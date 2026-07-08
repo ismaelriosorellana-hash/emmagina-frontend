@@ -1,0 +1,456 @@
+"use strict";
+
+(function () {
+    let bannerTimer = 0;
+    let bannerIndex = 0;
+
+
+    function enableDragScroll(scrollArea, options = {}) {
+        if (!scrollArea || scrollArea.dataset.dragScrollReady === "true") return;
+
+        let isPointerDown = false;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let startScrollLeft = 0;
+        let lastX = 0;
+        let lastTime = 0;
+        let velocity = 0;
+        let pointerId = null;
+        let momentumFrame = 0;
+
+        const threshold = Number(options.threshold || 8);
+        const friction = Number(options.friction || 0.955);
+        const minVelocity = Number(options.minVelocity || 0.08);
+
+        function cancelMomentum() {
+            if (momentumFrame) {
+                window.cancelAnimationFrame(momentumFrame);
+                momentumFrame = 0;
+            }
+        }
+
+        function startMomentum() {
+            cancelMomentum();
+
+            let currentVelocity = velocity * 16;
+            if (Math.abs(currentVelocity) < minVelocity) return;
+
+            const step = () => {
+                currentVelocity *= friction;
+                scrollArea.scrollLeft -= currentVelocity;
+
+                if (Math.abs(currentVelocity) > minVelocity) {
+                    momentumFrame = window.requestAnimationFrame(step);
+                } else {
+                    momentumFrame = 0;
+                }
+            };
+
+            momentumFrame = window.requestAnimationFrame(step);
+        }
+
+        scrollArea.dataset.dragScrollReady = "true";
+        scrollArea.classList.add("drag-scroll-ready");
+
+        scrollArea.addEventListener("dragstart", (event) => {
+            event.preventDefault();
+        });
+
+        scrollArea.addEventListener("pointerdown", (event) => {
+            if (event.button !== undefined && event.button !== 0) return;
+            if (scrollArea.scrollWidth <= scrollArea.clientWidth) return;
+
+            // En pantallas táctiles dejamos que el navegador haga el scroll nativo:
+            // es más fluido y tiene inercia real del dispositivo.
+            if (event.pointerType === "touch") return;
+
+            cancelMomentum();
+            isPointerDown = true;
+            isDragging = false;
+            pointerId = event.pointerId;
+            startX = event.clientX;
+            startY = event.clientY;
+            lastX = event.clientX;
+            lastTime = performance.now();
+            velocity = 0;
+            startScrollLeft = scrollArea.scrollLeft;
+        });
+
+        scrollArea.addEventListener("pointermove", (event) => {
+            if (!isPointerDown || event.pointerId !== pointerId) return;
+
+            const deltaX = event.clientX - startX;
+            const deltaY = event.clientY - startY;
+            const absX = Math.abs(deltaX);
+
+            if (!isDragging && absX > threshold && absX > Math.abs(deltaY)) {
+                isDragging = true;
+                scrollArea.classList.add("is-dragging-scroll");
+                scrollArea.setPointerCapture?.(pointerId);
+            }
+
+            if (!isDragging) return;
+
+            const now = performance.now();
+            const elapsed = Math.max(now - lastTime, 16);
+            velocity = (event.clientX - lastX) / elapsed;
+            lastX = event.clientX;
+            lastTime = now;
+
+            event.preventDefault();
+            scrollArea.scrollLeft = startScrollLeft - deltaX;
+        }, { passive: false });
+
+        function stopDragging(event) {
+            if (!isPointerDown || (event?.pointerId !== undefined && event.pointerId !== pointerId)) return;
+
+            const wasDragging = isDragging;
+            isPointerDown = false;
+            isDragging = false;
+            scrollArea.classList.remove("is-dragging-scroll");
+
+            if (wasDragging) {
+                scrollArea.dataset.suppressClick = "true";
+                window.setTimeout(() => {
+                    delete scrollArea.dataset.suppressClick;
+                }, 90);
+                startMomentum();
+            }
+
+            try {
+                if (pointerId !== null) scrollArea.releasePointerCapture?.(pointerId);
+            } catch {}
+            pointerId = null;
+        }
+
+        scrollArea.addEventListener("pointerup", stopDragging);
+        scrollArea.addEventListener("pointercancel", stopDragging);
+        scrollArea.addEventListener("lostpointercapture", stopDragging);
+
+        scrollArea.addEventListener("click", (event) => {
+            if (scrollArea.dataset.suppressClick === "true") {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        }, true);
+
+        scrollArea.addEventListener("wheel", (event) => {
+            if (scrollArea.scrollWidth <= scrollArea.clientWidth) return;
+            const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY)
+                ? event.deltaX
+                : event.deltaY;
+            if (!delta) return;
+
+            const atStart = scrollArea.scrollLeft <= 1;
+            const atEnd = scrollArea.scrollLeft + scrollArea.clientWidth >= scrollArea.scrollWidth - 1;
+            if ((delta < 0 && atStart) || (delta > 0 && atEnd)) return;
+
+            event.preventDefault();
+            cancelMomentum();
+            scrollArea.scrollBy({ left: delta, behavior: "auto" });
+        }, { passive: false });
+    }
+
+    function initDragCarousels() {
+        document
+            .querySelectorAll(".carousel-container, .categories-grid")
+            .forEach((scrollArea) => enableDragScroll(scrollArea));
+    }
+    function initCarouselArrows() {
+        document
+            .querySelectorAll(".carousel-arrow")
+            .forEach((button) => {
+                button.addEventListener("click", () => {
+                    const container =
+                        document.getElementById(
+                            button.dataset.carousel
+                        );
+
+                    if (!container) return;
+
+                    const direction =
+                        Number(button.dataset.direction) || 1;
+
+                    container.scrollBy({
+                        left:
+                            container.clientWidth *
+                            0.82 *
+                            direction,
+                        behavior: "smooth"
+                    });
+                });
+            });
+    }
+
+
+    function initCategoryRail() {
+        const rail = document.getElementById("categories-grid");
+        if (!rail) return;
+
+        document.querySelectorAll("[data-category-direction]")
+            .forEach((button) => {
+                button.addEventListener("click", () => {
+                    const direction = Number(button.dataset.categoryDirection) || 1;
+                    rail.scrollBy({
+                        left: Math.max(260, rail.clientWidth * 0.72) * direction,
+                        behavior: "smooth"
+                    });
+                });
+            });
+
+        rail.addEventListener("wheel", (event) => {
+            if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+            if (rail.scrollWidth <= rail.clientWidth) return;
+
+            const atStart = rail.scrollLeft <= 1;
+            const atEnd = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 1;
+
+            if ((event.deltaY < 0 && atStart) || (event.deltaY > 0 && atEnd)) {
+                return;
+            }
+
+            event.preventDefault();
+            rail.scrollLeft += event.deltaY;
+        }, { passive: false });
+    }
+
+    function bannerImage(slide) {
+        const mobile = window.matchMedia(
+            "(max-width: 700px)"
+        ).matches;
+
+        return mobile && slide.mobileImage
+            ? slide.mobileImage
+            : slide.desktopImage;
+    }
+
+    function applyBannerSlide(slide, index = bannerIndex) {
+        const background =
+            document.getElementById("banner-bg");
+
+        const eyebrow =
+            document.getElementById("hero-eyebrow");
+
+        const title =
+            document.getElementById("hero-title");
+
+        const button =
+            document.getElementById("hero-cta");
+
+        if (!background || !slide) return;
+
+        const image = bannerImage(slide);
+        const overlay =
+            "linear-gradient(90deg, rgba(35, 26, 29, 0.74), rgba(35, 26, 29, 0.08))";
+
+        background.classList.add("is-changing");
+
+        window.setTimeout(() => {
+            background.style.backgroundImage = image
+                ? `${overlay}, url("${image}")`
+                : `${overlay}, linear-gradient(135deg, #6f5059, #e9a8b5)`;
+
+            background.style.backgroundPosition =
+                slide.position || "center";
+
+            if (eyebrow && slide.eyebrow) {
+                eyebrow.textContent = slide.eyebrow;
+            }
+
+            if (title && slide.title) {
+                title.textContent = slide.title;
+            }
+
+            if (button) {
+                button.textContent =
+                    slide.buttonText || "Ver productos";
+
+                button.href =
+                    slide.target || "#lo-mas-vendido";
+            }
+
+            background.classList.remove("is-changing");
+
+            document
+                .querySelectorAll(".banner-pagination-dot")
+                .forEach((dot, dotIndex) => {
+                    const active = dotIndex === index;
+                    dot.classList.toggle("active", active);
+                    dot.setAttribute("aria-current", active ? "true" : "false");
+                });
+        }, 160);
+    }
+
+    function mapApiBanner(banner) {
+        return {
+            desktopImage:
+                banner.imagenEscritorio ||
+                banner.desktopImage ||
+                "",
+            mobileImage:
+                banner.imagenMovil ||
+                banner.mobileImage ||
+                "",
+            position:
+                banner.posicion ||
+                banner.position ||
+                "center",
+            eyebrow:
+                banner.eyebrow ||
+                banner.textoSuperior ||
+                "",
+            title:
+                banner.titulo ||
+                banner.title ||
+                "",
+            buttonText:
+                banner.textoBoton ||
+                banner.buttonText ||
+                "Ver productos",
+            target:
+                banner.destino ||
+                banner.target ||
+                "#lo-mas-vendido"
+        };
+    }
+
+    async function getBannerSlides() {
+        try {
+            const data =
+                await API.request(
+                    "/banners"
+                );
+
+            if (
+                Array.isArray(data) &&
+                data.length
+            ) {
+                return data.map(
+                    mapApiBanner
+                );
+            }
+        } catch (error) {
+            console.warn(
+                "Se utilizarán los banners de config.js:",
+                error.message
+            );
+        }
+
+        return Array.isArray(
+            CONFIG.HOME_BANNERS
+        )
+            ? CONFIG.HOME_BANNERS
+            : [];
+    }
+
+    function startBannerTimer(slides) {
+        window.clearInterval(bannerTimer);
+
+        if (slides.length <= 1) return;
+
+        bannerTimer = window.setInterval(() => {
+            bannerIndex = (bannerIndex + 1) % slides.length;
+            applyBannerSlide(slides[bannerIndex], bannerIndex);
+        }, 7000);
+    }
+
+    function renderBannerPagination(slides) {
+        const pagination = document.getElementById("banner-pagination");
+        if (!pagination) return;
+
+        pagination.innerHTML = "";
+        pagination.hidden = slides.length <= 1;
+
+        slides.forEach((slide, index) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = `banner-pagination-dot${index === 0 ? " active" : ""}`;
+            button.setAttribute("aria-label", `Mostrar banner ${index + 1}: ${slide.title || "promoción"}`);
+            button.setAttribute("aria-current", index === 0 ? "true" : "false");
+            button.addEventListener("click", () => {
+                bannerIndex = index;
+                applyBannerSlide(slides[index], index);
+                startBannerTimer(slides);
+            });
+            pagination.appendChild(button);
+        });
+    }
+
+    async function initBanner() {
+        const slides =
+            await getBannerSlides();
+
+        if (!slides.length) return;
+
+        bannerIndex = 0;
+        renderBannerPagination(slides);
+        applyBannerSlide(slides[0], 0);
+        startBannerTimer(slides);
+
+        window
+            .matchMedia("(max-width: 700px)")
+            .addEventListener?.("change", () => {
+                applyBannerSlide(
+                    slides[bannerIndex],
+                    bannerIndex
+                );
+            });
+    }
+
+    function initHeroScroll() {
+        const button =
+            document.getElementById("hero-cta");
+
+        button?.addEventListener("click", (event) => {
+            const selector =
+                button.getAttribute("href");
+
+            if (!selector?.startsWith("#")) return;
+
+            const destination =
+                document.querySelector(selector);
+
+            if (!destination) return;
+
+            event.preventDefault();
+
+            destination.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        });
+    }
+
+    function openCustomizationFromQuery() {
+        const params =
+            new URLSearchParams(window.location.search);
+
+        if (params.get("personalizar") === "1") {
+            window.Customization?.open();
+        }
+    }
+
+    window.EmmaginaDragCarousels = initDragCarousels;
+
+    window.addEventListener("emmagina:products-rendered", () => {
+        initDragCarousels();
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        initCarouselArrows();
+        initCategoryRail();
+        initDragCarousels();
+        initBanner();
+        initHeroScroll();
+
+        window.setTimeout(
+            openCustomizationFromQuery,
+            0
+        );
+    });
+
+    window.addEventListener("beforeunload", () => {
+        window.clearInterval(bannerTimer);
+    });
+})();

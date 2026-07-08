@@ -1,0 +1,41 @@
+{
+  "nombre": "Figura Familiar con Alma",
+  "slug": "figura-familiar-con-alma",
+  "sku": "EMM-FAM-ALMA",
+  "marca": "Emmagina",
+  "precio": 99990,
+  "precioOriginal": 119990,
+  "descripcion": "Escena familiar personalizada de hasta 3 personas, impresa en 3D, lijada y pintada a mano con pintura acrílica y marcadores acrílicos.",
+  "imagenes": [
+    {
+      "url": "https://res.cloudinary.com/TU_CLOUD/image/upload/v1234567890/emmagina/productos/figura-familiar-con-alma.png",
+      "principal": true,
+      "orden": 1
+    }
+  ],
+  "categoriaPrincipal": "Linea Memories",
+  "categorias": ["Linea Memories", "Decoración", "Coleccionables", "Todos"],
+  "insignia": "Producto principal",
+  "destacado": true,
+  "publicarCatalogo": true,
+  "activo": true,
+  "stock": 10,
+  "orden": 10,
+  "personalizable": true,
+  "diasPreparacion": 12,
+  "pesoGramos": 220,
+  "dimensiones": {
+    "largoCm": 15,
+    "anchoCm": 12,
+    "altoCm": 14
+  },
+  "ajusteImagenTarjeta": "contain",
+  "ajusteImagenDetalle": "contain",
+  "posicionImagen": "center",
+  "caracteristicas": [
+    { "label": "Personas", "value": "Hasta 3" },
+    { "label": "Acabado", "value": "Lijado y pintado a mano" },
+    { "label": "Material", "value": "PLA" },
+    { "label": "Placa", "value": "Personalizada" }
+  ]
+}

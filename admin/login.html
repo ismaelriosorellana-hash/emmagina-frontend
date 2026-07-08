@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; script-src 'self' https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https: https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms; connect-src 'self' https://key-soul-desing-backend.onrender.com https://res.cloudinary.com https://*.cloudinary.com https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <meta name="description" content="Acceso privado para la administración interna del emprendimiento Emmagina.">
+
+    <meta name="robots" content="noindex, nofollow, noarchive">
+
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <meta name="theme-color" content="#FFF9FD">
+    <title>Administración | Emmagina</title>
+    <link rel="icon" href="https://res.cloudinary.com/jo3bgrnh/image/upload/v1782320550/LOGO_MOMMY_CRAFTS_PNGG_mpgyfl.png">
+    <link rel="stylesheet" href="css/admin.css?v=3.63.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="css/admin-experience-v327.css?v=3.63.0">
+    <link rel="stylesheet" href="../css/mobile-polish-v3370.css?v=3.63.0">
+</head>
+<body>
+    <main class="admin-login-page" id="main-content">
+        <section class="admin-login-card" aria-labelledby="admin-login-title">
+            <a class="admin-login-back" href="../index.html">
+                <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                Volver a la tienda
+            </a>
+
+            <div class="admin-login-brand">
+                <img
+                    src="https://res.cloudinary.com/jo3bgrnh/image/upload/v1782320550/LOGO_MOMMY_CRAFTS_PNGG_mpgyfl.png"
+                    alt="Logotipo de Emmagina"
+                >
+                <div>
+                    <p class="admin-login-eyebrow">Emmagina</p>
+                    <h1 id="admin-login-title">Administración interna</h1>
+                    <p>Acceso privado para personal autorizado.</p>
+                </div>
+            </div>
+
+            <div class="admin-login-identity" aria-label="Identidad del sitio">
+                <div>
+                    <i class="fa-solid fa-store" aria-hidden="true"></i>
+                    <span>
+                        Sitio:
+                        <strong id="admin-site-host">Emmagina</strong>
+                    </span>
+                </div>
+                <div>
+                    <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                    <span id="admin-connection-status">Comprobando la conexión...</span>
+                </div>
+            </div>
+
+            <div class="admin-login-intro">
+                <strong>Acceso oficial de Emmagina</strong>
+                <p>
+                    Emmagina es un emprendimiento independiente de productos
+                    personalizados. Este formulario se utiliza únicamente para
+                    administrar su propia tienda.
+                </p>
+            </div>
+
+            <form id="admin-login-form" autocomplete="on" novalidate>
+                <div class="admin-field">
+                    <label for="admin-email">Correo administrativo</label>
+                    <input
+                        id="admin-email"
+                        name="email"
+                        type="email"
+                        inputmode="email"
+                        autocomplete="username"
+                        aria-describedby="admin-email-help"
+                        required
+                    >
+                    <small id="admin-email-help">
+                        Usa exclusivamente la cuenta administrativa creada para Emmagina.
+                    </small>
+                </div>
+
+                <div class="admin-field">
+                    <label for="admin-password">Contraseña administrativa</label>
+                    <input
+                        id="admin-password"
+                        name="password"
+                        type="password"
+                        autocomplete="current-password"
+                        aria-describedby="admin-password-help"
+                        required
+                    >
+                    <small id="admin-password-help">
+                        Este acceso no solicita contraseñas de Google, correo,
+                        bancos, Netlify, Render ni otros servicios.
+                    </small>
+                </div>
+                <p class="admin-session-note"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Por seguridad, la sesión termina al cerrar el navegador.</p>
+
+                <button
+                    class="admin-button admin-login-submit"
+                    id="admin-login-button"
+                    type="submit"
+                >
+                    <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+                    Iniciar sesión
+                </button>
+
+                <p
+                    id="admin-login-error"
+                    class="admin-login-error"
+                    role="alert"
+                    aria-live="polite"
+                    hidden
+                ></p>
+            </form>
+
+            <footer class="admin-login-footer">
+                <p>
+                    <a href="../seguridad.html">Información de seguridad del sitio</a>
+                </p>
+                <p>
+                    ¿Tienes dudas sobre este acceso?
+                    <a
+                        href="https://wa.me/56900000000?text=Necesito%20ayuda%20con%20el%20acceso%20administrativo%20de%20Mommy%20Crafts"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Contactar a Emmagina
+                    </a>
+                </p>
+                <p>© 2026 Emmagina. Acceso de uso interno.</p>
+            </footer>
+        </section>
+    </main>
+
+    <script src="../js/config.js?v=3.63.0"></script>
+    <script src="js/admin-api.js?v=3.63.0"></script>
+    <script src="js/login.js?v=3.63.0"></script>
+</body>
+</html>

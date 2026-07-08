@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; script-src 'self' https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https: https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms; connect-src 'self' https://key-soul-desing-backend.onrender.com https://res.cloudinary.com https://*.cloudinary.com https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <meta name="robots" content="noindex, nofollow, noarchive">
+
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Pedidos | Emmagina</title>
+    <link rel="icon" href="https://res.cloudinary.com/jo3bgrnh/image/upload/v1782320550/LOGO_MOMMY_CRAFTS_PNGG_mpgyfl.png">
+    <link rel="stylesheet" href="css/admin.css?v=3.63.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="css/admin-experience-v327.css?v=3.63.0">
+    <link rel="stylesheet" href="css/admin-orders-pro-v3450.css?v=3.63.0">
+    <link rel="stylesheet" href="../css/mobile-polish-v3370.css?v=3.63.0">
+</head>
+<body data-admin-page="pedidos" data-admin-title="Pedidos">
+    <section id="admin-page-content">
+
+<div class="admin-page-intro">
+    <div>
+        <h2>Gestión de pedidos</h2>
+        <p>Controla pedidos, pagos, personalizaciones, diseño, fabricación y entrega desde una vista operativa.</p>
+    </div>
+
+    <div class="orders-page-actions">
+        <a class="admin-button secondary" href="../seguimiento-pedido.html" target="_blank" rel="noopener">
+            <i class="fa-solid fa-route"></i>
+            Ver seguimiento cliente
+        </a>
+
+        <button class="admin-button secondary" id="orders-refresh" type="button">
+        <i class="fa-solid fa-rotate"></i>
+        Actualizar
+        </button>
+    </div>
+</div>
+
+<div class="admin-toolbar">
+    <div class="admin-toolbar-group" style="flex:1">
+        <div class="admin-field" style="min-width:min(100%,320px);flex:1">
+            <input id="orders-search" type="search" placeholder="Buscar por pedido, cliente o correo">
+        </div>
+
+        <select id="orders-status" aria-label="Filtrar por estado" style="min-height:43px;border:1px solid var(--admin-border);border-radius:11px;padding:0 12px">
+            <option value="">Todos los estados</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="confirmado">Confirmado</option>
+            <option value="validacion_diseno">Validación de diseño</option>
+            <option value="en_produccion">En producción</option>
+            <option value="listo">Listo</option>
+            <option value="enviado">Enviado</option>
+            <option value="entregado">Entregado</option>
+            <option value="cancelado">Cancelado</option>
+        </select>
+    </div>
+</div>
+
+<section class="admin-card">
+    <div class="admin-table-wrap" id="orders-table"></div>
+</section>
+
+<div class="admin-modal" id="order-modal" hidden>
+    <section class="admin-modal-panel">
+        <header class="admin-modal-header">
+            <h3 id="order-modal-title">Detalle del pedido</h3>
+            <button class="admin-icon-button" type="button" data-close-modal="order-modal" aria-label="Cerrar">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </header>
+
+        <div class="admin-modal-body" id="order-detail"></div>
+
+        <footer class="admin-modal-footer">
+            <button class="admin-button secondary" type="button" data-close-modal="order-modal">
+                Cerrar
+            </button>
+
+            <button class="admin-button secondary" id="order-sync-payment" type="button" hidden>
+                <i class="fa-solid fa-rotate"></i>
+                Sincronizar Mercado Pago
+            </button>
+
+            <button class="admin-button" id="order-save" type="button">
+                <i class="fa-solid fa-floppy-disk"></i>
+                Guardar cambios
+            </button>
+        </footer>
+    </section>
+</div>
+
+    </section>
+
+    <script src="../js/config.js?v=3.63.0"></script>
+    <script src="js/admin-api.js?v=3.63.0"></script>
+    <script src="js/admin-common.js?v=3.63.0"></script>
+    <script src="js/admin-experience-v327.js?v=3.63.0"></script>
+    <script src="js/orders-admin.js?v=3.63.0"></script>
+    <script src="js/orders-admin-pro-v3450.js?v=3.63.0"></script>
+</body>
+</html>

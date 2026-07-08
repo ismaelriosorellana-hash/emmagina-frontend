@@ -1,0 +1,508 @@
+/* Emmagina v3.63.0 - mejora comercial y conversión */
+.commercial-section {
+    margin-top: clamp(2rem, 4vw, 4rem);
+    margin-bottom: clamp(2rem, 4vw, 4rem);
+}
+
+.commercial-section-header {
+    max-width: 760px;
+    margin-bottom: 1.5rem;
+}
+
+.commercial-section-header p {
+    color: #755862;
+    line-height: 1.7;
+    margin-top: .55rem;
+}
+
+.commercial-steps-grid,
+.occasion-grid,
+.product-guide-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.commercial-steps-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.commercial-step-card,
+.occasion-card,
+.product-guide-card,
+.commercial-whatsapp-strip {
+    background: rgba(255, 255, 255, .88);
+    border: 1px solid rgba(154, 102, 120, .16);
+    box-shadow: 0 16px 34px rgba(86, 55, 66, .08);
+}
+
+.commercial-step-card,
+.product-guide-card {
+    border-radius: 1.35rem;
+    padding: 1.15rem;
+}
+
+.commercial-step-number {
+    align-items: center;
+    background: #f3d5dc;
+    border-radius: 999px;
+    color: #6e3f4f;
+    display: inline-flex;
+    font-weight: 800;
+    height: 2.35rem;
+    justify-content: center;
+    margin-bottom: .85rem;
+    width: 2.35rem;
+}
+
+.commercial-step-card h3,
+.product-guide-card h3 {
+    color: #4f323b;
+    font-size: 1rem;
+    margin: 0 0 .45rem;
+}
+
+.commercial-step-card p,
+.product-guide-card p {
+    color: #755862;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.commercial-whatsapp-strip {
+    align-items: center;
+    border-radius: 1.35rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding: 1rem 1.15rem;
+}
+
+.commercial-whatsapp-strip strong,
+.commercial-whatsapp-strip span {
+    display: block;
+}
+
+.commercial-whatsapp-strip strong {
+    color: #4f323b;
+    margin-bottom: .25rem;
+}
+
+.commercial-whatsapp-strip span {
+    color: #755862;
+}
+
+.commercial-whatsapp-link,
+.product-guide-card a {
+    align-items: center;
+    background: #25d366;
+    border-radius: 999px;
+    color: #fff;
+    display: inline-flex;
+    font-weight: 800;
+    justify-content: center;
+    padding: .72rem 1rem;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.occasion-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.occasion-card {
+    align-items: center;
+    border-radius: 1.25rem;
+    color: #593946;
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+    min-height: 8.2rem;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.occasion-card:hover,
+.occasion-card:focus-visible {
+    border-color: rgba(154, 102, 120, .34);
+    box-shadow: 0 20px 38px rgba(86, 55, 66, .12);
+    transform: translateY(-2px);
+}
+
+.occasion-card i {
+    color: #b86d86;
+    font-size: 1.65rem;
+}
+
+.occasion-card span {
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.product-commercial-guide {
+    margin: clamp(1.5rem, 4vw, 3rem) auto;
+    max-width: 1180px;
+    padding: 0 1rem;
+}
+
+.product-guide-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.product-guide-card i {
+    align-items: center;
+    background: #f7eef1;
+    border-radius: 999px;
+    color: #ad667c;
+    display: inline-flex;
+    font-size: 1.25rem;
+    height: 2.7rem;
+    justify-content: center;
+    margin-bottom: .85rem;
+    width: 2.7rem;
+}
+
+.product-guide-card a {
+    margin-top: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .commercial-steps-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .occasion-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 720px) {
+    .commercial-section {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .commercial-steps-grid,
+    .occasion-grid,
+    .product-guide-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .commercial-whatsapp-strip {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .commercial-whatsapp-link,
+    .product-guide-card a {
+        width: 100%;
+    }
+
+    .occasion-card {
+        min-height: auto;
+        flex-direction: row;
+        justify-content: flex-start;
+        text-align: left;
+    }
+}
+
+
+/* V3.63.0 · orden comercial de home */
+.how-it-works-compact {
+    scroll-margin-top: 7.5rem;
+}
+
+.how-it-works-compact .commercial-section-header {
+    max-width: 680px;
+}
+
+.how-it-works-compact .commercial-step-card {
+    padding: 1rem;
+}
+
+.how-it-works-compact .commercial-step-number {
+    height: 2rem;
+    width: 2rem;
+    margin-bottom: .65rem;
+}
+
+@media (max-width: 720px) {
+    .how-it-works-compact {
+        scroll-margin-top: 5.5rem;
+    }
+}
+
+
+/* V3.63.0 · página Cómo comprar y guía en ficha */
+.how-buy-page .content-hero {
+    background: linear-gradient(135deg, rgba(247, 238, 241, .94), rgba(255, 255, 255, .96));
+}
+
+.how-buy-layout {
+    display: grid;
+    gap: clamp(1rem, 3vw, 2rem);
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+    margin-bottom: clamp(2rem, 5vw, 4rem);
+    margin-top: clamp(1.5rem, 4vw, 3rem);
+}
+
+.how-buy-main {
+    display: grid;
+    gap: 1rem;
+}
+
+.how-buy-card,
+.how-buy-help-card,
+.product-how-buy-link a {
+    background: rgba(255, 255, 255, .92);
+    border: 1px solid rgba(154, 102, 120, .16);
+    box-shadow: 0 18px 38px rgba(86, 55, 66, .08);
+}
+
+.how-buy-card {
+    border-radius: 1.45rem;
+    padding: clamp(1.1rem, 3vw, 1.65rem);
+}
+
+.how-buy-card h2,
+.how-buy-help-card h2 {
+    color: #4f323b;
+    margin-bottom: .65rem;
+}
+
+.how-buy-card p,
+.how-buy-card li,
+.how-buy-help-card p {
+    color: #755862;
+    line-height: 1.7;
+}
+
+.how-buy-steps,
+.how-buy-detail-grid {
+    display: grid;
+    gap: .95rem;
+    margin-top: 1.1rem;
+}
+
+.how-buy-steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.how-buy-detail-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.how-buy-steps article,
+.how-buy-detail-grid article {
+    background: #fff8fa;
+    border: 1px solid rgba(184, 109, 134, .15);
+    border-radius: 1.15rem;
+    padding: 1rem;
+}
+
+.how-buy-steps span,
+.how-buy-detail-grid i,
+.product-how-buy-link span {
+    align-items: center;
+    background: #f3d5dc;
+    border-radius: 999px;
+    color: #6e3f4f;
+    display: inline-flex;
+    font-weight: 900;
+    height: 2.35rem;
+    justify-content: center;
+    margin-bottom: .7rem;
+    width: 2.35rem;
+}
+
+.how-buy-steps h3,
+.how-buy-detail-grid h3 {
+    color: #4f323b;
+    font-size: 1rem;
+    margin: 0 0 .45rem;
+}
+
+.how-buy-note {
+    align-items: flex-start;
+    background: #f7eef1;
+    border-radius: 1.1rem;
+    color: #6f4b58;
+    display: flex;
+    gap: .75rem;
+    margin-top: 1rem;
+    padding: .9rem 1rem;
+}
+
+.how-buy-timeline {
+    display: grid;
+    gap: .75rem;
+    margin: 1rem 0 0;
+    padding-left: 1.2rem;
+}
+
+.how-buy-card details {
+    border-bottom: 1px solid rgba(154, 102, 120, .14);
+    padding: .75rem 0;
+}
+
+.how-buy-card summary {
+    color: #4f323b;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.how-buy-aside {
+    align-self: start;
+    display: grid;
+    gap: 1rem;
+    position: sticky;
+    top: 1rem;
+}
+
+.how-buy-help-card {
+    border-radius: 1.45rem;
+    padding: 1.25rem;
+}
+
+.how-buy-help-card > i {
+    background: #25d366;
+    border-radius: 999px;
+    color: #fff;
+    font-size: 1.4rem;
+    height: 3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: .85rem;
+    width: 3rem;
+}
+
+.how-buy-help-card a,
+.how-buy-mini-links a {
+    align-items: center;
+    border-radius: 999px;
+    display: inline-flex;
+    font-weight: 800;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.how-buy-help-card a {
+    background: #25d366;
+    color: #fff;
+    margin-top: .85rem;
+    padding: .75rem 1rem;
+    width: 100%;
+}
+
+.how-buy-mini-links {
+    display: grid;
+    gap: .55rem;
+}
+
+.how-buy-mini-links a {
+    background: #fff;
+    border: 1px solid rgba(154, 102, 120, .15);
+    color: #6e3f4f;
+    padding: .75rem 1rem;
+}
+
+.product-how-buy-link {
+    margin-bottom: 1rem;
+}
+
+.product-how-buy-link a {
+    align-items: center;
+    border-radius: 1.25rem;
+    color: inherit;
+    display: grid;
+    gap: .9rem;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding: 1rem;
+    text-decoration: none;
+}
+
+.product-how-buy-link strong {
+    color: #4f323b;
+    display: block;
+    margin-bottom: .25rem;
+}
+
+.product-how-buy-link p {
+    color: #755862;
+    line-height: 1.55;
+    margin: 0;
+}
+
+.product-how-buy-link a:hover,
+.product-how-buy-link a:focus-visible {
+    border-color: rgba(154, 102, 120, .34);
+    box-shadow: 0 20px 38px rgba(86, 55, 66, .12);
+}
+
+@media (max-width: 980px) {
+    .how-buy-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .how-buy-aside {
+        position: static;
+    }
+
+    .how-buy-steps,
+    .how-buy-detail-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 680px) {
+    .how-buy-steps,
+    .how-buy-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-how-buy-link a {
+        align-items: flex-start;
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .product-how-buy-link a > i {
+        display: none;
+    }
+}
+
+/* V3.63.0 · acceso visible a Cómo comprar en ficha */
+.product-confidence-how-buy {
+    background: linear-gradient(135deg, rgba(255,255,255,.96), rgba(255,244,248,.92));
+    border-color: rgba(189, 104, 132, .22);
+}
+
+.product-confidence-how-buy .product-confidence-icon {
+    color: #8a4659;
+}
+
+
+/* V3.63.0 · Cómo comprar separado y visible */
+.product-how-buy-standalone {
+    margin: clamp(1.25rem, 3vw, 2rem) auto clamp(1.2rem, 3vw, 1.8rem);
+    width: min(1180px, calc(100% - 2rem));
+}
+
+.product-how-buy-standalone a {
+    border-radius: 1.35rem;
+    padding: clamp(1rem, 2.2vw, 1.25rem);
+}
+
+.product-detail-content > .product-how-buy-link {
+    display: none !important;
+}
+
+@media (max-width: 680px) {
+    .product-how-buy-standalone {
+        margin-top: 1rem;
+        width: min(100% - 1rem, 100%);
+    }
+}
