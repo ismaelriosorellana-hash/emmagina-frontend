@@ -1,8 +1,8 @@
 "use strict";
 
 (function () {
-    const VIEW_STORAGE_KEY = "keySoulDesingProductViews";
-    const VIEW_SESSION_KEY = "keySoulDesingViewedThisSession";
+    const VIEW_STORAGE_KEY = "emmaginaProductViews";
+    const VIEW_SESSION_KEY = "emmaginaViewedThisSession";
 
     const state = {
         productos: [],
@@ -222,8 +222,6 @@ function normalizeCharacteristics(value) {
                 if (image && typeof image === "object") {
                     return normalizeImageUrl(
                         image.url ??
-                        image.secure_url ??
-                        image.secureUrl ??
                         image.src ??
                         image.imagen ??
                         image.imgUrl

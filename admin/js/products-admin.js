@@ -32,6 +32,9 @@ document.addEventListener("admin:ready", () => {
     document.getElementById("product-form")
         ?.addEventListener("submit", saveProduct);
 
+    document.getElementById("product-upload-images")
+        ?.addEventListener("click", uploadProductImages);
+
     document.getElementById("products-table")
         ?.addEventListener("click", handleTableClick);
 
@@ -556,7 +559,7 @@ function addVariant(variant = {}, focus = true) {
 
             <div class="admin-field full">
                 <label>Imágenes de la variante</label>
-                <textarea data-variant-field="imagenes" rows="4" placeholder="Una URL de Cloudinary por línea">${AdminUI.escapeHtml(normalizeImageUrls(variant.imagenes || [variant.imagen]).join("\n"))}</textarea>
+                <textarea data-variant-field="imagenes" rows="4" placeholder="Una URL por línea">${AdminUI.escapeHtml(normalizeImageUrls(variant.imagenes || [variant.imagen]).join("\n"))}</textarea>
             </div>
         </div>
     `;
@@ -693,6 +696,77 @@ function updateProductFormStatus() {
         ? `Pendiente: ${missing.slice(0, 4).join(", ")}${missing.length > 4 ? "…" : "."}`
         : "La ficha contiene todos los datos recomendados para esta etapa.";
     document.getElementById("product-completion-bar").style.width = `${percent}%`;
+}
+
+
+async function uploadProductImages() {
+    const input = document.getElementById("product-image-files");
+    const textarea = document.getElementById("product-images");
+    const status = document.getElementById("product-upload-status");
+    const button = document.getElementById("product-upload-images");
+
+    const files = Array.from(input?.files || []);
+
+    if (!files.length) {
+        AdminUI.toast("Selecciona una o más imágenes para subir.", "error");
+        return;
+    }
+
+    if (files.length > 5) {
+        AdminUI.toast("Puedes subir máximo 5 imágenes por carga.", "error");
+        return;
+    }
+
+    const allowed = new Set(["image/jpeg", "image/png", "image/webp"]);
+    const invalid = files.find((file) => !allowed.has(file.type));
+
+    if (invalid) {
+        AdminUI.toast("Solo se permiten imágenes JPG, PNG o WEBP.", "error");
+        return;
+    }
+
+    const formData = new FormData();
+    files.forEach((file) => formData.append("imagenes", file));
+
+    const productSlug = stringFrom("product-slug") || slugify(stringFrom("product-name"));
+    if (productSlug) formData.append("productSlug", productSlug);
+    const productId = stringFrom("product-id");
+    if (productId) formData.append("productId", productId);
+
+    button.disabled = true;
+    if (status) status.textContent = "Subiendo imágenes a Cloudinary...";
+
+    try {
+        const response = await AdminAPI.request("/uploads/productos", {
+            method: "POST",
+            body: formData
+        });
+
+        const urls = Array.isArray(response?.urls)
+            ? response.urls
+            : Array.isArray(response?.assets)
+                ? response.assets.map((asset) => asset.url).filter(Boolean)
+                : [];
+
+        if (!urls.length) {
+            throw new Error("Cloudinary no devolvió URLs válidas.");
+        }
+
+        const current = textarea.value.trim();
+        textarea.value = [current, ...urls]
+            .filter(Boolean)
+            .join("\n");
+
+        input.value = "";
+        if (status) status.textContent = `${urls.length} imagen(es) subida(s). Guarda el producto para publicar los cambios.`;
+        AdminUI.toast("Imágenes subidas a Cloudinary.", "success");
+        updateProductFormStatus();
+    } catch (error) {
+        if (status) status.textContent = error.message || "No fue posible subir las imágenes.";
+        AdminUI.toast(error.message || "No fue posible subir las imágenes.", "error");
+    } finally {
+        button.disabled = false;
+    }
 }
 
 async function saveProduct(event) {

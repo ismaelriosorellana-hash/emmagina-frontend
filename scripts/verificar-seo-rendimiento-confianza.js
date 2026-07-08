@@ -72,7 +72,7 @@ const noindexPages = [
 for (const page of [...indexedPages, ...noindexPages]) {
     const html = read(page);
     ok(html.includes("js/seo-v3490.js?v=3.63.0"), `${page} carga helper SEO`);
-    ok(/<link\b(?=[^>]*rel=["']canonical["'])(?=[^>]*href=["']https:\/\/mommycrafts\.cl)/i.test(html), `${page} incluye canonical absoluto`);
+    ok(/<link\b(?=[^>]*rel=["']canonical["'])(?=[^>]*href=["']https:\/\/emmagina\.cl)/i.test(html), `${page} incluye canonical absoluto`);
     ok(hasMeta(html, "og:title"), `${page} incluye og:title`);
     ok(hasMeta(html, "og:description"), `${page} incluye og:description`);
     ok(hasMeta(html, "twitter:card", "summary_large_image"), `${page} incluye Twitter card`);

@@ -6,7 +6,7 @@ const path = require("path");
 
 const root = path.resolve(__dirname, "..");
 const finalDomain = "https://emmagina.cl";
-const oldDomain = "mommycrafts.onrender.com";
+const oldDomain = "emmagina.onrender.com";
 
 function read(relative) {
     return fs.readFileSync(path.join(root, relative), "utf8");
@@ -34,7 +34,7 @@ if (!sitemap.includes(`<loc>${finalDomain}/</loc>`)) {
     fail("sitemap.xml no contiene la home del dominio final.");
 }
 if (sitemap.includes(oldDomain)) {
-    fail("sitemap.xml aún contiene mommycrafts.onrender.com.");
+    fail("sitemap.xml aún contiene emmagina.onrender.com.");
 }
 
 const seo = read("js/seo-v3490.js");

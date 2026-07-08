@@ -86,7 +86,7 @@ if (!config.includes('APP_VERSION: "3.63.0"')) {
     errors.push("js/config.js no informa la versión 3.63.0.");
 }
 
-if (!config.includes("https://key-soul-desing-backend.onrender.com/api")) {
+if (!config.includes("https://emmagina-backend.onrender.com/api")) {
     errors.push("La API de producción no apunta a Render mediante HTTPS.");
 }
 

@@ -1,0 +1,21 @@
+EMMAGINA FRONTEND v1.1 estable
+
+Tipo de servicio recomendado en Render:
+- Static Site
+- Build Command: dejar vacío
+- Publish Directory: .
+
+Conexión API:
+- js/config.js ya apunta en producción a https://emmagina-backend.onrender.com/api
+- USE_STATIC_KSD_CATALOG está en false, por lo que la tienda lee productos reales desde MongoDB/backend.
+
+Panel admin:
+- URL: /admin/login.html
+- Productos: /admin/productos.html
+- El panel usa el mismo backend definido en js/config.js.
+- En Productos puedes pegar URLs de Cloudinary o subir imágenes directamente con el botón “Subir a Cloudinary”.
+
+Si el frontend queda cargando:
+1. Verifica que https://emmagina-backend.onrender.com/api/productos responda JSON.
+2. Revisa que FRONTEND_URLS en Render backend incluya https://emmagina-frontend.onrender.com.
+3. Revisa consola del navegador por errores CORS o CSP.

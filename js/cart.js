@@ -1,7 +1,7 @@
 "use strict";
 
 (function () {
-    const STORAGE_KEY = "keySoulDesingCart";
+    const STORAGE_KEY = "emmaginaCart";
     const FREE_SHIPPING_THRESHOLD = Number(CONFIG.FREE_SHIPPING_THRESHOLD || 25000);
 
     function formatPrice(value) {

@@ -1,7 +1,7 @@
 "use strict";
 
 (function () {
-    const STORAGE_KEY = "keySoulDesingCompareProducts";
+    const STORAGE_KEY = "emmaginaCompareProducts";
     const MAX_COMPARE_ITEMS = 3;
 
     const state = {

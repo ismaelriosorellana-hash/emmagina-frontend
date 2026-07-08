@@ -2,10 +2,10 @@
 
 (function () {
     const TOKEN_KEY =
-        "mommycrafts_admin_token";
+        "emmagina_admin_token";
 
     const USER_KEY =
-        "mommycrafts_admin_user";
+        "emmagina_admin_user";
 
     class AdminApiError extends Error {
         constructor(

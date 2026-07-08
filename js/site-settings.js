@@ -1,7 +1,7 @@
 "use strict";
 
 (function () {
-    const SETTINGS_CACHE_KEY = "mommycrafts_site_settings_cache_v1";
+    const SETTINGS_CACHE_KEY = "emmagina_site_settings_cache_v1";
 
     const CSS_VARIABLES = {
         primary: "--color-primary",

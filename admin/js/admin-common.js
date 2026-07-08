@@ -2,7 +2,7 @@
 
 (function () {
     const LOGO =
-        "https://res.cloudinary.com/jo3bgrnh/image/upload/v1782320550/LOGO_MOMMY_CRAFTS_PNGG_mpgyfl.png";
+        "../assets/emmagina-logo.svg";
 
     const pages = [
         {

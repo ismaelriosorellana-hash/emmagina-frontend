@@ -4,7 +4,7 @@
     const DEFAULTS = {
         branding: {
             logo: {
-                url: "https://res.cloudinary.com/jo3bgrnh/image/upload/v1782320550/LOGO_MOMMY_CRAFTS_PNGG_mpgyfl.png",
+                url: "../assets/emmagina-logo.svg",
                 publicId: "",
                 alt: "Logo Emmagina",
                 width: 52,

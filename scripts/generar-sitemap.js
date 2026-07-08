@@ -6,7 +6,7 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const SITE_URL = "https://emmagina.cl";
-const API_URL = "https://key-soul-desing-backend.onrender.com/api/productos?limite=200";
+const API_URL = "https://emmagina-backend.onrender.com/api/productos?limite=200";
 const TODAY = new Date().toISOString().slice(0, 10);
 
 const staticUrls = [

@@ -21,7 +21,7 @@ const checks = [
   ["correo ventas visible", index.includes("contacto@emmagina.cl")],
   ["robots dominio final", robots.includes("Sitemap: https://emmagina.cl/sitemap.xml")],
   ["sitemap sin netlify", !/netlify\.app/i.test(sitemap + index + config + seo)],
-  ["sitemap sin onrender", !/mommycrafts\.onrender\.com/i.test(sitemap + robots)],
+  ["sitemap sin onrender", !/emmagina\.onrender\.com/i.test(sitemap + robots)],
   ["archivo verificacion antiguo eliminado", !fs.existsSync(path.join(root, "googlec321375894d8c5db.html"))]
 ];
 

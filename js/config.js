@@ -4,19 +4,14 @@ const IS_LOCAL_ENVIRONMENT =
     ["localhost", "127.0.0.1"]
         .includes(window.location.hostname);
 
-/*
- * API pública conectada a MongoDB Atlas.
- * - Local: usa el backend en http://localhost:3000/api.
- * - Producción: cambia esta URL si tu backend de Render usa otro dominio.
- */
 const API_BASE_URL =
     IS_LOCAL_ENVIRONMENT
         ? "http://localhost:3000/api"
-        : "https://key-soul-desing-backend.onrender.com/api";
+        : "https://emmagina-backend.onrender.com/api";
 
 window.CONFIG = Object.freeze({
-    APP_VERSION: "1.0.0-ksd",
-    SITE_URL: "https://emmagina.cl",
+    APP_VERSION: "1.1.0-emmagina-stable",
+    SITE_URL: "https://emmagina-frontend.onrender.com",
     SITE_NAME: "Emmagina",
     BRAND_NAME: "Emmagina",
     DEFAULT_SEO_IMAGE: "",
@@ -151,10 +146,6 @@ HOME_BANNERS: Object.freeze([
 
     locale: "es-CL",
     currency: "CLP",
-    /*
-     * false = la tienda lee productos reales desde MongoDB mediante la API.
-     * true = usa el catálogo estático de js/ksd-catalog-data.js solo como respaldo/demo.
-     */
     USE_STATIC_KSD_CATALOG: false,
     environment:
         IS_LOCAL_ENVIRONMENT

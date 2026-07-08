@@ -2,8 +2,8 @@
 
 (function () {
     const MODAL_SELECTOR = "#modal-personalizar";
-    const DRAFT_KEY = "mommycrafts_customization_draft_v3410";
-    const LEGACY_DRAFT_KEYS = ["mommycrafts_customization_draft_v3390"];
+    const DRAFT_KEY = "emmagina_customization_draft_v3410";
+    const LEGACY_DRAFT_KEYS = ["emmagina_customization_draft_v3390"];
     const STEP_HINTS = {
         1: "Elige el tipo de producto que quieres personalizar.",
         2: "Selecciona el producto base. El precio se actualizará automáticamente.",

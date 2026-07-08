@@ -18,7 +18,7 @@ const checks = [
     ["JS inicializa modal", js.includes("mc-customization-pro") && js.includes("addTrustStrip")],
     ["JS validación contextual", js.includes("showValidationForActiveStep")],
     ["JS borrador temporal controlado", js.includes("sessionStorage") && js.includes("DRAFT_KEY") && js.includes("currentStep() !== 6")],
-    ["JS limpia borrador anterior", js.includes("clearLegacyDrafts") && js.includes("mommycrafts_customization_draft_v3390")],
+    ["JS limpia borrador anterior", js.includes("clearLegacyDrafts") && js.includes("emmagina_customization_draft_v3390")],
     ["Placeholder inicial guía selección", config.includes("Elige tu producto") && config.includes("para verlo aquí")]
 ];
 

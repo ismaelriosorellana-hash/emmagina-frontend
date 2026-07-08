@@ -2,10 +2,10 @@
 
 (function () {
     const TOKEN_KEY =
-        "mommycrafts_customer_token";
+        "emmagina_customer_token";
 
     const USER_KEY =
-        "mommycrafts_customer_user";
+        "emmagina_customer_user";
 
     function clearLegacyPersistentSession() {
         localStorage.removeItem(

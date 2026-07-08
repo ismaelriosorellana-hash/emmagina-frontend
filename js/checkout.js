@@ -420,7 +420,7 @@
                 })
             });
 
-            sessionStorage.setItem("mommycrafts_last_order", JSON.stringify({
+            sessionStorage.setItem("emmagina_last_order", JSON.stringify({
                 pedidoId: response.pedidoId, numeroPedido: response.numeroPedido, venceAt: response.venceAt, metodoPago: response.metodoPago
             }));
 
