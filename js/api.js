@@ -291,11 +291,7 @@
         return query ? `${endpoint}?${query}` : endpoint;
     }
 
-    async function obtenerCatalogo(filtros = {}) {
-        const data = await request(
-            withQuery(CONFIG.ENDPOINTS.productos, filtros)
-        );
-
+    function normalizeCatalogResponse(data) {
         if (Array.isArray(data)) {
             return {
                 productos: data,
@@ -318,8 +314,54 @@
             };
         }
 
+        if (Array.isArray(data?.items)) {
+            return {
+                productos: data.items,
+                paginacion: data.paginacion || data.pagination || null,
+                filtros: data.filtros || null
+            };
+        }
+
         throw new ApiError(
             "La respuesta de productos no contiene un listado válido."
+        );
+    }
+
+    async function obtenerCatalogo(filtros = {}) {
+        const primaryEndpoint = CONFIG.ENDPOINTS.productos || "/productos";
+        const candidates = [
+            primaryEndpoint,
+            "/productos",
+            "/producto",
+            "/catalogo"
+        ].filter((endpoint, index, values) => endpoint && values.indexOf(endpoint) === index);
+
+        let lastError = null;
+
+        for (const endpoint of candidates) {
+            try {
+                const data = await request(
+                    withQuery(endpoint, filtros),
+                    { retries: endpoint === primaryEndpoint ? undefined : 0 }
+                );
+
+                return normalizeCatalogResponse(data);
+            } catch (error) {
+                lastError = error;
+
+                /*
+                 * Compatibilidad temporal: algunas versiones antiguas del backend
+                 * publicaban /api/producto o /api/catalogo en vez de /api/productos.
+                 * Si la ruta principal no existe, probamos alias sin dejar la tienda cargando.
+                 */
+                if (![404, 405].includes(Number(error?.status))) {
+                    throw error;
+                }
+            }
+        }
+
+        throw lastError || new ApiError(
+            "No fue posible cargar el catálogo de productos."
         );
     }
 

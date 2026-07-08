@@ -1023,3 +1023,67 @@ body[data-page="custom-order"] .custom-order-guide .commercial-whatsapp-strip sp
 body[data-page="custom-order"] .custom-order-guide .commercial-section-header p {
     color: var(--em-muted) !important;
 }
+
+/* Emmagina v1.5 · barra compacta antes del footer y catálogo robusto */
+body[data-page="home"] .main-content {
+    margin-top: clamp(3rem, 4vw, 5rem) !important;
+    padding-block: clamp(2.4rem, 3vw, 3.4rem) !important;
+    background: transparent !important;
+}
+
+body[data-page="home"] .container-features {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 1rem !important;
+}
+
+body[data-page="home"] .card-feature {
+    min-height: 0 !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    padding: 1.05rem 1.25rem !important;
+    border-radius: 1.8rem !important;
+    background: rgba(255,255,255,.58) !important;
+    box-shadow: 0 1.1rem 2.5rem rgba(85,127,145,.10) !important;
+}
+
+body[data-page="home"] .card-feature > i {
+    width: 3.8rem !important;
+    height: 3.8rem !important;
+    font-size: 1.45rem !important;
+    box-shadow: none !important;
+    background: rgba(255,255,255,.76) !important;
+}
+
+body[data-page="home"] .card-feature .feature-content {
+    min-width: 0 !important;
+}
+
+body[data-page="home"] .card-feature h3 {
+    margin: 0 0 .15rem !important;
+    font-size: 1.35rem !important;
+    line-height: 1.15 !important;
+}
+
+body[data-page="home"] .card-feature p {
+    margin: 0 !important;
+    font-size: 1.08rem !important;
+    line-height: 1.32 !important;
+    color: var(--em-muted) !important;
+}
+
+@media (max-width: 900px) {
+    body[data-page="home"] .container-features {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 560px) {
+    body[data-page="home"] .container-features {
+        grid-template-columns: 1fr !important;
+    }
+
+    body[data-page="home"] .card-feature {
+        padding: 1rem 1.15rem !important;
+    }
+}

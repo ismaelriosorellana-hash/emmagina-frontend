@@ -3,7 +3,7 @@
 (function () {
     const DEFAULT_TITLE = "Emmagina | Productos personalizados en Chile";
     const DEFAULT_DESCRIPTION = "Productos personalizados, regalos sublimados y detalles únicos preparados con revisión previa, atención cercana y entrega coordinada en Chile.";
-    const DEFAULT_IMAGE = "https://res.cloudinary.com/jo3bgrnh/image/upload/v1782320550/Mommy_Crafts_2_1_hbj8xi.png";
+    const DEFAULT_IMAGE = window.CONFIG?.DEFAULT_SEO_IMAGE || "";
     const SITE_URL = String(window.CONFIG?.SITE_URL || window.location.origin || "https://emmagina.onrender.com").replace(/\/+$/, "");
     const SITE_NAME = window.CONFIG?.SITE_NAME || "Emmagina";
     const BRAND_NAME = window.CONFIG?.BRAND_NAME || SITE_NAME;

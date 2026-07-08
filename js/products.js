@@ -871,6 +871,15 @@ function findGalleryIndexForVariant(product, variant, preferredUrl = "") {
 }
 
 function hasAvailableStock(product) {
+    if (!product) return false;
+
+    /*
+     * Los productos de Emmagina pueden fabricarse a pedido.
+     * Si el producto está marcado como personalizable, no depende
+     * del stock físico para mostrarse o agregarse al flujo de compra.
+     */
+    if (product.personalizable) return true;
+
     const variants = getSelectableVariants(product);
     if (!variants.length) return numberValue(product?.stock) > 0;
     return variants.some((variant) => getVariantStock(product, variant) > 0);
@@ -1019,12 +1028,13 @@ function hasAvailableStock(product) {
     }
 
     function getBestSellers(limit = 10) {
-        return state.productos
-            .filter(
-                (product) =>
-                    isCatalogProduct(product) &&
-                    hasAvailableStock(product)
-            )
+        const visible = state.productos
+            .filter(isCatalogProduct);
+
+        const available = visible
+            .filter(hasAvailableStock);
+
+        return (available.length ? available : visible)
             .sort((a, b) =>
                 getPopularityScore(b) -
                 getPopularityScore(a) ||
@@ -1590,7 +1600,15 @@ function createProductCard(product) {
                 (product) => hasAvailableStock(product)
             );
 
-        const destacados = inStock
+        /*
+         * En Emmagina muchos productos se fabrican a pedido.
+         * Por eso la home debe mostrar productos publicados aunque el stock
+         * quede en 0 desde el panel; la tarjeta marcará Agotado si corresponde,
+         * pero no dejará los carruseles vacíos o eternamente en cargando.
+         */
+        const showcase = inStock.length ? inStock : catalog;
+
+        const destacados = showcase
             .filter((product) => product.destacado)
             .sort((a, b) =>
                 getPopularityScore(b) -
@@ -1598,11 +1616,12 @@ function createProductCard(product) {
                 a.orden - b.orden
             );
 
-        const nuevos = inStock
+        const nuevos = showcase
             .filter(
-                (product) =>
-                    normalizeText(product.insignia) ===
-                    "nuevo"
+                (product) => {
+                    const badge = normalizeText(product.insignia);
+                    return badge === "nuevo" || badge === "lanzamiento";
+                }
             )
             .sort((a, b) =>
                 b.createdAt - a.createdAt ||
@@ -1618,7 +1637,7 @@ function createProductCard(product) {
             (
                 destacados.length
                     ? destacados
-                    : inStock
+                    : showcase
             ).slice(0, 10)
         );
 
@@ -1636,7 +1655,7 @@ function createProductCard(product) {
             (
                 nuevos.length
                     ? nuevos
-                    : [...inStock].sort(
+                    : [...showcase].sort(
                         (a, b) =>
                             b.createdAt -
                             a.createdAt
@@ -1648,7 +1667,7 @@ function createProductCard(product) {
             document.getElementById(
                 "todos-los-productos"
             ),
-            inStock.slice(0, 12)
+            showcase.slice(0, 12)
         );
     }
 

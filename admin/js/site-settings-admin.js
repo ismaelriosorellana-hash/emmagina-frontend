@@ -12,8 +12,8 @@
                 offsetY: 0
             },
             title: {
-                mode: "image",
-                url: "https://res.cloudinary.com/jo3bgrnh/image/upload/v1782320550/Mommy_Crafts_2_1_hbj8xi.png",
+                mode: "text",
+                url: "",
                 publicId: "",
                 text: "Emmagina",
                 width: 220,

@@ -1,7 +1,7 @@
 "use strict";
 
 (function () {
-    const SETTINGS_CACHE_KEY = "emmagina_site_settings_cache_v1";
+    const SETTINGS_CACHE_KEY = "emmagina_site_settings_cache_v2";
 
     const CSS_VARIABLES = {
         primary: "--color-primary",
@@ -26,42 +26,67 @@
         return [...container.children].filter((child) => child.tagName === "IMG");
     }
 
+    function isLegacyMommyAsset(value) {
+        return /mommy[_-]?crafts|jo3bgrnh/i.test(String(value || ""));
+    }
+
+    function safeImageUrl(value) {
+        const url = String(value || "").trim();
+        if (!url || isLegacyMommyAsset(url)) return "";
+        if (/^(https:\/\/|data:image\/|assets\/|img\/|\.\/|\.\.\/|\/)/i.test(url)) return url;
+        return "";
+    }
+
     function updateBrandContainer(container, branding, colors) {
         const images = directImages(container);
-        let logo = images[0] || null;
-        if (!logo) {
-            logo = document.createElement("img");
-            container.prepend(logo);
+        const logoUrl = safeImageUrl(branding.logo?.url);
+        let logo = container.querySelector(":scope > img[data-site-logo]") || images.find((item) => item.dataset.siteLogo !== undefined) || null;
+
+        if (logoUrl) {
+            if (!logo) {
+                logo = document.createElement("img");
+                container.prepend(logo);
+            }
+
+            logo.dataset.siteLogo = "";
+            logo.hidden = false;
+            logo.src = logoUrl;
+            logo.alt = branding.logo.alt || "Logo Emmagina";
+            logo.style.width = `${Number(branding.logo.width) || 52}px`;
+            logo.style.height = "auto";
+            logo.style.maxWidth = "min(28vw, 240px)";
+            logo.style.maxHeight = "none";
+            logo.style.objectFit = "contain";
+            logo.style.transform = `translate(${Number(branding.logo.offsetX) || 0}px, ${Number(branding.logo.offsetY) || 0}px)`;
+        } else if (logo) {
+            logo.hidden = true;
+            logo.removeAttribute("src");
         }
 
-        logo.dataset.siteLogo = "";
-        logo.src = branding.logo.url;
-        logo.alt = branding.logo.alt || "Logo Emmagina";
-        logo.style.width = `${branding.logo.width}px`;
-        logo.style.height = "auto";
-        logo.style.maxWidth = "min(28vw, 240px)";
-        logo.style.maxHeight = "none";
-        logo.style.objectFit = "contain";
-        logo.style.transform = `translate(${branding.logo.offsetX}px, ${branding.logo.offsetY}px)`;
-
-        let titleImage = container.querySelector(":scope > img.logo-title, :scope > img[data-site-title-logo]") || images[1] || null;
+        let titleImage = container.querySelector(":scope > img.logo-title, :scope > img[data-site-title-logo]") || images.find((item) => item !== logo) || null;
         let titleText = container.querySelector(":scope > [data-site-title-text]") || container.querySelector(":scope > strong");
 
-        container.style.gap = `${branding.title.gap}px`;
+        const titleUrl = safeImageUrl(branding.title?.url);
+        const titleMode = branding.title?.mode === "image" && titleUrl ? "image" : "text";
 
-        if (branding.title.mode === "text") {
-            if (titleImage) titleImage.hidden = true;
+        container.style.gap = `${Number(branding.title?.gap) || 10}px`;
+
+        if (titleMode === "text") {
+            if (titleImage) {
+                titleImage.hidden = true;
+                titleImage.removeAttribute("src");
+            }
             if (!titleText) {
                 titleText = document.createElement("strong");
                 container.appendChild(titleText);
             }
             titleText.dataset.siteTitleText = "";
             titleText.hidden = false;
-            titleText.textContent = branding.title.text || "Emmagina";
-            titleText.style.fontSize = `${branding.title.fontSize}px`;
+            titleText.textContent = branding.title?.text || "Emmagina";
+            titleText.style.fontSize = `${Number(branding.title?.fontSize) || 32}px`;
             titleText.style.lineHeight = "1.1";
-            titleText.style.color = colors.primaryDark || colors.text;
-            titleText.style.transform = `translate(${branding.title.offsetX}px, ${branding.title.offsetY}px)`;
+            titleText.style.color = colors.primaryDark || colors.text || "#45505f";
+            titleText.style.transform = `translate(${Number(branding.title?.offsetX) || 0}px, ${Number(branding.title?.offsetY) || 0}px)`;
             titleText.style.whiteSpace = "nowrap";
         } else {
             if (titleText) titleText.hidden = true;
@@ -71,16 +96,16 @@
             }
             titleImage.dataset.siteTitleLogo = "";
             titleImage.hidden = false;
-            titleImage.src = branding.title.url;
+            titleImage.src = titleUrl;
             titleImage.alt = branding.title.text || "Emmagina";
-            titleImage.style.width = `${branding.title.width}px`;
+            titleImage.style.width = `${Number(branding.title.width) || 220}px`;
             titleImage.style.height = "auto";
             titleImage.style.maxWidth = container.classList.contains("brand-link")
                 ? "min(65vw, 520px)"
                 : "min(58vw, 320px)";
             titleImage.style.maxHeight = "none";
             titleImage.style.objectFit = "contain";
-            titleImage.style.transform = `translate(${branding.title.offsetX}px, ${branding.title.offsetY}px)`;
+            titleImage.style.transform = `translate(${Number(branding.title.offsetX) || 0}px, ${Number(branding.title.offsetY) || 0}px)`;
         }
     }
 
@@ -381,9 +406,12 @@
         document.querySelectorAll(".brand-link, .account-brand, .content-brand, .legal-brand")
             .forEach((container) => updateBrandContainer(container, branding, colors));
 
-        document.querySelectorAll('link[rel~="icon"]').forEach((link) => {
-            link.href = branding.logo.url;
-        });
+        const faviconUrl = safeImageUrl(branding.logo?.url);
+        if (faviconUrl) {
+            document.querySelectorAll('link[rel~="icon"]').forEach((link) => {
+                link.href = faviconUrl;
+            });
+        }
 
         syncPurchaseUi();
         document.dispatchEvent(new CustomEvent("site:settings-applied", { detail: settings }));

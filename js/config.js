@@ -10,7 +10,7 @@ const API_BASE_URL =
         : "https://emmagina-backend.onrender.com/api";
 
 window.CONFIG = Object.freeze({
-    APP_VERSION: "1.1.0-emmagina-stable",
+    APP_VERSION: "1.2.0-emmagina-stable",
     SITE_URL: "https://emmagina-frontend.onrender.com",
     SITE_NAME: "Emmagina",
     BRAND_NAME: "Emmagina",

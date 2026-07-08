@@ -375,7 +375,7 @@ function openProductForm(product = null) {
     setValue("product-barcode", product?.codigoBarras || "");
     setValue("product-price", product?.precio ?? "");
     setValue("product-original-price", product?.precioOriginal || "");
-    setValue("product-stock", product?.stock ?? 0);
+    setValue("product-stock", product ? (product.stock ?? 0) : 10);
     setValue("product-order", product?.orden ?? 0);
     setValue("product-preparation-days", product?.diasPreparacion ?? 3);
     setValue("product-main-category", product?.categoriaPrincipal || "");
