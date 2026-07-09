@@ -443,16 +443,21 @@
         }
     }
 
-    window.EmmaginaDragCarousels = initDragCarousels;
+    // Emmagina v1.7: los carruseles de la home ahora se gestionan
+    // exclusivamente desde js/emmagina-carousel-v170.js para evitar
+    // doble inicialización, scroll bloqueado y conflictos con flechas.
+    window.EmmaginaDragCarousels = function () {
+        window.EmmaginaCarouselV170?.refresh?.();
+    };
 
     window.addEventListener("emmagina:products-rendered", () => {
-        initDragCarousels();
+        window.EmmaginaCarouselV170?.refresh?.();
     });
 
     document.addEventListener("DOMContentLoaded", () => {
-        initCarouselArrows();
+        // v1.7: initCarouselArrows/initDragCarousels quedan desactivados aquí.
+        // El módulo emmagina-carousel-v170.js toma el control completo.
         initCategoryRail();
-        initDragCarousels();
         initBanner();
         initHeroScroll();
 

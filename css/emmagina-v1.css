@@ -1740,3 +1740,122 @@ body[data-page="home"] .carousel-track .container-img:not(:has(.product-badge:no
         top: 3.65rem !important;
     }
 }
+
+
+/* ==========================================================
+   Emmagina v1.7 · carruseles revisados y tarjeta producto fit
+   ========================================================== */
+body[data-page="home"] .carousel-wrapper {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+body[data-page="home"] .carousel-container {
+    position: relative !important;
+    overflow: hidden !important;
+    cursor: grab !important;
+    touch-action: pan-y !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    scroll-behavior: auto !important;
+}
+
+body[data-page="home"] .carousel-container.emm-carousel-pressed,
+body[data-page="home"] .carousel-container.is-dragging-scroll {
+    cursor: grabbing !important;
+}
+
+body[data-page="home"] .carousel-track {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    width: max-content !important;
+    min-width: max-content !important;
+    gap: clamp(1.4rem, 2vw, 2rem) !important;
+    padding: .45rem .45rem 1.8rem !important;
+    will-change: transform !important;
+    transform: translate3d(0, 0, 0);
+    transition: none !important;
+}
+
+body[data-page="home"] .carousel-track > * {
+    flex-shrink: 0 !important;
+}
+
+body[data-page="home"] .carousel-track .card-product,
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .card-product {
+    flex: 0 0 clamp(22rem, 23vw, 28rem) !important;
+    width: clamp(22rem, 23vw, 28rem) !important;
+    min-width: clamp(22rem, 23vw, 28rem) !important;
+    max-width: clamp(22rem, 23vw, 28rem) !important;
+    background: #ffffff !important;
+}
+
+body[data-page="home"] .carousel-track .container-img,
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .container-img {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    display: grid !important;
+    place-items: center !important;
+    overflow: hidden !important;
+    background: var(--em-bg-soft) !important;
+}
+
+body[data-page="home"] .carousel-track .product-card-image,
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-card-image {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    padding: .75rem !important;
+    background: transparent !important;
+}
+
+body[data-page="home"] .carousel-track .product-badge,
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-badge,
+body[data-page="home"] .carousel-track .product-discount-badge,
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-discount-badge {
+    width: fit-content !important;
+    min-width: 0 !important;
+    max-width: calc(100% - 1.8rem) !important;
+    padding: .52rem .95rem !important;
+    font-size: 1.2rem !important;
+    line-height: 1.05 !important;
+    white-space: nowrap !important;
+}
+
+body[data-page="home"] .carousel-arrow {
+    z-index: 20 !important;
+    pointer-events: auto !important;
+    opacity: 1 !important;
+}
+
+@media (max-width: 700px) {
+    body[data-page="home"] .carousel-track .card-product,
+    body[data-page="home"] .emmagina-carousel-stack .carousel-track .card-product {
+        flex-basis: min(76vw, 24rem) !important;
+        width: min(76vw, 24rem) !important;
+        min-width: min(76vw, 24rem) !important;
+        max-width: min(76vw, 24rem) !important;
+    }
+}
+
+/* Emmagina v1.7 · ajuste global de imagen en tarjetas de vitrina */
+body:not([data-page="product"]) .card-product .container-img {
+    aspect-ratio: 1 / 1 !important;
+    display: grid !important;
+    place-items: center !important;
+    overflow: hidden !important;
+}
+
+body:not([data-page="product"]) .card-product .product-card-image {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+}
