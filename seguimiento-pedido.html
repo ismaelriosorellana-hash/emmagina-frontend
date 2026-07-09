@@ -1,107 +1,88 @@
 <!DOCTYPE html>
-
 <html lang="es-CL">
 <head>
-<meta charset="utf-8"/>
-<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; script-src 'self' https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https: https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms; connect-src 'self' https://emmagina-backend.onrender.com https://res.cloudinary.com https://*.cloudinary.com https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests" http-equiv="Content-Security-Policy"/>
-<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<meta content="noindex, nofollow, noarchive" name="robots"/>
-<meta content="strict-origin-when-cross-origin" name="referrer"/>
-<meta content="Consulta el avance de un pedido Emmagina con la información solicitada." name="description"/>
-<title>Seguimiento de pedido | Emmagina</title>
-<link rel="icon" href="favicon.ico" sizes="any"/>
-<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
-<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
-<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" referrerpolicy="no-referrer" rel="stylesheet"/>
-<link href="css/main.css?v=1.4.0" rel="stylesheet"/>
-<link href="css/account.css?v=1.4.0" rel="stylesheet"/>
-<link href="css/order-tracking-v3440.css?v=1.4.0" rel="stylesheet"/>
-<link href="css/experience-v327.css?v=1.4.0" rel="stylesheet"/>
-<link href="css/site-studio.css?v=1.4.0" rel="stylesheet"/>
-<link href="css/mc-commerce-tools-v3311.css?v=1.4.0" rel="stylesheet"/>
-<link href="css/mobile-polish-v3370.css?v=1.4.0" rel="stylesheet"/>
-<link href="css/mobile-menu-v3380.css?v=1.4.0" rel="stylesheet"/>
-<link href="css/ksd-theme.css?v=1.4.0" rel="stylesheet"/>
-<link crossorigin="anonymous" href="https://res.cloudinary.com" rel="preconnect"/><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com" rel="preconnect"/><link crossorigin="anonymous" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://res.cloudinary.com" rel="dns-prefetch"/><link href="https://cdnjs.cloudflare.com" rel="dns-prefetch"/><link href="https://emmagina.cl/seguimiento-pedido.html" rel="canonical"/><meta content="#f7eef1" name="theme-color"/><meta content="telephone=no" name="format-detection"/><meta content="Emmagina" property="og:site_name"/><meta content="es_CL" property="og:locale"/><meta content="website" property="og:type"/><meta content="Seguimiento de pedido | Emmagina" property="og:title"/><meta content="Consulta el avance de un pedido Emmagina con la información solicitada." property="og:description"/><meta content="https://emmagina.cl/seguimiento-pedido.html" property="og:url"/><meta content="" property="og:image"/><meta content="Seguimiento de pedido | Emmagina" property="og:image:alt"/><meta content="summary_large_image" name="twitter:card"/><meta content="Seguimiento de pedido | Emmagina" name="twitter:title"/><meta content="Consulta el avance de un pedido Emmagina con la información solicitada." name="twitter:description"/><meta content="" name="twitter:image"/><link rel="stylesheet" href="css/privacy-consent-v3590.css?v=1.4.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/emmagina.css?v=2.0.0">
+  <title>Seguimiento | Emmagina</title>
 </head>
-<body class="account-page tracking-page" data-account-page="tracking" data-page="tracking">
-<a class="skip-link" href="#main-content">Saltar al contenido</a>
-<header class="account-header">
-<div class="container account-header-inner">
-<a aria-label="Ir a Emmagina" class="account-brand" href="index.html">
-<img alt="" decoding="async" loading="lazy" src=""/>
-<span class="ksd-mobile-wordmark">Emmagina</span>
-</a>
-<div class="account-header-links">
-<a href="catalogo.html">Ver productos</a>
-<a href="cuenta.html#pedidos">Mi cuenta</a>
-<div class="navbar-actions">
-<a aria-label="Ver carrito" class="icon-btn cart-button" href="carrito.html">
-<i class="fa-solid fa-cart-shopping"></i>
-<span class="badge" id="cart-count">0</span>
-</a>
-</div>
-</div>
-</div>
-</header>
-<main class="account-main" id="main-content">
-<section class="tracking-hero">
-<div class="tracking-hero-card">
-<p class="section-kicker">Seguimiento</p>
-<h1>Revisa el avance de tu pedido</h1>
-<p>Consulta pago, revisión del diseño, fabricación y entrega desde un solo lugar. Para productos personalizados, la vista final queda asociada al pedido.</p>
-<div aria-label="Información de seguimiento" class="tracking-hero-points">
-<div class="tracking-hero-point"><i aria-hidden="true" class="fa-solid fa-circle-check"></i><span>Estado de pago y preparación actualizado.</span></div>
-<div class="tracking-hero-point"><i aria-hidden="true" class="fa-solid fa-wand-magic-sparkles"></i><span>Seguimiento especial para diseños personalizados.</span></div>
-<div class="tracking-hero-point"><i aria-hidden="true" class="fa-brands fa-whatsapp"></i><span>Acceso rápido a WhatsApp si necesitas ayuda.</span></div>
-</div>
-</div>
-<aside class="tracking-form-card">
-<h2>Buscar pedido</h2>
-<form class="tracking-form" id="tracking-form">
-<div class="tracking-field">
-<label for="tracking-order-number">Número de pedido</label>
-<input autocomplete="off" id="tracking-order-number" name="pedido" placeholder="Ej: MC-000123" required="" type="text"/>
-</div>
-<div class="tracking-field">
-<label for="tracking-email">Correo usado en la compra</label>
-<input autocomplete="email" id="tracking-email" name="email" placeholder="correo@ejemplo.cl" required="" type="email"/>
-</div>
-<button class="btn-primary" type="submit">Consultar estado</button>
-</form>
-<p class="tracking-help">Usamos el correo para proteger la información del pedido.</p>
-<div class="tracking-login-note">
-<strong>¿Tienes cuenta?</strong>
-<p>También puedes revisar tus pedidos vinculados desde tu cuenta de cliente.</p>
-<a class="btn-secondary" hidden="" href="cuenta.html#pedidos" id="tracking-session-button">Ir a mis pedidos</a>
-</div>
-</aside>
-</section>
-<section aria-live="polite" class="tracking-layout">
-<div id="tracking-result"></div>
-<aside id="tracking-side"></aside>
-</section>
-</main>
-<footer class="account-legal-footer">
-<a href="quienes-somos.html">Quiénes somos</a>
-<a href="preguntas-frecuentes.html">Preguntas frecuentes</a>
-<a href="despachos-retiros.html">Despachos y retiros</a>
-<a href="privacidad.html">Privacidad</a>
-<a href="terminos.html">Términos</a>
-<a href="seguridad.html">Seguridad</a>
-</footer>
-<script defer="" src="js/config.js?v=1.4.0"></script><script defer="" src="js/seo-v3490.js?v=1.4.0"></script>
-<script defer="" src="js/api.js?v=1.4.0"></script>
-<script defer="" src="js/ksd-catalog-data.js?v=1.4.0"></script>
-<script defer="" src="js/categories.js?v=1.4.0"></script>
-<script defer="" src="js/site-settings.js?v=1.4.0"></script>
-<script defer="" src="js/privacy-consent-v3590.js?v=1.4.0"></script>
-<script defer="" src="js/analytics-v3590.js?v=1.4.0"></script>
-<script defer="" src="js/site-studio.js?v=1.4.0"></script>
-<script defer="" src="js/customer-auth.js?v=1.4.0"></script>
-<script defer="" src="js/cart.js?v=1.4.0"></script>
-<script defer="" src="js/order-tracking-v3440.js?v=1.4.0"></script>
-<script defer="" src="js/experience-v327.js?v=1.4.0"></script>
-<script defer="" src="js/mc-commerce-tools-v3311.js?v=1.4.0"></script>
+<body>
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+  <header class="site-header">
+    <div class="header-top">
+      <button class="icon-button search-trigger" type="button" data-open-search aria-label="Buscar"><span>Buscar</span> 🔎</button>
+      <a class="brand" href="index.html" aria-label="Emmagina inicio">Emmagina<small>3D Store</small></a>
+      <div class="header-actions">
+        <button class="icon-button mobile-menu-button" type="button" data-mobile-menu aria-expanded="false">Menú</button>
+        <a class="header-link login-link" href="acceso.html">Iniciar sesión</a>
+        <a class="header-link cart-pill" href="carrito.html">Carrito <span class="cart-count" data-cart-count>0</span></a>
+      </div>
+    </div>
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="catalogo.html">Tienda</a>
+      <a href="pedido-personalizado.html">Crea tu Escena</a>
+      <a href="quienes-somos.html">Sobre Nosotros</a>
+      <a href="contacto.html">Contáctanos</a>
+      <a href="preguntas-frecuentes.html">Preguntas Frecuentes</a>
+    </nav>
+  </header>
+  <div class="search-panel" data-search-panel>
+    <div class="search-box">
+      <form action="catalogo.html" method="get">
+        <input type="search" name="q" placeholder="Buscar figuras, decoración, herramientas..." aria-label="Buscar productos">
+        <button class="btn btn-primary" type="submit">Buscar</button>
+      </form>
+      <button class="btn btn-soft search-close" type="button" data-close-search>Cerrar</button>
+    </div>
+  </div>
+  <main id="main"><section class="content-page"><p class="kicker">Emmagina</p><h1>Seguimiento de pedido</h1><p>El seguimiento por código de pedido será habilitado junto al módulo de postventa.</p><p><a class="btn btn-primary" href="catalogo.html">Volver a la tienda</a></p></section></main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <div class="footer-brand">Emmagina</div>
+        <p>Productos impresos en 3D, figuras personalizadas y decoraciones pensadas para regalar, crear y recordar.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Tienda</h3>
+        <nav>
+          <a href="catalogo.html">Catálogo</a>
+          <a href="pedido-personalizado.html">Crea tu escena</a>
+          <a href="carrito.html">Carrito</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h3>Ayuda</h3>
+        <nav>
+          <a href="preguntas-frecuentes.html">Preguntas frecuentes</a>
+          <a href="despachos-retiros.html">Despachos y retiros</a>
+          <a href="cambios-pedidos.html">Cambios y pedidos</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h3>Soporte</h3>
+        <p>WhatsApp: +56 9 0000 0000</p>
+        <p>Correo: contacto@emmagina.cl</p>
+        <a class="btn btn-soft btn-small" href="https://wa.me/56900000000" target="_blank" rel="noopener">Contactar soporte</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Emmagina. Todos los derechos reservados.</span>
+      <span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span>
+    </div>
+  </footer>
+  <script src="js/config.js?v=2.0.0"></script>
+  <script src="js/emmagina-data.js?v=2.0.0"></script>
+  <script src="js/emmagina-api.js?v=2.0.0"></script>
+  <script src="js/emmagina-cart.js?v=2.0.0"></script>
+  <script src="js/emmagina-ui.js?v=2.0.0"></script>
+  <script src="js/emmagina-common.js?v=2.0.0"></script>
+  
 </body>
 </html>

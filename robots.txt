@@ -1,13 +1,3 @@
 User-agent: *
-Disallow: /admin/
-Disallow: /acceso.html
-Disallow: /cuenta.html
-Disallow: /pedido.html
-Disallow: /pago.html
-Disallow: /carrito.html
-Disallow: /finalizar-compra.html
-Disallow: /seguimiento-pedido.html
-Disallow: /pagina.html
 Allow: /
-
-Sitemap: https://emmagina.cl/sitemap.xml
+Sitemap: https://emmagina-frontend.onrender.com/sitemap.xml
