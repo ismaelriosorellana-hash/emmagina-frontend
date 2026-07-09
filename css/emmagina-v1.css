@@ -1668,3 +1668,75 @@ body[data-page="home"] .carousel-arrow {
         min-width: min(72vw, 24rem) !important;
     }
 }
+
+/* ==========================================================
+   Emmagina v1.6 · carruseles estables y badges +30%
+   ========================================================== */
+body[data-page="home"] .carousel-container {
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    cursor: grab !important;
+    touch-action: pan-y !important;
+    overscroll-behavior-x: contain !important;
+    user-select: none !important;
+}
+
+body[data-page="home"] .carousel-container.is-dragging-scroll,
+body[data-page="home"] .carousel-container.emm-carousel-active-pointer {
+    cursor: grabbing !important;
+    scroll-behavior: auto !important;
+}
+
+body[data-page="home"] .carousel-track {
+    will-change: transform !important;
+    transform: translateZ(0) !important;
+}
+
+body[data-page="home"] .carousel-track .card-product,
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .card-product {
+    backface-visibility: hidden !important;
+}
+
+body[data-page="home"] .carousel-track .container-img,
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .container-img {
+    min-height: 0 !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-badge,
+body[data-page="home"] .carousel-track .product-badge,
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-discount-badge,
+body[data-page="home"] .carousel-track .product-discount-badge {
+    padding: .5rem .94rem !important;
+    font-size: 1.2rem !important;
+    line-height: 1.05 !important;
+    min-height: 2.25rem !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-badge,
+body[data-page="home"] .carousel-track .product-badge {
+    top: .9rem !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-discount-badge,
+body[data-page="home"] .carousel-track .product-discount-badge {
+    top: 4rem !important;
+}
+
+body[data-page="home"] .carousel-track .container-img:not(:has(.product-badge:not([hidden]))) .product-discount-badge {
+    top: .9rem !important;
+}
+
+@media (max-width: 700px) {
+    body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-badge,
+    body[data-page="home"] .carousel-track .product-badge,
+    body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-discount-badge,
+    body[data-page="home"] .carousel-track .product-discount-badge {
+        font-size: 1.05rem !important;
+        padding: .45rem .82rem !important;
+    }
+
+    body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-discount-badge,
+    body[data-page="home"] .carousel-track .product-discount-badge {
+        top: 3.65rem !important;
+    }
+}
