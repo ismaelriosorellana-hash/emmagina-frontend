@@ -52,8 +52,9 @@
           </div>
           <p class="product-meta">${escapeHtml(meta)}</p>
           <div class="product-actions">
-            <a class="btn btn-soft" href="${detail}">Ver detalle</a>
-            <button class="btn btn-primary" type="button" data-add-cart="${escapeHtml(product.id)}">Agregar</button>
+            <a class="btn btn-soft" href="${detail}" title="Ver detalle">Detalle</a>
+            <button class="btn btn-compare" type="button" data-compare-product="${escapeHtml(product.id)}" title="Comparar producto">Comparar</button>
+            <button class="btn btn-primary" type="button" data-add-cart="${escapeHtml(product.id)}" title="Agregar al carrito">Agregar</button>
           </div>
         </div>
       </article>`;
@@ -61,6 +62,58 @@
 
   const productMap = new Map();
   let cartDelegationReady = false;
+  const COMPARE_KEY = "emmagina.compare.v1";
+  const MAX_COMPARE = 3;
+
+  function showToast(message) {
+    let el = document.querySelector(".em-toast");
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "em-toast";
+      document.body.appendChild(el);
+    }
+    el.textContent = message;
+    el.classList.add("is-visible");
+    window.clearTimeout(showToast.timer);
+    showToast.timer = window.setTimeout(() => el.classList.remove("is-visible"), 2200);
+  }
+
+  function readCompare() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(COMPARE_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed.map(String).filter(Boolean).slice(0, MAX_COMPARE) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function writeCompare(ids) {
+    const normalized = [...new Set(ids.map(String).filter(Boolean))].slice(0, MAX_COMPARE);
+    localStorage.setItem(COMPARE_KEY, JSON.stringify(normalized));
+    document.querySelectorAll("[data-compare-product]").forEach((button) => {
+      button.classList.toggle("is-active", normalized.includes(String(button.dataset.compareProduct || "")));
+    });
+  }
+
+  function toggleCompare(productId) {
+    const id = String(productId || "");
+    if (!id) return;
+    const ids = readCompare();
+    const index = ids.indexOf(id);
+    if (index >= 0) {
+      ids.splice(index, 1);
+      writeCompare(ids);
+      showToast("Producto quitado de comparación.");
+      return;
+    }
+    if (ids.length >= MAX_COMPARE) {
+      showToast("Puedes comparar hasta 3 productos.");
+      return;
+    }
+    ids.push(id);
+    writeCompare(ids);
+    showToast("Producto agregado a comparación.");
+  }
 
   function attachCartButtons(products = []) {
     products.forEach((product) => {
@@ -71,12 +124,21 @@
     cartDelegationReady = true;
 
     document.addEventListener("click", (event) => {
+      const compareButton = event.target.closest?.("[data-compare-product]");
+      if (compareButton) {
+        event.preventDefault();
+        toggleCompare(compareButton.dataset.compareProduct);
+        return;
+      }
+
       const button = event.target.closest?.("[data-add-cart]");
       if (!button) return;
       event.preventDefault();
       const product = productMap.get(String(button.dataset.addCart));
       if (product) window.EmmaginaCart.add(product, 1);
     });
+
+    writeCompare(readCompare());
   }
 
   function setLoading(container, message = "Cargando...") {
