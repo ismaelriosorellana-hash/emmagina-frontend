@@ -1,0 +1,24 @@
+Emmagina Frontend v2.3
+
+Cambios incluidos:
+- Hero de inicio reducido aproximadamente 60% y preparado para imagen de banner desde Admin > Banners.
+- Lista de categorías reducida a la misma altura del hero.
+- Hero usa la imagen completa del banner como fondo del recuadro.
+- Tarjetas de producto: imagen cuadrada, sin bordes ni esquinas redondeadas, ocupando todo el recuadro.
+- Linea Memories y Linea Alma reemplazadas por banners bajos con imagen de Cloudinary y botón "Pedir el mío".
+- Sección informativa reemplaza "Catálogo inicial" y puede tomar imágenes desde banners tipo "Tarjeta informativa".
+- Sección de reseñas reales antes del footer, visible cuando los productos tengan reseñas/valoraciones con 4 o 5 estrellas.
+
+Medidas recomendadas:
+- Hero: recuadro aproximado desktop 954 x 170 px. Imagen recomendada Cloudinary: 1600 x 360 px.
+- Linea Memories / Linea Alma: recuadro aproximado desktop 1180 x 112 px. Imagen recomendada: 1600 x 300 px.
+- Tarjetas informativas: recuadro aproximado desktop 381 x 381 px. Imagen recomendada: 800 x 800 px.
+- Producto tarjeta: imagen cuadrada. Imagen recomendada: 800 x 800 px.
+
+Para asignar imágenes desde el panel:
+- Admin > Banners > Nuevo banner.
+- Elegir "Ubicación en inicio": Hero principal, Tarjeta informativa, Linea Memories o Linea Alma.
+- Pegar URL de Cloudinary en Imagen escritorio.
+- Activar el banner y guardar.
+
+Después de subir a Render, usar Ctrl + Shift + R para limpiar caché.

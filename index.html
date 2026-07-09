@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/emmagina.css?v=2.2.0">
+  <link rel="stylesheet" href="css/emmagina.css?v=2.3.0">
   <title>Emmagina | Tienda 3D</title>
 </head>
 <body>
@@ -60,50 +60,34 @@
             <a href="catalogo.html">Todos</a>
           </nav>
         </aside>
-        <article class="hero-card">
-          <div class="hero-copy">
-            <p class="kicker">Impresión 3D · regalos · recuerdos</p>
-            <h1>Ideas que toman forma</h1>
-            <p>Figuras, decoraciones, herramientas y escenas personalizadas impresas en 3D para regalar, crear y conservar momentos especiales.</p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="catalogo.html">Ver tienda</a>
-              <a class="btn btn-soft" href="pedido-personalizado.html">Crear mi escena</a>
-            </div>
-          </div>
-          <div class="hero-visual">
-            <img src="assets/producto-referencia-emmagina.png" alt="Figura familiar 3D Emmagina" loading="eager">
-          </div>
-        </article>
+        <a class="hero-card hero-card-banner" href="catalogo.html" data-hero-link aria-label="Ver tienda Emmagina">
+          <img data-hero-image src="assets/producto-referencia-emmagina.png" alt="Banner principal Emmagina" loading="eager">
+          <span class="hero-overlay" data-hero-overlay>
+            <span class="kicker" data-hero-kicker>Impresión 3D · regalos · recuerdos</span>
+            <strong data-hero-title>Ideas que toman forma</strong>
+            <span class="hero-button" data-hero-button>Ver tienda</span>
+          </span>
+        </a>
       </div>
     </section>
 
     <section class="section section-muted">
       <div class="section-heading">
-        <div><p class="kicker">Catálogo inicial</p><h2>Explora por interés</h2></div>
+        <div><p class="kicker">Información</p><h2>Explora Emmagina</h2></div>
       </div>
       <div class="explore-grid" data-explore-grid></div>
     </section>
 
-    <section class="section scene-lines-section">
-      <div class="scene-banner scene-banner-compact scene-banner-memories">
-        <img src="assets/producto-referencia-emmagina.png" alt="Crea tu escena personalizada en 3D">
-        <div class="scene-content">
-          <p class="kicker">Linea Memories</p>
-          <h2>Crea tu escena</h2>
-          <p>Cuéntanos el momento, envía tus fotos y diseñemos una figura o escena familiar inspirada en tu recuerdo.</p>
-          <a class="btn btn-primary" href="pedido-personalizado.html">Completar formulario</a>
-        </div>
-      </div>
+    <section class="section scene-lines-section" aria-label="Líneas personalizadas Emmagina">
+      <a class="line-banner line-banner-memories" href="pedido-personalizado.html" data-line-banner="linea-memories" aria-label="Pedir una pieza de Linea Memories">
+        <img src="assets/producto-referencia-emmagina.png" alt="Linea Memories Emmagina" loading="lazy">
+        <span class="line-banner-button">Pedir el mío</span>
+      </a>
 
-      <div class="scene-banner scene-banner-compact scene-banner-alma">
-        <img src="assets/producto-referencia-emmagina.png" alt="Linea Alma Emmagina">
-        <div class="scene-content">
-          <p class="kicker">Linea Alma</p>
-          <h2>Recuerdos con sentido</h2>
-          <p>Figuras, detalles y piezas pensadas para regalar emoción, acompañar historias familiares y decorar con significado.</p>
-          <a class="btn btn-soft" href="catalogo.html?categoria=Linea%20Alma">Ver Linea Alma</a>
-        </div>
-      </div>
+      <a class="line-banner line-banner-alma" href="catalogo.html?categoria=Linea%20Alma" data-line-banner="linea-alma" aria-label="Pedir una pieza de Linea Alma">
+        <img src="assets/producto-referencia-emmagina.png" alt="Linea Alma Emmagina" loading="lazy">
+        <span class="line-banner-button">Pedir el mío</span>
+      </a>
     </section>
 
     <section class="section section-muted">
@@ -135,7 +119,22 @@
         </div>
       </div>
     </section>
-</main>
+    <section class="section section-muted reviews-section" data-reviews-section hidden>
+      <div class="section-heading">
+        <div><p class="kicker">Reseñas reales</p><h2>Mejor evaluados</h2></div>
+      </div>
+      <section class="reviews-carousel" data-carousel data-review-carousel data-autoplay="true" data-interval="4200">
+        <div class="carousel-head review-head">
+          <div></div>
+          <div class="carousel-controls">
+            <button class="carousel-button" data-carousel-prev type="button" aria-label="Reseña anterior">‹</button>
+            <button class="carousel-button" data-carousel-next type="button" aria-label="Reseña siguiente">›</button>
+          </div>
+        </div>
+        <div class="carousel-viewport" data-carousel-viewport><div class="carousel-track" data-carousel-track data-reviews-track></div></div>
+      </section>
+    </section>
+  </main>
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-col">
@@ -170,13 +169,13 @@
       <span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span>
     </div>
   </footer>
-  <script src="js/config.js?v=2.2.0"></script>
-  <script src="js/emmagina-data.js?v=2.2.0"></script>
-  <script src="js/emmagina-api.js?v=2.2.0"></script>
-  <script src="js/emmagina-cart.js?v=2.2.0"></script>
-  <script src="js/emmagina-ui.js?v=2.2.0"></script>
-  <script src="js/emmagina-common.js?v=2.2.0"></script>
-  <script src="js/emmagina-carousel.js?v=2.2.0"></script>
-  <script src="js/emmagina-home.js?v=2.2.0"></script>
+  <script src="js/config.js?v=2.3.0"></script>
+  <script src="js/emmagina-data.js?v=2.3.0"></script>
+  <script src="js/emmagina-api.js?v=2.3.0"></script>
+  <script src="js/emmagina-cart.js?v=2.3.0"></script>
+  <script src="js/emmagina-ui.js?v=2.3.0"></script>
+  <script src="js/emmagina-common.js?v=2.3.0"></script>
+  <script src="js/emmagina-carousel.js?v=2.3.0"></script>
+  <script src="js/emmagina-home.js?v=2.3.0"></script>
 </body>
 </html>

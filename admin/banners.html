@@ -10,10 +10,10 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Banners | Emmagina</title>
     <link rel="icon" href="../assets/emmagina-logo.svg">
-    <link rel="stylesheet" href="css/admin.css?v=1.3.0">
+    <link rel="stylesheet" href="css/admin.css?v=2.3.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="css/admin-experience-v327.css?v=1.3.0">
-    <link rel="stylesheet" href="../css/mobile-polish-v3370.css?v=1.3.0">
+    <link rel="stylesheet" href="css/admin-experience-v327.css?v=2.3.0">
+    <link rel="stylesheet" href="../css/mobile-polish-v3370.css?v=2.3.0">
 </head>
 <body data-admin-page="banners" data-admin-title="Banners">
     <section id="admin-page-content">
@@ -58,8 +58,20 @@
                         <input id="banner-order" type="number" step="1" value="0">
                     </div>
 
+                    <div class="admin-field">
+                        <label for="banner-location">Ubicación en inicio</label>
+                        <select id="banner-location">
+                            <option value="general">General / no asignado</option>
+                            <option value="hero-inicio">Hero principal</option>
+                            <option value="info-card">Tarjeta informativa</option>
+                            <option value="linea-memories">Linea Memories</option>
+                            <option value="linea-alma">Linea Alma</option>
+                        </select>
+                        <small>Usa esta opción para controlar imágenes del inicio desde Cloudinary.</small>
+                    </div>
+
                     <div class="admin-field full">
-                        <label for="banner-eyebrow">Texto superior</label>
+                        <label for="banner-eyebrow">Texto superior / descripción breve</label>
                         <input id="banner-eyebrow">
                     </div>
 
@@ -144,10 +156,10 @@
 
     </section>
 
-    <script src="../js/config.js?v=1.3.0"></script>
-    <script src="js/admin-api.js?v=1.3.0"></script>
-    <script src="js/admin-common.js?v=1.3.0"></script>
-    <script src="js/admin-experience-v327.js?v=1.3.0"></script>
-    <script src="js/banners-admin.js?v=1.3.0"></script>
+    <script src="../js/config.js?v=2.3.0"></script>
+    <script src="js/admin-api.js?v=2.3.0"></script>
+    <script src="js/admin-common.js?v=2.3.0"></script>
+    <script src="js/admin-experience-v327.js?v=2.3.0"></script>
+    <script src="js/banners-admin.js?v=2.3.0"></script>
 </body>
 </html>

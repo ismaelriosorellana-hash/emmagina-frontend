@@ -145,6 +145,17 @@ async function loadBanners() {
     }
 }
 
+function locationLabel(value) {
+    const labels = {
+        "hero-inicio": "Hero principal",
+        "info-card": "Tarjeta informativa",
+        "linea-memories": "Linea Memories",
+        "linea-alma": "Linea Alma",
+        general: "General"
+    };
+    return labels[value] || "General";
+}
+
 function renderBanners() {
     const container =
         document.getElementById(
@@ -167,6 +178,7 @@ function renderBanners() {
                 <tr>
                     <th>Banner</th>
                     <th>Título</th>
+                    <th>Ubicación</th>
                     <th>Orden</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -191,6 +203,7 @@ function renderBanners() {
                             </div>
                         </td>
                         <td>${AdminUI.escapeHtml(banner.titulo)}</td>
+                        <td>${AdminUI.escapeHtml(locationLabel(banner.ubicacion))}</td>
                         <td>${Number(banner.orden) || 0}</td>
                         <td>
                             <span class="admin-status ${banner.activo ? "success" : "danger"}">
@@ -272,6 +285,9 @@ function openBannerForm(banner = null) {
         "banner-order"
     ).value =
         banner?.orden ?? 0;
+
+    const locationSelect = document.getElementById("banner-location");
+    if (locationSelect) locationSelect.value = banner?.ubicacion || "general";
 
     document.getElementById(
         "banner-eyebrow"
@@ -366,6 +382,8 @@ async function saveBanner(event) {
                     "banner-order"
                 ).value
             ) || 0,
+        ubicacion:
+            document.getElementById("banner-location")?.value || "general",
         eyebrow:
             document.getElementById(
                 "banner-eyebrow"

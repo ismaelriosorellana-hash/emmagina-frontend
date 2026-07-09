@@ -74,9 +74,18 @@
     return window.EmmaginaData.normalizeProduct(payload);
   }
 
+  async function getBanners() {
+    const payload = await request("/banners");
+    if (Array.isArray(payload)) return payload;
+    if (Array.isArray(payload?.banners)) return payload.banners;
+    if (Array.isArray(payload?.items)) return payload.items;
+    return [];
+  }
+
   API.request = request;
   API.getProducts = getProducts;
   API.getProductBySlug = getProductBySlug;
   API.getProductById = getProductById;
+  API.getBanners = getBanners;
   window.EmmaginaAPI = Object.freeze(API);
 })();
