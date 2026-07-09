@@ -214,23 +214,46 @@ function normalizeCharacteristics(value) {
         if (!Array.isArray(rawImages)) return [];
 
         return rawImages
-            .map((image) => {
+            .map((image, index) => {
                 if (typeof image === "string") {
-                    return normalizeImageUrl(image);
+                    return {
+                        url: normalizeImageUrl(image),
+                        principal: index === 0,
+                        orden: index
+                    };
                 }
 
                 if (image && typeof image === "object") {
-                    return normalizeImageUrl(
-                        image.url ??
-                        image.src ??
-                        image.imagen ??
-                        image.imgUrl
-                    );
+                    return {
+                        url: normalizeImageUrl(
+                            image.url ??
+                            image.secure_url ??
+                            image.src ??
+                            image.imagen ??
+                            image.imgUrl
+                        ),
+                        principal: booleanValue(
+                            image.principal ??
+                            image.isPrimary ??
+                            image.main,
+                            index === 0
+                        ),
+                        orden: numberValue(
+                            image.orden ??
+                            image.order,
+                            index
+                        )
+                    };
                 }
 
-                return "";
+                return { url: "", principal: false, orden: index };
             })
-            .filter(Boolean);
+            .filter((entry) => entry.url)
+            .sort((a, b) =>
+                Number(b.principal) - Number(a.principal) ||
+                a.orden - b.orden
+            )
+            .map((entry) => entry.url);
     }
 
 
@@ -562,7 +585,7 @@ function normalizeVariants(rawProduct, defaultImage, defaultImages = []) {
             rawProduct.publicarCatalogo ??
             rawProduct.visibleCatalogo ??
             rawProduct.publicado,
-            !personalizable
+            true
         );
 
         const createdAtRaw =
@@ -977,7 +1000,7 @@ function hasAvailableStock(product) {
         return Boolean(
             product &&
             product.activo &&
-            product.publicarCatalogo
+            product.publicarCatalogo !== false
         );
     }
 
@@ -987,6 +1010,25 @@ function hasAvailableStock(product) {
             product.activo &&
             product.personalizable
         );
+    }
+
+    function getVisibleProductsForCatalog() {
+        const published = state.productos
+            .filter(isCatalogProduct);
+
+        if (published.length) {
+            return published;
+        }
+
+        /*
+         * Respaldo seguro para productos recién creados en admin:
+         * si la API devuelve productos activos pero el campo publicarCatalogo
+         * quedó ausente/inconsistente, evitamos que la tienda quede en cargando
+         * o vacía. El panel admin seguirá permitiendo despublicar usando
+         * publicarCatalogo=false explícito.
+         */
+        return state.productos
+            .filter((product) => product.activo);
     }
 
     function matchesCategory(product, category) {
@@ -1090,7 +1132,7 @@ function hasAvailableStock(product) {
         sort = "mas-vendidos"
     } = {}) {
         let products =
-            state.productos.filter(isCatalogProduct);
+            getVisibleProductsForCatalog();
 
         if (
             category &&
@@ -1523,14 +1565,12 @@ function createProductCard(product) {
 
     function categoryCount(category) {
         if (normalizeText(category) === "todos") {
-            return state.productos
-                .filter(isCatalogProduct)
+            return getVisibleProductsForCatalog()
                 .length;
         }
 
-        return state.productos.filter(
+        return getVisibleProductsForCatalog().filter(
             (product) =>
-                isCatalogProduct(product) &&
                 matchesCategory(product, category)
         ).length;
     }
@@ -1592,8 +1632,12 @@ function createProductCard(product) {
     }
 
     function renderHome(products) {
-        const catalog =
+        const published =
             products.filter(isCatalogProduct);
+
+        const catalog = published.length
+            ? published
+            : products.filter((product) => product.activo);
 
         const inStock =
             catalog.filter(

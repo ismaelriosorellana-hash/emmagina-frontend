@@ -145,7 +145,7 @@
             Number.isInteger(retries)
                 ? Math.max(0, retries)
                 : method === "GET" && renderApi
-                    ? 1
+                    ? 2
                     : 0;
 
         let lastError = null;
@@ -319,6 +319,26 @@
                 productos: data.items,
                 paginacion: data.paginacion || data.pagination || null,
                 filtros: data.filtros || null
+            };
+        }
+
+        if (Array.isArray(data?.products)) {
+            return {
+                productos: data.products,
+                paginacion: data.paginacion || data.pagination || null,
+                filtros: data.filtros || data.filters || null
+            };
+        }
+
+        if (Array.isArray(data?.data)) {
+            return normalizeCatalogResponse(data.data);
+        }
+
+        if (Array.isArray(data?.data?.productos)) {
+            return {
+                productos: data.data.productos,
+                paginacion: data.data.paginacion || data.data.pagination || data.paginacion || data.pagination || null,
+                filtros: data.data.filtros || data.data.filters || data.filtros || data.filters || null
             };
         }
 

@@ -1,0 +1,80 @@
+FICHAS DE PRODUCTO DE ALTO IMPACTO
+
+Objetivo:
+Que cada ficha de producto responda dudas antes de que el cliente pregunte y aumente la confianza para comprar.
+
+Estructura recomendada:
+1. Galería principal
+   - Imagen principal grande.
+   - Miniaturas laterales o inferiores.
+   - Zoom al pasar o tocar.
+   - Video corto opcional del producto real.
+   - Imagen con fondo blanco/neutro.
+   - Imagen en ambiente casero.
+
+2. Bloque comercial inmediato
+   - Nombre del producto.
+   - Precio en CLP.
+   - Precio anterior si aplica.
+   - Insignia: Nuevo, Lanzamiento, Desde $14.990, Personalizable.
+   - Estado: En stock, Fabricado a pedido, Agotado.
+   - Tiempo estimado de fabricación.
+
+3. Variantes
+   - Color de PLA.
+   - Color pintado a mano.
+   - Tamaño.
+   - Tipo de base.
+   - Con placa / sin placa.
+   - Acabado: sin pintar, detalles de color, pintado completo.
+
+4. Botones
+   - Agregar al carrito.
+   - Comprar ahora.
+   - Crear escena personalizada si el producto lo permite.
+   - Consultar por WhatsApp.
+
+5. Lo que debes saber
+   Ejemplo:
+   - Producto impreso en 3D.
+   - Puede tener pequeñas líneas propias del proceso de impresión.
+   - Acabado lijado y pintado manualmente según versión.
+   - Las figuras personalizadas son interpretaciones artísticas.
+   - Producción estimada: 7 a 12 días hábiles en productos personalizados.
+
+6. Preguntas y respuestas
+   Estilo marketplace:
+   - Campo para preguntar.
+   - Lista de preguntas visibles.
+   - Respuestas desde admin.
+   - Preguntas frecuentes automáticas por categoría.
+
+7. Reseñas
+   - Estrellas.
+   - Fotos de clientes.
+   - Comentario.
+   - Fecha.
+   - Producto comprado.
+   - Filtro: más recientes, mejor valoradas, con fotos.
+
+8. Despacho y retiro
+   - Retiro en Santiago.
+   - Envío a regiones.
+   - Costo estimado.
+   - Tiempo de fabricación + tiempo de despacho.
+
+9. Productos relacionados
+   - De la misma categoría.
+   - Complementarios.
+   - Packs y regalos.
+
+Campos que conviene agregar al modelo Producto más adelante:
+- preguntas: array.
+- resenas: array o colección independiente.
+- galeriaVideos.
+- variantes avanzadas.
+- materiales.
+- tiempoFabricacionMin.
+- tiempoFabricacionMax.
+- tipoFabricacion: stock / pedido / personalizado.
+- instruccionesCuidado.

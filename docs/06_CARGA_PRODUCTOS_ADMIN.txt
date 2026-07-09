@@ -1,0 +1,39 @@
+GUÍA RÁPIDA PARA QUE UN PRODUCTO APAREZCA EN LA TIENDA
+
+Desde el panel admin:
+1. Ir a /admin/login.html.
+2. Entrar con usuario administrador.
+3. Ir a /admin/productos.html.
+4. Crear producto.
+5. Completar:
+   - Nombre.
+   - Precio.
+   - Categoría principal.
+   - Descripción.
+   - Stock o fabricado a pedido.
+   - Imágenes Cloudinary.
+6. Confirmar que esté marcado:
+   - Activo.
+   - Publicar en catálogo.
+7. Guardar.
+8. Abrir https://emmagina-backend.onrender.com/api/productos y confirmar que aparece.
+9. Abrir la tienda y hacer recarga forzada:
+   - Windows: Ctrl + F5.
+   - Mac: Cmd + Shift + R.
+
+Si aparece en API pero no en la tienda:
+- Revisar que el frontend haya sido redeployado.
+- Revisar que los scripts carguen con ?v=1.3.0.
+- Revisar DevTools -> Console.
+- Revisar DevTools -> Network -> /api/productos.
+- Verificar CORS en backend.
+- Confirmar que el producto tenga activo=true.
+- Confirmar que publicarCatalogo no sea false.
+
+Campos importantes en MongoDB:
+- activo: true.
+- publicarCatalogo: true.
+- precio: número mayor a 0.
+- imagenes: array con URL de Cloudinary.
+- categorias: array o texto válido.
+- categoriaPrincipal: texto.

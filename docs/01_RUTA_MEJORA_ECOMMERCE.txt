@@ -1,0 +1,72 @@
+RUTA DE MEJORA ECOMMERCE PARA EMMAGINA
+
+Contexto del negocio:
+Emmagina es una tienda de productos impresos en 3D: figuras, decoraciones, herramientas, accesorios, coleccionables, vasos temáticos y líneas emocionales para madres, padres jóvenes, familias y personas que buscan regalos personalizados.
+
+Objetivo general:
+Convertir la tienda en una plataforma confiable, rápida y clara, con una experiencia cercana a marketplaces grandes, pero manteniendo identidad artesanal, familiar y emocional.
+
+ETAPA 1 - Estabilidad técnica y catálogo real
+Objetivo: que la tienda siempre muestre productos reales desde MongoDB.
+Acciones:
+- Verificar API /api/productos.
+- Mostrar productos activos aunque sean fabricados a pedido.
+- Validar imágenes de Cloudinary.
+- Normalizar categorías, precios, stock, imágenes y estados.
+- Corregir cache de scripts con versiones nuevas.
+- Mantener panel admin conectado para crear productos sin editar MongoDB manualmente.
+
+Resultado esperado:
+Home, catálogo y categorías muestran productos reales creados desde admin.
+
+ETAPA 2 - Ficha de producto profesional
+Objetivo: aumentar confianza y conversión.
+Acciones:
+- Galería con miniaturas, zoom, imagen principal y video corto si existe.
+- Precio claro, precio anterior, descuento, stock/fabricado a pedido.
+- Selector de variantes: color, tamaño, acabado, tipo de base.
+- Módulo "Lo que debes saber" con 3 a 5 puntos clave.
+- Preguntas y respuestas por producto.
+- Reseñas con estrellas y fotos de clientes.
+- Bloque de despacho/retiro visible antes del botón de compra.
+- Botón fijo inferior en móvil.
+
+ETAPA 3 - Checkout y post-venta
+Objetivo: que comprar sea simple y que el cliente sepa qué ocurre después.
+Acciones:
+- Carrito claro con imágenes, cantidades y edición rápida.
+- Checkout con datos mínimos, método de entrega y pago.
+- Mercado Pago para pago automático.
+- Transferencia manual solo si se necesita.
+- Correos automáticos con Resend.
+- Seguimiento de pedido con código.
+- Estados adaptados a Emmagina: recibido, revisión, diseño, impresión, lijado, pintura, listo, enviado, entregado.
+
+ETAPA 4 - Performance, SEO y confianza
+Objetivo: cargar rápido, posicionar en Google y generar seguridad.
+Acciones:
+- Optimizar imágenes Cloudinary con tamaños por vista.
+- Lazy loading en imágenes no críticas.
+- Preload solo para imagen principal del hero.
+- Meta título/descripción por producto.
+- JSON-LD Product para fichas.
+- Sitemap actualizado.
+- Páginas de políticas claras.
+- Indicadores de confianza: tiempos, cambios, contacto, materiales, cuidado del producto.
+
+ETAPA 5 - Operación y crecimiento
+Objetivo: administrar ventas reales sin desorden.
+Acciones:
+- Dashboard admin con pedidos por estado.
+- Alertas de stock bajo o materiales.
+- Reportes de ventas por categoría.
+- Métricas de productos más vistos y más vendidos.
+- Integración con Google Analytics 4 y Microsoft Clarity.
+- Plantillas de correos y mensajes WhatsApp.
+
+Prioridad inmediata:
+1. Resolver carga de productos.
+2. Mejorar tarjetas y catálogo.
+3. Mejorar ficha de producto.
+4. Activar flujo completo de pedido.
+5. Activar pagos y correos automáticos.

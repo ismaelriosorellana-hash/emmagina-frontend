@@ -1,0 +1,60 @@
+POST-VENTA, DESPACHOS Y TRANSPARENCIA
+
+Objetivo:
+Que el cliente sienta control después de comprar.
+
+Estados recomendados para pedidos normales:
+1. Pedido recibido.
+2. Pago confirmado.
+3. En preparación.
+4. Listo para retiro/envío.
+5. Enviado.
+6. Entregado.
+7. Cancelado.
+
+Estados recomendados para Crea tu escena:
+1. Solicitud recibida.
+2. Revisando fotografías.
+3. Viabilidad confirmada.
+4. Diseño en preparación.
+5. En impresión 3D.
+6. En lijado y acabado.
+7. En pintura.
+8. Listo para retiro/envío.
+9. Enviado.
+10. Entregado.
+
+Seguimiento de pedido:
+- Página seguimiento-pedido.html.
+- El cliente ingresa código y correo/WhatsApp.
+- El sistema muestra estado actual, fecha estimada y próximos pasos.
+
+Correos automáticos con Resend:
+- Pedido recibido.
+- Pago confirmado.
+- Pedido en producción.
+- Pedido listo.
+- Pedido enviado.
+- Pedido entregado.
+
+Zoho Mail:
+- Bandeja real de contacto y soporte.
+- Correos manuales desde contacto@emmagina.cl o ventas@emmagina.cl.
+- Usar Resend solo para correos transaccionales automáticos.
+
+Despacho:
+Fase inicial:
+- Santiago: retiro coordinado o despacho local cotizado.
+- Regiones: envío por pagar o cotizado manualmente.
+
+Fase profesional:
+- Tabla de comunas.
+- Costo base por zona.
+- Envíos a regiones con transportista definido.
+- Cálculo automático según comuna/región/peso.
+
+Políticas visibles:
+- Productos personalizados no tienen devolución por gusto o arrepentimiento si ya fueron aprobados y fabricados.
+- Sí se revisan problemas de fabricación, daño de envío o error atribuible a Emmagina.
+- Explicar tiempos de producción antes de pagar.
+- Indicar que las figuras son interpretaciones artísticas, no réplicas exactas.
