@@ -633,6 +633,13 @@ function normalizeVariants(rawProduct, defaultImage, defaultImages = []) {
             destacado: booleanValue(rawProduct.destacado),
             activo: booleanValue(rawProduct.activo, true),
             personalizable,
+            fabricadoPedido: booleanValue(
+                rawProduct.fabricadoPedido ??
+                rawProduct.fabricadoAPedido ??
+                rawProduct.bajoPedido ??
+                rawProduct.madeToOrder,
+                personalizable
+            ),
             publicarCatalogo,
 
             lightCustomization:
@@ -827,6 +834,15 @@ function getVariantImages(product, variant) {
         : [CONFIG.placeholderImage];
 }
 
+function isMadeToOrder(product) {
+    return Boolean(
+        product?.personalizable ||
+        product?.fabricadoPedido ||
+        product?.bajoPedido ||
+        product?.madeToOrder
+    );
+}
+
 
 function buildProductGallery(product) {
     const gallery = [];
@@ -901,7 +917,7 @@ function hasAvailableStock(product) {
      * Si el producto está marcado como personalizable, no depende
      * del stock físico para mostrarse o agregarse al flujo de compra.
      */
-    if (product.personalizable) return true;
+    if (isMadeToOrder(product)) return true;
 
     const variants = getSelectableVariants(product);
     if (!variants.length) return numberValue(product?.stock) > 0;
@@ -1070,13 +1086,9 @@ function hasAvailableStock(product) {
     }
 
     function getBestSellers(limit = 10) {
-        const visible = state.productos
-            .filter(isCatalogProduct);
+        const visible = getVisibleProductsForCatalog();
 
-        const available = visible
-            .filter(hasAvailableStock);
-
-        return (available.length ? available : visible)
+        return [...visible]
             .sort((a, b) =>
                 getPopularityScore(b) -
                 getPopularityScore(a) ||
@@ -1452,8 +1464,12 @@ function createProductCard(product) {
     updateCardVariant(activeVariant);
 
     if (!hasAvailableStock(product)) {
-        addButton.disabled = true;
-        addButton.querySelector("span").textContent = "Agotado";
+        const label = addButton.querySelector("span");
+        article.classList.add("is-showcase-only");
+        label.textContent = isMadeToOrder(product) ? "A pedido" : "Ver detalle";
+        addButton.addEventListener("click", () => {
+            window.location.href = link.href;
+        });
     } else if (selectableVariants.length || availableSizes.length) {
         addButton.querySelector("span").textContent =
             selectableVariants.length && availableSizes.length
@@ -1639,18 +1655,12 @@ function createProductCard(product) {
             ? published
             : products.filter((product) => product.activo);
 
-        const inStock =
-            catalog.filter(
-                (product) => hasAvailableStock(product)
-            );
-
         /*
-         * En Emmagina muchos productos se fabrican a pedido.
-         * Por eso la home debe mostrar productos publicados aunque el stock
-         * quede en 0 desde el panel; la tarjeta marcará Agotado si corresponde,
-         * pero no dejará los carruseles vacíos o eternamente en cargando.
+         * Emmagina funciona como vitrina + tienda: hay productos con stock
+         * físico y líneas fabricadas a pedido. La home y los carruseles no
+         * deben ocultar productos solo porque el stock esté en 0.
          */
-        const showcase = inStock.length ? inStock : catalog;
+        const showcase = catalog;
 
         const destacados = showcase
             .filter((product) => product.destacado)
@@ -2479,7 +2489,7 @@ function updatePurchaseReadiness(product, { showErrors = false } = {}) {
     const needsSize = sizes.length > 0;
     const missingSize = needsSize && !state.tallaActual;
     const stockAmount = getVariantStock(product, state.varianteActual);
-    const noStock = stockAmount <= 0;
+    const noStock = stockAmount <= 0 && !isMadeToOrder(product);
 
     setOptionError("product-size-selector", "product-size-error", showErrors && missingSize);
     setOptionError("product-color-selector", "product-color-error", showErrors && !state.varianteActual && getSelectableVariants(product).length > 0);

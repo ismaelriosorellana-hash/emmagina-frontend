@@ -10,7 +10,7 @@ const API_BASE_URL =
         : "https://emmagina-backend.onrender.com/api";
 
 window.CONFIG = Object.freeze({
-    APP_VERSION: "1.3.0-emmagina-estable",
+    APP_VERSION: "1.4.0-emmagina-estable",
     SITE_URL: "https://emmagina-frontend.onrender.com",
     SITE_NAME: "Emmagina",
     BRAND_NAME: "Emmagina",
@@ -157,14 +157,13 @@ HOME_BANNERS: Object.freeze([
         "data:image/svg+xml;charset=UTF-8," +
         encodeURIComponent(`
             <svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900">
-                <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8fbff"/><stop offset="0.55" stop-color="#eaf5fb"/><stop offset="1" stop-color="#f7efe5"/></linearGradient></defs>
-                <rect width="900" height="900" rx="90" fill="url(#g)"/>
+                <rect width="900" height="900" rx="90" fill="#eef8fc"/>
                 <circle cx="290" cy="335" r="92" fill="#ffffff" opacity="0.78"/>
                 <circle cx="455" cy="310" r="120" fill="#ffffff" opacity="0.68"/>
                 <circle cx="610" cy="355" r="86" fill="#ffffff" opacity="0.74"/>
-                <path d="M230 610c55-130 130-190 225-190s170 60 225 190" fill="#d8c6b6" opacity="0.52"/>
-                <text x="450" y="680" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#4c5664">Emmagina</text>
-                <text x="450" y="732" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#718095">Recuerdos que toman forma</text>
+                <path d="M230 610c55-130 130-190 225-190s170 60 225 190" fill="#d8c6b6" opacity="0.62"/>
+                <text x="450" y="680" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#45505f">Emmagina</text>
+                <text x="450" y="732" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#738093">Producto en preparación</text>
             </svg>
         `)
 });

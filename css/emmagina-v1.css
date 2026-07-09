@@ -20,11 +20,7 @@
 }
 
 body {
-    background:
-        radial-gradient(circle at 14% 6%, rgba(255,255,255,.92), transparent 28rem),
-        radial-gradient(circle at 86% 12%, rgba(185,216,230,.50), transparent 32rem),
-        radial-gradient(circle at 62% 74%, rgba(245,234,220,.72), transparent 34rem),
-        linear-gradient(135deg, #fbfdff 0%, var(--em-bg-soft) 44%, var(--em-bg-warm) 100%) !important;
+    background: var(--em-bg) !important;
     color: var(--em-ink) !important;
 }
 
@@ -119,7 +115,7 @@ body {
 .emmagina-header-right .icon-btn:focus-visible,
 .emmagina-search-form .btn-search:hover,
 .emmagina-search-form .btn-search:focus-visible {
-    background: linear-gradient(135deg, var(--em-accent), var(--em-sand)) !important;
+    background: var(--em-accent-dark) !important;
     color: #fff !important;
     border-color: rgba(255,255,255,.55) !important;
     transform: translateY(-.15rem);
@@ -228,11 +224,8 @@ body {
 .emmagina-hero-banner .banner-background {
     inset: 0;
     transform: none !important;
-    background-image:
-        radial-gradient(circle at 18% 30%, rgba(255,255,255,.84), transparent 18rem),
-        radial-gradient(circle at 82% 20%, rgba(185,216,230,.66), transparent 26rem),
-        radial-gradient(circle at 76% 84%, rgba(216,198,182,.48), transparent 24rem),
-        linear-gradient(135deg, #fbfdff 0%, #edf8fc 52%, #f8efe4 100%) !important;
+    background-image: none !important;
+    background-color: var(--em-bg-soft) !important;
     background-size: cover !important;
     background-position: center !important;
 }
@@ -274,14 +267,14 @@ body {
 .emmagina-hero-banner .btn-primary {
     width: max-content;
     margin-top: 1rem;
-    background: linear-gradient(135deg, var(--em-accent), var(--em-sand)) !important;
+    background: var(--em-accent-dark) !important;
     color: #fff !important;
     box-shadow: none !important;
 }
 
 .emmagina-hero-banner .btn-primary:hover,
 .emmagina-hero-banner .btn-primary:focus-visible {
-    background: linear-gradient(135deg, var(--em-accent-dark), var(--em-warm)) !important;
+    background: var(--em-ink) !important;
     color: #fff !important;
 }
 
@@ -313,7 +306,7 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--em-accent), var(--em-sand));
+    background: var(--em-accent-dark);
     color: #fff;
     font-size: 2rem;
     flex: none;
@@ -517,7 +510,7 @@ body {
 .category-card img,
 .product-image,
 .category-image {
-    background: linear-gradient(135deg, #fbfdff 0%, #edf8fc 52%, #f8efe4 100%) !important;
+    background: var(--em-bg-soft) !important;
 }
 
 .product-price,
@@ -541,7 +534,7 @@ body {
 .btn-primary,
 .checkout-submit,
 .commercial-whatsapp-link {
-    background: linear-gradient(135deg, var(--em-accent), var(--em-sand)) !important;
+    background: var(--em-accent-dark) !important;
     color: #fff !important;
     box-shadow: 0 16px 38px rgba(111,151,166,.22) !important;
 }
@@ -550,7 +543,7 @@ body {
 .btn-primary:hover,
 .checkout-submit:hover,
 .commercial-whatsapp-link:hover {
-    background: linear-gradient(135deg, var(--em-accent-dark), var(--em-warm)) !important;
+    background: var(--em-ink) !important;
 }
 
 .footer,
@@ -688,7 +681,7 @@ body[data-page="home"] #categories-grid .category-card-content p {
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: linear-gradient(90deg, rgba(248,251,255,.92) 0%, rgba(248,251,255,.80) 34%, rgba(248,251,255,.36) 68%, rgba(248,251,255,.16) 100%);
+    background: rgba(248,251,255,.58);
 }
 
 .emmagina-create-scene-copy {
@@ -769,7 +762,7 @@ body[data-page="home"] #categories-grid .category-card-content p {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba(185,216,230,.82), rgba(216,185,152,.62));
+    background: var(--em-accent-dark);
     color: #fff;
     font-size: 1.5rem;
 }
@@ -831,7 +824,7 @@ body[data-page="home"] #categories-grid .category-card-content p {
     }
 
     .emmagina-create-scene-banner::after {
-        background: linear-gradient(0deg, rgba(248,251,255,.96) 0%, rgba(248,251,255,.78) 56%, rgba(248,251,255,.22) 100%);
+        background: rgba(248,251,255,.72);
     }
 
     .emmagina-create-scene-copy {
@@ -1085,5 +1078,366 @@ body[data-page="home"] .card-feature p {
 
     body[data-page="home"] .card-feature {
         padding: 1rem 1.15rem !important;
+    }
+}
+
+/* Emmagina v1.4 · profesionalización visual, colores sólidos y vitrina a pedido */
+:root {
+    --em-bg: #f8fbff;
+    --em-bg-soft: #eef8fc;
+    --em-bg-warm: #f9f1e7;
+    --em-surface: #ffffff;
+    --em-panel: #f4f9fb;
+    --em-overlay: rgba(255, 255, 255, .72);
+    --em-ink: #45505f;
+    --em-muted: #738093;
+    --em-line: rgba(69, 80, 95, .16);
+    --em-blue: #b9d8e6;
+    --em-warm: #d8c6b6;
+    --em-accent: #7aaec4;
+    --em-accent-dark: #557f91;
+    --em-sand: #d8b998;
+    --em-shadow: 0 18px 42px rgba(69, 80, 95, .12);
+}
+
+body {
+    background: var(--em-bg) !important;
+    color: var(--em-ink) !important;
+}
+
+.emmagina-header,
+.emmagina-navbar-wrap,
+.categories-section,
+.commercial-section,
+.trending-section,
+.best-sellers-section,
+.new-section,
+.brand-search-section,
+.featured-products,
+.products-section,
+.emmagina-hero-banner.banner,
+.emmagina-gift-panel,
+.brand-search-card,
+.footer,
+footer {
+    background: var(--em-surface) !important;
+    backdrop-filter: none !important;
+}
+
+.emmagina-navbar-wrap,
+.emmagina-header,
+.footer,
+footer {
+    border-color: var(--em-line) !important;
+}
+
+.emmagina-search-form,
+.emmagina-header-right .icon-btn,
+.category-card,
+.product-card,
+.commercial-step-card,
+.occasion-card,
+.card-feature,
+.carousel-arrow,
+.category-rail-arrow,
+.catalog-controls,
+.catalog-hero-card,
+.footer-support-card {
+    background: var(--em-surface) !important;
+    border: 1px solid var(--em-line) !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+
+.product-card img,
+.category-card img,
+.product-image,
+.category-image,
+.emmagina-hero-banner .banner-background,
+.emmagina-create-scene-banner,
+body[data-page="home"] #categories-grid .category-card.emmagina-category-image-card img {
+    background: var(--em-bg-soft) !important;
+}
+
+.emmagina-header-right .icon-btn:hover,
+.emmagina-header-right .icon-btn:focus-visible,
+.emmagina-search-form .btn-search:hover,
+.emmagina-search-form .btn-search:focus-visible,
+.add-cart,
+.btn-primary,
+.checkout-submit,
+.commercial-whatsapp-link,
+.footer-whatsapp-button {
+    background: var(--em-accent-dark) !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+.add-cart:hover,
+.btn-primary:hover,
+.checkout-submit:hover,
+.commercial-whatsapp-link:hover,
+.footer-whatsapp-button:hover {
+    background: var(--em-ink) !important;
+}
+
+.btn-secondary,
+.section-link,
+.product-price,
+.current-price {
+    color: var(--em-accent-dark) !important;
+}
+
+.product-badge,
+.product-discount-badge,
+.discount-badge,
+.light-customization-badge,
+.badge,
+.tag {
+    background: var(--em-bg-warm) !important;
+    color: #6f5f50 !important;
+    border: 1px solid rgba(111, 95, 80, .18) !important;
+}
+
+.emmagina-hero-banner .content-banner,
+.emmagina-create-scene-copy {
+    background: var(--em-overlay) !important;
+    border: 1px solid rgba(255,255,255,.78) !important;
+    backdrop-filter: blur(16px) !important;
+}
+
+.emmagina-create-scene-banner::after {
+    background: rgba(248, 251, 255, .48) !important;
+}
+
+.emmagina-gift-grid .occasion-card i,
+.footer-support-card .support-icon {
+    background: var(--em-accent-dark) !important;
+    color: #ffffff !important;
+}
+
+/* El scroll vertical nunca mueve carruseles; se mueven por arrastre o flechas. */
+body[data-page="home"] .carousel-container,
+body[data-page="home"] .categories-grid {
+    overscroll-behavior-x: contain !important;
+    overscroll-behavior-y: auto !important;
+    scrollbar-width: none !important;
+}
+
+body[data-page="home"] .carousel-container::-webkit-scrollbar,
+body[data-page="home"] .categories-grid::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Tarjetas de productos: imagen completa + capa glaseada inferior. */
+body[data-page="home"] .emmagina-carousel-stack .carousel-track {
+    grid-auto-columns: clamp(23rem, 24vw, 29rem) !important;
+    gap: 1.6rem !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .card-product {
+    position: relative !important;
+    aspect-ratio: 1 / 1 !important;
+    display: block !important;
+    overflow: hidden !important;
+    border-radius: 2.2rem !important;
+    background: var(--em-bg-soft) !important;
+    border: 1px solid var(--em-line) !important;
+    box-shadow: none !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-card-link {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    min-height: 0 !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .container-img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: auto !important;
+    border-radius: 0 !important;
+    background: var(--em-bg-soft) !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-card-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .content-card-product {
+    position: absolute !important;
+    left: .85rem !important;
+    right: .85rem !important;
+    bottom: 5rem !important;
+    z-index: 2 !important;
+    padding: .95rem 1rem !important;
+    border-radius: 1.45rem !important;
+    background: rgba(255,255,255,.72) !important;
+    border: 1px solid rgba(255,255,255,.72) !important;
+    backdrop-filter: blur(14px) !important;
+    color: var(--em-ink) !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-category {
+    margin: 0 0 .25rem !important;
+    font-size: .95rem !important;
+    color: var(--em-muted) !important;
+    text-transform: uppercase !important;
+    letter-spacing: .11em !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-name {
+    margin: 0 !important;
+    font-size: clamp(1.3rem, 1.2vw, 1.55rem) !important;
+    line-height: 1.16 !important;
+    color: var(--em-ink) !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-price-row {
+    margin-top: .45rem !important;
+    padding: 0 !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-price {
+    font-size: clamp(1.35rem, 1.25vw, 1.65rem) !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-badge,
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-discount-badge {
+    position: absolute !important;
+    top: .85rem !important;
+    z-index: 3 !important;
+    border-radius: 999px !important;
+    padding: .45rem .8rem !important;
+    font-size: 1rem !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-badge {
+    left: .85rem !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-discount-badge {
+    right: .85rem !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .add-cart {
+    position: absolute !important;
+    left: .85rem !important;
+    right: .85rem !important;
+    bottom: .85rem !important;
+    z-index: 4 !important;
+    min-height: 3.9rem !important;
+    border-radius: 1.3rem !important;
+    margin: 0 !important;
+    border: 0 !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .card-product.is-showcase-only .add-cart {
+    background: var(--em-surface) !important;
+    color: var(--em-accent-dark) !important;
+    border: 1px solid var(--em-line) !important;
+}
+
+@media (max-width: 700px) {
+    body[data-page="home"] .emmagina-carousel-stack .carousel-track {
+        grid-auto-columns: minmax(18rem, 58vw) !important;
+    }
+
+    body[data-page="home"] .emmagina-carousel-stack .carousel-track .content-card-product {
+        bottom: 4.8rem !important;
+        padding: .8rem !important;
+    }
+}
+
+/* Footer estándar: ordenado, sólido y legible. */
+.footer,
+footer {
+    background: var(--em-bg-soft) !important;
+    border-top: 1px solid var(--em-line) !important;
+    color: var(--em-ink) !important;
+    padding-top: clamp(3rem, 5vw, 5rem) !important;
+}
+
+.footer .menu-footer,
+footer .menu-footer {
+    display: grid !important;
+    grid-template-columns: 1.15fr repeat(3, minmax(0, 1fr)) !important;
+    gap: clamp(2rem, 4vw, 4rem) !important;
+    align-items: start !important;
+}
+
+.footer .title-footer,
+footer .title-footer {
+    margin: 0 0 1.2rem !important;
+    color: var(--em-ink) !important;
+    font-size: 1.35rem !important;
+    letter-spacing: .12em !important;
+    text-transform: uppercase !important;
+}
+
+.footer ul,
+footer ul {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+    display: grid !important;
+    gap: .75rem !important;
+}
+
+.footer li,
+.footer p,
+footer li,
+footer p {
+    color: var(--em-muted) !important;
+    font-size: 1.35rem !important;
+    line-height: 1.55 !important;
+}
+
+.footer a,
+footer a {
+    color: var(--em-ink) !important;
+    text-decoration: none !important;
+}
+
+.footer a:hover,
+.footer a:focus-visible,
+footer a:hover,
+footer a:focus-visible {
+    color: var(--em-accent-dark) !important;
+    text-decoration: underline !important;
+    text-underline-offset: .25rem !important;
+}
+
+.footer .copyright,
+footer .copyright {
+    margin-top: clamp(2rem, 4vw, 3.6rem) !important;
+    padding: 1.4rem 0 !important;
+    border-top: 1px solid var(--em-line) !important;
+    text-align: center !important;
+}
+
+.footer .copyright p,
+footer .copyright p {
+    color: var(--em-muted) !important;
+    font-size: 1.2rem !important;
+}
+
+@media (max-width: 900px) {
+    .footer .menu-footer,
+    footer .menu-footer {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 560px) {
+    .footer .menu-footer,
+    footer .menu-footer {
+        grid-template-columns: 1fr !important;
     }
 }

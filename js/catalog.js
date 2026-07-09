@@ -5,7 +5,7 @@
         category: "Todos",
         query: "",
         sort: "mas-vendidos",
-        inStock: true
+        inStock: false
     };
 
     function readUrlState() {
@@ -25,9 +25,7 @@
             params.get("orden") ||
             "mas-vendidos";
 
-        state.inStock =
-            params.get("stock") !==
-            "todos";
+        state.inStock = ["1", "true", "en-stock", "stock"].includes(String(params.get("stock") || "").toLowerCase());
     }
 
     function updateUrl() {
@@ -73,10 +71,10 @@
             );
         }
 
-        if (!state.inStock) {
+        if (state.inStock) {
             url.searchParams.set(
                 "stock",
-                "todos"
+                "en-stock"
             );
         } else {
             url.searchParams.delete(

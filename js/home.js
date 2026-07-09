@@ -134,22 +134,8 @@
                 event.stopPropagation();
             }
         }, true);
-
-        scrollArea.addEventListener("wheel", (event) => {
-            if (scrollArea.scrollWidth <= scrollArea.clientWidth) return;
-            const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY)
-                ? event.deltaX
-                : event.deltaY;
-            if (!delta) return;
-
-            const atStart = scrollArea.scrollLeft <= 1;
-            const atEnd = scrollArea.scrollLeft + scrollArea.clientWidth >= scrollArea.scrollWidth - 1;
-            if ((delta < 0 && atStart) || (delta > 0 && atEnd)) return;
-
-            event.preventDefault();
-            cancelMomentum();
-            scrollArea.scrollBy({ left: delta, behavior: "auto" });
-        }, { passive: false });
+        // El scroll del mouse queda reservado para subir y bajar la página.
+        // El carrusel se mueve solo con clic sostenido + arrastre, touch o flechas.
     }
 
     function initDragCarousels() {
@@ -198,21 +184,7 @@
                     });
                 });
             });
-
-        rail.addEventListener("wheel", (event) => {
-            if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
-            if (rail.scrollWidth <= rail.clientWidth) return;
-
-            const atStart = rail.scrollLeft <= 1;
-            const atEnd = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 1;
-
-            if ((event.deltaY < 0 && atStart) || (event.deltaY > 0 && atEnd)) {
-                return;
-            }
-
-            event.preventDefault();
-            rail.scrollLeft += event.deltaY;
-        }, { passive: false });
+        // La rueda del mouse no desplaza el carrusel de categorías; solo navega la página.
     }
 
     function bannerImage(slide) {
@@ -241,15 +213,15 @@
         if (!background || !slide) return;
 
         const image = bannerImage(slide);
-        const overlay =
-            "linear-gradient(90deg, rgba(35, 26, 29, 0.74), rgba(35, 26, 29, 0.08))";
+        const fallbackColor = "#eef8fc";
 
         background.classList.add("is-changing");
 
         window.setTimeout(() => {
+            background.style.backgroundColor = fallbackColor;
             background.style.backgroundImage = image
-                ? `${overlay}, url("${image}")`
-                : `${overlay}, linear-gradient(135deg, #6f5059, #e9a8b5)`;
+                ? `url("${image}")`
+                : "none";
 
             background.style.backgroundPosition =
                 slide.position || "center";
