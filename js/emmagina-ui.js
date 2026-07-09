@@ -29,7 +29,7 @@
     return `
       <article class="product-card" data-product-id="${escapeHtml(product.id)}">
         <a class="product-media" href="${detail}" aria-label="Ver ${escapeHtml(product.nombre)}">
-          <img src="${escapeHtml(product.imagenPrincipal)}" alt="${escapeHtml(product.nombre)}" loading="lazy" decoding="async">
+          <img src="${escapeHtml(product.imagenPrincipal)}" alt="${escapeHtml(product.nombre)}" loading="lazy" decoding="async" draggable="false">
           ${productBadges(product)}
         </a>
         <div class="product-body">
@@ -49,16 +49,23 @@
       </article>`;
   }
 
+  const productMap = new Map();
+  let cartDelegationReady = false;
+
   function attachCartButtons(products = []) {
-    const byId = new Map(products.map((p) => [String(p.id), p]));
-    document.querySelectorAll("[data-add-cart]").forEach((button) => {
-      if (button.dataset.bound === "true") return;
-      button.dataset.bound = "true";
-      button.addEventListener("click", (event) => {
-        event.preventDefault();
-        const product = byId.get(String(button.dataset.addCart));
-        if (product) window.EmmaginaCart.add(product, 1);
-      });
+    products.forEach((product) => {
+      if (product?.id) productMap.set(String(product.id), product);
+    });
+
+    if (cartDelegationReady) return;
+    cartDelegationReady = true;
+
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest?.("[data-add-cart]");
+      if (!button) return;
+      event.preventDefault();
+      const product = productMap.get(String(button.dataset.addCart));
+      if (product) window.EmmaginaCart.add(product, 1);
     });
   }
 

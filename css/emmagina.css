@@ -235,15 +235,19 @@ button { cursor: pointer; }
 .carousel-controls { display: flex; gap: 8px; }
 .carousel-button { width: 42px; height: 42px; border-radius: 999px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); font-size: 20px; }
 .carousel-button:hover { background: var(--mist); }
-.carousel-viewport { overflow: hidden; min-width: 0; touch-action: pan-y; cursor: grab; }
+.carousel-viewport { overflow: hidden; min-width: 0; touch-action: pan-y; cursor: grab; overscroll-behavior-x: contain; }
 .carousel-viewport:active { cursor: grabbing; }
-.carousel-track { display: flex; gap: 18px; will-change: transform; transition: transform .42s cubic-bezier(.2,.7,.2,1); }
+.carousel-track { display: flex; gap: 18px; will-change: transform; transition: transform .38s cubic-bezier(.22,.72,.22,1); transform: translate3d(0,0,0); }
 .carousel-track.no-transition { transition: none !important; }
 .carousel-track.is-dragging { cursor: grabbing; user-select: none; }
+.carousel-track.is-dragging * { user-select: none; }
 .product-carousel.is-static .carousel-controls { display: none; }
+.product-carousel a,
+.product-carousel img { -webkit-user-drag: none; user-select: none; }
+
 
 .product-card {
-  flex: 0 0 clamp(210px, 22vw, 270px);
+  flex: 0 0 clamp(230px, 24vw, 292px);
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
@@ -251,9 +255,11 @@ button { cursor: pointer; }
   box-shadow: 0 10px 28px rgba(48,55,68,.07);
   display: flex;
   flex-direction: column;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
-.product-media { position: relative; background: var(--cloud); aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; padding: 14px; border-bottom: 1px solid var(--line); }
-.product-media img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
+.product-media { position: relative; background: var(--cloud); aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; padding: 10px; border-bottom: 1px solid var(--line); overflow: hidden; -webkit-user-drag: none; user-select: none; }
+.product-media img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; -webkit-user-drag: none; user-select: none; pointer-events: none; }
 .product-badges { position: absolute; left: 12px; top: 12px; display: inline-flex; flex-direction: column; align-items: flex-start; gap: 7px; z-index: 2; }
 .product-badge { display: inline-flex; align-items: center; justify-content: center; width: fit-content; max-width: 160px; border-radius: 999px; padding: 7px 10px; font-size: 12px; line-height: 1; font-weight: 900; box-shadow: 0 6px 18px rgba(48,55,68,.12); white-space: nowrap; }
 .badge-primary { background: var(--ink); color: #fff; }

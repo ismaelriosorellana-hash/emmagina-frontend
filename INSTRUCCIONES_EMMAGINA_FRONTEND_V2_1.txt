@@ -1,0 +1,44 @@
+EMMAGINA FRONTEND v2.1 - CARRUSELES ESTABLES
+
+Cambios principales:
+1. Carrusel público reconstruido en js/emmagina-carousel.js.
+   - Movimiento por transform, no por scrollLeft.
+   - Loop infinito con clones internos.
+   - Flechas funcionales.
+   - Arrastre horizontal con clic sostenido.
+   - La rueda del mouse solo controla el scroll vertical de la página.
+   - Se desactiva el drag nativo de imágenes para evitar el fantasma/overlay que trababa el carrusel.
+
+2. Productos en carruseles:
+   - Cada carrusel prioriza sus productos marcados, pero si hay pocos, completa con otros productos visibles.
+   - Evita que un carrusel muestre únicamente el mismo producto repetido cuando existen más productos en catálogo.
+
+3. Tarjetas:
+   - Imagen completa dentro del recuadro cuadrado.
+   - object-fit: contain.
+   - Drag nativo de imagen desactivado.
+   - Botones Ver detalle y Agregar se mantienen.
+
+Archivos clave modificados:
+- js/emmagina-carousel.js
+- js/emmagina-home.js
+- js/emmagina-ui.js
+- css/emmagina.css
+- index.html y páginas públicas con versión ?v=2.1.0
+
+Instalación:
+1. Respaldar el frontend actual.
+2. Reemplazar el contenido del repo frontend por esta carpeta, sin borrar .git.
+3. git add .
+4. git commit -m "Emmagina frontend v2.1 carruseles estables"
+5. git push
+6. Esperar deploy automático de Render.
+7. Abrir la tienda con Ctrl + Shift + R.
+
+Pruebas esperadas:
+- Los carruseles se mueven solos.
+- Las flechas mueven por tarjeta completa.
+- El arrastre lateral no genera imagen fantasma.
+- Las imágenes no se salen ni se recortan del recuadro.
+- Ver detalle abre producto.html.
+- Agregar suma al carrito.

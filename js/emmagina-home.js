@@ -5,14 +5,35 @@
 
   function by(selector) { return document.querySelector(selector); }
 
+  function uniqueById(list) {
+    const seen = new Set();
+    return list.filter((product) => {
+      const key = String(product.id || product.slug || product.nombre || "");
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
+
+  function fillCarouselList(selected, products, minItems = 6) {
+    const visible = uniqueById(products.filter(window.EmmaginaData.isVisible));
+    const base = uniqueById(selected);
+    if (base.length >= minItems) return base.slice(0, 14);
+    const selectedKeys = new Set(base.map((p) => String(p.id || p.slug || p.nombre || "")));
+    const fillers = visible.filter((p) => !selectedKeys.has(String(p.id || p.slug || p.nombre || "")));
+    return base.concat(fillers).slice(0, Math.max(minItems, Math.min(14, visible.length)));
+  }
+
   function sectionProducts(kind, products) {
-    const visible = products.filter(window.EmmaginaData.isVisible);
-    if (kind === "destacados") return visible.filter((p) => p.destacado || p.insignia.toLowerCase().includes("destacado")).slice(0, 12);
-    if (kind === "desde14990") return visible.filter((p) => p.desde14990 || p.precio <= 14990).slice(0, 12);
-    if (kind === "lanzamiento") return visible.filter((p) => p.lanzamiento || p.insignia.toLowerCase().includes("lanzamiento")).slice(0, 12);
-    if (kind === "vendidos") return visible.filter((p) => p.masVendido).slice(0, 12);
-    if (kind === "vistos") return visible.filter((p) => p.masVisto).slice(0, 12);
-    return visible.slice(0, 12);
+    const visible = uniqueById(products.filter(window.EmmaginaData.isVisible));
+    let selected = [];
+    if (kind === "destacados") selected = visible.filter((p) => p.destacado || String(p.insignia || "").toLowerCase().includes("destacado"));
+    else if (kind === "desde14990") selected = visible.filter((p) => p.desde14990 || p.precio <= 14990);
+    else if (kind === "lanzamiento") selected = visible.filter((p) => p.lanzamiento || String(p.insignia || "").toLowerCase().includes("lanzamiento"));
+    else if (kind === "vendidos") selected = visible.filter((p) => p.masVendido);
+    else if (kind === "vistos") selected = visible.filter((p) => p.masVisto);
+    else selected = visible;
+    return fillCarouselList(selected, visible, 6);
   }
 
   function renderCarousel(id, title, products) {
@@ -25,18 +46,7 @@
       return;
     }
 
-    /*
-     * Para que el carrusel sea realmente útil incluso cuando una sección tenga
-     * pocos productos, repetimos visualmente los mismos ítems hasta generar
-     * una tira navegable. No duplica datos ni afecta el carrito; solo mejora
-     * la presentación.
-     */
-    const display = [];
-    while (display.length < Math.max(8, selected.length)) {
-      display.push(...selected);
-      if (selected.length === 0) break;
-    }
-    track.innerHTML = display.slice(0, Math.max(8, selected.length)).map((p) => window.EmmaginaUI.productCard(p)).join("");
+    track.innerHTML = selected.map((p) => window.EmmaginaUI.productCard(p)).join("");
     window.EmmaginaUI.attachCartButtons(all);
     window.EmmaginaCarousel.init(root);
   }
