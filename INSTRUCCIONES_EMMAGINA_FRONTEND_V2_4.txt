@@ -1,0 +1,20 @@
+Emmagina Frontend v2.4 - Ajuste de proporciones Home
+
+Cambios incluidos:
+1. Hero principal aumentado un 90% respecto a la altura de v2.3.
+   - Altura escritorio: 323 px.
+   - Categorías laterales alineadas a la misma altura: 323 px.
+   - La lista de categorías aumenta proporcionalmente para ocupar el panel.
+
+2. Sección informativa inmediatamente posterior al hero reducida aproximadamente 60%.
+   - Las tarjetas informativas quedan en formato compacto.
+   - Altura visual sugerida de imagen por tarjeta en escritorio: 130-160 px.
+   - Se mantiene soporte para imágenes desde Cloudinary vía banners informativos.
+
+3. Se actualizó el versionado de recursos a v=2.4.0 para evitar caché.
+
+Subida recomendada:
+- Reemplazar el frontend completo por esta versión.
+- Mantener la carpeta .git local.
+- Ejecutar: git add . && git commit -m "Emmagina frontend v2.4 proporciones home" && git push
+- En Render, esperar el auto-deploy y luego probar con Ctrl + Shift + R.
