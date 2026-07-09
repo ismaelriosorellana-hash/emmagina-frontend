@@ -1,0 +1,10 @@
+Emmagina Frontend v2.2
+
+Cambios incluidos:
+- Imagen de tarjetas ocupa todo el recuadro cuadrado, sin padding, sin borde interno y sin esquinas redondeadas en la imagen.
+- Badges renderizados desde datos del producto: texto, color, color de texto, activo y orden.
+- Texto comercial de disponibilidad configurable desde admin.
+- Sección Linea Memories reducida aproximadamente al 50% de altura.
+- Nueva sección Linea Alma bajo Linea Memories con el mismo formato compacto.
+
+Después de subir a Render, usar Ctrl + Shift + R para limpiar caché.

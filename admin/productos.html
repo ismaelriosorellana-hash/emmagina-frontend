@@ -8,10 +8,10 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Productos | Emmagina</title>
     <link rel="icon" href="../assets/emmagina-logo.svg">
-    <link rel="stylesheet" href="css/admin.css?v=1.3.0">
+    <link rel="stylesheet" href="css/admin.css?v=2.2.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="css/admin-experience-v327.css?v=1.3.0">
-    <link rel="stylesheet" href="../css/mobile-polish-v3370.css?v=1.3.0">
+    <link rel="stylesheet" href="css/admin-experience-v327.css?v=2.2.0">
+    <link rel="stylesheet" href="../css/mobile-polish-v3370.css?v=2.2.0">
 </head>
 <body data-admin-page="productos" data-admin-title="Productos">
     <section id="admin-page-content">
@@ -131,8 +131,29 @@
                                 </div>
 
                                 <div class="admin-field">
-                                    <label for="product-badge">Insignia</label>
-                                    <input id="product-badge" placeholder="Nuevo" maxlength="80">
+                                    <label for="product-badge">Texto insignia principal</label>
+                                    <input id="product-badge" placeholder="Nuevo, Lanzamiento, A pedido" maxlength="48">
+                                </div>
+
+                                <div class="admin-field">
+                                    <label for="product-availability-text">Texto visible de disponibilidad</label>
+                                    <input id="product-availability-text" placeholder="Fabricado a pedido, Disponible, Preventa" maxlength="80">
+                                    <small>Este texto reemplaza “Fabricado a pedido” o “1 disponible” en la tarjeta.</small>
+                                </div>
+
+                                <div class="admin-field full">
+                                    <label>Badges de tarjeta</label>
+                                    <div class="admin-form-grid" style="margin-top:8px;">
+                                        <label class="admin-checkbox"><input id="product-badge-enabled" type="checkbox" checked> Mostrar insignia principal</label>
+                                        <div class="admin-field"><label for="product-badge-order">Orden insignia</label><input id="product-badge-order" type="number" step="1" value="1"></div>
+                                        <div class="admin-field"><label for="product-badge-color">Color insignia</label><input id="product-badge-color" type="color" value="#303744"></div>
+                                        <div class="admin-field"><label for="product-badge-text-color">Color texto insignia</label><input id="product-badge-text-color" type="color" value="#ffffff"></div>
+                                        <label class="admin-checkbox"><input id="product-discount-badge-enabled" type="checkbox" checked> Mostrar badge de descuento si existe precio anterior</label>
+                                        <div class="admin-field"><label for="product-discount-badge-text">Texto descuento</label><input id="product-discount-badge-text" placeholder="Ej: Oferta, -20%"></div>
+                                        <div class="admin-field"><label for="product-discount-badge-order">Orden descuento</label><input id="product-discount-badge-order" type="number" step="1" value="2"></div>
+                                        <div class="admin-field"><label for="product-discount-badge-color">Color descuento</label><input id="product-discount-badge-color" type="color" value="#a87148"></div>
+                                    </div>
+                                    <small>La insignia y el descuento se ordenan por número menor a mayor. Si dejas vacío el texto de descuento, se calculará automáticamente como “-XX%”.</small>
                                 </div>
 
                                 <div class="admin-field">
@@ -409,10 +430,10 @@
         </div>
     </section>
 
-    <script src="../js/config.js?v=1.3.0"></script>
-    <script src="js/admin-api.js?v=1.3.0"></script>
-    <script src="js/admin-common.js?v=1.3.0"></script>
-    <script src="js/admin-experience-v327.js?v=1.3.0"></script>
-    <script src="js/products-admin.js?v=1.3.0"></script>
+    <script src="../js/config.js?v=2.2.0"></script>
+    <script src="js/admin-api.js?v=2.2.0"></script>
+    <script src="js/admin-common.js?v=2.2.0"></script>
+    <script src="js/admin-experience-v327.js?v=2.2.0"></script>
+    <script src="js/products-admin.js?v=2.2.0"></script>
 </body>
 </html>

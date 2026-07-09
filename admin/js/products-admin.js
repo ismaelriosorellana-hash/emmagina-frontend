@@ -387,7 +387,21 @@ function openProductForm(product = null) {
         "product-sizes",
         Array.isArray(product?.tallas) ? product.tallas.join(", ") : product?.tallas || ""
     );
-    setValue("product-badge", product?.insignia || "");
+    const primaryBadge = Array.isArray(product?.badges)
+        ? product.badges.find((badge) => badge && badge.tipo !== "descuento")
+        : null;
+    const discountBadge = product?.badgeDescuento || {};
+
+    setValue("product-badge", product?.insignia || primaryBadge?.texto || "");
+    setValue("product-availability-text", product?.textoDisponibilidad || product?.availabilityText || "");
+    setChecked("product-badge-enabled", primaryBadge ? primaryBadge.activo !== false : true);
+    setValue("product-badge-order", primaryBadge?.orden ?? 1);
+    setValue("product-badge-color", primaryBadge?.color || "#303744");
+    setValue("product-badge-text-color", primaryBadge?.textoColor || "#ffffff");
+    setChecked("product-discount-badge-enabled", discountBadge.activo !== false);
+    setValue("product-discount-badge-text", discountBadge.texto || "");
+    setValue("product-discount-badge-order", discountBadge.orden ?? 2);
+    setValue("product-discount-badge-color", discountBadge.color || "#a87148");
     setValue("product-description", product?.descripcion || "");
     setValue("product-images", normalizeImageUrls(product?.imagenes).join("\n"));
     setValue("product-characteristics", characteristicsToText(product?.caracteristicas));
@@ -807,6 +821,25 @@ async function saveProduct(event) {
                 values.indexOf(item) === index
             ),
         insignia: stringFrom("product-badge"),
+        textoDisponibilidad: stringFrom("product-availability-text"),
+        badges: stringFrom("product-badge")
+            ? [{
+                tipo: "insignia",
+                activo: checkedFrom("product-badge-enabled"),
+                texto: stringFrom("product-badge"),
+                color: stringFrom("product-badge-color") || "#303744",
+                textoColor: stringFrom("product-badge-text-color") || "#ffffff",
+                orden: numberFrom("product-badge-order") || 1
+            }]
+            : [],
+        badgeDescuento: {
+            tipo: "descuento",
+            activo: checkedFrom("product-discount-badge-enabled"),
+            texto: stringFrom("product-discount-badge-text"),
+            color: stringFrom("product-discount-badge-color") || "#a87148",
+            textoColor: "#ffffff",
+            orden: numberFrom("product-discount-badge-order") || 2
+        },
         descripcion: stringFrom("product-description"),
         imagenes: parseLineList(document.getElementById("product-images").value)
             .map((url, index) => ({ url, principal: index === 0, orden: index + 1 })),

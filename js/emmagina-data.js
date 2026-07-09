@@ -78,6 +78,29 @@
     const personalizado = Boolean(raw.personalizable || raw.fabricadoAPedido || raw.aPedido || stock <= 0);
     const insignia = String(raw.insignia || raw.badge || (raw.lanzamiento ? "Lanzamiento" : raw.destacado ? "Destacado" : personalizado ? "A pedido" : "")).trim();
     const discount = discountPercent({ precio, precioOriginal });
+    const rawBadges = Array.isArray(raw.badges) ? raw.badges : [];
+    const badges = rawBadges
+      .filter((badge) => badge && badge.activo !== false && badge.visible !== false && String(badge.texto || badge.text || badge.label || "").trim())
+      .map((badge, index) => ({
+        texto: String(badge.texto || badge.text || badge.label || "").trim().slice(0, 48),
+        color: String(badge.color || badge.background || "#303744").trim() || "#303744",
+        textoColor: String(badge.textoColor || badge.textColor || badge.colorTexto || "#ffffff").trim() || "#ffffff",
+        orden: Number.isFinite(Number(badge.orden)) ? Number(badge.orden) : index + 1
+      }))
+      .sort((a, b) => a.orden - b.orden);
+
+    const discountBadge = raw.badgeDescuento || raw.discountBadge || {};
+    if (discount > 0 && discountBadge.activo !== false) {
+      badges.push({
+        texto: String(discountBadge.texto || discountBadge.text || `-${discount}%`).trim(),
+        color: String(discountBadge.color || "#a87148").trim() || "#a87148",
+        textoColor: String(discountBadge.textoColor || discountBadge.textColor || "#ffffff").trim() || "#ffffff",
+        orden: Number.isFinite(Number(discountBadge.orden)) ? Number(discountBadge.orden) : 99
+      });
+      badges.sort((a, b) => a.orden - b.orden);
+    }
+
+    const availabilityText = String(raw.textoDisponibilidad || raw.availabilityText || raw.estadoComercialTexto || "").trim();
 
     return {
       id,
@@ -102,7 +125,9 @@
       desde14990: Boolean(raw.desde14990 || precio <= 14990),
       personalizable: personalizado,
       insignia,
+      badges,
       discount,
+      availabilityText,
       variantes: Array.isArray(raw.variantes) ? raw.variantes : [],
       raw
     };

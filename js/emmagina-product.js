@@ -1,6 +1,19 @@
 "use strict";
 
 (async function () {
+
+  function renderDetailBadges(product) {
+    const badges = Array.isArray(product.badges) ? product.badges : [];
+    const html = badges.map((badge) => {
+      const text = window.EmmaginaUI.escapeHtml(badge.texto || "");
+      if (!text) return "";
+      const background = window.EmmaginaUI.escapeHtml(badge.color || "#303744");
+      const color = window.EmmaginaUI.escapeHtml(badge.textoColor || "#ffffff");
+      return `<span class="product-badge" style="background:${background};color:${color};">${text}</span>`;
+    }).filter(Boolean).join("");
+
+    return html ? `<div class="product-badges" style="position:static;margin:10px 0 4px;">${html}</div>` : "";
+  }
   const root = document.querySelector("[data-product-detail]");
   if (!root) return;
   const params = new URLSearchParams(location.search);
@@ -20,7 +33,7 @@
       <aside class="product-panel">
         <p class="kicker">${window.EmmaginaUI.escapeHtml(product.categoriaPrincipal || "Emmagina")}</p>
         <h1>${window.EmmaginaUI.escapeHtml(product.nombre)}</h1>
-        <div class="product-badges" style="position:static;margin:10px 0 4px;">${product.insignia ? `<span class="product-badge badge-primary">${window.EmmaginaUI.escapeHtml(product.insignia)}</span>` : ""}${product.discount > 0 ? `<span class="product-badge badge-discount">-${product.discount}%</span>` : ""}</div>
+        ${renderDetailBadges(product)}
         <div class="detail-price"><strong>${window.EmmaginaData.formatPrice(product.precio)}</strong>${product.precioOriginal > product.precio ? `<span class="product-old-price">${window.EmmaginaData.formatPrice(product.precioOriginal)}</span>` : ""}</div>
         <p>${window.EmmaginaUI.escapeHtml(product.descripcion || product.descripcionCorta || "Producto impreso en 3D.")}</p>
         <div class="detail-actions">
@@ -28,7 +41,7 @@
           <a class="btn btn-soft" href="pedido-personalizado.html">Crear una escena personalizada</a>
         </div>
         <ul class="info-list">
-          <li><strong>Disponibilidad:</strong> ${product.personalizable ? "Fabricado a pedido" : "Producto visible en vitrina"}</li>
+          <li><strong>Disponibilidad:</strong> ${window.EmmaginaUI.escapeHtml(product.availabilityText || (product.personalizable ? "Fabricado a pedido" : "Producto visible en vitrina"))}</li>
           <li><strong>Material:</strong> Impresión 3D en PLA según producto.</li>
           <li><strong>Acabado:</strong> Puede incluir lijado y pintura artesanal según versión.</li>
           <li><strong>Importante:</strong> Las piezas personalizadas son interpretaciones artísticas inspiradas en referencias.</li>

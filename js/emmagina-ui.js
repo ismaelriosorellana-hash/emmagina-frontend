@@ -11,9 +11,19 @@
   }
 
   function productBadges(product) {
-    const parts = [];
-    if (product.insignia) parts.push(`<span class="product-badge badge-primary">${escapeHtml(product.insignia)}</span>`);
-    if (product.discount > 0) parts.push(`<span class="product-badge badge-discount">-${product.discount}%</span>`);
+    const badges = Array.isArray(product.badges) ? product.badges : [];
+    const parts = badges.map((badge) => {
+      const text = escapeHtml(badge.texto || "");
+      if (!text) return "";
+      const background = escapeHtml(badge.color || "#303744");
+      const color = escapeHtml(badge.textoColor || "#ffffff");
+      return `<span class="product-badge" style="background:${background};color:${color};">${text}</span>`;
+    }).filter(Boolean);
+
+    if (!parts.length && product.insignia) {
+      parts.push(`<span class="product-badge badge-primary">${escapeHtml(product.insignia)}</span>`);
+    }
+
     return parts.length ? `<div class="product-badges">${parts.join("")}</div>` : "";
   }
 
@@ -23,7 +33,7 @@
     const original = product.precioOriginal > product.precio
       ? `<span class="product-old-price">${window.EmmaginaData.formatPrice(product.precioOriginal)}</span>`
       : "";
-    const meta = product.personalizable ? "Fabricado a pedido" : product.stock > 0 ? `${product.stock} disponibles` : "Disponible para vitrina";
+    const meta = product.availabilityText || (product.personalizable ? "Fabricado a pedido" : product.stock > 0 ? `${product.stock} disponibles` : "Disponible para vitrina");
     const category = product.categoriaPrincipal || product.categorias?.[0] || "Emmagina";
 
     return `
