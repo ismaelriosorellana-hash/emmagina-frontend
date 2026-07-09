@@ -1,0 +1,28 @@
+Emmagina Frontend v3.0 - HTML5 semántico y modular
+
+Base tomada desde v2.6 y reorganizada para trabajar con una estructura más limpia.
+
+Cambios principales:
+- HTML reconstruido con estructura HTML5 semántica: header, nav, main, section, aside, article y footer.
+- CSS separado en módulos: base, layout, components, home, catalog, product y pages.
+- Frontend público sin dependencia del CSS monolítico antiguo.
+- Admin conservado para mantener operación actual.
+- JS público mantenido en módulos existentes y versionado a v3.0.0.
+
+Dónde modificar:
+- Colores y variables: css/base.css
+- Header, buscador y footer: css/layout.css
+- Tarjetas, botones, carruseles y preview: css/components.css
+- Home, hero, líneas y banners: css/home.css
+- Catálogo: css/catalog.css
+- Ficha de producto: css/product.css
+- Páginas informativas, carrito y formularios: css/pages.css
+
+Subida recomendada:
+1. Respaldar frontend actual.
+2. Borrar contenido del repo sin borrar .git.
+3. Copiar esta carpeta completa.
+4. git add .
+5. git commit -m "Emmagina frontend v3 HTML5 semantico modular"
+6. git push
+7. Probar en Render con Ctrl + Shift + R.

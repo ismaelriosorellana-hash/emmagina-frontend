@@ -31,7 +31,7 @@ const PLACEHOLDER_IMAGE = "data:image/svg+xml;charset=UTF-8," + encodeURICompone
 </svg>`);
 
 window.CONFIG = Object.freeze({
-  APP_VERSION: "2.6.0-emmagina-marquee-clean",
+  APP_VERSION: "3.0.0-emmagina-html5-modular",
   SITE_NAME: "Emmagina",
   BRAND_NAME: "Emmagina",
   SITE_URL: "https://emmagina-frontend.onrender.com",

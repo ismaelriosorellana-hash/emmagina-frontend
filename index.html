@@ -1,49 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es-CL">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tienda online de productos impresos en 3D, figuras personalizadas, decoración y recuerdos familiares.">
+  <meta name="theme-color" content="#f8f6f1">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/emmagina.css?v=2.6.0">
+  <link rel="stylesheet" href="css/base.css?v=3.0.0">
+  <link rel="stylesheet" href="css/layout.css?v=3.0.0">
+  <link rel="stylesheet" href="css/components.css?v=3.0.0">
+  <link rel="stylesheet" href="css/home.css?v=3.0.0">
+  <link rel="stylesheet" href="css/catalog.css?v=3.0.0">
+  <link rel="stylesheet" href="css/product.css?v=3.0.0">
+  <link rel="stylesheet" href="css/pages.css?v=3.0.0">
   <title>Emmagina | Tienda 3D</title>
 </head>
 <body>
   <a href="#main" class="skip-link">Saltar al contenido</a>
-  <header class="site-header">
-    <div class="header-top">
-      <button class="icon-button search-trigger" type="button" data-open-search aria-label="Buscar"><span>Buscar</span> 🔎</button>
-      <a class="brand" href="index.html" aria-label="Emmagina inicio">Emmagina<small>3D Store</small></a>
-      <div class="header-actions">
-        <button class="icon-button mobile-menu-button" type="button" data-mobile-menu aria-expanded="false">Menú</button>
-        <a class="header-link login-link" href="acceso.html">Iniciar sesión</a>
-        <a class="header-link cart-pill" href="carrito.html">Carrito <span class="cart-count" data-cart-count>0</span></a>
+  <header class="site-header" data-site-header>
+    <div class="header-shell">
+      <div class="header-top" aria-label="Barra superior Emmagina">
+        <button class="icon-button search-trigger" type="button" data-open-search aria-label="Buscar productos">
+          <span aria-hidden="true">🔎</span><span>Buscar</span>
+        </button>
+        <a class="brand" href="index.html" aria-label="Ir al inicio de Emmagina">
+          <strong>Emmagina</strong><small>3D Store</small>
+        </a>
+        <div class="header-actions" aria-label="Acciones de usuario">
+          <button class="icon-button mobile-menu-button" type="button" data-mobile-menu aria-expanded="false" aria-controls="main-nav">Menú</button>
+          <a class="header-link login-link" href="acceso.html">Iniciar sesión</a>
+          <a class="header-link cart-pill" href="carrito.html" aria-label="Ir al carrito">Carrito <span class="cart-count" data-cart-count>0</span></a>
+        </div>
       </div>
+      <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="catalogo.html">Tienda</a>
+        <a href="pedido-personalizado.html">Crea tu Escena</a>
+        <a href="quienes-somos.html">Sobre Nosotros</a>
+        <a href="contacto.html">Contáctanos</a>
+        <a href="preguntas-frecuentes.html">Preguntas Frecuentes</a>
+      </nav>
     </div>
-    <nav class="main-nav" aria-label="Navegación principal">
-      <a href="index.html">Inicio</a>
-      <a href="catalogo.html">Tienda</a>
-      <a href="pedido-personalizado.html">Crea tu Escena</a>
-      <a href="quienes-somos.html">Sobre Nosotros</a>
-      <a href="contacto.html">Contáctanos</a>
-      <a href="preguntas-frecuentes.html">Preguntas Frecuentes</a>
-    </nav>
   </header>
-  <div class="search-panel" data-search-panel>
-    <div class="search-box">
+  <section class="search-panel" data-search-panel aria-label="Buscador" aria-hidden="true">
+    <div class="search-box" role="search">
       <form action="catalogo.html" method="get">
-        <input type="search" name="q" placeholder="Buscar figuras, decoración, herramientas..." aria-label="Buscar productos">
+        <label class="sr-only" for="global-search">Buscar productos</label>
+        <input id="global-search" type="search" name="q" placeholder="Buscar figuras, decoración, herramientas...">
         <button class="btn btn-primary" type="submit">Buscar</button>
       </form>
       <button class="btn btn-soft search-close" type="button" data-close-search>Cerrar</button>
     </div>
-  </div>
+  </section>
   <main id="main">
-    <section class="hero-section">
+    <section class="hero-section" aria-labelledby="home-hero-title">
       <div class="hero-layout">
         <aside class="category-panel" aria-label="Categorías principales">
           <h2>Categorías</h2>
@@ -64,16 +79,16 @@
           <img data-hero-image src="assets/producto-referencia-emmagina.png" alt="Banner principal Emmagina" loading="eager">
           <span class="hero-overlay" data-hero-overlay>
             <span class="kicker" data-hero-kicker>Impresión 3D · regalos · recuerdos</span>
-            <strong data-hero-title>Ideas que toman forma</strong>
+            <strong id="home-hero-title" data-hero-title>Ideas que toman forma</strong>
             <span class="hero-button" data-hero-button>Ver tienda</span>
           </span>
         </a>
       </div>
     </section>
 
-    <section class="section section-muted home-info-section">
+    <section class="section section-muted home-info-section" aria-labelledby="home-info-title">
       <div class="section-heading">
-        <div><p class="kicker">Información</p><h2>Explora Emmagina</h2></div>
+        <div><p class="kicker">Información</p><h2 id="home-info-title">Explora Emmagina</h2></div>
       </div>
       <div class="explore-grid" data-explore-grid></div>
     </section>
@@ -83,16 +98,15 @@
         <img src="assets/producto-referencia-emmagina.png" alt="Linea Memories Emmagina" loading="lazy">
         <span class="line-banner-button">Pedir el mío</span>
       </a>
-
-      <a class="line-banner line-banner-alma" href="catalogo.html?categoria=Linea%20Alma" data-line-banner="linea-alma" aria-label="Pedir una pieza de Linea Alma">
+      <a class="line-banner line-banner-alma" href="pedido-personalizado.html" data-line-banner="linea-alma" aria-label="Pedir una pieza de Linea Alma">
         <img src="assets/producto-referencia-emmagina.png" alt="Linea Alma Emmagina" loading="lazy">
         <span class="line-banner-button">Pedir el mío</span>
       </a>
     </section>
 
-    <section class="section section-muted">
+    <section class="section section-muted" aria-label="Productos destacados Emmagina">
       <div class="shop-layout">
-        <aside class="gift-panel">
+        <aside class="gift-panel" aria-label="Ideas para regalar">
           <h3>Ideas para regalar</h3>
           <div class="gift-buttons">
             <a href="catalogo.html?categoria=Linea%20Memories">Familia</a>
@@ -105,69 +119,66 @@
         </aside>
         <div class="carousel-stack">
           <section class="product-marquee" data-home-marquee="desde14990" aria-label="Productos desde 14.990">
-            <div class="carousel-head"><div><p class="kicker">Entrada</p><h2>Desde $14.990</h2></div></div>
+            <header class="carousel-head"><div><p class="kicker">Entrada</p><h2>Desde $14.990</h2></div></header>
             <div class="marquee-viewport"><div class="marquee-track" data-marquee-track></div></div>
           </section>
           <section class="product-marquee" data-home-marquee="lanzamiento" aria-label="Productos de lanzamiento">
-            <div class="carousel-head"><div><p class="kicker">Novedades</p><h2>Lanzamiento</h2></div></div>
+            <header class="carousel-head"><div><p class="kicker">Novedades</p><h2>Lanzamiento</h2></div></header>
             <div class="marquee-viewport"><div class="marquee-track" data-marquee-track></div></div>
           </section>
           <section class="product-marquee" data-home-marquee="destacados" aria-label="Productos destacados">
-            <div class="carousel-head"><div><p class="kicker">Selección</p><h2>Destacados</h2></div></div>
+            <header class="carousel-head"><div><p class="kicker">Selección</p><h2>Destacados</h2></div></header>
             <div class="marquee-viewport"><div class="marquee-track" data-marquee-track></div></div>
           </section>
         </div>
       </div>
     </section>
-    <section class="section section-muted reviews-section" data-reviews-section hidden>
+
+    <section class="section reviews-marquee" data-reviews-section hidden aria-labelledby="reviews-title">
       <div class="section-heading">
-        <div><p class="kicker">Reseñas reales</p><h2>Mejor evaluados</h2></div>
+        <div><p class="kicker">Confianza</p><h2 id="reviews-title">Mejores reseñas</h2></div>
       </div>
-      <section class="reviews-marquee" data-review-marquee aria-label="Carrusel de reseñas mejor evaluadas">
-        <div class="marquee-viewport"><div class="marquee-track reviews-track" data-reviews-track></div></div>
-      </section>
+      <div class="marquee-viewport"><div class="marquee-track" data-reviews-track></div></div>
     </section>
   </main>
   <footer class="site-footer">
     <div class="footer-inner">
-      <div class="footer-col">
-        <div class="footer-brand">Emmagina</div>
+      <section class="footer-col" aria-label="Marca">
+        <h2 class="footer-brand">Emmagina</h2>
         <p>Productos impresos en 3D, figuras personalizadas y decoraciones pensadas para regalar, crear y recordar.</p>
-      </div>
-      <div class="footer-col">
+      </section>
+      <nav class="footer-col" aria-label="Tienda">
         <h3>Tienda</h3>
-        <nav>
-          <a href="catalogo.html">Catálogo</a>
-          <a href="pedido-personalizado.html">Crea tu escena</a>
-          <a href="carrito.html">Carrito</a>
-        </nav>
-      </div>
-      <div class="footer-col">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="pedido-personalizado.html">Crea tu escena</a>
+        <a href="carrito.html">Carrito</a>
+        <a href="comparacion.html">Comparación</a>
+      </nav>
+      <nav class="footer-col" aria-label="Ayuda">
         <h3>Ayuda</h3>
-        <nav>
-          <a href="preguntas-frecuentes.html">Preguntas frecuentes</a>
-          <a href="despachos-retiros.html">Despachos y retiros</a>
-          <a href="cambios-pedidos.html">Cambios y pedidos</a>
-        </nav>
-      </div>
-      <div class="footer-col">
+        <a href="preguntas-frecuentes.html">Preguntas frecuentes</a>
+        <a href="despachos-retiros.html">Despachos y retiros</a>
+        <a href="cambios-pedidos.html">Cambios y pedidos</a>
+        <a href="seguimiento-pedido.html">Seguimiento</a>
+      </nav>
+      <section class="footer-col" aria-label="Soporte al cliente">
         <h3>Soporte</h3>
         <p>WhatsApp: +56 9 0000 0000</p>
         <p>Correo: contacto@emmagina.cl</p>
         <a class="btn btn-soft btn-small" href="https://wa.me/56900000000" target="_blank" rel="noopener">Contactar soporte</a>
-      </div>
+      </section>
     </div>
     <div class="footer-bottom">
       <span>© 2026 Emmagina. Todos los derechos reservados.</span>
       <span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span>
     </div>
   </footer>
-  <script src="js/config.js?v=2.6.0"></script>
-  <script src="js/emmagina-data.js?v=2.6.0"></script>
-  <script src="js/emmagina-api.js?v=2.6.0"></script>
-  <script src="js/emmagina-cart.js?v=2.6.0"></script>
-  <script src="js/emmagina-ui.js?v=2.6.0"></script>
-  <script src="js/emmagina-common.js?v=2.6.0"></script>
-  <script src="js/emmagina-home.js?v=2.6.0"></script>
+  <script src="js/config.js?v=3.0.0"></script>
+  <script src="js/emmagina-data.js?v=3.0.0"></script>
+  <script src="js/emmagina-api.js?v=3.0.0"></script>
+  <script src="js/emmagina-cart.js?v=3.0.0"></script>
+  <script src="js/emmagina-ui.js?v=3.0.0"></script>
+  <script src="js/emmagina-common.js?v=3.0.0"></script>
+  <script src="js/emmagina-home.js?v=3.0.0"></script>
 </body>
 </html>

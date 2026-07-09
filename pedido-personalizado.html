@@ -1,107 +1,133 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es-CL">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Formulario para crear una escena personalizada impresa en 3D.">
+  <meta name="theme-color" content="#f8f6f1">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/emmagina.css?v=2.6.0">
+  <link rel="stylesheet" href="css/base.css?v=3.0.0">
+  <link rel="stylesheet" href="css/layout.css?v=3.0.0">
+  <link rel="stylesheet" href="css/components.css?v=3.0.0">
+  <link rel="stylesheet" href="css/home.css?v=3.0.0">
+  <link rel="stylesheet" href="css/catalog.css?v=3.0.0">
+  <link rel="stylesheet" href="css/product.css?v=3.0.0">
+  <link rel="stylesheet" href="css/pages.css?v=3.0.0">
   <title>Crea tu escena | Emmagina</title>
 </head>
 <body>
   <a href="#main" class="skip-link">Saltar al contenido</a>
-  <header class="site-header">
-    <div class="header-top">
-      <button class="icon-button search-trigger" type="button" data-open-search aria-label="Buscar"><span>Buscar</span> 🔎</button>
-      <a class="brand" href="index.html" aria-label="Emmagina inicio">Emmagina<small>3D Store</small></a>
-      <div class="header-actions">
-        <button class="icon-button mobile-menu-button" type="button" data-mobile-menu aria-expanded="false">Menú</button>
-        <a class="header-link login-link" href="acceso.html">Iniciar sesión</a>
-        <a class="header-link cart-pill" href="carrito.html">Carrito <span class="cart-count" data-cart-count>0</span></a>
+  <header class="site-header" data-site-header>
+    <div class="header-shell">
+      <div class="header-top" aria-label="Barra superior Emmagina">
+        <button class="icon-button search-trigger" type="button" data-open-search aria-label="Buscar productos">
+          <span aria-hidden="true">🔎</span><span>Buscar</span>
+        </button>
+        <a class="brand" href="index.html" aria-label="Ir al inicio de Emmagina">
+          <strong>Emmagina</strong><small>3D Store</small>
+        </a>
+        <div class="header-actions" aria-label="Acciones de usuario">
+          <button class="icon-button mobile-menu-button" type="button" data-mobile-menu aria-expanded="false" aria-controls="main-nav">Menú</button>
+          <a class="header-link login-link" href="acceso.html">Iniciar sesión</a>
+          <a class="header-link cart-pill" href="carrito.html" aria-label="Ir al carrito">Carrito <span class="cart-count" data-cart-count>0</span></a>
+        </div>
       </div>
+      <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="catalogo.html">Tienda</a>
+        <a href="pedido-personalizado.html">Crea tu Escena</a>
+        <a href="quienes-somos.html">Sobre Nosotros</a>
+        <a href="contacto.html">Contáctanos</a>
+        <a href="preguntas-frecuentes.html">Preguntas Frecuentes</a>
+      </nav>
     </div>
-    <nav class="main-nav" aria-label="Navegación principal">
-      <a href="index.html">Inicio</a>
-      <a href="catalogo.html">Tienda</a>
-      <a href="pedido-personalizado.html">Crea tu Escena</a>
-      <a href="quienes-somos.html">Sobre Nosotros</a>
-      <a href="contacto.html">Contáctanos</a>
-      <a href="preguntas-frecuentes.html">Preguntas Frecuentes</a>
-    </nav>
   </header>
-  <div class="search-panel" data-search-panel>
-    <div class="search-box">
+  <section class="search-panel" data-search-panel aria-label="Buscador" aria-hidden="true">
+    <div class="search-box" role="search">
       <form action="catalogo.html" method="get">
-        <input type="search" name="q" placeholder="Buscar figuras, decoración, herramientas..." aria-label="Buscar productos">
+        <label class="sr-only" for="global-search">Buscar productos</label>
+        <input id="global-search" type="search" name="q" placeholder="Buscar figuras, decoración, herramientas...">
         <button class="btn btn-primary" type="submit">Buscar</button>
       </form>
       <button class="btn btn-soft search-close" type="button" data-close-search>Cerrar</button>
     </div>
-  </div>
+  </section>
   <main id="main">
-    <section class="form-page">
-      <div class="form-card">
-        <p class="kicker">Linea Memories</p>
-        <h1>Crea tu escena</h1>
-        <p>Completa esta información para recrear una figura o escena inspirada en un recuerdo familiar. En esta versión el formulario queda listo visualmente; la conexión completa a backend será la siguiente etapa.</p>
+    <header class="content-hero">
+      <p class="kicker">Personalización</p>
+      <h1>Crea tu escena</h1>
+      <p>Cuéntanos el momento que quieres recrear y envía tus referencias para preparar una figura o escena personalizada.</p>
+    </header>
+    <section class="section form-section" aria-label="Formulario crea tu escena">
+      <article class="content-card">
+        <h2>Guía rápida</h2>
+        <ol class="step-list">
+          <li>Elige el tipo de producto o escena.</li>
+          <li>Envía 2 fotos por persona y una referencia del contexto.</li>
+          <li>Agrega frase para placa, fecha o detalle especial.</li>
+          <li>Revisaremos viabilidad antes de iniciar producción.</li>
+        </ol>
+      </article>
+      <article class="content-card">
+        <h2>Solicitud personalizada</h2>
         <form class="form-grid" data-scene-form>
-          <div class="field"><label>Nombre</label><input required name="nombre"></div>
-          <div class="field"><label>WhatsApp</label><input required name="whatsapp"></div>
-          <div class="field"><label>Correo</label><input type="email" name="correo"></div>
-          <div class="field"><label>Ciudad / comuna</label><input name="comuna"></div>
-          <div class="field"><label>Cantidad de personas</label><select name="personas"><option>1 persona</option><option>2 personas</option><option>3 personas</option></select></div>
-          <div class="field"><label>Frase para placa</label><input name="placa" maxlength="60"></div>
-          <div class="field full"><label>Descripción del momento</label><textarea rows="5" name="momento" placeholder="Ej: mamá, papá y bebé en su primer paseo..."></textarea></div>
-          <div class="field full"><label>Fotos de referencia</label><input type="file" multiple accept="image/*"><small>Idealmente 2 fotos por persona y una imagen del contexto.</small></div>
+          <div class="field"><label for="scene-name">Nombre</label><input id="scene-name" required name="nombre"></div>
+          <div class="field"><label for="scene-whatsapp">WhatsApp</label><input id="scene-whatsapp" required name="whatsapp"></div>
+          <div class="field"><label for="scene-email">Correo</label><input id="scene-email" type="email" name="correo"></div>
+          <div class="field"><label for="scene-city">Ciudad / comuna</label><input id="scene-city" name="comuna"></div>
+          <div class="field"><label for="scene-people">Cantidad de personas</label><select id="scene-people" name="personas"><option>1 persona</option><option>2 personas</option><option>3 personas</option></select></div>
+          <div class="field"><label for="scene-plaque">Frase para placa</label><input id="scene-plaque" name="placa" maxlength="60"></div>
+          <div class="field full"><label for="scene-moment">Descripción del momento</label><textarea id="scene-moment" rows="5" name="momento" placeholder="Ej: mamá, papá y bebé en su primer paseo..."></textarea></div>
+          <div class="field full"><label for="scene-files">Fotos de referencia</label><input id="scene-files" type="file" multiple accept="image/*"><small>Idealmente 2 fotos por persona y una imagen del contexto.</small></div>
           <div class="field full"><button class="btn btn-primary" type="submit">Enviar solicitud</button></div>
         </form>
-        <div data-scene-message style="margin-top:18px;"></div>
-      </div>
-    </section></main>
+        <div data-scene-message class="form-message"></div>
+      </article>
+    </section>
+  </main>
   <footer class="site-footer">
     <div class="footer-inner">
-      <div class="footer-col">
-        <div class="footer-brand">Emmagina</div>
+      <section class="footer-col" aria-label="Marca">
+        <h2 class="footer-brand">Emmagina</h2>
         <p>Productos impresos en 3D, figuras personalizadas y decoraciones pensadas para regalar, crear y recordar.</p>
-      </div>
-      <div class="footer-col">
+      </section>
+      <nav class="footer-col" aria-label="Tienda">
         <h3>Tienda</h3>
-        <nav>
-          <a href="catalogo.html">Catálogo</a>
-          <a href="pedido-personalizado.html">Crea tu escena</a>
-          <a href="carrito.html">Carrito</a>
-        </nav>
-      </div>
-      <div class="footer-col">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="pedido-personalizado.html">Crea tu escena</a>
+        <a href="carrito.html">Carrito</a>
+        <a href="comparacion.html">Comparación</a>
+      </nav>
+      <nav class="footer-col" aria-label="Ayuda">
         <h3>Ayuda</h3>
-        <nav>
-          <a href="preguntas-frecuentes.html">Preguntas frecuentes</a>
-          <a href="despachos-retiros.html">Despachos y retiros</a>
-          <a href="cambios-pedidos.html">Cambios y pedidos</a>
-        </nav>
-      </div>
-      <div class="footer-col">
+        <a href="preguntas-frecuentes.html">Preguntas frecuentes</a>
+        <a href="despachos-retiros.html">Despachos y retiros</a>
+        <a href="cambios-pedidos.html">Cambios y pedidos</a>
+        <a href="seguimiento-pedido.html">Seguimiento</a>
+      </nav>
+      <section class="footer-col" aria-label="Soporte al cliente">
         <h3>Soporte</h3>
         <p>WhatsApp: +56 9 0000 0000</p>
         <p>Correo: contacto@emmagina.cl</p>
         <a class="btn btn-soft btn-small" href="https://wa.me/56900000000" target="_blank" rel="noopener">Contactar soporte</a>
-      </div>
+      </section>
     </div>
     <div class="footer-bottom">
       <span>© 2026 Emmagina. Todos los derechos reservados.</span>
       <span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span>
     </div>
   </footer>
-  <script src="js/config.js?v=2.6.0"></script>
-  <script src="js/emmagina-data.js?v=2.6.0"></script>
-  <script src="js/emmagina-api.js?v=2.6.0"></script>
-  <script src="js/emmagina-cart.js?v=2.6.0"></script>
-  <script src="js/emmagina-ui.js?v=2.6.0"></script>
-  <script src="js/emmagina-common.js?v=2.6.0"></script>
-  <script src="js/emmagina-custom-scene.js?v=2.6.0"></script>
+  <script src="js/config.js?v=3.0.0"></script>
+  <script src="js/emmagina-data.js?v=3.0.0"></script>
+  <script src="js/emmagina-api.js?v=3.0.0"></script>
+  <script src="js/emmagina-cart.js?v=3.0.0"></script>
+  <script src="js/emmagina-ui.js?v=3.0.0"></script>
+  <script src="js/emmagina-common.js?v=3.0.0"></script>
+  <script src="js/emmagina-custom-scene.js?v=3.0.0"></script>
 </body>
 </html>
