@@ -1,3 +1,4 @@
+
 "use strict";
 
 (async function () {
@@ -47,13 +48,21 @@
       .sort((a, b) => (Number(a.orden) || 0) - (Number(b.orden) || 0));
   }
 
-  function fillCarouselList(selected, products, minItems = 6) {
+  function fillMarqueeList(selected, products, minItems = 8) {
     const visible = uniqueById(products.filter(window.EmmaginaData.isVisible));
     const base = uniqueById(selected.filter(window.EmmaginaData.isVisible));
-    if (base.length >= minItems) return base.slice(0, 18);
     const selectedKeys = new Set(base.map((p) => String(p.id || p.slug || p.nombre || "")));
     const fillers = visible.filter((p) => !selectedKeys.has(String(p.id || p.slug || p.nombre || "")));
-    return base.concat(fillers).slice(0, Math.max(minItems, Math.min(18, visible.length)));
+    const merged = base.concat(fillers);
+    if (!merged.length) return [];
+    const result = [];
+    let i = 0;
+    while (result.length < Math.max(minItems, Math.min(14, visible.length || minItems))) {
+      result.push(merged[i % merged.length]);
+      i += 1;
+      if (merged.length === result.length && result.length >= minItems) break;
+    }
+    return result.slice(0, 14);
   }
 
   function sectionProducts(kind, products) {
@@ -65,22 +74,25 @@
     else if (kind === "vendidos") selected = visible.filter((p) => p.masVendido);
     else if (kind === "vistos") selected = visible.filter((p) => p.masVisto);
     else selected = visible;
-    return fillCarouselList(selected, visible, 6);
+    return fillMarqueeList(selected, visible, 8);
   }
 
-  function renderCarousel(id, title, products) {
-    const root = by(`[data-home-carousel='${id}']`);
+  function renderProductMarquee(id, title, products) {
+    const root = by(`[data-home-marquee='${id}']`);
     if (!root) return;
-    const track = root.querySelector("[data-carousel-track]");
-    const selected = products.length ? products : all.slice(0, 10);
+    const track = root.querySelector("[data-marquee-track]");
+    const selected = products.length ? products : all.slice(0, 12);
+    if (!track) return;
     if (!selected.length) {
-      root.innerHTML = `<div class="state-box"><p>No hay productos disponibles para ${title}.</p></div>`;
+      track.innerHTML = `<div class="state-box"><p>No hay productos disponibles para ${window.EmmaginaUI.escapeHtml(title)}.</p></div>`;
       return;
     }
 
-    track.innerHTML = selected.map((p) => window.EmmaginaUI.productCard(p)).join("");
+    const cards = selected.map((p) => window.EmmaginaUI.productCard(p)).join("");
+    track.innerHTML = `<div class="marquee-group">${cards}</div><div class="marquee-group" aria-hidden="true">${cards}</div>`;
+    const duration = Math.max(34, selected.length * 6);
+    track.style.setProperty("--marquee-duration", `${duration}s`);
     window.EmmaginaUI.attachCartButtons(all);
-    window.EmmaginaCarousel.init(root);
   }
 
   function applyHeroBanner() {
@@ -90,9 +102,7 @@
     const kicker = by("[data-hero-kicker]");
     const title = by("[data-hero-title]");
     const button = by("[data-hero-button]");
-
     if (!banner || !image) return;
-
     const src = bannerImage(banner);
     if (src) image.src = src;
     image.alt = banner.titulo || banner.nombre || "Banner principal Emmagina";
@@ -122,7 +132,6 @@
   function renderExplore(products) {
     const container = by("[data-explore-grid]");
     if (!container) return;
-
     const infoBanners = bannersByLocation("info-card").slice(0, 3);
     if (infoBanners.length) {
       container.innerHTML = infoBanners.map((banner) => {
@@ -137,13 +146,11 @@
       }).join("");
       return;
     }
-
     const cards = [
       { title: "Destacados", text: "Piezas seleccionadas para regalar o decorar.", kind: "destacados" },
       { title: "Los más vendidos", text: "Productos con mayor movimiento en la tienda.", kind: "vendidos" },
       { title: "Los más vistos", text: "Opciones que más despiertan interés.", kind: "vistos" }
     ];
-
     container.innerHTML = cards.map((card) => {
       const product = sectionProducts(card.kind, products)[0] || products[0] || {};
       const image = product.imagenPrincipal || window.CONFIG.placeholderImage;
@@ -179,23 +186,20 @@
         if (normalized) reviews.push(normalized);
       }
     }
-    return reviews
-      .sort((a, b) => b.rating - a.rating)
-      .slice(0, 12);
+    return reviews.sort((a, b) => b.rating - a.rating).slice(0, 12);
   }
 
   function renderReviews(products) {
     const section = by("[data-reviews-section]");
-    const carousel = by("[data-review-carousel]");
     const track = by("[data-reviews-track]");
-    if (!section || !carousel || !track) return;
+    if (!section || !track) return;
     const reviews = collectReviews(products);
     if (!reviews.length) {
       section.hidden = true;
       return;
     }
     section.hidden = false;
-    track.innerHTML = reviews.map((review) => {
+    const cards = reviews.map((review) => {
       const stars = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
       return `<article class="review-card">
         <div class="review-stars" aria-label="${review.rating} de 5 estrellas">${stars}</div>
@@ -206,11 +210,12 @@
         </footer>
       </article>`;
     }).join("");
-    window.EmmaginaCarousel.init(carousel);
+    track.innerHTML = `<div class="marquee-group">${cards}</div><div class="marquee-group" aria-hidden="true">${cards}</div>`;
+    track.style.setProperty("--marquee-duration", `${Math.max(32, reviews.length * 7)}s`);
   }
 
   try {
-    document.querySelectorAll("[data-carousel-track]").forEach((track) => window.EmmaginaUI.setLoading(track, "Cargando productos..."));
+    document.querySelectorAll("[data-marquee-track]").forEach((track) => window.EmmaginaUI.setLoading(track, "Cargando productos..."));
     const [products, banners] = await Promise.all([
       window.EmmaginaAPI.getProducts({ limit: 240 }),
       window.EmmaginaAPI.getBanners().catch(() => [])
@@ -222,14 +227,13 @@
     applyHeroBanner();
     applyLineBanner("linea-memories", ["memories", "memoria"], "pedido-personalizado.html");
     applyLineBanner("linea-alma", ["alma"], "catalogo.html?categoria=Linea%20Alma");
-
     renderExplore(visible);
-    renderCarousel("desde14990", "Desde $14.990", sectionProducts("desde14990", visible));
-    renderCarousel("lanzamiento", "Lanzamiento", sectionProducts("lanzamiento", visible));
-    renderCarousel("destacados", "Destacados", sectionProducts("destacados", visible));
+    renderProductMarquee("desde14990", "Desde $14.990", sectionProducts("desde14990", visible));
+    renderProductMarquee("lanzamiento", "Lanzamiento", sectionProducts("lanzamiento", visible));
+    renderProductMarquee("destacados", "Destacados", sectionProducts("destacados", visible));
     renderReviews(visible);
   } catch (error) {
     console.error("No fue posible cargar productos en inicio:", error);
-    document.querySelectorAll("[data-home-carousel]").forEach((root) => window.EmmaginaUI.setError(root, error.message));
+    document.querySelectorAll("[data-home-marquee]").forEach((root) => window.EmmaginaUI.setError(root, error.message));
   }
 })();
