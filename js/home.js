@@ -5,6 +5,89 @@
     let bannerIndex = 0;
 
 
+    function getCarouselTrack(scrollArea) {
+        if (!scrollArea) return null;
+        return scrollArea.querySelector(".carousel-track") || scrollArea;
+    }
+
+    function cleanupCarouselClones(track) {
+        if (!track) return;
+        track.querySelectorAll("[data-carousel-clone='true']").forEach((node) => node.remove());
+    }
+
+    function attachCloneActions(clone, container) {
+        clone.querySelectorAll(".add-cart").forEach((button) => {
+            button.addEventListener("click", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                if (container?.dataset?.suppressClick === "true") return;
+                const card = button.closest(".card-product");
+                const href = card?.querySelector(".product-card-link")?.getAttribute("href");
+                if (href) window.location.href = href;
+            });
+        });
+    }
+
+    function setupInfiniteCarousel(scrollArea) {
+        const track = getCarouselTrack(scrollArea);
+        if (!scrollArea || !track || !track.classList.contains("carousel-track")) return;
+
+        cleanupCarouselClones(track);
+
+        const originals = Array.from(track.children)
+            .filter((node) => !node.matches(".loading-products, .catalog-empty") && node.dataset.carouselClone !== "true");
+
+        if (originals.length < 2) {
+            delete scrollArea.dataset.infiniteReady;
+            delete scrollArea.dataset.infiniteWidth;
+            return;
+        }
+
+        const before = originals.map((node) => {
+            const clone = node.cloneNode(true);
+            clone.dataset.carouselClone = "true";
+            clone.setAttribute("aria-hidden", "true");
+            attachCloneActions(clone, scrollArea);
+            return clone;
+        });
+
+        const after = originals.map((node) => {
+            const clone = node.cloneNode(true);
+            clone.dataset.carouselClone = "true";
+            clone.setAttribute("aria-hidden", "true");
+            attachCloneActions(clone, scrollArea);
+            return clone;
+        });
+
+        before.reverse().forEach((clone) => track.prepend(clone));
+        after.forEach((clone) => track.append(clone));
+
+        window.requestAnimationFrame(() => {
+            const setWidth = Math.max(1, track.scrollWidth / 3);
+            scrollArea.dataset.infiniteReady = "true";
+            scrollArea.dataset.infiniteWidth = String(setWidth);
+            if (!scrollArea.dataset.infinitePositioned) {
+                scrollArea.scrollLeft = setWidth;
+                scrollArea.dataset.infinitePositioned = "true";
+            } else {
+                normalizeInfiniteCarousel(scrollArea);
+            }
+        });
+    }
+
+    function normalizeInfiniteCarousel(scrollArea) {
+        if (!scrollArea || scrollArea.dataset.infiniteReady !== "true") return;
+        const setWidth = Number(scrollArea.dataset.infiniteWidth || 0);
+        if (!setWidth) return;
+
+        const current = scrollArea.scrollLeft;
+        if (current < setWidth * 0.5) {
+            scrollArea.scrollLeft = current + setWidth;
+        } else if (current > setWidth * 1.5) {
+            scrollArea.scrollLeft = current - setWidth;
+        }
+    }
+
     function enableDragScroll(scrollArea, options = {}) {
         if (!scrollArea || scrollArea.dataset.dragScrollReady === "true") return;
 
@@ -13,67 +96,30 @@
         let startX = 0;
         let startY = 0;
         let startScrollLeft = 0;
-        let lastX = 0;
-        let lastTime = 0;
-        let velocity = 0;
         let pointerId = null;
-        let momentumFrame = 0;
+        let normalizeTimer = 0;
 
-        const threshold = Number(options.threshold || 8);
-        const friction = Number(options.friction || 0.955);
-        const minVelocity = Number(options.minVelocity || 0.08);
+        const threshold = Number(options.threshold || 6);
 
-        function cancelMomentum() {
-            if (momentumFrame) {
-                window.cancelAnimationFrame(momentumFrame);
-                momentumFrame = 0;
-            }
-        }
-
-        function startMomentum() {
-            cancelMomentum();
-
-            let currentVelocity = velocity * 16;
-            if (Math.abs(currentVelocity) < minVelocity) return;
-
-            const step = () => {
-                currentVelocity *= friction;
-                scrollArea.scrollLeft -= currentVelocity;
-
-                if (Math.abs(currentVelocity) > minVelocity) {
-                    momentumFrame = window.requestAnimationFrame(step);
-                } else {
-                    momentumFrame = 0;
-                }
-            };
-
-            momentumFrame = window.requestAnimationFrame(step);
+        function scheduleNormalize() {
+            window.clearTimeout(normalizeTimer);
+            normalizeTimer = window.setTimeout(() => normalizeInfiniteCarousel(scrollArea), 90);
         }
 
         scrollArea.dataset.dragScrollReady = "true";
         scrollArea.classList.add("drag-scroll-ready");
 
-        scrollArea.addEventListener("dragstart", (event) => {
-            event.preventDefault();
-        });
+        scrollArea.addEventListener("dragstart", (event) => event.preventDefault());
 
         scrollArea.addEventListener("pointerdown", (event) => {
             if (event.button !== undefined && event.button !== 0) return;
             if (scrollArea.scrollWidth <= scrollArea.clientWidth) return;
 
-            // En pantallas táctiles dejamos que el navegador haga el scroll nativo:
-            // es más fluido y tiene inercia real del dispositivo.
-            if (event.pointerType === "touch") return;
-
-            cancelMomentum();
             isPointerDown = true;
             isDragging = false;
             pointerId = event.pointerId;
             startX = event.clientX;
             startY = event.clientY;
-            lastX = event.clientX;
-            lastTime = performance.now();
-            velocity = 0;
             startScrollLeft = scrollArea.scrollLeft;
         });
 
@@ -82,9 +128,8 @@
 
             const deltaX = event.clientX - startX;
             const deltaY = event.clientY - startY;
-            const absX = Math.abs(deltaX);
 
-            if (!isDragging && absX > threshold && absX > Math.abs(deltaY)) {
+            if (!isDragging && Math.abs(deltaX) > threshold && Math.abs(deltaX) > Math.abs(deltaY)) {
                 isDragging = true;
                 scrollArea.classList.add("is-dragging-scroll");
                 scrollArea.setPointerCapture?.(pointerId);
@@ -92,14 +137,9 @@
 
             if (!isDragging) return;
 
-            const now = performance.now();
-            const elapsed = Math.max(now - lastTime, 16);
-            velocity = (event.clientX - lastX) / elapsed;
-            lastX = event.clientX;
-            lastTime = now;
-
             event.preventDefault();
             scrollArea.scrollLeft = startScrollLeft - deltaX;
+            normalizeInfiniteCarousel(scrollArea);
         }, { passive: false });
 
         function stopDragging(event) {
@@ -114,8 +154,8 @@
                 scrollArea.dataset.suppressClick = "true";
                 window.setTimeout(() => {
                     delete scrollArea.dataset.suppressClick;
-                }, 90);
-                startMomentum();
+                }, 120);
+                scheduleNormalize();
             }
 
             try {
@@ -127,6 +167,7 @@
         scrollArea.addEventListener("pointerup", stopDragging);
         scrollArea.addEventListener("pointercancel", stopDragging);
         scrollArea.addEventListener("lostpointercapture", stopDragging);
+        scrollArea.addEventListener("scroll", scheduleNormalize, { passive: true });
 
         scrollArea.addEventListener("click", (event) => {
             if (scrollArea.dataset.suppressClick === "true") {
@@ -134,37 +175,35 @@
                 event.stopPropagation();
             }
         }, true);
-        // El scroll del mouse queda reservado para subir y bajar la página.
-        // El carrusel se mueve solo con clic sostenido + arrastre, touch o flechas.
     }
 
     function initDragCarousels() {
         document
-            .querySelectorAll(".carousel-container, .categories-grid")
+            .querySelectorAll(".carousel-container")
+            .forEach((scrollArea) => {
+                setupInfiniteCarousel(scrollArea);
+                enableDragScroll(scrollArea);
+            });
+
+        document
+            .querySelectorAll(".categories-grid")
             .forEach((scrollArea) => enableDragScroll(scrollArea));
     }
+
     function initCarouselArrows() {
         document
             .querySelectorAll(".carousel-arrow")
             .forEach((button) => {
+                if (button.dataset.arrowReady === "true") return;
+                button.dataset.arrowReady = "true";
                 button.addEventListener("click", () => {
-                    const container =
-                        document.getElementById(
-                            button.dataset.carousel
-                        );
-
+                    const container = document.getElementById(button.dataset.carousel);
                     if (!container) return;
 
-                    const direction =
-                        Number(button.dataset.direction) || 1;
-
-                    container.scrollBy({
-                        left:
-                            container.clientWidth *
-                            0.82 *
-                            direction,
-                        behavior: "smooth"
-                    });
+                    const direction = Number(button.dataset.direction) || 1;
+                    const distance = Math.max(240, container.clientWidth * 0.78) * direction;
+                    container.scrollBy({ left: distance, behavior: "smooth" });
+                    window.setTimeout(() => normalizeInfiniteCarousel(container), 420);
                 });
             });
     }
@@ -176,6 +215,8 @@
 
         document.querySelectorAll("[data-category-direction]")
             .forEach((button) => {
+                if (button.dataset.categoryArrowReady === "true") return;
+                button.dataset.categoryArrowReady = "true";
                 button.addEventListener("click", () => {
                     const direction = Number(button.dataset.categoryDirection) || 1;
                     rail.scrollBy({
@@ -184,7 +225,6 @@
                     });
                 });
             });
-        // La rueda del mouse no desplaza el carrusel de categorías; solo navega la página.
     }
 
     function bannerImage(slide) {

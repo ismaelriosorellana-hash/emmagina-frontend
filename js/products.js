@@ -1369,7 +1369,7 @@ function createProductCard(product) {
         article.dataset.selectedVariantId = activeVariant?.id || "";
     }
 
-    image.style.objectFit = product.cardImageFit || "cover";
+    image.style.objectFit = product.cardImageFit || "contain";
     image.style.objectPosition = product.imagePosition || "center";
     image.addEventListener("error", () => {
         image.src = CONFIG.placeholderImage;
@@ -1463,39 +1463,12 @@ function createProductCard(product) {
 
     updateCardVariant(activeVariant);
 
-    if (!hasAvailableStock(product)) {
-        const label = addButton.querySelector("span");
-        article.classList.add("is-showcase-only");
-        label.textContent = isMadeToOrder(product) ? "A pedido" : "Ver detalle";
-        addButton.addEventListener("click", () => {
-            window.location.href = link.href;
-        });
-    } else if (selectableVariants.length || availableSizes.length) {
-        addButton.querySelector("span").textContent =
-            selectableVariants.length && availableSizes.length
-                ? "Elegir color y talla"
-                : selectableVariants.length
-                    ? "Elegir color"
-                    : "Elegir talla";
-        addButton.addEventListener("click", () => {
-            if (availableSizes.length && !activeSize) {
-                showToast("Selecciona una talla antes de continuar.");
-                sizeRow?.scrollIntoView({ behavior: "smooth", block: "center" });
-                return;
-            }
-            window.location.href = link.href;
-        });
-    } else {
-        addButton.addEventListener("click", () => {
-            window.Cart?.add(product, 1);
-            showToast(`${product.nombre} fue agregado al carrito.`);
-            const label = addButton.querySelector("span");
-            label.textContent = "Agregado";
-            window.setTimeout(() => {
-                label.textContent = "Agregar";
-            }, 1200);
-        });
-    }
+    addButton.querySelector("span").textContent = "Ver detalle";
+    addButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        window.location.href = link.href;
+    });
 
     return fragment;
 }

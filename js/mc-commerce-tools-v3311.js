@@ -176,8 +176,8 @@
                 <button class="mc-product-tool" type="button" data-mc-quick-view aria-label="Abrir vista rápida" title="Vista rápida">
                     <i class="fa-regular fa-eye" aria-hidden="true"></i>
                 </button>
-                <button class="mc-product-tool" type="button" data-mc-open-category aria-label="Ver más de la misma categoría" title="Ver categoría">
-                    <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                <button class="mc-product-tool" type="button" data-mc-add-card aria-label="Agregar primera opción al carrito" title="Agregar al carrito">
+                    <i class="fa-solid fa-cart-plus" aria-hidden="true"></i>
                 </button>
             `;
             imageContainer.appendChild(toolbox);
@@ -568,6 +568,40 @@
         openQuickView(product);
     }
 
+    function addFirstOptionToCart(product) {
+        if (!product) return false;
+
+        const variants = getVariants(product);
+        const sizes = getSizes(product);
+        const variant = variants[0] || null;
+        const size = sizes[0] || "";
+        const customization = {};
+
+        if (size) {
+            customization.talla = size;
+            customization.size = size;
+        }
+
+        if (variant?.selectable) {
+            customization.productVariant = variant.nombre;
+            customization.variantId = variant.id;
+            customization.colorHex = variant.colorHex;
+            customization.sku = variant.sku;
+        }
+
+        const cartProduct = {
+            ...product,
+            precio: getVariantPrice(product, variant),
+            imagenPrincipal: variant?.imagen || product.imagenPrincipal
+        };
+
+        return window.Cart?.add(
+            cartProduct,
+            1,
+            Object.keys(customization).length ? customization : null
+        );
+    }
+
     function addQuickViewToCart() {
         const product = state.quickViewProduct;
         if (!product) return;
@@ -676,14 +710,17 @@
                 return;
             }
 
-            const categoryButton = event.target.closest("[data-mc-open-category]");
-            if (categoryButton) {
+            const addCardButton = event.target.closest("[data-mc-add-card]");
+            if (addCardButton) {
                 event.preventDefault();
                 event.stopPropagation();
-                const productId = categoryButton.closest(".card-product")?.dataset.productId;
+                const productId = addCardButton.closest(".card-product")?.dataset.productId;
                 const product = await findProduct(productId);
-                if (product?.categoria) {
-                    window.location.href = `catalogo.html?categoria=${encodeURIComponent(product.categoria)}`;
+                const added = addFirstOptionToCart(product);
+                if (added !== false) {
+                    showToast(`${product?.nombre || "Producto"} fue agregado al carrito.`);
+                } else {
+                    showToast("No pudimos agregar ese producto al carrito.");
                 }
                 return;
             }

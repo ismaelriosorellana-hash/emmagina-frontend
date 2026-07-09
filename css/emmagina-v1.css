@@ -1441,3 +1441,230 @@ footer .copyright p {
         grid-template-columns: 1fr !important;
     }
 }
+
+/* ==========================================================
+   Emmagina v1.5 · carruseles infinitos y tarjetas de producto limpias
+   ========================================================== */
+body[data-page="home"] .carousel-wrapper {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+body[data-page="home"] .carousel-container {
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    scroll-behavior: smooth !important;
+    scroll-snap-type: none !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+    cursor: grab !important;
+}
+
+body[data-page="home"] .carousel-container::-webkit-scrollbar {
+    display: none !important;
+}
+
+body[data-page="home"] .carousel-container.is-dragging-scroll {
+    cursor: grabbing !important;
+    scroll-behavior: auto !important;
+}
+
+body[data-page="home"] .carousel-track {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    width: max-content !important;
+    min-width: max-content !important;
+    gap: clamp(1.4rem, 2vw, 2rem) !important;
+    padding: .4rem .4rem 1.6rem !important;
+    background: transparent !important;
+}
+
+body[data-page="home"] .carousel-track > * {
+    scroll-snap-align: none !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .card-product,
+body[data-page="home"] .carousel-track .card-product {
+    position: relative !important;
+    flex: 0 0 clamp(22rem, 23vw, 28rem) !important;
+    width: clamp(22rem, 23vw, 28rem) !important;
+    min-width: clamp(22rem, 23vw, 28rem) !important;
+    aspect-ratio: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    border-radius: 2rem !important;
+    background: #ffffff !important;
+    border: 1px solid var(--em-line) !important;
+    box-shadow: 0 1.2rem 3rem rgba(69, 80, 95, .08) !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-card-link,
+body[data-page="home"] .carousel-track .product-card-link {
+    position: static !important;
+    inset: auto !important;
+    display: flex !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    flex-direction: column !important;
+    color: inherit !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .container-img,
+body[data-page="home"] .carousel-track .container-img {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    flex: 0 0 auto !important;
+    overflow: hidden !important;
+    border-radius: 0 !important;
+    background: var(--em-bg-soft) !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-card-image,
+body[data-page="home"] .carousel-track .product-card-image {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    padding: .4rem !important;
+    background: transparent !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .content-card-product,
+body[data-page="home"] .carousel-track .content-card-product {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    z-index: 1 !important;
+    display: flex !important;
+    flex: 1 1 auto !important;
+    flex-direction: column !important;
+    gap: .35rem !important;
+    min-height: 11.5rem !important;
+    padding: 1.25rem 1.35rem .9rem !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    color: var(--em-ink) !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-category,
+body[data-page="home"] .carousel-track .product-category {
+    margin: 0 !important;
+    color: var(--em-muted) !important;
+    font-size: .95rem !important;
+    font-weight: 700 !important;
+    letter-spacing: .1em !important;
+    text-transform: uppercase !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-name,
+body[data-page="home"] .carousel-track .product-name {
+    display: -webkit-box !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    color: var(--em-ink) !important;
+    font-size: clamp(1.35rem, 1.25vw, 1.62rem) !important;
+    line-height: 1.2 !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-price-row,
+body[data-page="home"] .carousel-track .product-price-row {
+    margin-top: auto !important;
+    padding-top: .65rem !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-price,
+body[data-page="home"] .carousel-track .product-price {
+    font-size: clamp(1.45rem, 1.35vw, 1.75rem) !important;
+    color: var(--em-accent-dark) !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-badge,
+body[data-page="home"] .carousel-track .product-badge,
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-discount-badge,
+body[data-page="home"] .carousel-track .product-discount-badge {
+    position: absolute !important;
+    left: .9rem !important;
+    right: auto !important;
+    z-index: 3 !important;
+    width: max-content !important;
+    max-width: calc(100% - 1.8rem) !important;
+    min-width: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: .38rem .72rem !important;
+    border-radius: 999px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    font-size: .92rem !important;
+    line-height: 1 !important;
+    box-shadow: none !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-badge,
+body[data-page="home"] .carousel-track .product-badge {
+    top: .9rem !important;
+    background: var(--em-bg-warm) !important;
+    color: #6f5f50 !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .product-discount-badge,
+body[data-page="home"] .carousel-track .product-discount-badge {
+    top: 3.55rem !important;
+    background: #ffffff !important;
+    color: var(--em-accent-dark) !important;
+    border: 1px solid var(--em-line) !important;
+}
+
+body[data-page="home"] .carousel-track .container-img:not(:has(.product-badge:not([hidden]))) .product-discount-badge {
+    top: .9rem !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .add-cart,
+body[data-page="home"] .carousel-track .add-cart {
+    position: static !important;
+    inset: auto !important;
+    z-index: 1 !important;
+    width: auto !important;
+    min-height: 4.2rem !important;
+    margin: 0 1.25rem 1.25rem !important;
+    border-radius: 999px !important;
+    background: var(--em-accent-dark) !important;
+    color: #ffffff !important;
+    font-size: 1.25rem !important;
+}
+
+body[data-page="home"] .emmagina-carousel-stack .carousel-track .card-product.is-showcase-only .add-cart,
+body[data-page="home"] .carousel-track .card-product.is-showcase-only .add-cart {
+    background: var(--em-accent-dark) !important;
+    color: #ffffff !important;
+    border: 0 !important;
+}
+
+body[data-page="home"] .carousel-arrow {
+    z-index: 8 !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+@media (max-width: 700px) {
+    body[data-page="home"] .emmagina-carousel-stack .carousel-track .card-product,
+    body[data-page="home"] .carousel-track .card-product {
+        flex-basis: min(72vw, 24rem) !important;
+        width: min(72vw, 24rem) !important;
+        min-width: min(72vw, 24rem) !important;
+    }
+}
