@@ -81,6 +81,14 @@
     return payload?.page || payload?.data || payload;
   }
 
+  async function getNavigation() {
+    const payload = await request("/pages/_navigation");
+    if (Array.isArray(payload)) return payload;
+    if (Array.isArray(payload?.items)) return payload.items;
+    if (Array.isArray(payload?.navigation)) return payload.navigation;
+    return [];
+  }
+
   async function getBanners() {
     const payload = await request("/banners");
     if (Array.isArray(payload)) return payload;
@@ -94,6 +102,7 @@
   API.getProductBySlug = getProductBySlug;
   API.getProductById = getProductById;
   API.getBanners = getBanners;
+  API.getNavigation = getNavigation;
   API.getPage = getPage;
   window.EmmaginaAPI = Object.freeze(API);
 })();

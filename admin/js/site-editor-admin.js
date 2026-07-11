@@ -191,9 +191,10 @@
             const active = [page.key, page.slug, page._id].map(String).includes(String(current)) ? " active" : "";
             const status = page.isPublished === false ? "Borrador" : "Publicada";
             const system = page.isSystem ? " · Sistema" : "";
+            const nav = page.showInNavigation ? ` · Menú #${Number(page.sortOrder || 50)}` : "";
             return `<button class="site-editor-page-item${active}" type="button" data-page-key="${escapeHtml(page._id || page.key || page.slug)}">
                 <strong>${escapeHtml(page.title || page.key || "Página")}</strong>
-                <span>/${escapeHtml(page.slug || page.key || "")} · ${escapeHtml(status)}${escapeHtml(system)} · ${Number(page.sectionsCount || 0)} secciones · ${Number(page.blocksCount || 0)} bloques</span>
+                <span>/${escapeHtml(page.slug || page.key || "")} · ${escapeHtml(status)}${escapeHtml(system)}${escapeHtml(nav)} · ${Number(page.sectionsCount || 0)} secciones · ${Number(page.blocksCount || 0)} bloques</span>
             </button>`;
         }).join("");
     }
@@ -204,6 +205,8 @@
         $("#site-editor-page-title").value = empty ? "" : (page.title || "");
         $("#site-editor-page-slug").value = empty ? "" : (page.slug || "");
         $("#site-editor-page-navigation-label").value = empty ? "" : (page.navigationLabel || page.title || "");
+        const sortInput = $("#site-editor-page-sort-order");
+        if (sortInput) sortInput.value = empty ? "" : String(page.sortOrder || 50);
         $("#site-editor-page-description").value = empty ? "" : (page.description || "");
         $("#site-editor-page-seo-title").value = empty ? "" : (page.seo?.title || "");
         $("#site-editor-page-seo-description").value = empty ? "" : (page.seo?.description || "");
@@ -406,7 +409,7 @@
         if (!state.page) return AdminUI.toast("Primero carga o crea una página.", "warning");
         const button = $("#site-editor-save-page");
         const currentKey = activePageKey();
-        const payload = { title: $("#site-editor-page-title").value.trim() || "Página", slug: $("#site-editor-page-slug").value.trim(), description: $("#site-editor-page-description").value.trim(), isPublished: $("#site-editor-page-published").checked, showInNavigation: $("#site-editor-page-nav").checked, navigationLabel: $("#site-editor-page-navigation-label").value.trim(), seo: { title: $("#site-editor-page-seo-title").value.trim(), description: $("#site-editor-page-seo-description").value.trim() } };
+        const payload = { title: $("#site-editor-page-title").value.trim() || "Página", slug: $("#site-editor-page-slug").value.trim(), description: $("#site-editor-page-description").value.trim(), isPublished: $("#site-editor-page-published").checked, showInNavigation: $("#site-editor-page-nav").checked, navigationLabel: $("#site-editor-page-navigation-label").value.trim(), sortOrder: Number($("#site-editor-page-sort-order")?.value || 50), seo: { title: $("#site-editor-page-seo-title").value.trim(), description: $("#site-editor-page-seo-description").value.trim() } };
         try {
             if (button) button.disabled = true;
             setStatus("Guardando página...", "");
@@ -420,7 +423,7 @@
     async function createPage() {
         const title = prompt("Nombre de la nueva página", "Nueva página");
         if (!title) return;
-        state.page = normalizePage(await AdminAPI.request("/admin/editor-sitio/pages", { method: "POST", body: { title, slug: "", isPublished: false, pageType: "custom", showInNavigation: false } }));
+        state.page = normalizePage(await AdminAPI.request("/admin/editor-sitio/pages", { method: "POST", body: { title, slug: "", isPublished: false, pageType: "custom", showInNavigation: false, sortOrder: 50 } }));
         state.selectedSectionId = state.page.sections[0]?._id || "";
         state.selectedBlockId = state.page.sections[0]?.blocks?.[0]?._id || "";
         await loadPages(state.page._id || state.page.key);
@@ -685,7 +688,7 @@
             state.page = null;
             renderAll();
             showError(error);
-            setStatus("No se pudo cargar el Editor del Sitio desde el backend. Verifica que el backend v2.4 esté desplegado y presiona Reparar conexión.", "danger");
+            setStatus("No se pudo cargar el Editor del Sitio desde el backend. Verifica que el backend v2.5 esté desplegado y presiona Reparar conexión.", "danger");
         }
     }
 

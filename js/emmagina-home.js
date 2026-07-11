@@ -109,6 +109,16 @@
     return block?.style && typeof block.style === "object" ? block.style : {};
   }
 
+  function spacingStyle(source) {
+    const style = getStyle(source);
+    const parts = [];
+    if (Number.isFinite(Number(style.marginTop))) parts.push(`margin-top:${Number(style.marginTop)}px`);
+    if (Number.isFinite(Number(style.marginBottom))) parts.push(`margin-bottom:${Number(style.marginBottom)}px`);
+    if (Number.isFinite(Number(style.paddingTop))) parts.push(`padding-top:${Number(style.paddingTop)}px`);
+    if (Number.isFinite(Number(style.paddingBottom))) parts.push(`padding-bottom:${Number(style.paddingBottom)}px`);
+    return parts.length ? ` style="${parts.join(";")}"` : "";
+  }
+
   function uniqueById(list) {
     const seen = new Set();
     return list.filter((product) => {
@@ -327,9 +337,22 @@
       : `<div class="state-box"><p>No hay productos disponibles por ahora.</p></div>`;
     const duration = Math.max(34, selected.length * 6);
 
-    return `<section class="section section-muted product-marquee builder-section" data-block-id="${escape(block._id || block.id || "")}" aria-label="${escape(title)}">
+    return `<section class="section section-muted product-marquee builder-section" data-block-id="${escape(block._id || block.id || "")}" aria-label="${escape(title)}"${spacingStyle(block)}>
       <header class="carousel-head"><div><p class="kicker">${escape(content.kicker || "Emmagina")}</p><h2>${escape(title)}</h2></div></header>
       <div class="marquee-viewport"><div class="marquee-track" style="--marquee-duration:${duration}s">${track}</div></div>
+    </section>`;
+  }
+
+  function renderProductGridBlock(block, products) {
+    const content = getContent(block);
+    const title = content.title || block.name || "Productos";
+    const filter = content.filter || content.grupo || content.category || "todos";
+    const limit = Math.max(4, Math.min(36, toNumber(content.limit, 12)));
+    const selected = sectionProducts(filter, products, limit).slice(0, limit);
+    const cards = selected.map((p) => window.EmmaginaUI.productCard(p)).join("");
+    return `<section class="section section-muted builder-section product-grid-section" data-block-id="${escape(block._id || block.id || "")}"${spacingStyle(block)}>
+      <header class="carousel-head"><div><p class="kicker">${escape(content.kicker || "Emmagina")}</p><h2>${escape(title)}</h2></div></header>
+      ${selected.length ? `<div class="product-grid">${cards}</div>` : `<div class="state-box"><p>No hay productos disponibles por ahora.</p></div>`}
     </section>`;
   }
 
@@ -450,8 +473,8 @@
       case "category_grid": return renderCategoryGridBlock(block);
       case "hero_banner": return renderHeroBlock(block);
       case "info_cards": return renderInfoCardsBlock(block);
-      case "product_marquee":
-      case "product_grid": return renderProductMarqueeBlock(block, products);
+      case "product_marquee": return renderProductMarqueeBlock(block, products);
+      case "product_grid": return renderProductGridBlock(block, products);
       case "image_banner": return renderImageBannerBlock(block);
       case "reviews_marquee": return renderReviewsBlock(block, products);
       case "text_block": return renderTextBlock(block);
@@ -476,9 +499,9 @@
       const hero = blocks.find((block) => normalizeBlockType(block.type) === "hero_banner");
       const rest = blocks.filter((block) => block !== category && block !== hero);
       const heroHeight = Math.max(160, Math.min(760, toNumber(getStyle(hero || {}).heightDesktop || getContent(hero || {}).heightDesktop, 323)));
-      return `<section class="hero-section builder-section builder-section-group" data-section-id="${escape(section._id || section.id || "")}"><div class="hero-layout" style="--hero-height:${heroHeight}px">${category ? renderCategorySidebarBlock(category) : ""}${hero ? renderHeroCardOnly(hero) : ""}</div>${rest.map((block) => renderBuilderBlock(block, products)).join("")}</section>`;
+      return `<section class="hero-section builder-section builder-section-group" data-section-id="${escape(section._id || section.id || "")}"${spacingStyle(section)}><div class="hero-layout" style="--hero-height:${heroHeight}px">${category ? renderCategorySidebarBlock(category) : ""}${hero ? renderHeroCardOnly(hero) : ""}</div>${rest.map((block) => renderBuilderBlock(block, products)).join("")}</section>`;
     }
-    return `<section class="builder-section-group" data-section-id="${escape(section._id || section.id || "")}">${blocks.map((block) => renderBuilderBlock(block, products)).join("")}</section>`;
+    return `<section class="builder-section-group" data-section-id="${escape(section._id || section.id || "")}"${spacingStyle(section)}>${blocks.map((block) => renderBuilderBlock(block, products)).join("")}</section>`;
   }
 
   function renderBuilderHome(page, products) {
