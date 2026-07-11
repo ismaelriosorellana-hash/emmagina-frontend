@@ -10,12 +10,19 @@
 
     const blockLabels = {
         hero_banner: "Hero / Banner principal",
+        "hero-banner": "Hero / Banner principal",
         info_cards: "Tarjetas informativas",
+        "info-cards": "Tarjetas informativas",
         product_marquee: "Carrusel de productos",
+        "product-marquee": "Carrusel de productos",
         product_grid: "Grilla de productos",
+        "product-grid": "Grilla de productos",
         image_banner: "Banner de imagen",
+        "image-banner": "Banner de imagen",
         reviews_marquee: "Carrusel de reseñas",
-        custom_html: "HTML controlado"
+        "reviews-marquee": "Carrusel de reseñas",
+        custom_html: "HTML controlado",
+        "custom-html": "HTML controlado"
     };
 
     const defaultBlocks = {
@@ -104,6 +111,29 @@
 
     function activePageKey() {
         return state.page?._id || state.page?.key || state.page?.slug || "home";
+    }
+
+    function normalizeEditorBlockType(value) {
+        const raw = String(value || "custom_html").trim();
+        const aliases = {
+            "hero-banner": "hero_banner",
+            "hero_banner": "hero_banner",
+            "info-cards": "info_cards",
+            "info_cards": "info_cards",
+            "product-marquee": "product_marquee",
+            "product_marquee": "product_marquee",
+            "product-grid": "product_grid",
+            "product_grid": "product_grid",
+            "image-banner": "image_banner",
+            "image_banner": "image_banner",
+            "reviews-marquee": "reviews_marquee",
+            "reviews_marquee": "reviews_marquee",
+            "custom-html": "custom_html",
+            "custom_html": "custom_html",
+            "html-block": "html_block",
+            "html_block": "html_block"
+        };
+        return aliases[raw] || aliases[raw.replace(/_/g, "-")] || raw.replace(/-/g, "_");
     }
 
     function getSelectedBlock() {
@@ -268,7 +298,8 @@
         const root = $("#site-editor-specific-fields");
         if (!root || !block) return;
         const content = block.content || {};
-        if (["hero_banner", "image_banner"].includes(block.type)) {
+        const normalizedType = normalizeEditorBlockType(block.type);
+        if (["hero_banner", "image_banner"].includes(normalizedType)) {
             root.innerHTML = `
                 ${fieldHtml("title", "Título", content.title || "")}
                 ${fieldHtml("subtitle", "Subtítulo", content.subtitle || "")}
@@ -279,7 +310,7 @@
             `;
             return;
         }
-        if (["product_marquee", "product_grid"].includes(block.type)) {
+        if (["product_marquee", "product_grid"].includes(normalizedType)) {
             root.innerHTML = `
                 ${fieldHtml("title", "Título", content.title || "")}
                 <div class="admin-field">
@@ -292,15 +323,15 @@
             `;
             return;
         }
-        if (block.type === "reviews_marquee") {
+        if (normalizedType === "reviews_marquee") {
             root.innerHTML = `${fieldHtml("title", "Título", content.title || "")}${fieldHtml("minRating", "Evaluación mínima", content.minRating || 4, "number")}`;
             return;
         }
-        if (block.type === "custom_html") {
+        if (normalizedType === "custom_html" || normalizedType === "html_block") {
             root.innerHTML = `${fieldHtml("title", "Título", content.title || "")}${textareaFieldHtml("html", "HTML controlado", content.html || "", 8)}`;
             return;
         }
-        if (block.type === "info_cards") {
+        if (normalizedType === "info_cards") {
             root.innerHTML = `<div class="admin-help">Por ahora este bloque se edita en el JSON de contenido. Usa cards con title, text, image y href.</div>`;
             return;
         }
@@ -322,7 +353,7 @@
         empty.hidden = true;
         $("#site-editor-selected-title").textContent = block.name || blockLabels[block.type] || block.type;
         $("#block-name").value = block.name || "";
-        $("#block-type").value = block.type || "custom_html";
+        $("#block-type").value = normalizeEditorBlockType(block.type || "custom_html");
         $("#block-visible").value = block.isVisible === false ? "false" : "true";
         $("#block-content-json").value = stringify(block.content);
         $("#block-style-json").value = stringify(block.style);
@@ -443,7 +474,7 @@
         }
         const payload = {
             name: $("#block-name").value.trim() || $("#block-type").value,
-            type: $("#block-type").value,
+            type: normalizeEditorBlockType($("#block-type").value),
             isVisible: $("#block-visible").value === "true",
             content,
             style

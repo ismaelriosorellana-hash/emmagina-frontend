@@ -46,6 +46,45 @@
     return block?.content && typeof block.content === "object" ? block.content : {};
   }
 
+  function normalizeBlockType(value) {
+    const raw = String(value || "").trim();
+    const key = raw
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9_]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    const aliases = {
+      "hero-banner": "hero_banner",
+      "hero_banner": "hero_banner",
+      "hero": "hero_banner",
+      "banner-principal": "hero_banner",
+      "info-cards": "info_cards",
+      "info_cards": "info_cards",
+      "bloques-informativos": "info_cards",
+      "tarjetas-informativas": "info_cards",
+      "product-marquee": "product_marquee",
+      "product_marquee": "product_marquee",
+      "carrusel-productos": "product_marquee",
+      "product-grid": "product_grid",
+      "product_grid": "product_grid",
+      "grilla-productos": "product_grid",
+      "image-banner": "image_banner",
+      "image_banner": "image_banner",
+      "banner-imagen": "image_banner",
+      "reviews-marquee": "reviews_marquee",
+      "reviews_marquee": "reviews_marquee",
+      "resenas": "reviews_marquee",
+      "carrusel-resenas": "reviews_marquee",
+      "html-block": "html_block",
+      "html_block": "html_block",
+      "custom-html": "custom_html",
+      "custom_html": "custom_html",
+      "contenido-html": "custom_html"
+    };
+    return aliases[key] || aliases[raw] || key.replace(/-/g, "_") || "custom_html";
+  }
+
   function getStyle(block) {
     return block?.style && typeof block.style === "object" ? block.style : {};
   }
@@ -317,7 +356,8 @@
 
   function renderBuilderBlock(block, products) {
     if (!block || block.isVisible === false) return "";
-    switch (block.type) {
+    const type = normalizeBlockType(block.type);
+    switch (type) {
       case "hero_banner": return renderHeroBlock(block);
       case "info_cards": return renderInfoCardsBlock(block);
       case "product_marquee":
@@ -326,7 +366,7 @@
       case "reviews_marquee": return renderReviewsBlock(block, products);
       case "html_block":
       case "custom_html": return renderHtmlBlock(block);
-      default: return renderGenericBlock(block);
+      default: return renderGenericBlock({ ...block, type });
     }
   }
 

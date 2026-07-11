@@ -1,0 +1,10 @@
+Emmagina Frontend v3.6 - Editor del Sitio Final
+
+Esta versión usa un único módulo central:
+/admin/editor-sitio.html
+
+El Editor del Sitio se conecta al backend v2.2 mediante:
+/api/admin/editor-sitio/pages
+/api/admin/editor-sitio/_repair
+
+Los módulos antiguos de Banners, Contenido, Apariencia, Categorías y Modo Dios quedan fuera del menú principal y redirigen al Editor del Sitio cuando corresponde.
