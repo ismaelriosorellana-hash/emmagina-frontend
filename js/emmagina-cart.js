@@ -27,9 +27,21 @@
     } : null;
   }
 
-  function add(product, quantity = 1) {
+  function normalizeSelectedOption(product, selectedOption = null) {
+    const option = selectedOption || pickFirstOption(product);
+    if (!option) return null;
+    return {
+      variantId: String(option.variantId || option.id || option.key || option.sku || option.nombre || "base"),
+      variantName: option.variantName || option.nombre || option.name || "Opción principal",
+      sku: option.sku || "",
+      price: Number(option.price ?? option.precio ?? product.precio ?? 0),
+      image: option.image || option.imagenPrincipal || product.imagenPrincipal || ""
+    };
+  }
+
+  function add(product, quantity = 1, selectedOption = null) {
     if (!product) return false;
-    const option = pickFirstOption(product);
+    const option = normalizeSelectedOption(product, selectedOption);
     const id = String(product.id || product._id || product.slug || product.nombre || "");
     const optionKey = option?.variantId || "base";
     const lineKey = `${id}::${optionKey}`;
@@ -46,7 +58,7 @@
         slug: product.slug || "",
         name: product.nombre,
         price: Number(option?.price || product.precio || 0),
-        image: product.imagenPrincipal,
+        image: option?.image || product.imagenPrincipal,
         quantity: safeQuantity,
         option,
         personalizable: product.personalizable === true

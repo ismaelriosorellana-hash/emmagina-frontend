@@ -402,6 +402,7 @@ function openProductForm(product = null) {
     setValue("product-discount-badge-text", discountBadge.texto || "");
     setValue("product-discount-badge-order", discountBadge.orden ?? 2);
     setValue("product-discount-badge-color", discountBadge.color || "#a87148");
+    setValue("product-short-description", product?.descripcionCorta || product?.shortDescription || "");
     setValue("product-description", product?.descripcion || "");
     setValue("product-images", normalizeImageUrls(product?.imagenes).join("\n"));
     setValue("product-characteristics", characteristicsToText(product?.caracteristicas));
@@ -425,6 +426,17 @@ function openProductForm(product = null) {
     );
     setValue("product-seo-image", seo.imagen || "");
     setChecked("product-seo-noindex", seo.noIndex);
+
+    const pdp = product?.contenidoPDP && typeof product.contenidoPDP === "object"
+        ? product.contenidoPDP
+        : {};
+    setValue("product-benefit-title", pdp.tituloBeneficio || "");
+    setValue("product-benefit-text", pdp.textoBeneficio || "");
+    setValue("product-benefits", Array.isArray(pdp.beneficios) ? pdp.beneficios.join("\n") : "");
+    setValue("product-care", Array.isArray(pdp.cuidados) ? pdp.cuidados.join("\n") : "");
+    setValue("product-faqs", faqsToText(pdp.preguntasFrecuentes));
+    setValue("product-buy-message", pdp.mensajeCompra || "");
+    setValue("product-warranty", pdp.garantia || "");
 
     setChecked("product-active", product?.activo !== false);
     setChecked("product-publish", product?.publicarCatalogo !== false);
@@ -527,8 +539,19 @@ function addVariant(variant = {}, focus = true) {
 
         <div class="admin-form-grid">
             <div class="admin-field">
-                <label>Nombre del color o presentación</label>
-                <input data-variant-field="nombre" maxlength="120" value="${AdminUI.escapeHtml(variant.nombre || variant.color || "")}" placeholder="Ej. Azul marino">
+                <label>Nombre de la variante</label>
+                <input data-variant-field="nombre" maxlength="120" value="${AdminUI.escapeHtml(variant.nombre || variant.color || "")}" placeholder="Ej. Azul marino / Tamaño M">
+            </div>
+
+            <div class="admin-field">
+                <label>Tipo</label>
+                <select data-variant-field="tipo">
+                    <option value="opcion" ${String(variant.tipo || "opcion") === "opcion" ? "selected" : ""}>Opción</option>
+                    <option value="color" ${String(variant.tipo || "") === "color" ? "selected" : ""}>Color</option>
+                    <option value="talla" ${String(variant.tipo || "") === "talla" ? "selected" : ""}>Talla</option>
+                    <option value="acabado" ${String(variant.tipo || "") === "acabado" ? "selected" : ""}>Acabado</option>
+                    <option value="pack" ${String(variant.tipo || "") === "pack" ? "selected" : ""}>Pack</option>
+                </select>
             </div>
 
             <div class="admin-field">
@@ -537,18 +560,53 @@ function addVariant(variant = {}, focus = true) {
             </div>
 
             <div class="admin-field">
+                <label>Talla / tamaño</label>
+                <input data-variant-field="talla" maxlength="80" value="${AdminUI.escapeHtml(variant.opciones?.talla || variant.opciones?.tamaño || variant.talla || "")}" placeholder="Ej. S, M, Grande">
+            </div>
+
+            <div class="admin-field">
+                <label>Acabado</label>
+                <input data-variant-field="acabado" maxlength="80" value="${AdminUI.escapeHtml(variant.opciones?.acabado || variant.acabado || "")}" placeholder="Ej. Pintado a mano">
+            </div>
+
+            <div class="admin-field">
+                <label>Material</label>
+                <input data-variant-field="material" maxlength="80" value="${AdminUI.escapeHtml(variant.opciones?.material || variant.material || "")}" placeholder="Ej. PLA">
+            </div>
+
+            <div class="admin-field">
                 <label>SKU de variante</label>
                 <input data-variant-field="sku" maxlength="80" value="${AdminUI.escapeHtml(variant.sku || "")}" placeholder="Se generará automáticamente">
             </div>
 
             <div class="admin-field">
-                <label>Stock</label>
+                <label>Stock total</label>
                 <input data-variant-field="stock" type="number" min="0" step="1" value="${Number(variant.stock ?? 0)}">
+            </div>
+
+            <div class="admin-field">
+                <label>Stock reservado</label>
+                <input data-variant-field="stockReservado" type="number" min="0" step="1" value="${Number(variant.stockReservado ?? 0)}">
+            </div>
+
+            <div class="admin-field">
+                <label>Alerta stock bajo</label>
+                <input data-variant-field="stockMinimo" type="number" min="0" step="1" value="${Number(variant.stockMinimo ?? 5)}">
             </div>
 
             <div class="admin-field">
                 <label>Precio especial</label>
                 <input data-variant-field="precio" type="number" min="0" step="1" value="${variant.precio ?? ""}" placeholder="Usar precio general">
+            </div>
+
+            <div class="admin-field">
+                <label>Precio anterior variante</label>
+                <input data-variant-field="precioOriginal" type="number" min="0" step="1" value="${variant.precioOriginal ?? ""}" placeholder="Opcional">
+            </div>
+
+            <div class="admin-field">
+                <label>Estado visible</label>
+                <input data-variant-field="estadoComercial" maxlength="80" value="${AdminUI.escapeHtml(variant.estadoComercial || "")}" placeholder="Disponible, Preventa, A pedido">
             </div>
 
             <div class="admin-field">
@@ -632,6 +690,25 @@ function parseCharacteristics(value) {
     });
 }
 
+function parseFaqs(value) {
+    return parseLineList(value).map((line) => {
+        const separator = line.indexOf("|");
+        if (separator < 1) return null;
+        return {
+            pregunta: line.slice(0, separator).trim(),
+            respuesta: line.slice(separator + 1).trim()
+        };
+    }).filter((item) => item && item.pregunta && item.respuesta);
+}
+
+function faqsToText(value) {
+    if (!Array.isArray(value)) return "";
+    return value.map((item) => {
+        if (!item || typeof item !== "object") return "";
+        return `${item.pregunta || ""} | ${item.respuesta || ""}`.trim();
+    }).filter(Boolean).join("\n");
+}
+
 function collectVariants() {
     return [...document.querySelectorAll(".admin-variant-card")]
         .map((card) => {
@@ -640,14 +717,29 @@ function collectVariants() {
             if (!name) return null;
 
             const price = get("precio");
+            const originalPrice = get("precioOriginal");
+            const stock = Number(get("stock")) || 0;
+            const reserved = Number(get("stockReservado")) || 0;
 
             return {
+                key: normalizeSkuClient(get("sku")) || normalizeSkuClient(name),
                 nombre: name,
+                tipo: get("tipo") || "opcion",
+                opciones: {
+                    talla: get("talla"),
+                    acabado: get("acabado"),
+                    material: get("material")
+                },
                 codigoHex: get("codigoHex"),
-                stock: Number(get("stock")) || 0,
+                stock,
+                stockReservado: reserved,
+                stockDisponible: Math.max(0, stock - reserved),
+                stockMinimo: Number(get("stockMinimo")) || 5,
                 ...(price ? { precio: Number(price) } : {}),
+                ...(originalPrice ? { precioOriginal: Number(originalPrice) } : {}),
                 sku: normalizeSkuClient(get("sku")),
                 activo: true,
+                estadoComercial: get("estadoComercial"),
                 pesoGramos: Number(get("pesoGramos")) || 0,
                 dimensiones: {
                     largoCm: Number(get("largoCm")) || 0,
@@ -686,7 +778,7 @@ function updateProductFormStatus() {
         { label: "nombre", ok: Boolean(productName) },
         { label: "precio", ok: numberFrom("product-price") > 0 },
         { label: "categoría", ok: Boolean(stringFrom("product-main-category")) },
-        { label: "descripción", ok: stringFrom("product-description").length >= 40 },
+        { label: "descripción", ok: stringFrom("product-description").length >= 40 || stringFrom("product-short-description").length >= 40 },
         {
             label: "imagen",
             ok:
@@ -840,6 +932,7 @@ async function saveProduct(event) {
             textoColor: "#ffffff",
             orden: numberFrom("product-discount-badge-order") || 2
         },
+        descripcionCorta: stringFrom("product-short-description"),
         descripcion: stringFrom("product-description"),
         imagenes: parseLineList(document.getElementById("product-images").value)
             .map((url, index) => ({ url, principal: index === 0, orden: index + 1 })),
@@ -857,6 +950,15 @@ async function saveProduct(event) {
                 .filter(Boolean),
             imagen: stringFrom("product-seo-image"),
             noIndex: checkedFrom("product-seo-noindex")
+        },
+        contenidoPDP: {
+            tituloBeneficio: stringFrom("product-benefit-title"),
+            textoBeneficio: stringFrom("product-benefit-text"),
+            beneficios: parseLineList(stringFrom("product-benefits")),
+            cuidados: parseLineList(stringFrom("product-care")),
+            preguntasFrecuentes: parseFaqs(stringFrom("product-faqs")),
+            mensajeCompra: stringFrom("product-buy-message"),
+            garantia: stringFrom("product-warranty")
         },
         entrega: {
             envio: {

@@ -8,10 +8,10 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Productos | Emmagina</title>
     <link rel="icon" href="../assets/emmagina-logo.svg">
-    <link rel="stylesheet" href="css/admin.css?v=2.2.0">
+    <link rel="stylesheet" href="css/admin.css?v=4.6.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="css/admin-experience-v327.css?v=2.2.0">
-    <link rel="stylesheet" href="../css/mobile-polish-v3370.css?v=2.2.0">
+    <link rel="stylesheet" href="css/admin-experience-v327.css?v=4.6.0">
+    <link rel="stylesheet" href="../css/mobile-polish-v3370.css?v=4.6.0">
 </head>
 <body data-admin-page="productos" data-admin-title="Productos">
     <section id="admin-page-content">
@@ -85,6 +85,10 @@
                         <button class="admin-product-tab" type="button" role="tab" aria-selected="false" data-product-tab="seo">
                             <i class="fa-solid fa-magnifying-glass"></i>
                             SEO
+                        </button>
+                        <button class="admin-product-tab" type="button" role="tab" aria-selected="false" data-product-tab="pdp">
+                            <i class="fa-solid fa-window-maximize"></i>
+                            Ficha venta
                         </button>
                         <button class="admin-product-tab" type="button" role="tab" aria-selected="false" data-product-tab="personalizacion">
                             <i class="fa-solid fa-wand-magic-sparkles"></i>
@@ -194,7 +198,13 @@
                                 </div>
 
                                 <div class="admin-field full">
-                                    <label for="product-description">Descripción</label>
+                                    <label for="product-short-description">Descripción corta para tarjetas y ficha</label>
+                                    <textarea id="product-short-description" rows="3" maxlength="360" placeholder="Resumen comercial breve: qué es, para quién sirve y qué lo hace especial."></textarea>
+                                    <small>Se usa en tarjetas de producto y al inicio de la ficha.</small>
+                                </div>
+
+                                <div class="admin-field full">
+                                    <label for="product-description">Descripción completa</label>
                                     <textarea id="product-description" rows="7" maxlength="10000"></textarea>
                                 </div>
 
@@ -354,6 +364,54 @@
                             </div>
                         </section>
 
+                        <section class="admin-product-panel" role="tabpanel" data-product-panel="pdp" hidden>
+                            <div class="admin-product-section-heading">
+                                <div>
+                                    <span class="admin-product-eyebrow">Ficha pública</span>
+                                    <h4>Contenido comercial de la PDP</h4>
+                                </div>
+                                <p>Estos campos alimentan la ficha de producto avanzada: beneficios, cuidados, preguntas frecuentes y mensajes de compra.</p>
+                            </div>
+
+                            <div class="admin-form-grid">
+                                <div class="admin-field full">
+                                    <label for="product-benefit-title">Título del bloque de beneficios</label>
+                                    <input id="product-benefit-title" maxlength="120" placeholder="Lo que debes saber">
+                                </div>
+
+                                <div class="admin-field full">
+                                    <label for="product-benefit-text">Texto principal de beneficios</label>
+                                    <textarea id="product-benefit-text" rows="4" maxlength="800" placeholder="Explica el valor principal del producto."></textarea>
+                                </div>
+
+                                <div class="admin-field full">
+                                    <label for="product-benefits">Beneficios</label>
+                                    <textarea id="product-benefits" rows="5" placeholder="Una línea por beneficio"></textarea>
+                                </div>
+
+                                <div class="admin-field full">
+                                    <label for="product-care">Cuidados y recomendaciones</label>
+                                    <textarea id="product-care" rows="5" placeholder="Una línea por recomendación"></textarea>
+                                </div>
+
+                                <div class="admin-field full">
+                                    <label for="product-faqs">Preguntas frecuentes</label>
+                                    <textarea id="product-faqs" rows="6" placeholder="Pregunta | Respuesta&#10;¿Cuánto demora? | Depende del tipo de producto."></textarea>
+                                    <small>Usa una pregunta por línea con el formato “Pregunta | Respuesta”.</small>
+                                </div>
+
+                                <div class="admin-field full">
+                                    <label for="product-buy-message">Mensaje junto al botón de compra</label>
+                                    <input id="product-buy-message" maxlength="240" placeholder="Agrega al carrito y continúa con el checkout.">
+                                </div>
+
+                                <div class="admin-field full">
+                                    <label for="product-warranty">Garantía o nota de fabricación</label>
+                                    <textarea id="product-warranty" rows="3" maxlength="500" placeholder="Ej.: Producto fabricado artesanalmente, pueden existir pequeñas variaciones."></textarea>
+                                </div>
+                            </div>
+                        </section>
+
                         <section class="admin-product-panel" role="tabpanel" data-product-panel="personalizacion" hidden>
                             <div class="admin-product-section-heading">
                                 <div>
@@ -430,10 +488,10 @@
         </div>
     </section>
 
-    <script src="../js/config.js?v=2.2.0"></script>
-    <script src="js/admin-api.js?v=2.2.0"></script>
-    <script src="js/admin-common.js?v=2.2.0"></script>
-    <script src="js/admin-experience-v327.js?v=2.2.0"></script>
-    <script src="js/products-admin.js?v=2.2.0"></script>
+    <script src="../js/config.js?v=4.6.0"></script>
+    <script src="js/admin-api.js?v=4.6.0"></script>
+    <script src="js/admin-common.js?v=4.6.0"></script>
+    <script src="js/admin-experience-v327.js?v=4.6.0"></script>
+    <script src="js/products-admin.js?v=4.6.0"></script>
 </body>
 </html>

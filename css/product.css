@@ -16,3 +16,63 @@
 .info-list { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 10px; color: var(--muted); }
 .info-list li { border-top: 1px solid var(--line); padding-top: 10px; }
 @media (max-width: 860px) { .detail-layout { grid-template-columns: 1fr; } .product-panel { position: static; } }
+
+/* V4.6 · PDP profesional con variantes */
+.pdp-shell {
+  width: var(--container);
+  margin: 26px auto 36px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(340px, .94fr);
+  gap: 28px;
+  align-items: start;
+}
+.pdp-gallery { position: sticky; top: 128px; }
+.pdp-main-image { background: linear-gradient(180deg, #fff, var(--cloud)); }
+.product-detail-badges { position: static; margin: 12px 0 4px; display: flex; flex-wrap: wrap; gap: 8px; }
+.pdp-buy-panel { top: 128px; }
+.pdp-short-description { margin: 0 0 18px; color: var(--deep-blue); line-height: 1.65; }
+.pdp-status-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 14px 0 18px; color: var(--deep-blue); font-size: 0.9rem; }
+.pdp-status { display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 0 12px; border-radius: 999px; font-weight: 850; }
+.pdp-status.is-available { background: rgba(33, 158, 188, .13); color: var(--navy); }
+.pdp-status.is-custom { background: var(--cream); color: var(--navy); }
+.pdp-card { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: clamp(18px, 3vw, 26px); box-shadow: 0 12px 30px rgba(2, 48, 71, .055); }
+.pdp-card h2 { margin: 0 0 12px; color: var(--navy); font-size: clamp(1.12rem, 2vw, 1.55rem); }
+.pdp-card p { color: var(--deep-blue); line-height: 1.68; }
+.pdp-section-heading { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 12px; }
+.pdp-section-heading span { color: var(--deep-blue); font-size: .78rem; text-transform: uppercase; font-weight: 900; letter-spacing: .08em; }
+.pdp-section-heading strong { color: var(--navy); }
+.pdp-variant-panel { margin: 18px 0; padding: 16px; box-shadow: none; background: var(--cloud); }
+.pdp-variant-list { display: grid; gap: 10px; max-height: 320px; overflow: auto; padding-right: 4px; }
+.pdp-variant-option { width: 100%; min-height: 58px; display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 16px; background: #fff; color: var(--navy); text-align: left; }
+.pdp-variant-option:hover { border-color: var(--blue); }
+.pdp-variant-option.is-selected { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(33, 158, 188, .14); }
+.pdp-variant-option small { display: block; margin-top: 2px; color: var(--deep-blue); font-weight: 700; }
+.pdp-color-dot { width: 22px; height: 22px; flex: 0 0 auto; border: 2px solid #fff; border-radius: 999px; box-shadow: 0 0 0 1px var(--line); }
+.pdp-quantity-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin: 18px 0 0; padding-top: 16px; border-top: 1px solid var(--line); }
+.pdp-quantity-row label { font-weight: 850; color: var(--navy); }
+.pdp-quantity-row input { width: 92px; min-height: 42px; border: 1px solid var(--line); border-radius: 14px; padding: 0 12px; background: #fff; color: var(--navy); font-weight: 800; }
+.pdp-actions .btn-buy { min-width: 190px; }
+.pdp-buy-note { margin: 12px 0 0; color: var(--deep-blue); font-size: .9rem; line-height: 1.55; }
+.pdp-content-grid { width: var(--container); margin: 0 auto 70px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.pdp-description-card, .pdp-benefits, .pdp-delivery-card { grid-column: 1 / -1; }
+.pdp-benefits ul, .pdp-check-list { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.pdp-benefits li, .pdp-check-list li { position: relative; padding-left: 28px; color: var(--deep-blue); line-height: 1.5; }
+.pdp-benefits li::before, .pdp-check-list li::before { content: "✓"; position: absolute; left: 0; top: 0; width: 20px; height: 20px; display: inline-grid; place-items: center; border-radius: 999px; background: rgba(33, 158, 188, .14); color: var(--navy); font-size: 12px; font-weight: 900; }
+.pdp-spec-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; }
+.pdp-spec-grid div { padding: 13px; border: 1px solid var(--line); border-radius: 16px; background: var(--cloud); }
+.pdp-spec-grid dt { color: var(--deep-blue); font-size: .78rem; font-weight: 850; text-transform: uppercase; letter-spacing: .05em; }
+.pdp-spec-grid dd { margin: 4px 0 0; color: var(--navy); font-weight: 800; }
+.pdp-delivery-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.pdp-delivery-grid div { padding: 16px; border-radius: 18px; background: var(--cloud); border: 1px solid var(--line); }
+.pdp-delivery-grid strong { display: block; color: var(--navy); }
+.pdp-delivery-grid span { display: block; margin-top: 4px; color: var(--deep-blue); font-size: .9rem; }
+.pdp-faq-list { display: grid; gap: 10px; }
+.pdp-faq-list details { border: 1px solid var(--line); border-radius: 16px; background: var(--cloud); padding: 12px 14px; }
+.pdp-faq-list summary { cursor: pointer; font-weight: 900; color: var(--navy); }
+.pdp-related { width: var(--container); margin: 0 auto 80px; }
+@media (max-width: 920px) {
+  .pdp-shell, .detail-layout { grid-template-columns: 1fr; }
+  .pdp-gallery, .pdp-buy-panel { position: static; }
+  .pdp-content-grid { grid-template-columns: 1fr; }
+  .pdp-delivery-grid, .pdp-spec-grid { grid-template-columns: 1fr; }
+}
