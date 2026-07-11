@@ -21,17 +21,17 @@ const CATEGORIES = [
 
 const PLACEHOLDER_IMAGE = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900">
-  <rect width="900" height="900" rx="70" fill="#F6F1EA"/>
-  <circle cx="302" cy="336" r="94" fill="#E7F3F6"/>
+  <rect width="900" height="900" rx="70" fill="#EAF4F8"/>
+  <circle cx="302" cy="336" r="94" fill="#8ECAE6"/>
   <circle cx="454" cy="306" r="120" fill="#FFFFFF" opacity="0.78"/>
-  <circle cx="604" cy="354" r="88" fill="#D9E6EE" opacity="0.72"/>
-  <path d="M230 620c58-132 132-192 225-192s167 60 225 192" fill="#D4BFAE" opacity="0.55"/>
-  <text x="450" y="695" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#354055">Emmagina</text>
-  <text x="450" y="746" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" fill="#6E7582">Producto en preparación</text>
+  <circle cx="604" cy="354" r="88" fill="#219EBC" opacity="0.72"/>
+  <path d="M230 620c58-132 132-192 225-192s167 60 225 192" fill="#FFB703" opacity="0.55"/>
+  <text x="450" y="695" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#023047">Emmagina</text>
+  <text x="450" y="746" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" fill="#125373">Producto en preparación</text>
 </svg>`);
 
 window.CONFIG = Object.freeze({
-  APP_VERSION: "4.4.0-editor-navegacion-footer-estilos",
+  APP_VERSION: "4.5.0-paleta-scroll-ui",
   SITE_NAME: "Emmagina",
   BRAND_NAME: "Emmagina",
   SITE_URL: "https://emmagina-frontend.onrender.com",

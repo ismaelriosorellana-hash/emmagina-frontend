@@ -1,7 +1,7 @@
 "use strict";
 
 (function () {
-    const VERSION = "4.4.0";
+    const VERSION = "4.5.0";
 
     const state = {
         pages: [],
@@ -1284,7 +1284,7 @@
     function defaultSettings() {
         return {
             colors: {
-                primary: "#FCC0E6", accent: "#F59BCF", background: "#FFF9FD", text: "#372A32", footerBackground: "#2F292C", footerText: "#F9F3F5"
+                primary: "#8ECAE6", accent: "#FB8500", background: "#EAF4F8", text: "#023047", footerBackground: "#023047", footerText: "#FFFFFF"
             },
             visualStyle: { cardRadius: 28, sectionSpacing: 28, density: "comfortable", shadowLevel: "soft" },
             navigation: { mode: "mixed", items: [] },
@@ -1309,12 +1309,12 @@
         setValue("#settings-footer-email", footer.email || "");
         setValue("#settings-footer-whatsapp", footer.whatsapp || "");
         setValue("#settings-footer-copyright", footer.copyright || "");
-        setValue("#settings-color-primary", colors.primary || "#FCC0E6");
-        setValue("#settings-color-accent", colors.accent || "#F59BCF");
-        setValue("#settings-color-background", colors.background || "#FFF9FD");
-        setValue("#settings-color-text", colors.text || "#372A32");
-        setValue("#settings-color-footer-bg", colors.footerBackground || "#2F292C");
-        setValue("#settings-color-footer-text", colors.footerText || "#F9F3F5");
+        setValue("#settings-color-primary", colors.primary || "#8ECAE6");
+        setValue("#settings-color-accent", colors.accent || "#FB8500");
+        setValue("#settings-color-background", colors.background || "#EAF4F8");
+        setValue("#settings-color-text", colors.text || "#023047");
+        setValue("#settings-color-footer-bg", colors.footerBackground || "#023047");
+        setValue("#settings-color-footer-text", colors.footerText || "#FFFFFF");
         setValue("#settings-style-card-radius", visual.cardRadius ?? 28);
         setValue("#settings-style-section-spacing", visual.sectionSpacing ?? 28);
         setValue("#settings-style-density", visual.density || "comfortable");

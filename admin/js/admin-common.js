@@ -327,7 +327,7 @@
             const result = await AdminAPI.request("/admin/estudio-sitio");
             const studio = result.studio || result;
             const panel = studio.adminPanel || {};
-            document.documentElement.style.setProperty("--admin-primary", panel.accentColor || "#8E456A");
+            document.documentElement.style.setProperty("--admin-primary", panel.accentColor || "#219EBC");
             document.documentElement.style.setProperty("--admin-sidebar-background", panel.sidebarBackground || "#2F2930");
             document.documentElement.style.setProperty("--admin-sidebar-text", panel.sidebarText || "#FFFFFF");
             const activePage = document.body.dataset.adminPage || "dashboard";

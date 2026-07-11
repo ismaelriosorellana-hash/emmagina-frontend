@@ -29,3 +29,16 @@
 .footer-bottom a { color: var(--footer-text, #fff); }
 @media (max-width: 860px) { .header-top { grid-template-columns: auto 1fr auto; height: 64px; } .brand { font-size: 17px; align-items: start; } .brand small { display: none; } .mobile-menu-button { display: inline-flex; } .login-link { display: none; } .main-nav { display: none; flex-direction: column; align-items: stretch; padding: 12px 0 16px; gap: 0; border-top: 1px solid var(--line); } .main-nav.is-open { display: flex; } .main-nav a { padding: 11px 2px; } .search-box form { flex-direction: column; } .footer-inner { grid-template-columns: 1fr 1fr; } .footer-bottom { flex-direction: column; } }
 @media (max-width: 560px) { .footer-inner { grid-template-columns: 1fr; } .cart-pill { padding-inline: 10px; } .cart-pill::before { content: ""; } }
+
+
+/* Emmagina v4.5: navegación azul, acento naranja reservado */
+.site-header { background: rgba(255,255,255,.96); backdrop-filter: blur(14px); }
+.brand { color: var(--navy); }
+.main-nav a:hover, .main-nav a.is-active { color: var(--blue); }
+.icon-button, .header-link { background: var(--paper); color: var(--navy); border-color: rgba(2,48,71,.14); }
+.icon-button:hover, .header-link:hover { background: var(--cloud); border-color: var(--sky); }
+.cart-count { background: var(--navy); color: #fff; }
+.cart-pill { border-color: var(--buy); }
+.cart-pill:hover { background: var(--cream); }
+.site-footer { background: var(--footer-bg, var(--navy)); }
+.search-panel { background: rgba(234,244,248,.96); }

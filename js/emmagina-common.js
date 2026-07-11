@@ -38,6 +38,33 @@
     });
   }
 
+
+  const DEFAULT_PALETTE = Object.freeze({
+    primary: "#8ECAE6",
+    primaryDark: "#219EBC",
+    primaryDeep: "#023047",
+    primarySoft: "#EAF4F8",
+    secondary: "#125373",
+    accent: "#FB8500",
+    background: "#EAF4F8",
+    surface: "#FFFFFF",
+    surfaceSoft: "#EAF4F8",
+    text: "#023047",
+    textSoft: "#125373",
+    border: "rgba(2, 48, 71, 0.14)",
+    footerBackground: "#023047",
+    footerText: "#FFFFFF",
+    buttonText: "#023047"
+  });
+
+  const LEGACY_PALETTE = new Set(["#FCC0E6", "#8E456A", "#71364F", "#FFF2FA", "#65445A", "#F59BCF", "#FFF9FD", "#F0D6E6", "#2F292C", "#F9F3F5", "#372A32", "#715F69"]);
+
+  function colorValue(colors, key) {
+    const value = String(colors?.[key] || "").trim();
+    if (!value || LEGACY_PALETTE.has(value.toUpperCase())) return DEFAULT_PALETTE[key];
+    return value;
+  }
+
   function asPx(value, fallback) {
     const number = Number(value);
     return Number.isFinite(number) ? `${number}px` : fallback;
@@ -48,18 +75,19 @@
     const colors = settings.colors || {};
     const style = settings.visualStyle || {};
     const mapping = {
-      "--cloud": colors.background,
-      "--paper": colors.surface,
-      "--mist": colors.surfaceSoft || colors.primarySoft,
-      "--sand": colors.primarySoft,
-      "--clay": colors.accent,
-      "--sky": colors.primary,
-      "--ink": colors.text,
-      "--muted": colors.textSoft,
-      "--line": colors.border,
-      "--footer-bg": colors.footerBackground,
-      "--footer-text": colors.footerText,
-      "--button-text": colors.buttonText,
+      "--cloud": colorValue(colors, "background"),
+      "--paper": colorValue(colors, "surface"),
+      "--mist": colorValue(colors, "surfaceSoft") || colorValue(colors, "primarySoft"),
+      "--sand": colorValue(colors, "primarySoft"),
+      "--clay": colorValue(colors, "primaryDark"),
+      "--sky": colorValue(colors, "primary"),
+      "--ink": colorValue(colors, "text"),
+      "--muted": colorValue(colors, "textSoft"),
+      "--line": colorValue(colors, "border"),
+      "--footer-bg": colorValue(colors, "footerBackground"),
+      "--footer-text": colorValue(colors, "footerText"),
+      "--button-text": colorValue(colors, "buttonText"),
+      "--buy": colorValue(colors, "accent"),
       "--radius-xl": asPx(style.cardRadius, null),
       "--radius-lg": asPx(Math.max(8, Number(style.cardRadius || 28) - 6), null),
       "--radius-md": asPx(style.inputRadius, null),

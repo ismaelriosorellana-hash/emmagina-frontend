@@ -1,6 +1,6 @@
 .hero-section { padding: 26px 0 34px; }
 .hero-layout { width: var(--container); margin-inline: auto; display: grid; grid-template-columns: 260px 1fr; gap: 22px; align-items: stretch; --hero-height: 324px; }
-.category-panel { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-xl); padding: 18px; box-shadow: var(--shadow); max-height: var(--hero-height, 324px); overflow: hidden; }
+.category-panel { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-xl); padding: 18px; box-shadow: var(--shadow); max-height: var(--hero-height, 324px); overflow: auto; }
 .category-panel h2 { margin: 0 0 12px; font-size: 17px; }
 .category-list { display: grid; gap: 5px; }
 .category-list a { border-radius: 14px; padding: 8px 11px; color: var(--muted); font-size: 13px; font-weight: 800; }
@@ -66,3 +66,56 @@
 .builder-section-group + .builder-section-group { margin-top: 18px; }
 .site-header .main-nav a[data-source="cms"]::after { content: ""; }
 @media (max-width: 860px) { .builder-block-grid { width: var(--container); grid-template-columns: 1fr; } }
+
+
+/* Emmagina v4.5: Home con paleta azul y acento naranja solo comercial */
+.hero-section { background: linear-gradient(180deg, var(--paper), var(--cloud)); }
+.category-panel { scrollbar-gutter: stable; }
+.category-panel h2, .carousel-head h2, .explore-card h3 { color: var(--navy); }
+.category-list a:hover { background: var(--cloud); color: var(--navy); }
+.category-view-all { background: var(--sky); color: var(--navy); }
+.hero-card { background: var(--sky); border-color: rgba(2,48,71,.12); }
+.hero-overlay::before { background: rgba(2, 48, 71, .38); }
+.hero-button { background: var(--buy); color: var(--navy); box-shadow: 0 10px 24px rgba(251,133,0,.22); }
+.hero-button:hover { background: var(--buy-dark); color: #fff; }
+.line-banner { background: var(--sky); border-color: rgba(2,48,71,.12); }
+.line-banner-button { background: var(--deep-blue); color: #fff; }
+.line-banner[href*="catalogo"] .line-banner-button,
+.line-banner[href*="pedido"] .line-banner-button,
+.line-banner[href*="producto"] .line-banner-button { background: var(--buy); color: var(--navy); }
+.primary-link { background: var(--buy); color: var(--navy); }
+.primary-link:hover { background: var(--buy-dark); color: #fff; }
+.builder-section-group { max-width: 100%; }
+.builder-section-group > .builder-section:last-child { margin-bottom: 0; }
+@media (max-width: 860px) { .category-panel { max-height: 280px; } }
+
+/* Ajuste v4.5: naranja solo para acciones comerciales claras */
+.hero-button,
+.primary-link {
+  background: var(--deep-blue);
+  color: #fff;
+}
+.hero-card[href*="catalogo"] .hero-button,
+.hero-card[href*="producto"] .hero-button,
+.hero-card[href*="pedido"] .hero-button,
+.hero-card[href*="finalizar-compra"] .hero-button,
+a[href*="catalogo"].primary-link,
+a[href*="producto"].primary-link,
+a[href*="pedido"].primary-link,
+a[href*="finalizar-compra"].primary-link,
+a[href*="pago"].primary-link {
+  background: var(--buy);
+  color: var(--navy);
+}
+.hero-card[href*="catalogo"] .hero-button:hover,
+.hero-card[href*="producto"] .hero-button:hover,
+.hero-card[href*="pedido"] .hero-button:hover,
+.hero-card[href*="finalizar-compra"] .hero-button:hover,
+a[href*="catalogo"].primary-link:hover,
+a[href*="producto"].primary-link:hover,
+a[href*="pedido"].primary-link:hover,
+a[href*="finalizar-compra"].primary-link:hover,
+a[href*="pago"].primary-link:hover {
+  background: var(--buy-dark);
+  color: #fff;
+}

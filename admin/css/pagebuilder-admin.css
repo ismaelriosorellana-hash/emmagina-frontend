@@ -51,13 +51,13 @@
 .pagebuilder-block-main strong {
     display: block;
     font-size: 14px;
-    color: #1f2a33;
+    color: #023047;
 }
 
 .pagebuilder-block-main span {
     display: block;
     margin-top: 2px;
-    color: #70808c;
+    color: #125373;
     font-size: 12px;
 }
 
@@ -85,7 +85,7 @@
     border: 1px dashed rgba(30, 50, 70, 0.22);
     border-radius: 18px;
     padding: 14px;
-    background: #f8fafb;
+    background: #F7FBFD;
 }
 
 .pagebuilder-preview-block.active {
@@ -103,7 +103,7 @@
 
 .pagebuilder-preview-block h4 {
     margin: 0;
-    color: #1f2a33;
+    color: #023047;
 }
 
 .pagebuilder-preview-block p {
