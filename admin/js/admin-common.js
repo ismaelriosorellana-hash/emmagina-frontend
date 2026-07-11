@@ -70,6 +70,12 @@
             label: "Editor del sitio",
             href: "editor-sitio.html",
             icon: "fa-layer-group"
+        },
+        {
+            id: "pagebuilder",
+            label: "Modo Dios",
+            href: "pagebuilder.html",
+            icon: "fa-wand-magic-sparkles"
         }
     ];
 
