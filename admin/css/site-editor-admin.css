@@ -124,3 +124,134 @@
 .admin-inline-status.success { color: #217346; font-weight: 700; }
 .admin-inline-status.danger { color: #b42318; font-weight: 700; }
 .admin-inline-status.warning { color: #8a5a00; font-weight: 700; }
+
+
+.site-editor-layer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.site-editor-new-block-row {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.site-editor-new-block-row label {
+    font-size: 12px;
+    font-weight: 800;
+    color: #8a3d6c;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.site-editor-new-block-row select {
+    width: 100%;
+    border: 1px solid rgba(142, 61, 108, .22);
+    border-radius: 14px;
+    padding: 10px 12px;
+    background: #fff;
+    color: #312633;
+}
+
+.site-editor-layer-section {
+    border: 1px solid rgba(142, 61, 108, .16);
+    border-radius: 18px;
+    background: rgba(255,255,255,.78);
+    padding: 10px;
+    display: grid;
+    gap: 10px;
+}
+
+.site-editor-layer-section.active {
+    border-color: #8e3d6c;
+    box-shadow: 0 10px 24px rgba(142, 61, 108, .08);
+}
+
+.site-editor-layer-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.site-editor-layer-section-head strong,
+.site-editor-layer-section-head span {
+    display: block;
+}
+
+.site-editor-layer-section-head strong {
+    color: #1f2a33;
+    font-size: 13px;
+}
+
+.site-editor-layer-section-head span {
+    color: #70808c;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.site-editor-layer-blocks {
+    display: grid;
+    gap: 8px;
+    padding-left: 8px;
+    border-left: 2px solid rgba(142, 61, 108, .12);
+}
+
+.site-editor-add-block-to-section {
+    justify-content: center;
+    width: 100%;
+}
+
+.pagebuilder-preview-section {
+    border: 1px solid rgba(20, 32, 44, 0.10);
+    border-radius: 20px;
+    padding: 12px;
+    background: #fff;
+    display: grid;
+    gap: 10px;
+}
+
+.pagebuilder-preview-section.active {
+    border-color: #8e3d6c;
+    box-shadow: 0 12px 26px rgba(142, 61, 108, .08);
+}
+
+.pagebuilder-preview-section > header,
+.pagebuilder-preview-block > header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.pagebuilder-preview-section h4,
+.pagebuilder-preview-block h4 {
+    margin: 0;
+}
+
+.pagebuilder-preview-section p,
+.pagebuilder-preview-block p {
+    margin: 3px 0 0;
+    color: #70808c;
+    font-size: 12px;
+}
+
+.pagebuilder-preview-section-blocks {
+    display: grid;
+    gap: 10px;
+}
+
+.site-editor-section-panel {
+    display: grid;
+    gap: 10px;
+}
+
+.admin-empty.small {
+    min-height: auto;
+    padding: 10px;
+    font-size: 12px;
+}

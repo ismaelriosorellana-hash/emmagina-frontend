@@ -59,6 +59,13 @@
       "hero_banner": "hero_banner",
       "hero": "hero_banner",
       "banner-principal": "hero_banner",
+      "category-sidebar": "category_sidebar",
+      "category_sidebar": "category_sidebar",
+      "categorias": "category_sidebar",
+      "lista-categorias": "category_sidebar",
+      "category-grid": "category_grid",
+      "category_grid": "category_grid",
+      "grilla-categorias": "category_grid",
       "info-cards": "info_cards",
       "info_cards": "info_cards",
       "bloques-informativos": "info_cards",
@@ -80,7 +87,20 @@
       "html_block": "html_block",
       "custom-html": "custom_html",
       "custom_html": "custom_html",
-      "contenido-html": "custom_html"
+      "contenido-html": "custom_html",
+      "text-block": "text_block",
+      "text_block": "text_block",
+      "texto": "text_block",
+      "faq-block": "faq_block",
+      "faq_block": "faq_block",
+      "contact-block": "contact_block",
+      "contact_block": "contact_block",
+      "cart-summary": "cart_summary",
+      "cart_summary": "cart_summary",
+      "checkout-form": "checkout_form",
+      "checkout_form": "checkout_form",
+      "spacer": "spacer",
+      "separador": "spacer"
     };
     return aliases[key] || aliases[raw] || key.replace(/-/g, "_") || "custom_html";
   }
@@ -195,7 +215,8 @@
       const href = typeof item === "string"
         ? (label === "Todos" ? "catalogo.html" : `catalogo.html?categoria=${encodeURIComponent(label)}`)
         : cleanUrl(item?.href || item?.url || item?.link, `catalogo.html?categoria=${encodeURIComponent(label)}`);
-      return `<a href="${escape(href)}">${escape(label)}</a>`;
+      const image = typeof item === "object" ? item?.image || item?.imagen || "" : "";
+      return `<a href="${escape(href)}">${image ? `<img src="${escape(image)}" alt="" loading="lazy">` : ""}<span>${escape(label)}</span></a>`;
     }).join("");
   }
 
@@ -203,7 +224,33 @@
     return content.imageDesktop || content.image || content.imagen || content.imageUrl || content.url || fallback;
   }
 
-  function renderHeroBlock(block) {
+  function renderCategorySidebarBlock(block) {
+    const content = getContent(block);
+    const style = getStyle(block);
+    const categories = content.categories || content.categorias || DEFAULT_CATEGORIES;
+    const hiddenMobile = style.mobileVisible === false ? " category-panel-mobile-hidden" : "";
+    return `<aside class="category-panel${hiddenMobile}" aria-label="Categorías principales" data-block-id="${escape(block._id || block.id || "")}">
+      <h2>${escape(content.heading || content.title || "Categorías")}</h2>
+      <nav class="category-list">${categoriesHtml(categories)}</nav>
+      ${content.showViewAll === false ? "" : `<a class="category-view-all" href="${escape(cleanUrl(content.viewAllUrl, "catalogo.html"))}">${escape(content.viewAllText || "Ver todas")}</a>`}
+    </aside>`;
+  }
+
+  function renderCategoryGridBlock(block) {
+    const content = getContent(block);
+    const categories = content.categories || content.categorias || DEFAULT_CATEGORIES;
+    return `<section class="section section-muted builder-section category-grid-section" data-block-id="${escape(block._id || block.id || "")}">
+      <div class="section-heading"><div><p class="kicker">Emmagina</p><h2>${escape(content.title || content.heading || "Categorías")}</h2></div></div>
+      <div class="explore-grid">${categories.slice(0, 12).map((item) => {
+        const label = typeof item === "string" ? item : item?.label || item?.nombre || "Categoría";
+        const href = typeof item === "string" ? `catalogo.html?categoria=${encodeURIComponent(label)}` : cleanUrl(item?.href || item?.url, `catalogo.html?categoria=${encodeURIComponent(label)}`);
+        const image = typeof item === "object" ? item?.image || item?.imagen || window.CONFIG.placeholderImage : window.CONFIG.placeholderImage;
+        return `<a class="explore-card" href="${escape(href)}"><img class="explore-image" src="${escape(image)}" alt="${escape(label)}" loading="lazy"><h3>${escape(label)}</h3></a>`;
+      }).join("")}</div>
+    </section>`;
+  }
+
+  function renderHeroBlock(block, options = {}) {
     const content = getContent(block);
     const style = getStyle(block);
     const heightDesktop = Math.max(160, Math.min(760, toNumber(style.heightDesktop || content.heightDesktop, 323)));
@@ -213,23 +260,31 @@
     const buttonText = content.buttonText || "Ver tienda";
     const buttonUrl = cleanUrl(content.buttonUrl || content.url || content.href, "catalogo.html");
     const categories = content.categories || content.categorias || DEFAULT_CATEGORIES;
+    const includeCategories = options.includeCategories !== false;
 
     return `<section class="hero-section builder-section" data-block-id="${escape(block._id || block.id || "")}">
-      <div class="hero-layout" style="--hero-height:${heightDesktop}px">
-        <aside class="category-panel" aria-label="Categorías principales">
-          <h2>${escape(content.categoryTitle || "Categorías")}</h2>
-          <nav class="category-list">${categoriesHtml(categories)}</nav>
-        </aside>
+      <div class="hero-layout ${includeCategories ? "" : "hero-layout-single"}" style="--hero-height:${heightDesktop}px">
+        ${includeCategories ? `<aside class="category-panel" aria-label="Categorías principales"><h2>${escape(content.categoryTitle || "Categorías")}</h2><nav class="category-list">${categoriesHtml(categories)}</nav></aside>` : ""}
         <a class="hero-card hero-card-banner" href="${escape(buttonUrl)}" aria-label="${escape(title)}">
           <img src="${escape(image)}" alt="${escape(content.alt || title)}" loading="eager" style="object-position:${escape(content.imagePosition || style.objectPosition || "center")}">
-          <span class="hero-overlay">
-            <span class="kicker">${escape(subtitle)}</span>
-            <strong>${escape(title)}</strong>
-            <span class="hero-button">${escape(buttonText)}</span>
-          </span>
+          <span class="hero-overlay"><span class="kicker">${escape(subtitle)}</span><strong>${escape(title)}</strong><span class="hero-button">${escape(buttonText)}</span></span>
         </a>
       </div>
     </section>`;
+  }
+
+  function renderHeroCardOnly(block) {
+    const content = getContent(block);
+    const style = getStyle(block);
+    const image = imageFromContent(content, "assets/producto-referencia-emmagina.png");
+    const title = content.title || "Ideas que toman forma";
+    const subtitle = content.subtitle || content.eyebrow || "Impresión 3D · regalos · recuerdos";
+    const buttonText = content.buttonText || "Ver tienda";
+    const buttonUrl = cleanUrl(content.buttonUrl || content.url || content.href, "catalogo.html");
+    return `<a class="hero-card hero-card-banner" href="${escape(buttonUrl)}" aria-label="${escape(title)}" data-block-id="${escape(block._id || block.id || "")}">
+      <img src="${escape(image)}" alt="${escape(content.alt || title)}" loading="eager" style="object-position:${escape(content.imagePosition || style.objectPosition || "center")}">
+      <span class="hero-overlay"><span class="kicker">${escape(subtitle)}</span><strong>${escape(title)}</strong><span class="hero-button">${escape(buttonText)}</span></span>
+    </a>`;
   }
 
   function renderInfoCardsBlock(block) {
@@ -342,6 +397,39 @@
     </section>`;
   }
 
+  function renderTextBlock(block) {
+    const content = getContent(block);
+    return `<section class="section builder-section text-block-section" data-block-id="${escape(block._id || block.id || "")}"><div class="html-block"><h2>${escape(content.title || block.name || "Texto")}</h2><p>${escape(content.text || content.body || "")}</p></div></section>`;
+  }
+
+  function renderFaqBlock(block) {
+    const content = getContent(block);
+    const items = Array.isArray(content.items) ? content.items : [];
+    return `<section class="section builder-section faq-block-section" data-block-id="${escape(block._id || block.id || "")}"><div class="section-heading"><div><p class="kicker">Ayuda</p><h2>${escape(content.title || "Preguntas frecuentes")}</h2></div></div><div class="faq-list">${items.map((item) => `<details><summary>${escape(item.question || item.pregunta || "Pregunta")}</summary><p>${escape(item.answer || item.respuesta || "Respuesta")}</p></details>`).join("")}</div></section>`;
+  }
+
+  function renderContactBlock(block) {
+    const content = getContent(block);
+    return `<section class="section builder-section contact-block-section" data-block-id="${escape(block._id || block.id || "")}"><div class="html-block"><h2>${escape(content.title || "Contáctanos")}</h2><p>${escape(content.text || "Escríbenos y responderemos pronto.")}</p><a class="primary-link" href="contacto.html">Ir a contacto</a></div></section>`;
+  }
+
+  function renderSpacerBlock(block) {
+    const content = getContent(block);
+    const style = getStyle(block);
+    const height = Math.max(0, Math.min(260, toNumber(style.heightDesktop || content.height, 32)));
+    return `<div class="builder-spacer" data-block-id="${escape(block._id || block.id || "")}" style="height:${height}px"></div>`;
+  }
+
+  function renderCartSummaryBlock(block) {
+    const content = getContent(block);
+    return `<section class="section builder-section" data-block-id="${escape(block._id || block.id || "")}"><div class="html-block"><h2>${escape(content.title || "Resumen del carrito")}</h2><p>Este bloque se muestra completo en la página Carrito.</p><a class="primary-link" href="carrito.html">Ver carrito</a></div></section>`;
+  }
+
+  function renderCheckoutFormBlock(block) {
+    const content = getContent(block);
+    return `<section class="section builder-section" data-block-id="${escape(block._id || block.id || "")}"><div class="html-block"><h2>${escape(content.title || "Finalizar compra")}</h2><p>Este bloque se muestra completo en el flujo de compra.</p><a class="primary-link" href="finalizar-compra.html">Finalizar compra</a></div></section>`;
+  }
+
   function renderHtmlBlock(block) {
     const content = getContent(block);
     const html = String(content.html || content.body || "").trim();
@@ -358,26 +446,54 @@
     if (!block || block.isVisible === false) return "";
     const type = normalizeBlockType(block.type);
     switch (type) {
+      case "category_sidebar": return renderCategorySidebarBlock(block);
+      case "category_grid": return renderCategoryGridBlock(block);
       case "hero_banner": return renderHeroBlock(block);
       case "info_cards": return renderInfoCardsBlock(block);
       case "product_marquee":
       case "product_grid": return renderProductMarqueeBlock(block, products);
       case "image_banner": return renderImageBannerBlock(block);
       case "reviews_marquee": return renderReviewsBlock(block, products);
+      case "text_block": return renderTextBlock(block);
+      case "faq_block": return renderFaqBlock(block);
+      case "contact_block": return renderContactBlock(block);
+      case "cart_summary": return renderCartSummaryBlock(block);
+      case "checkout_form": return renderCheckoutFormBlock(block);
+      case "spacer": return renderSpacerBlock(block);
       case "html_block":
       case "custom_html": return renderHtmlBlock(block);
       default: return renderGenericBlock({ ...block, type });
     }
   }
 
+  function renderBuilderSection(section, products) {
+    if (!section || section.isVisible === false) return "";
+    const blocks = Array.isArray(section.blocks) ? section.blocks.filter((block) => block?.isVisible !== false).sort((a, b) => Number(a.position || 0) - Number(b.position || 0)) : [];
+    if (!blocks.length) return "";
+    const layout = String(section.layout || "stack");
+    if (layout === "hero_with_sidebar") {
+      const category = blocks.find((block) => normalizeBlockType(block.type) === "category_sidebar");
+      const hero = blocks.find((block) => normalizeBlockType(block.type) === "hero_banner");
+      const rest = blocks.filter((block) => block !== category && block !== hero);
+      const heroHeight = Math.max(160, Math.min(760, toNumber(getStyle(hero || {}).heightDesktop || getContent(hero || {}).heightDesktop, 323)));
+      return `<section class="hero-section builder-section builder-section-group" data-section-id="${escape(section._id || section.id || "")}"><div class="hero-layout" style="--hero-height:${heroHeight}px">${category ? renderCategorySidebarBlock(category) : ""}${hero ? renderHeroCardOnly(hero) : ""}</div>${rest.map((block) => renderBuilderBlock(block, products)).join("")}</section>`;
+    }
+    return `<section class="builder-section-group" data-section-id="${escape(section._id || section.id || "")}">${blocks.map((block) => renderBuilderBlock(block, products)).join("")}</section>`;
+  }
+
   function renderBuilderHome(page, products) {
     const main = document.getElementById("main");
     if (!main) return false;
+    const sections = Array.isArray(page?.sections) ? page.sections.slice().filter((section) => section?.isVisible !== false).sort((a, b) => Number(a.position || 0) - Number(b.position || 0)) : [];
+    if (sections.length) {
+      const html = sections.map((section) => renderBuilderSection(section, products)).join("");
+      if (!html.trim()) return false;
+      main.innerHTML = html;
+      window.EmmaginaUI.attachCartButtons(products);
+      return true;
+    }
     const blocks = Array.isArray(page?.blocks) ? page.blocks.slice() : [];
-    const visibleBlocks = blocks
-      .filter((block) => block?.isVisible !== false)
-      .sort((a, b) => Number(a.position || 0) - Number(b.position || 0));
-
+    const visibleBlocks = blocks.filter((block) => block?.isVisible !== false).sort((a, b) => Number(a.position || 0) - Number(b.position || 0));
     if (!visibleBlocks.length) return false;
     main.innerHTML = visibleBlocks.map((block) => renderBuilderBlock(block, products)).join("");
     window.EmmaginaUI.attachCartButtons(products);

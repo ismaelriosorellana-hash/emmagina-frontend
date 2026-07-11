@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="robots" content="noindex, nofollow, noarchive">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>Editor del Sitio | Emmagina CMS</title>
+    <title>Editor del Sitio | Emmagina CMS v3.8</title>
     <link rel="icon" href="../assets/emmagina-logo.svg">
-    <link rel="stylesheet" href="css/admin.css?v=3.7.0">
+    <link rel="stylesheet" href="css/admin.css?v=3.8.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="css/admin-experience-v327.css?v=3.7.0">
-    <link rel="stylesheet" href="css/pagebuilder-admin.css?v=3.7.0">
-    <link rel="stylesheet" href="css/site-editor-admin.css?v=3.7.0">
+    <link rel="stylesheet" href="css/admin-experience-v327.css?v=3.8.0">
+    <link rel="stylesheet" href="css/pagebuilder-admin.css?v=3.8.0">
+    <link rel="stylesheet" href="css/site-editor-admin.css?v=3.8.0">
 </head>
 <body data-admin-page="studio" data-admin-title="Editor del Sitio">
     <section id="admin-page-content">
@@ -110,15 +110,41 @@
                         <div class="admin-card-header compact">
                             <div>
                                 <p class="admin-section-kicker">Estructura</p>
-                                <h3>Bloques</h3>
+                                <h3>Secciones y bloques</h3>
                             </div>
-                            <button class="admin-button small" id="site-editor-add-block" type="button">
-                                <i class="fa-solid fa-plus"></i>
-                                Bloque
-                            </button>
+                            <div class="site-editor-layer-actions">
+                                <button class="admin-button secondary small" id="site-editor-add-section" type="button">
+                                    <i class="fa-solid fa-plus"></i>
+                                    Sección
+                                </button>
+                                <button class="admin-button small" id="site-editor-add-block" type="button">
+                                    <i class="fa-solid fa-plus"></i>
+                                    Bloque
+                                </button>
+                            </div>
+                        </div>
+                        <div class="site-editor-new-block-row">
+                            <label for="site-editor-new-block-type">Nuevo bloque</label>
+                            <select id="site-editor-new-block-type">
+                                <option value="category_sidebar">Lista lateral de categorías</option>
+                                <option value="category_grid">Grilla de categorías</option>
+                                <option value="hero_banner">Hero / Banner principal</option>
+                                <option value="info_cards">Tarjetas informativas</option>
+                                <option value="product_marquee">Carrusel de productos</option>
+                                <option value="product_grid">Grilla de productos</option>
+                                <option value="image_banner">Banner de imagen</option>
+                                <option value="reviews_marquee">Carrusel de reseñas</option>
+                                <option value="text_block">Texto simple</option>
+                                <option value="faq_block">Preguntas frecuentes</option>
+                                <option value="contact_block">Formulario de contacto</option>
+                                <option value="cart_summary">Resumen del carrito</option>
+                                <option value="checkout_form">Formulario de compra</option>
+                                <option value="spacer">Separador / espacio</option>
+                                <option value="custom_html">HTML controlado</option>
+                            </select>
                         </div>
                         <div class="pagebuilder-block-list" id="site-editor-block-list"></div>
-                        <p class="admin-help">Arrastra los bloques o usa las flechas para cambiar el orden.</p>
+                        <p class="admin-help">Puedes tener varias secciones y varios bloques dentro de una misma sección. Arrastra bloques o usa las flechas para ordenar.</p>
                     </aside>
 
                     <section class="admin-card pagebuilder-canvas" aria-label="Vista previa estructural">
@@ -148,12 +174,20 @@
                                 <div class="admin-field">
                                     <label for="block-type">Tipo de bloque</label>
                                     <select id="block-type" name="type">
+                                        <option value="category_sidebar">Lista lateral de categorías</option>
+                                        <option value="category_grid">Grilla de categorías</option>
                                         <option value="hero_banner">Hero / Banner principal</option>
                                         <option value="info_cards">Tarjetas informativas</option>
                                         <option value="product_marquee">Carrusel de productos</option>
                                         <option value="product_grid">Grilla de productos</option>
                                         <option value="image_banner">Banner de imagen</option>
                                         <option value="reviews_marquee">Carrusel de reseñas</option>
+                                        <option value="text_block">Texto simple</option>
+                                        <option value="faq_block">Preguntas frecuentes</option>
+                                        <option value="contact_block">Formulario de contacto</option>
+                                        <option value="cart_summary">Resumen del carrito</option>
+                                        <option value="checkout_form">Formulario de compra</option>
+                                        <option value="spacer">Separador / espacio</option>
                                         <option value="custom_html">Bloque HTML controlado</option>
                                     </select>
                                 </div>
@@ -165,6 +199,8 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <div id="site-editor-section-panel" class="site-editor-section-panel"></div>
 
                             <div id="site-editor-specific-fields" class="pagebuilder-specific-fields"></div>
 
@@ -221,10 +257,10 @@
         </section>
     </section>
 
-    <script src="../js/config.js?v=3.7.0"></script>
-    <script src="js/admin-api.js?v=3.7.0"></script>
-    <script src="js/admin-common.js?v=3.7.0"></script>
-    <script src="js/admin-experience-v327.js?v=3.7.0"></script>
-    <script src="js/site-editor-admin.js?v=3.7.0"></script>
+    <script src="../js/config.js?v=3.8.0"></script>
+    <script src="js/admin-api.js?v=3.8.0"></script>
+    <script src="js/admin-common.js?v=3.8.0"></script>
+    <script src="js/admin-experience-v327.js?v=3.8.0"></script>
+    <script src="js/site-editor-admin.js?v=3.8.0"></script>
 </body>
 </html>
