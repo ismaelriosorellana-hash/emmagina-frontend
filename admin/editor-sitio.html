@@ -6,21 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="robots" content="noindex, nofollow, noarchive">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>Editor del Sitio | Emmagina CMS v3.9</title>
+    <title>Editor del Sitio | Emmagina CMS v4.0</title>
     <link rel="icon" href="../assets/emmagina-logo.svg">
-    <link rel="stylesheet" href="css/admin.css?v=3.9.0">
+    <link rel="stylesheet" href="css/admin.css?v=4.0.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="css/admin-experience-v327.css?v=3.9.0">
-    <link rel="stylesheet" href="css/pagebuilder-admin.css?v=3.9.0">
-    <link rel="stylesheet" href="css/site-editor-admin.css?v=3.9.0">
+    <link rel="stylesheet" href="css/admin-experience-v327.css?v=4.0.0">
+    <link rel="stylesheet" href="css/pagebuilder-admin.css?v=4.0.0">
+    <link rel="stylesheet" href="css/site-editor-admin.css?v=4.0.0">
 </head>
 <body data-admin-page="studio" data-admin-title="Editor del Sitio">
     <section id="admin-page-content">
-        <div class="admin-page-intro">
+        <div class="admin-page-intro site-editor-intro">
             <div>
+                <p class="admin-section-kicker">CMS Emmagina</p>
                 <h2>Editor del Sitio</h2>
-                <p>Centro único para crear páginas, ordenar bloques y controlar lo visible en Emmagina.</p>
-                <p class="admin-help"><strong>Importante:</strong> Guardar página modifica datos generales. Para cambiar lo que se ve en la Home, selecciona un bloque, cambia sus propiedades y presiona <strong>Guardar bloque</strong>.</p>
+                <p>Administra páginas, secciones y bloques visuales desde un solo lugar.</p>
                 <div id="site-editor-status" class="admin-inline-status" aria-live="polite"></div>
             </div>
             <div class="admin-actions-row">
@@ -30,7 +30,7 @@
                 </button>
                 <button class="admin-button secondary" id="site-editor-repair" type="button">
                     <i class="fa-solid fa-screwdriver-wrench"></i>
-                    Reparar conexión
+                    Reparar
                 </button>
                 <button class="admin-button" id="site-editor-save-page" type="button">
                     <i class="fa-solid fa-floppy-disk"></i>
@@ -52,14 +52,25 @@
                     </button>
                 </div>
                 <div class="site-editor-page-list" id="site-editor-page-list"></div>
-                <p class="admin-help">Inicio es una página del sistema: se puede editar, pero no eliminar.</p>
+                <p class="admin-help compact">Inicio es del sistema: se puede editar, pero no eliminar.</p>
             </aside>
 
             <main class="site-editor-main">
                 <section class="admin-card site-editor-toolbar">
-                    <div class="admin-form-grid">
+                    <div class="admin-card-header compact">
+                        <div>
+                            <p class="admin-section-kicker">Página seleccionada</p>
+                            <h3>Datos generales</h3>
+                        </div>
+                        <a class="admin-button secondary small" id="site-editor-public-link" href="../index.html" target="_blank" rel="noopener">
+                            <i class="fa-solid fa-store"></i>
+                            Ver página
+                        </a>
+                    </div>
+
+                    <div class="admin-form-grid site-editor-page-grid">
                         <div class="admin-field">
-                            <label for="site-editor-page-title">Título</label>
+                            <label for="site-editor-page-title">Título interno</label>
                             <input id="site-editor-page-title" placeholder="Inicio">
                         </div>
                         <div class="admin-field">
@@ -70,7 +81,7 @@
                             <label for="site-editor-page-navigation-label">Nombre en navegación</label>
                             <input id="site-editor-page-navigation-label" placeholder="Inicio">
                         </div>
-                        <div class="admin-field">
+                        <div class="admin-field small-number">
                             <label for="site-editor-page-sort-order">Orden menú</label>
                             <input id="site-editor-page-sort-order" type="number" min="1" step="1" placeholder="50">
                         </div>
@@ -80,32 +91,30 @@
                             <label class="admin-checkbox"><input id="site-editor-page-nav" type="checkbox"> Mostrar en navegación</label>
                         </div>
                     </div>
-                    <div class="admin-form-grid two site-editor-seo-grid">
-                        <div class="admin-field">
-                            <label for="site-editor-page-description">Descripción interna</label>
-                            <textarea id="site-editor-page-description" rows="2" placeholder="Notas internas o descripción de la página"></textarea>
-                        </div>
-                        <div class="admin-field">
-                            <label for="site-editor-page-seo-title">SEO título</label>
-                            <input id="site-editor-page-seo-title" placeholder="Título para Google">
-                        </div>
-                        <div class="admin-field">
-                            <label for="site-editor-page-seo-description">SEO descripción</label>
-                            <textarea id="site-editor-page-seo-description" rows="2" placeholder="Descripción para Google"></textarea>
-                        </div>
-                        <div class="admin-field site-editor-public-field">
-                            <label>Vista pública</label>
-                            <div class="site-editor-public-actions">
-                                <a class="admin-button secondary small" id="site-editor-public-link" href="../index.html" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-store"></i>
-                                    Ver página
-                                </a>
-                                <button class="admin-button danger small" id="site-editor-delete-page" type="button">
-                                    <i class="fa-solid fa-trash"></i>
-                                    Eliminar página
-                                </button>
+
+                    <details class="site-editor-advanced-panel">
+                        <summary>SEO y descripción interna</summary>
+                        <div class="admin-form-grid two site-editor-seo-grid">
+                            <div class="admin-field">
+                                <label for="site-editor-page-description">Descripción interna</label>
+                                <textarea id="site-editor-page-description" rows="2" placeholder="Notas internas o descripción de la página"></textarea>
+                            </div>
+                            <div class="admin-field">
+                                <label for="site-editor-page-seo-title">SEO título</label>
+                                <input id="site-editor-page-seo-title" placeholder="Título para Google">
+                            </div>
+                            <div class="admin-field full">
+                                <label for="site-editor-page-seo-description">SEO descripción</label>
+                                <textarea id="site-editor-page-seo-description" rows="2" placeholder="Descripción para Google"></textarea>
                             </div>
                         </div>
+                    </details>
+
+                    <div class="site-editor-public-actions">
+                        <button class="admin-button danger small" id="site-editor-delete-page" type="button">
+                            <i class="fa-solid fa-trash"></i>
+                            Eliminar página
+                        </button>
                     </div>
                 </section>
 
@@ -116,45 +125,38 @@
                                 <p class="admin-section-kicker">Estructura</p>
                                 <h3>Secciones y bloques</h3>
                             </div>
-                            <div class="site-editor-layer-actions">
+                        </div>
+
+                        <div class="site-editor-create-panel">
+                            <label for="site-editor-new-section-type">Nueva sección</label>
+                            <div class="site-editor-inline-create">
+                                <select id="site-editor-new-section-type"></select>
                                 <button class="admin-button secondary small" id="site-editor-add-section" type="button">
                                     <i class="fa-solid fa-plus"></i>
-                                    Sección
-                                </button>
-                                <button class="admin-button small" id="site-editor-add-block" type="button">
-                                    <i class="fa-solid fa-plus"></i>
-                                    Bloque
+                                    Agregar
                                 </button>
                             </div>
                         </div>
-                        <div class="site-editor-new-block-row">
+
+                        <div class="site-editor-create-panel">
                             <label for="site-editor-new-block-type">Nuevo bloque</label>
-                            <select id="site-editor-new-block-type">
-                                <option value="category_sidebar">Lista lateral de categorías</option>
-                                <option value="category_grid">Grilla de categorías</option>
-                                <option value="hero_banner">Hero / Banner principal</option>
-                                <option value="info_cards">Tarjetas informativas</option>
-                                <option value="product_marquee">Carrusel de productos</option>
-                                <option value="product_grid">Grilla de productos</option>
-                                <option value="image_banner">Banner de imagen</option>
-                                <option value="reviews_marquee">Carrusel de reseñas</option>
-                                <option value="text_block">Texto simple</option>
-                                <option value="faq_block">Preguntas frecuentes</option>
-                                <option value="contact_block">Formulario de contacto</option>
-                                <option value="cart_summary">Resumen del carrito</option>
-                                <option value="checkout_form">Formulario de compra</option>
-                                <option value="spacer">Separador / espacio</option>
-                                <option value="custom_html">HTML controlado</option>
-                            </select>
+                            <div class="site-editor-inline-create">
+                                <select id="site-editor-new-block-type"></select>
+                                <button class="admin-button small" id="site-editor-add-block" type="button">
+                                    <i class="fa-solid fa-plus"></i>
+                                    Agregar
+                                </button>
+                            </div>
                         </div>
+
                         <div class="pagebuilder-block-list" id="site-editor-block-list"></div>
-                        <p class="admin-help">Puedes tener varias secciones y varios bloques dentro de una misma sección. Arrastra bloques o usa las flechas para ordenar.</p>
+                        <p class="admin-help compact">Selecciona una sección o bloque. Puedes moverlos con flechas o arrastrar bloques dentro de una sección.</p>
                     </aside>
 
                     <section class="admin-card pagebuilder-canvas" aria-label="Vista previa estructural">
                         <div class="admin-card-header compact">
                             <div>
-                                <p class="admin-section-kicker">Vista</p>
+                                <p class="admin-section-kicker">Vista rápida</p>
                                 <h3 id="site-editor-canvas-title">Página</h3>
                             </div>
                         </div>
@@ -164,36 +166,22 @@
                     <aside class="admin-card pagebuilder-properties" aria-label="Propiedades del bloque">
                         <div class="admin-card-header compact">
                             <div>
-                                <p class="admin-section-kicker">Propiedades</p>
+                                <p class="admin-section-kicker">Edición visual</p>
                                 <h3 id="site-editor-selected-title">Sin selección</h3>
                             </div>
                         </div>
 
+                        <div id="site-editor-section-panel" class="site-editor-section-panel"></div>
+
                         <form id="site-editor-block-form" class="pagebuilder-form" hidden>
-                            <div class="admin-form-grid one">
+                            <div class="admin-form-grid one site-editor-basic-fields">
                                 <div class="admin-field">
                                     <label for="block-name">Nombre interno</label>
-                                    <input id="block-name" name="name">
+                                    <input id="block-name" name="name" placeholder="Ej: Hero principal">
                                 </div>
                                 <div class="admin-field">
                                     <label for="block-type">Tipo de bloque</label>
-                                    <select id="block-type" name="type">
-                                        <option value="category_sidebar">Lista lateral de categorías</option>
-                                        <option value="category_grid">Grilla de categorías</option>
-                                        <option value="hero_banner">Hero / Banner principal</option>
-                                        <option value="info_cards">Tarjetas informativas</option>
-                                        <option value="product_marquee">Carrusel de productos</option>
-                                        <option value="product_grid">Grilla de productos</option>
-                                        <option value="image_banner">Banner de imagen</option>
-                                        <option value="reviews_marquee">Carrusel de reseñas</option>
-                                        <option value="text_block">Texto simple</option>
-                                        <option value="faq_block">Preguntas frecuentes</option>
-                                        <option value="contact_block">Formulario de contacto</option>
-                                        <option value="cart_summary">Resumen del carrito</option>
-                                        <option value="checkout_form">Formulario de compra</option>
-                                        <option value="spacer">Separador / espacio</option>
-                                        <option value="custom_html">Bloque HTML controlado</option>
-                                    </select>
+                                    <select id="block-type" name="type"></select>
                                 </div>
                                 <div class="admin-field">
                                     <label for="block-visible">Visibilidad</label>
@@ -203,8 +191,6 @@
                                     </select>
                                 </div>
                             </div>
-
-                            <div id="site-editor-section-panel" class="site-editor-section-panel"></div>
 
                             <div id="site-editor-specific-fields" class="pagebuilder-specific-fields"></div>
 
@@ -231,19 +217,20 @@
                             </section>
 
                             <details class="pagebuilder-advanced">
-                                <summary>Avanzado: JSON del contenido y estilos</summary>
+                                <summary>Avanzado: JSON técnico</summary>
+                                <p class="admin-help compact">Usa esta zona solo si necesitas editar una propiedad que todavía no tiene campo visual.</p>
                                 <div class="admin-field">
                                     <label for="block-content-json">content</label>
-                                    <textarea id="block-content-json" rows="10" spellcheck="false"></textarea>
+                                    <textarea id="block-content-json" rows="9" spellcheck="false"></textarea>
                                 </div>
                                 <div class="admin-field">
                                     <label for="block-style-json">style</label>
-                                    <textarea id="block-style-json" rows="7" spellcheck="false"></textarea>
+                                    <textarea id="block-style-json" rows="6" spellcheck="false"></textarea>
                                 </div>
                             </details>
 
                             <footer class="pagebuilder-form-actions">
-                                <button class="admin-button secondary" id="site-editor-delete-block" type="button">
+                                <button class="admin-button secondary danger-outline" id="site-editor-delete-block" type="button">
                                     <i class="fa-solid fa-trash"></i>
                                     Eliminar bloque
                                 </button>
@@ -254,17 +241,17 @@
                             </footer>
                         </form>
 
-                        <div id="site-editor-empty-state" class="admin-empty">Selecciona un bloque para editar sus propiedades.</div>
+                        <div id="site-editor-empty-state" class="admin-empty">Selecciona un bloque para editar sus propiedades visuales.</div>
                     </aside>
                 </section>
             </main>
         </section>
     </section>
 
-    <script src="../js/config.js?v=3.9.0"></script>
-    <script src="js/admin-api.js?v=3.9.0"></script>
-    <script src="js/admin-common.js?v=3.9.0"></script>
-    <script src="js/admin-experience-v327.js?v=3.9.0"></script>
-    <script src="js/site-editor-admin.js?v=3.9.0"></script>
+    <script src="../js/config.js?v=4.0.0"></script>
+    <script src="js/admin-api.js?v=4.0.0"></script>
+    <script src="js/admin-common.js?v=4.0.0"></script>
+    <script src="js/admin-experience-v327.js?v=4.0.0"></script>
+    <script src="js/site-editor-admin.js?v=4.0.0"></script>
 </body>
 </html>

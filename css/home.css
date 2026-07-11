@@ -54,7 +54,7 @@
 .primary-link { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 16px; border-radius: 999px; background: var(--ink); color: #fff; font-weight: 900; margin-top: 12px; }
 @media (max-width: 860px) { .category-panel-mobile-hidden { display: none; } }
 
-/* Editor del Sitio v3.9: render definitivo de secciones */
+/* Editor del Sitio v4.0: render definitivo de secciones */
 .product-grid-section .carousel-head,
 .product-marquee .carousel-head { width: var(--container); margin-inline: auto; }
 .builder-block-grid { width: var(--container); margin-inline: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }

@@ -1,6 +1,8 @@
 "use strict";
 
 (function () {
+    const VERSION = "4.0.0";
+
     const state = {
         pages: [],
         page: null,
@@ -10,76 +12,262 @@
     };
 
     const sectionTypes = {
-        hero_section: { label: "Sección Hero", layout: "hero_with_sidebar" },
-        content_section: { label: "Sección de contenido", layout: "stack" },
-        products_section: { label: "Sección de productos", layout: "stack" },
-        brand_section: { label: "Líneas de marca", layout: "stack" },
-        reviews_section: { label: "Sección de reseñas", layout: "stack" },
-        generic_section: { label: "Sección genérica", layout: "stack" }
+        hero_section: {
+            label: "Hero / Portada",
+            icon: "fa-wand-magic-sparkles",
+            layout: "hero_with_sidebar",
+            description: "Ideal para portada, categorías laterales y banners principales."
+        },
+        content_section: {
+            label: "Contenido",
+            icon: "fa-align-left",
+            layout: "stack",
+            description: "Textos, tarjetas, bloques informativos y contenido editorial."
+        },
+        products_section: {
+            label: "Productos",
+            icon: "fa-box-open",
+            layout: "stack",
+            description: "Carruseles, grillas y vitrinas de productos."
+        },
+        brand_section: {
+            label: "Líneas de marca",
+            icon: "fa-images",
+            layout: "stack",
+            description: "Banners para Memories, Alma u otras campañas."
+        },
+        reviews_section: {
+            label: "Reseñas",
+            icon: "fa-star",
+            layout: "stack",
+            description: "Bloques de testimonios y prueba social."
+        },
+        generic_section: {
+            label: "Sección libre",
+            icon: "fa-layer-group",
+            layout: "stack",
+            description: "Para crear estructuras personalizadas."
+        }
     };
 
     const blockTypes = {
         category_sidebar: {
             label: "Lista lateral de categorías",
+            short: "Categorías lateral",
+            icon: "fa-list",
+            group: "Navegación",
             name: "Lista lateral de categorías",
+            description: "Menú de categorías junto al Hero.",
             content: {
                 heading: "Categorías",
                 source: "manual",
                 categories: [
-                    { label: "Accesorios", href: "catalogo.html?categoria=Accesorios" },
-                    { label: "Coleccionables", href: "catalogo.html?categoria=Coleccionables" },
-                    { label: "Decoración", href: "catalogo.html?categoria=Decoraci%C3%B3n" },
-                    { label: "Línea Memories", href: "catalogo.html?categoria=Linea%20Memories" },
-                    { label: "Línea Alma", href: "catalogo.html?categoria=Linea%20Alma" },
-                    { label: "Todos", href: "catalogo.html" }
+                    { label: "Accesorios", href: "catalogo.html?categoria=Accesorios", image: "" },
+                    { label: "Coleccionables", href: "catalogo.html?categoria=Coleccionables", image: "" },
+                    { label: "Decoración", href: "catalogo.html?categoria=Decoraci%C3%B3n", image: "" },
+                    { label: "Línea Memories", href: "catalogo.html?categoria=Linea%20Memories", image: "" },
+                    { label: "Línea Alma", href: "catalogo.html?categoria=Linea%20Alma", image: "" },
+                    { label: "Todos", href: "catalogo.html", image: "" }
                 ],
                 showViewAll: true,
                 viewAllText: "Ver todas",
                 viewAllUrl: "catalogo.html"
             },
-            style: { desktopVisible: true, mobileVisible: false }
+            style: { desktopVisible: true, mobileVisible: false, marginTop: 0, marginBottom: 0 }
         },
         category_grid: {
             label: "Grilla de categorías",
+            short: "Grilla categorías",
+            icon: "fa-grip",
+            group: "Navegación",
             name: "Grilla de categorías",
-            content: { title: "Categorías", categories: [{ label: "Todos", href: "catalogo.html", image: "" }] },
-            style: { marginTop: 0, marginBottom: 24 }
-        },
-        hero_banner: {
-            label: "Hero / Banner principal",
-            name: "Hero principal",
-            content: { title: "Emmagina", subtitle: "Productos impresos en 3D para regalar, decorar y crear recuerdos.", imageDesktop: "", imageMobile: "", buttonText: "Comprar ahora", buttonUrl: "catalogo.html" },
-            style: { heightDesktop: 323, heightMobile: 220, marginTop: 0, marginBottom: 24 }
-        },
-        info_cards: {
-            label: "Tarjetas informativas",
-            name: "Tarjetas informativas",
+            description: "Tarjetas visuales para categorías destacadas.",
             content: {
-                title: "Explora Emmagina",
-                cards: [
-                    { title: "Destacados", text: "Selección especial de productos", image: "", href: "catalogo.html?grupo=destacados" },
-                    { title: "Más vendidos", text: "Lo favorito de nuestros clientes", image: "", href: "catalogo.html?grupo=vendidos" },
-                    { title: "Más vistos", text: "Lo más explorado de la tienda", image: "", href: "catalogo.html?grupo=vistos" }
+                title: "Categorías destacadas",
+                categories: [
+                    { label: "Todos", href: "catalogo.html", image: "" }
                 ]
             },
             style: { marginTop: 0, marginBottom: 24 }
         },
-        product_marquee: { label: "Carrusel de productos", name: "Carrusel de productos", content: { title: "Productos", filter: "destacados", limit: 12 }, style: { marginTop: 0, marginBottom: 24 } },
-        product_grid: { label: "Grilla de productos", name: "Grilla de productos", content: { title: "Productos", filter: "todos", limit: 12 }, style: { marginTop: 0, marginBottom: 24 } },
-        image_banner: { label: "Banner de imagen", name: "Banner de imagen", content: { title: "Línea especial", imageDesktop: "", imageMobile: "", buttonText: "Pedir el mío", buttonUrl: "pedido-personalizado.html" }, style: { heightDesktop: 112, heightMobile: 88, marginTop: 0, marginBottom: 18 } },
-        reviews_marquee: { label: "Carrusel de reseñas", name: "Carrusel de reseñas", content: { title: "Lo que dicen nuestros clientes", minRating: 4, hideWhenEmpty: true }, style: { marginTop: 0, marginBottom: 24 } },
-        text_block: { label: "Texto simple", name: "Texto simple", content: { title: "Título", text: "Escribe el contenido de este bloque." }, style: { marginTop: 0, marginBottom: 24 } },
-        faq_block: { label: "Preguntas frecuentes", name: "Preguntas frecuentes", content: { title: "Preguntas frecuentes", items: [{ question: "Pregunta", answer: "Respuesta" }] }, style: { marginTop: 0, marginBottom: 24 } },
-        contact_block: { label: "Formulario de contacto", name: "Formulario de contacto", content: { title: "Contáctanos", text: "Escríbenos y responderemos pronto." }, style: { marginTop: 0, marginBottom: 24 } },
-        cart_summary: { label: "Resumen del carrito", name: "Resumen del carrito", content: { title: "Resumen" }, style: { marginTop: 0, marginBottom: 24 } },
-        checkout_form: { label: "Formulario de compra", name: "Formulario de compra", content: { title: "Finalizar compra" }, style: { marginTop: 0, marginBottom: 24 } },
-        spacer: { label: "Separador / espacio", name: "Separador", content: { height: 32 }, style: { heightDesktop: 32, heightMobile: 24, marginTop: 0, marginBottom: 0 } },
-        custom_html: { label: "Bloque HTML controlado", name: "Contenido HTML", content: { title: "Contenido", html: "<p>Contenido editable</p>" }, style: { marginTop: 0, marginBottom: 24 } }
+        hero_banner: {
+            label: "Hero / Banner principal",
+            short: "Hero",
+            icon: "fa-panorama",
+            group: "Portada",
+            name: "Hero principal",
+            description: "Imagen principal con título, subtítulo y botón.",
+            content: {
+                title: "Emmagina",
+                subtitle: "Productos impresos en 3D para regalar, decorar y crear recuerdos.",
+                imageDesktop: "",
+                imageMobile: "",
+                alt: "Banner principal Emmagina",
+                imagePosition: "center",
+                buttonText: "Comprar ahora",
+                buttonUrl: "catalogo.html"
+            },
+            style: { heightDesktop: 323, heightMobile: 220, marginTop: 0, marginBottom: 0 }
+        },
+        info_cards: {
+            label: "Tarjetas informativas",
+            short: "Tarjetas",
+            icon: "fa-table-cells-large",
+            group: "Contenido",
+            name: "Tarjetas informativas",
+            description: "Bloques con imagen, título, texto y enlace.",
+            content: {
+                kicker: "Información",
+                title: "Explora Emmagina",
+                cards: [
+                    { title: "Destacados", text: "Selección especial de productos.", image: "", href: "catalogo.html?grupo=destacados" },
+                    { title: "Más vendidos", text: "Lo favorito de nuestros clientes.", image: "", href: "catalogo.html?grupo=vendidos" },
+                    { title: "Más vistos", text: "Lo más explorado de la tienda.", image: "", href: "catalogo.html?grupo=vistos" }
+                ]
+            },
+            style: { marginTop: 0, marginBottom: 24 }
+        },
+        product_marquee: {
+            label: "Carrusel de productos",
+            short: "Carrusel",
+            icon: "fa-arrows-left-right-to-line",
+            group: "Productos",
+            name: "Carrusel de productos",
+            description: "Vitrina horizontal automática de productos.",
+            content: { kicker: "Emmagina", title: "Productos destacados", filter: "destacados", limit: 12 },
+            style: { marginTop: 0, marginBottom: 24 }
+        },
+        product_grid: {
+            label: "Grilla de productos",
+            short: "Grilla productos",
+            icon: "fa-boxes-stacked",
+            group: "Productos",
+            name: "Grilla de productos",
+            description: "Listado visual de productos en columnas.",
+            content: { kicker: "Emmagina", title: "Productos", filter: "todos", limit: 12 },
+            style: { marginTop: 0, marginBottom: 24 }
+        },
+        image_banner: {
+            label: "Banner de imagen",
+            short: "Banner",
+            icon: "fa-image",
+            group: "Campañas",
+            name: "Banner de imagen",
+            description: "Banner promocional con imagen y botón.",
+            content: {
+                title: "Línea especial",
+                subtitle: "Personaliza un recuerdo único.",
+                imageDesktop: "",
+                imageMobile: "",
+                alt: "Banner Emmagina",
+                imagePosition: "center",
+                buttonText: "Pedir el mío",
+                buttonUrl: "pedido-personalizado.html"
+            },
+            style: { heightDesktop: 112, heightMobile: 88, marginTop: 0, marginBottom: 18 }
+        },
+        reviews_marquee: {
+            label: "Carrusel de reseñas",
+            short: "Reseñas",
+            icon: "fa-comments",
+            group: "Confianza",
+            name: "Carrusel de reseñas",
+            description: "Muestra reseñas desde productos publicados.",
+            content: { title: "Lo que dicen nuestros clientes", minRating: 4, hideWhenEmpty: true },
+            style: { marginTop: 0, marginBottom: 24 }
+        },
+        text_block: {
+            label: "Texto simple",
+            short: "Texto",
+            icon: "fa-font",
+            group: "Contenido",
+            name: "Texto simple",
+            description: "Título y párrafo editable.",
+            content: { title: "Título", text: "Escribe el contenido de este bloque.", align: "left" },
+            style: { marginTop: 0, marginBottom: 24 }
+        },
+        faq_block: {
+            label: "Preguntas frecuentes",
+            short: "FAQ",
+            icon: "fa-circle-question",
+            group: "Contenido",
+            name: "Preguntas frecuentes",
+            description: "Lista editable de preguntas y respuestas.",
+            content: { title: "Preguntas frecuentes", items: [{ question: "Pregunta", answer: "Respuesta" }] },
+            style: { marginTop: 0, marginBottom: 24 }
+        },
+        contact_block: {
+            label: "Formulario de contacto",
+            short: "Contacto",
+            icon: "fa-envelope",
+            group: "Conversión",
+            name: "Formulario de contacto",
+            description: "Bloque de contacto o ayuda.",
+            content: { title: "Contáctanos", text: "Escríbenos y responderemos pronto.", email: "", whatsapp: "" },
+            style: { marginTop: 0, marginBottom: 24 }
+        },
+        cart_summary: {
+            label: "Resumen del carrito",
+            short: "Carrito",
+            icon: "fa-cart-shopping",
+            group: "Compra",
+            name: "Resumen del carrito",
+            description: "Acceso o resumen para páginas de compra.",
+            content: { title: "Resumen del carrito" },
+            style: { marginTop: 0, marginBottom: 24 }
+        },
+        checkout_form: {
+            label: "Formulario de compra",
+            short: "Checkout",
+            icon: "fa-credit-card",
+            group: "Compra",
+            name: "Formulario de compra",
+            description: "Acceso al flujo de compra.",
+            content: { title: "Finalizar compra" },
+            style: { marginTop: 0, marginBottom: 24 }
+        },
+        spacer: {
+            label: "Separador / espacio",
+            short: "Separador",
+            icon: "fa-up-down",
+            group: "Diseño",
+            name: "Separador",
+            description: "Espacio vertical para ordenar el diseño.",
+            content: { height: 32 },
+            style: { heightDesktop: 32, heightMobile: 24, marginTop: 0, marginBottom: 0 }
+        },
+        custom_html: {
+            label: "HTML controlado",
+            short: "HTML",
+            icon: "fa-code",
+            group: "Avanzado",
+            name: "Contenido HTML",
+            description: "Contenido HTML controlado para casos especiales.",
+            content: { title: "Contenido", html: "<p>Contenido editable</p>" },
+            style: { marginTop: 0, marginBottom: 24 }
+        }
     };
 
-    function $(selector) { return document.querySelector(selector); }
-    function escapeHtml(value) { return AdminUI.escapeHtml(value); }
+    function $(selector, root = document) { return root.querySelector(selector); }
+    function $all(selector, root = document) { return Array.from(root.querySelectorAll(selector)); }
+    function escapeHtml(value) { return (window.AdminUI?.escapeHtml || ((v) => String(v ?? "")))(value); }
     function clone(value) { return JSON.parse(JSON.stringify(value || {})); }
+    function toNumber(value, fallback = 0) { const number = Number(value); return Number.isFinite(number) ? number : fallback; }
+    function asBool(value, fallback = false) {
+        if (typeof value === "boolean") return value;
+        if (value === "true") return true;
+        if (value === "false") return false;
+        return fallback;
+    }
+    function idOf(item) { return String(item?._id || item?.id || ""); }
+    function normalizeString(value) { return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim(); }
+    function safeKey(value) { return normalizeString(value).replace(/[^a-z0-9_]+/g, "-").replace(/^-+|-+$/g, ""); }
+    function sortByPosition(items = []) { return [...(Array.isArray(items) ? items : [])].sort((a, b) => Number(a.position || 0) - Number(b.position || 0)); }
+    function stringify(value) { return JSON.stringify(value || {}, null, 2); }
+    function parseJson(text) {
+        try { return JSON.parse(text || "{}"); }
+        catch { throw new Error("JSON inválido. Revisa comas, llaves y comillas."); }
+    }
 
     function setStatus(message = "", type = "") {
         const status = $("#site-editor-status");
@@ -88,45 +276,48 @@
         status.className = `admin-inline-status ${type}`.trim();
     }
 
-    function sortByPosition(items = []) {
-        return [...items].sort((a, b) => Number(a.position || 0) - Number(b.position || 0));
-    }
-
-    function stringify(value) { return JSON.stringify(value || {}, null, 2); }
-
-    function parseJson(text) {
-        try { return JSON.parse(text || "{}"); }
-        catch { throw new Error("JSON inválido. Revisa comas, llaves y comillas."); }
-    }
-
-    function activePageKey() { return state.page?._id || state.page?.key || state.page?.slug || "home"; }
-
     function normalizeType(value, fallback = "custom_html") {
         const raw = String(value || fallback).trim();
-        const key = raw.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9_]+/g, "-").replace(/^-+|-+$/g, "");
+        const key = safeKey(raw);
         const aliases = {
-            "category-sidebar": "category_sidebar", "category_sidebar": "category_sidebar", categorias: "category_sidebar",
-            "category-grid": "category_grid", "category_grid": "category_grid",
+            "category-sidebar": "category_sidebar", "category_sidebar": "category_sidebar", categorias: "category_sidebar", "lista-categorias": "category_sidebar",
+            "category-grid": "category_grid", "category_grid": "category_grid", "grilla-categorias": "category_grid",
             "hero-banner": "hero_banner", "hero_banner": "hero_banner", hero: "hero_banner",
-            "info-cards": "info_cards", "info_cards": "info_cards",
-            "product-marquee": "product_marquee", "product_marquee": "product_marquee",
+            "info-cards": "info_cards", "info_cards": "info_cards", tarjetas: "info_cards",
+            "product-marquee": "product_marquee", "product_marquee": "product_marquee", carrusel: "product_marquee",
             "product-grid": "product_grid", "product_grid": "product_grid",
             "image-banner": "image_banner", "image_banner": "image_banner",
-            "reviews-marquee": "reviews_marquee", "reviews_marquee": "reviews_marquee",
-            "text-block": "text_block", "text_block": "text_block",
-            "faq-block": "faq_block", "faq_block": "faq_block",
+            "reviews-marquee": "reviews_marquee", "reviews_marquee": "reviews_marquee", resenas: "reviews_marquee",
+            "text-block": "text_block", "text_block": "text_block", texto: "text_block",
+            "faq-block": "faq_block", "faq_block": "faq_block", preguntas: "faq_block",
             "contact-block": "contact_block", "contact_block": "contact_block",
             "cart-summary": "cart_summary", "cart_summary": "cart_summary",
             "checkout-form": "checkout_form", "checkout_form": "checkout_form",
             spacer: "spacer", separador: "spacer",
-            "custom-html": "custom_html", "custom_html": "custom_html", "html-block": "html_block", "html_block": "html_block"
+            "custom-html": "custom_html", "custom_html": "custom_html", "html-block": "html_block", "html_block": "html_block",
+            "hero-section": "hero_section", "hero_section": "hero_section",
+            "content-section": "content_section", "content_section": "content_section",
+            "products-section": "products_section", "products_section": "products_section",
+            "brand-section": "brand_section", "brand_section": "brand_section",
+            "reviews-section": "reviews_section", "reviews_section": "reviews_section",
+            "generic-section": "generic_section", "generic_section": "generic_section"
         };
         return aliases[key] || aliases[raw] || key.replace(/-/g, "_") || fallback;
     }
 
+    function blockMeta(type) { return blockTypes[normalizeType(type)] || blockTypes.custom_html; }
+    function sectionMeta(type) { return sectionTypes[normalizeType(type, "generic_section")] || sectionTypes.generic_section; }
+    function blockLabel(type) { return blockMeta(type).label || type || "Bloque"; }
+    function sectionLabel(type) { return sectionMeta(type).label || type || "Sección"; }
+
     function flattenBlocks(page = state.page) {
         if (Array.isArray(page?.sections) && page.sections.length) {
-            return sortByPosition(page.sections).flatMap((section) => sortByPosition(section.blocks || []).map((block) => ({ ...block, sectionId: section._id || section.id, sectionName: section.name, sectionType: section.type })));
+            return sortByPosition(page.sections).flatMap((section) => sortByPosition(section.blocks || []).map((block) => ({
+                ...block,
+                sectionId: idOf(section),
+                sectionName: section.name,
+                sectionType: section.type
+            })));
         }
         return sortByPosition(page?.blocks || []);
     }
@@ -140,117 +331,223 @@
         return normalized;
     }
 
+    function activePageKey() { return state.page?._id || state.page?.key || state.page?.slug || "home"; }
     function getSelectedSection() {
-        return (state.page?.sections || []).find((section) => String(section._id || section.id) === String(state.selectedSectionId)) || state.page?.sections?.[0] || null;
+        return (state.page?.sections || []).find((section) => idOf(section) === String(state.selectedSectionId)) || state.page?.sections?.[0] || null;
     }
-
     function getSelectedBlock() {
-        return flattenBlocks().find((block) => String(block._id || block.id) === String(state.selectedBlockId)) || null;
+        return flattenBlocks().find((block) => idOf(block) === String(state.selectedBlockId)) || null;
     }
-
     function publicPath(page = state.page) {
         if (!page) return "../index.html";
         if (page.key === "home" || page.slug === "inicio") return "../index.html";
         return `../pagina.html?slug=${encodeURIComponent(page.slug || page.key || "")}`;
     }
 
-    function blockLabel(type) { return blockTypes[normalizeType(type)]?.label || type || "Bloque"; }
-    function sectionLabel(type) { return sectionTypes[normalizeType(type, "generic_section")]?.label || type || "Sección"; }
+    function blockSummary(block) {
+        const content = block.content || {};
+        const type = normalizeType(block.type);
+        if (type === "category_sidebar" || type === "category_grid") return `${Array.isArray(content.categories) ? content.categories.length : 0} categorías`;
+        if (type === "product_marquee" || type === "product_grid") return `Filtro: ${content.filter || "todos"} · ${content.limit || 12} productos`;
+        if (type === "info_cards") return `${Array.isArray(content.cards) ? content.cards.length : 0} tarjetas`;
+        if (type === "faq_block") return `${Array.isArray(content.items) ? content.items.length : 0} preguntas`;
+        if (type === "reviews_marquee") return `Desde ${content.minRating || 4} estrellas`;
+        if (content.subtitle) return content.subtitle;
+        if (content.text) return content.text;
+        if (content.buttonText) return `${content.buttonText} → ${content.buttonUrl || "#"}`;
+        return blockMeta(type).description || "Bloque editable";
+    }
+
+    function mediaFromBlock(block) {
+        const content = block?.content || {};
+        if (content.imageDesktop || content.image || content.imagen) return content.imageDesktop || content.image || content.imagen;
+        if (Array.isArray(content.cards)) return content.cards.find((card) => card.image)?.image || "";
+        if (Array.isArray(content.categories)) return content.categories.find((cat) => cat.image)?.image || "";
+        return "";
+    }
+
+    function booleanSelectHtml(field, label, value = false) {
+        return `<div class="admin-field"><label for="field-${escapeHtml(field)}">${escapeHtml(label)}</label><select id="field-${escapeHtml(field)}" data-content-field="${escapeHtml(field)}"><option value="true" ${value === true ? "selected" : ""}>Sí</option><option value="false" ${value !== true ? "selected" : ""}>No</option></select></div>`;
+    }
+    function fieldHtml(field, label, value = "", type = "text", attrs = "") {
+        return `<div class="admin-field"><label for="field-${escapeHtml(field)}">${escapeHtml(label)}</label><input id="field-${escapeHtml(field)}" data-content-field="${escapeHtml(field)}" type="${escapeHtml(type)}" value="${escapeHtml(value)}" ${attrs}></div>`;
+    }
+    function selectFieldHtml(field, label, value, options = []) {
+        return `<div class="admin-field"><label for="field-${escapeHtml(field)}">${escapeHtml(label)}</label><select id="field-${escapeHtml(field)}" data-content-field="${escapeHtml(field)}">${options.map((option) => {
+            const item = typeof option === "string" ? { value: option, label: option } : option;
+            return `<option value="${escapeHtml(item.value)}" ${String(value ?? "") === String(item.value) ? "selected" : ""}>${escapeHtml(item.label)}</option>`;
+        }).join("")}</select></div>`;
+    }
+    function textareaFieldHtml(field, label, value = "", rows = 4) {
+        return `<div class="admin-field full"><label for="field-${escapeHtml(field)}">${escapeHtml(label)}</label><textarea id="field-${escapeHtml(field)}" data-content-field="${escapeHtml(field)}" rows="${Number(rows) || 4}">${escapeHtml(value)}</textarea></div>`;
+    }
+    function uploadFieldHtml(field, label, value = "", help = "") {
+        const preview = value ? `<a class="site-editor-image-preview" href="${escapeHtml(value)}" target="_blank" rel="noopener"><img src="${escapeHtml(value)}" alt="Vista previa"></a>` : "";
+        return `<div class="admin-field full"><label for="field-${escapeHtml(field)}">${escapeHtml(label)}</label><input id="field-${escapeHtml(field)}" data-content-field="${escapeHtml(field)}" value="${escapeHtml(value)}" placeholder="URL Cloudinary">${help ? `<small>${escapeHtml(help)}</small>` : ""}<div class="pagebuilder-upload-row"><input type="file" accept="image/*" data-upload-target="${escapeHtml(field)}"><button class="admin-button secondary small" type="button" data-upload-button="${escapeHtml(field)}"><i class="fa-solid fa-cloud-arrow-up"></i> Subir</button>${preview}</div></div>`;
+    }
+
+    function repeaterRowHtml(listName, item = {}, index = 0) {
+        const safeList = escapeHtml(listName);
+        if (listName === "categories") {
+            return `<article class="site-editor-repeater-item" data-array-index="${index}">
+                <div class="site-editor-repeater-head"><strong>Categoría ${index + 1}</strong><button type="button" class="pagebuilder-mini-button danger" data-remove-row>Eliminar</button></div>
+                <div class="admin-form-grid one">
+                    <div class="admin-field"><label>Nombre</label><input data-array-list="${safeList}" data-array-field="label" value="${escapeHtml(item.label || item.nombre || "")}" placeholder="Ej: Decoración"></div>
+                    <div class="admin-field"><label>URL</label><input data-array-list="${safeList}" data-array-field="href" value="${escapeHtml(item.href || item.url || "")}" placeholder="catalogo.html?categoria=Decoración"></div>
+                    <div class="admin-field full"><label>Imagen / ícono</label><input data-array-list="${safeList}" data-array-field="image" value="${escapeHtml(item.image || item.imagen || "")}" placeholder="URL Cloudinary opcional"><div class="pagebuilder-upload-row"><input type="file" accept="image/*" data-upload-array-list="${safeList}" data-upload-array-index="${index}" data-upload-array-field="image"><button type="button" class="admin-button secondary small" data-upload-array-button><i class="fa-solid fa-cloud-arrow-up"></i> Subir</button></div></div>
+                </div>
+            </article>`;
+        }
+        if (listName === "cards") {
+            return `<article class="site-editor-repeater-item" data-array-index="${index}">
+                <div class="site-editor-repeater-head"><strong>Tarjeta ${index + 1}</strong><button type="button" class="pagebuilder-mini-button danger" data-remove-row>Eliminar</button></div>
+                <div class="admin-form-grid one">
+                    <div class="admin-field"><label>Título</label><input data-array-list="${safeList}" data-array-field="title" value="${escapeHtml(item.title || item.titulo || "")}" placeholder="Ej: Más vendidos"></div>
+                    <div class="admin-field"><label>Texto</label><textarea data-array-list="${safeList}" data-array-field="text" rows="2" placeholder="Descripción breve">${escapeHtml(item.text || item.descripcion || item.description || "")}</textarea></div>
+                    <div class="admin-field"><label>URL destino</label><input data-array-list="${safeList}" data-array-field="href" value="${escapeHtml(item.href || item.url || item.link || "")}" placeholder="catalogo.html"></div>
+                    <div class="admin-field full"><label>Imagen</label><input data-array-list="${safeList}" data-array-field="image" value="${escapeHtml(item.image || item.imagen || "")}" placeholder="URL Cloudinary"><div class="pagebuilder-upload-row"><input type="file" accept="image/*" data-upload-array-list="${safeList}" data-upload-array-index="${index}" data-upload-array-field="image"><button type="button" class="admin-button secondary small" data-upload-array-button><i class="fa-solid fa-cloud-arrow-up"></i> Subir</button></div></div>
+                </div>
+            </article>`;
+        }
+        if (listName === "items") {
+            return `<article class="site-editor-repeater-item" data-array-index="${index}">
+                <div class="site-editor-repeater-head"><strong>Pregunta ${index + 1}</strong><button type="button" class="pagebuilder-mini-button danger" data-remove-row>Eliminar</button></div>
+                <div class="admin-form-grid one">
+                    <div class="admin-field"><label>Pregunta</label><input data-array-list="${safeList}" data-array-field="question" value="${escapeHtml(item.question || item.pregunta || "")}" placeholder="Ej: ¿Cuánto demora mi pedido?"></div>
+                    <div class="admin-field"><label>Respuesta</label><textarea data-array-list="${safeList}" data-array-field="answer" rows="3" placeholder="Respuesta breve">${escapeHtml(item.answer || item.respuesta || "")}</textarea></div>
+                </div>
+            </article>`;
+        }
+        return "";
+    }
+
+    function repeaterHtml(listName, title, items = [], help = "") {
+        const safeItems = Array.isArray(items) && items.length ? items : [{}];
+        return `<section class="site-editor-repeater" data-array-repeater="${escapeHtml(listName)}">
+            <div class="site-editor-repeater-title"><div><p class="admin-section-kicker">${escapeHtml(title)}</p>${help ? `<span>${escapeHtml(help)}</span>` : ""}</div><button type="button" class="admin-button secondary small" data-add-row="${escapeHtml(listName)}"><i class="fa-solid fa-plus"></i> Agregar</button></div>
+            <div class="site-editor-repeater-list" data-array-list-root="${escapeHtml(listName)}">${safeItems.map((item, index) => repeaterRowHtml(listName, item, index)).join("")}</div>
+        </section>`;
+    }
+
+    function collectArray(listName) {
+        return $all(`[data-array-list-root="${listName}"] .site-editor-repeater-item`).map((row) => {
+            const item = {};
+            $all(`[data-array-list="${listName}"]`, row).forEach((input) => {
+                const key = input.dataset.arrayField;
+                if (!key) return;
+                item[key] = input.value;
+            });
+            return item;
+        }).filter((item) => Object.values(item).some((value) => String(value || "").trim() !== ""));
+    }
+
+    function renderBlockTypeOptions(current = "") {
+        const groups = {};
+        Object.entries(blockTypes).forEach(([value, meta]) => {
+            if (!groups[meta.group]) groups[meta.group] = [];
+            groups[meta.group].push({ value, meta });
+        });
+        return Object.entries(groups).map(([group, items]) => `<optgroup label="${escapeHtml(group)}">${items.map(({ value, meta }) => `<option value="${value}" ${normalizeType(current) === value ? "selected" : ""}>${escapeHtml(meta.label)}</option>`).join("")}</optgroup>`).join("");
+    }
+
+    function renderSectionTypeOptions(current = "") {
+        return Object.entries(sectionTypes).map(([value, meta]) => `<option value="${value}" ${normalizeType(current, "generic_section") === value ? "selected" : ""}>${escapeHtml(meta.label)}</option>`).join("");
+    }
 
     async function loadPages(preferKey = "") {
         setStatus("Cargando páginas...", "");
         const pages = await AdminAPI.request("/admin/editor-sitio/pages");
         state.pages = Array.isArray(pages) ? pages : [];
         renderPageList();
-        const currentStillExists = state.page && state.pages.some((page) => [page.key, page.slug, page._id].map(String).includes(String(activePageKey())));
-        if (!state.page || !currentStillExists || preferKey) {
-            const first = state.pages.find((page) => page.key === preferKey || page.slug === preferKey || String(page._id) === String(preferKey)) || state.pages[0];
-            await loadPage(first?._id || first?.key || preferKey || "home");
-        }
-        setStatus("Editor conectado al backend.", "success");
+        const currentStillExists = state.page && state.pages.some((page) => [page._id, page.id, page.key, page.slug].map(String).includes(String(preferKey || activePageKey())));
+        const target = preferKey || (currentStillExists ? activePageKey() : "home");
+        if (target) await loadPage(target, false);
+        setStatus("Editor del Sitio conectado.", "success");
     }
 
-    async function loadPage(pageId = "home") {
-        setStatus("Cargando página...", "");
-        state.page = normalizePage(await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(pageId)}`));
-        state.selectedSectionId = state.page.sections[0]?._id || "";
-        state.selectedBlockId = state.page.sections[0]?.blocks?.[0]?._id || state.page.blocks[0]?._id || "";
+    async function loadPage(key, showLoading = true) {
+        if (showLoading) setStatus("Cargando página...", "");
+        const page = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(key || "home")}`);
+        state.page = normalizePage(page);
+        if (!state.selectedSectionId || !state.page.sections.some((section) => idOf(section) === String(state.selectedSectionId))) {
+            state.selectedSectionId = idOf(state.page.sections[0]) || "";
+        }
+        if (!state.selectedBlockId || !flattenBlocks().some((block) => idOf(block) === String(state.selectedBlockId))) {
+            const section = getSelectedSection();
+            state.selectedBlockId = idOf(section?.blocks?.[0]) || "";
+        }
         renderAll();
-        setStatus(`Página cargada: ${state.page.title || "Página"}.`, "success");
+        if (showLoading) setStatus("Página cargada.", "success");
     }
 
     function renderPageList() {
-        const root = $("#site-editor-page-list");
-        if (!root) return;
+        const list = $("#site-editor-page-list");
+        if (!list) return;
         if (!state.pages.length) {
-            root.innerHTML = `<div class="admin-empty">No hay páginas todavía.</div>`;
+            list.innerHTML = `<div class="admin-empty">No hay páginas. Usa Reparar conexión.</div>`;
             return;
         }
-        const current = activePageKey();
-        root.innerHTML = state.pages.map((page) => {
-            const active = [page.key, page.slug, page._id].map(String).includes(String(current)) ? " active" : "";
+        list.innerHTML = state.pages.map((page) => {
+            const key = page._id || page.key || page.slug;
+            const active = String(key) === String(activePageKey()) || String(page.key) === String(state.page?.key);
             const status = page.isPublished === false ? "Borrador" : "Publicada";
-            const system = page.isSystem ? " · Sistema" : "";
-            const nav = page.showInNavigation ? ` · Menú #${Number(page.sortOrder || 50)}` : "";
-            return `<button class="site-editor-page-item${active}" type="button" data-page-key="${escapeHtml(page._id || page.key || page.slug)}">
-                <strong>${escapeHtml(page.title || page.key || "Página")}</strong>
-                <span>/${escapeHtml(page.slug || page.key || "")} · ${escapeHtml(status)}${escapeHtml(system)}${escapeHtml(nav)} · ${Number(page.sectionsCount || 0)} secciones · ${Number(page.blocksCount || 0)} bloques</span>
+            const nav = page.showInNavigation ? " · Menú" : "";
+            return `<button class="site-editor-page-item${active ? " active" : ""}" type="button" data-page-key="${escapeHtml(key)}">
+                <strong>${escapeHtml(page.title || "Página")}</strong>
+                <span>${escapeHtml(page.slug || page.key || "")}</span>
+                <em>${escapeHtml(status + nav)} · ${Number(page.sectionsCount || 0)} secciones</em>
             </button>`;
         }).join("");
     }
 
     function renderPageFields() {
         const page = state.page;
-        const empty = !page;
-        $("#site-editor-page-title").value = empty ? "" : (page.title || "");
-        $("#site-editor-page-slug").value = empty ? "" : (page.slug || "");
-        $("#site-editor-page-navigation-label").value = empty ? "" : (page.navigationLabel || page.title || "");
-        const sortInput = $("#site-editor-page-sort-order");
-        if (sortInput) sortInput.value = empty ? "" : String(page.sortOrder || 50);
-        $("#site-editor-page-description").value = empty ? "" : (page.description || "");
-        $("#site-editor-page-seo-title").value = empty ? "" : (page.seo?.title || "");
-        $("#site-editor-page-seo-description").value = empty ? "" : (page.seo?.description || "");
-        $("#site-editor-page-published").checked = !empty && page.isPublished !== false;
-        $("#site-editor-page-nav").checked = !empty && page.showInNavigation === true;
-        $("#site-editor-canvas-title").textContent = empty ? "Página" : page.title || "Página";
+        if (!page) return;
+        $("#site-editor-page-title").value = page.title || "";
+        $("#site-editor-page-slug").value = page.slug || "";
+        $("#site-editor-page-slug").disabled = page.key === "home";
+        $("#site-editor-page-navigation-label").value = page.navigationLabel || page.title || "";
+        $("#site-editor-page-sort-order").value = page.sortOrder || 50;
+        $("#site-editor-page-published").checked = page.isPublished !== false;
+        $("#site-editor-page-published").disabled = page.key === "home";
+        $("#site-editor-page-nav").checked = page.showInNavigation === true;
+        $("#site-editor-page-nav").disabled = page.key === "home";
+        $("#site-editor-page-description").value = page.description || "";
+        $("#site-editor-page-seo-title").value = page.seo?.title || "";
+        $("#site-editor-page-seo-description").value = page.seo?.description || "";
+        $("#site-editor-canvas-title").textContent = page.title || "Página";
         const link = $("#site-editor-public-link");
         if (link) link.href = publicPath(page);
-        const deletePageButton = $("#site-editor-delete-page");
-        if (deletePageButton) deletePageButton.disabled = !page || page.canDelete === false;
+        const deleteButton = $("#site-editor-delete-page");
+        if (deleteButton) deleteButton.disabled = page.canDelete === false;
     }
 
     function renderLayers() {
         const list = $("#site-editor-block-list");
-        const sections = sortByPosition(state.page?.sections || []);
         if (!list) return;
+        const sections = sortByPosition(state.page?.sections || []);
         if (!sections.length) {
             list.innerHTML = `<div class="admin-empty">Esta página todavía no tiene secciones.</div>`;
             return;
         }
         list.innerHTML = sections.map((section, sectionIndex) => {
-            const sectionId = String(section._id || section.id);
+            const sectionId = idOf(section);
+            const meta = sectionMeta(section.type);
             const activeSection = sectionId === String(state.selectedSectionId) ? " active" : "";
-            const hiddenSection = section.isVisible === false ? " · Oculta" : "";
             const blocks = sortByPosition(section.blocks || []);
             return `<section class="site-editor-layer-section${activeSection}" data-section-id="${escapeHtml(sectionId)}">
                 <header class="site-editor-layer-section-head" data-select-section="${escapeHtml(sectionId)}">
-                    <div><strong>${sectionIndex + 1}. ${escapeHtml(section.name || sectionLabel(section.type))}</strong><span>${escapeHtml(sectionLabel(section.type))}${hiddenSection} · ${blocks.length} bloques</span></div>
-                    <div class="pagebuilder-block-actions">
-                        <button class="pagebuilder-mini-button" type="button" data-section-move="up" data-section-id="${escapeHtml(sectionId)}">↑</button>
-                        <button class="pagebuilder-mini-button" type="button" data-section-move="down" data-section-id="${escapeHtml(sectionId)}">↓</button>
-                    </div>
+                    <div class="site-editor-layer-title"><span class="site-editor-icon"><i class="fa-solid ${escapeHtml(meta.icon)}"></i></span><div><strong>${sectionIndex + 1}. ${escapeHtml(section.name || meta.label)}</strong><span>${escapeHtml(meta.label)} · ${blocks.length} bloques ${section.isVisible === false ? "· Oculta" : ""}</span></div></div>
+                    <div class="pagebuilder-block-actions"><button class="pagebuilder-mini-button" type="button" data-section-move="up" data-section-id="${escapeHtml(sectionId)}" title="Subir sección">↑</button><button class="pagebuilder-mini-button" type="button" data-section-move="down" data-section-id="${escapeHtml(sectionId)}" title="Bajar sección">↓</button></div>
                 </header>
                 <div class="site-editor-layer-blocks">
                     ${blocks.map((block, blockIndex) => {
-                        const id = String(block._id || block.id);
+                        const id = idOf(block);
+                        const blockInfo = blockMeta(block.type);
                         const active = id === String(state.selectedBlockId) ? " active" : "";
-                        const hidden = block.isVisible === false ? " · Oculto" : "";
                         return `<article class="pagebuilder-block-item${active}" draggable="true" data-block-id="${escapeHtml(id)}" data-section-id="${escapeHtml(sectionId)}">
-                            <div class="pagebuilder-block-main"><strong>${escapeHtml(block.name || blockLabel(block.type))}</strong><span>${blockIndex + 1}. ${escapeHtml(blockLabel(block.type))}${hidden}</span></div>
-                            <div class="pagebuilder-block-actions">
-                                <button class="pagebuilder-mini-button" type="button" data-move="up" data-block-id="${escapeHtml(id)}">↑</button>
-                                <button class="pagebuilder-mini-button" type="button" data-move="down" data-block-id="${escapeHtml(id)}">↓</button>
-                            </div>
+                            <div class="pagebuilder-block-main"><span class="site-editor-icon soft"><i class="fa-solid ${escapeHtml(blockInfo.icon)}"></i></span><div><strong>${escapeHtml(block.name || blockInfo.short || blockInfo.label)}</strong><span>${blockIndex + 1}. ${escapeHtml(blockInfo.short || blockInfo.label)} ${block.isVisible === false ? "· Oculto" : ""}</span></div></div>
+                            <div class="pagebuilder-block-actions"><button class="pagebuilder-mini-button" type="button" data-move="up" data-block-id="${escapeHtml(id)}">↑</button><button class="pagebuilder-mini-button" type="button" data-move="down" data-block-id="${escapeHtml(id)}">↓</button></div>
                         </article>`;
                     }).join("") || `<div class="admin-empty small">Sin bloques.</div>`}
                     <button class="admin-button secondary small site-editor-add-block-to-section" type="button" data-add-block-section="${escapeHtml(sectionId)}"><i class="fa-solid fa-plus"></i> Agregar bloque aquí</button>
@@ -259,104 +556,127 @@
         }).join("");
     }
 
-    function blockSummary(block) {
-        const content = block.content || {};
-        const type = normalizeType(block.type);
-        if (type === "category_sidebar" || type === "category_grid") return `${Array.isArray(content.categories) ? content.categories.length : 0} categorías`;
-        if (type === "product_marquee" || type === "product_grid") return `Filtro: ${content.filter || "todos"} · Límite: ${content.limit || 12}`;
-        if (type === "info_cards") return `${Array.isArray(content.cards) ? content.cards.length : 0} tarjetas`;
-        if (type === "reviews_marquee") return `Reseñas desde ${content.minRating || 4} estrellas`;
-        if (content.subtitle) return content.subtitle;
-        if (content.html) return "Contenido HTML editable";
-        if (content.text) return content.text;
-        if (content.buttonText) return `${content.buttonText} → ${content.buttonUrl || "#"}`;
-        return "Bloque editable";
-    }
-
     function renderPreview() {
         const root = $("#site-editor-preview");
-        const sections = sortByPosition(state.page?.sections || []);
         if (!root) return;
+        const sections = sortByPosition(state.page?.sections || []);
         if (!sections.length) {
             root.innerHTML = `<div class="admin-empty">No hay secciones para previsualizar.</div>`;
             return;
         }
         root.innerHTML = sections.map((section) => {
-            const sectionId = String(section._id || section.id);
+            const sectionId = idOf(section);
+            const meta = sectionMeta(section.type);
+            const blocks = sortByPosition(section.blocks || []);
             const activeSection = sectionId === String(state.selectedSectionId) ? " active" : "";
             return `<section class="pagebuilder-preview-section${activeSection}" data-select-section="${escapeHtml(sectionId)}">
-                <header><div><h4>${escapeHtml(section.name || sectionLabel(section.type))}</h4><p>${escapeHtml(sectionLabel(section.type))} · ${sortByPosition(section.blocks || []).length} bloques</p></div><span class="admin-status-pill ${section.isVisible === false ? "danger" : "success"}">${section.isVisible === false ? "Oculta" : "Visible"}</span></header>
-                <div class="pagebuilder-preview-section-blocks">
-                    ${sortByPosition(section.blocks || []).map((block) => {
-                        const content = block.content || {};
-                        const active = String(block._id || block.id) === String(state.selectedBlockId) ? " active" : "";
-                        const img = content.imageDesktop || content.image || (Array.isArray(content.cards) ? content.cards.find((card) => card.image)?.image : "");
-                        return `<article class="pagebuilder-preview-block${active}" data-select-block="${escapeHtml(block._id || block.id)}"><header><div><h4>${escapeHtml(block.name || content.title || blockLabel(block.type))}</h4><p>${escapeHtml(blockSummary(block))}</p></div><span class="admin-status-pill ${block.isVisible === false ? "danger" : "success"}">${block.isVisible === false ? "Oculto" : "Visible"}</span></header>${img ? `<img class="pagebuilder-preview-image" src="${escapeHtml(img)}" alt="Vista previa">` : ""}</article>`;
-                    }).join("") || `<div class="admin-empty small">Sin bloques.</div>`}
-                </div>
+                <header><div class="site-editor-layer-title"><span class="site-editor-icon"><i class="fa-solid ${escapeHtml(meta.icon)}"></i></span><div><h4>${escapeHtml(section.name || meta.label)}</h4><p>${escapeHtml(meta.description)}</p></div></div><span class="admin-status-pill ${section.isVisible === false ? "danger" : "success"}">${section.isVisible === false ? "Oculta" : "Visible"}</span></header>
+                <div class="pagebuilder-preview-section-blocks layout-${escapeHtml(section.layout || "stack")}">${blocks.map((block) => {
+                    const content = block.content || {};
+                    const blockInfo = blockMeta(block.type);
+                    const active = idOf(block) === String(state.selectedBlockId) ? " active" : "";
+                    const img = mediaFromBlock(block);
+                    return `<article class="pagebuilder-preview-block${active}" data-select-block="${escapeHtml(idOf(block))}">
+                        <header><div class="site-editor-layer-title"><span class="site-editor-icon soft"><i class="fa-solid ${escapeHtml(blockInfo.icon)}"></i></span><div><h4>${escapeHtml(block.name || content.title || blockInfo.label)}</h4><p>${escapeHtml(blockSummary(block))}</p></div></div><span class="admin-status-pill ${block.isVisible === false ? "danger" : "success"}">${block.isVisible === false ? "Oculto" : "Visible"}</span></header>${img ? `<img class="pagebuilder-preview-image" src="${escapeHtml(img)}" alt="Vista previa" loading="lazy">` : ""}</article>`;
+                }).join("") || `<div class="admin-empty small">Sin bloques.</div>`}</div>
             </section>`;
         }).join("");
-    }
-
-    function fieldHtml(field, label, value = "", type = "text") {
-        return `<div class="admin-field"><label for="field-${escapeHtml(field)}">${escapeHtml(label)}</label><input id="field-${escapeHtml(field)}" data-content-field="${escapeHtml(field)}" type="${escapeHtml(type)}" value="${escapeHtml(value)}"></div>`;
-    }
-
-    function textareaFieldHtml(field, label, value = "", rows = 4) {
-        return `<div class="admin-field full"><label for="field-${escapeHtml(field)}">${escapeHtml(label)}</label><textarea id="field-${escapeHtml(field)}" data-content-field="${escapeHtml(field)}" rows="${Number(rows) || 4}">${escapeHtml(value)}</textarea></div>`;
-    }
-
-    function uploadFieldHtml(field, label, value = "") {
-        return `<div class="admin-field full"><label for="field-${escapeHtml(field)}">${escapeHtml(label)}</label><input id="field-${escapeHtml(field)}" data-content-field="${escapeHtml(field)}" value="${escapeHtml(value)}" placeholder="URL Cloudinary"><div class="pagebuilder-upload-row"><input type="file" accept="image/*" data-upload-target="${escapeHtml(field)}"><button class="admin-button secondary small" type="button" data-upload-button="${escapeHtml(field)}">Subir a Cloudinary</button></div></div>`;
-    }
-
-    function categoriesTextareaValue(content) {
-        const list = Array.isArray(content.categories) ? content.categories : [];
-        return list.map((item) => typeof item === "string" ? item : `${item.label || item.nombre || "Categoría"}|${item.href || item.url || "catalogo.html"}|${item.image || ""}`).join("\n");
-    }
-
-    function parseCategoriesText(text) {
-        return String(text || "").split(/\n+/).map((line) => line.trim()).filter(Boolean).map((line) => {
-            const parts = line.split("|").map((part) => part.trim());
-            return { label: parts[0] || "Categoría", href: parts[1] || `catalogo.html?categoria=${encodeURIComponent(parts[0] || "")}`, image: parts[2] || "" };
-        });
     }
 
     function renderSpecificFields(block) {
         const root = $("#site-editor-specific-fields");
         if (!root || !block) return;
-        const content = block.content || {};
         const type = normalizeType(block.type);
+        const content = { ...clone(blockMeta(type).content), ...clone(block.content) };
+        const heading = `<div class="site-editor-editor-heading"><span class="site-editor-icon"><i class="fa-solid ${escapeHtml(blockMeta(type).icon)}"></i></span><div><strong>${escapeHtml(blockMeta(type).label)}</strong><p>${escapeHtml(blockMeta(type).description)}</p></div></div>`;
+
         if (type === "category_sidebar" || type === "category_grid") {
-            root.innerHTML = `${fieldHtml("heading", "Título del bloque", content.heading || content.title || "Categorías")}${textareaFieldHtml("categoriesText", "Categorías: una por línea con formato Nombre|URL|Imagen opcional", categoriesTextareaValue(content), 8)}${fieldHtml("viewAllText", "Texto botón ver todas", content.viewAllText || "Ver todas")}${fieldHtml("viewAllUrl", "URL botón ver todas", content.viewAllUrl || "catalogo.html")}`;
+            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml(type === "category_grid" ? "title" : "heading", "Título visible", content.heading || content.title || "Categorías")}${booleanSelectHtml("showViewAll", "Mostrar botón Ver todas", content.showViewAll !== false)}${fieldHtml("viewAllText", "Texto botón", content.viewAllText || "Ver todas")}${fieldHtml("viewAllUrl", "URL botón", content.viewAllUrl || "catalogo.html")}</div>${repeaterHtml("categories", "Categorías", content.categories || [], "Edita nombre, enlace e imagen opcional.")}`;
             return;
         }
-        if (["hero_banner", "image_banner"].includes(type)) {
-            root.innerHTML = `${fieldHtml("title", "Título", content.title || "")}${fieldHtml("subtitle", "Subtítulo", content.subtitle || "")}${uploadFieldHtml("imageDesktop", "Imagen escritorio", content.imageDesktop || "")}${uploadFieldHtml("imageMobile", "Imagen móvil", content.imageMobile || "")}${fieldHtml("buttonText", "Texto botón", content.buttonText || "")}${fieldHtml("buttonUrl", "URL botón", content.buttonUrl || "")}`;
+
+        if (type === "hero_banner") {
+            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml("title", "Título", content.title || "")}${fieldHtml("subtitle", "Subtítulo", content.subtitle || "")}${fieldHtml("buttonText", "Texto botón", content.buttonText || "")}${fieldHtml("buttonUrl", "URL botón", content.buttonUrl || "catalogo.html")}${fieldHtml("alt", "Texto alternativo imagen", content.alt || "")}${selectFieldHtml("imagePosition", "Posición imagen", content.imagePosition || "center", [{ value: "center", label: "Centro" }, { value: "top", label: "Arriba" }, { value: "bottom", label: "Abajo" }, { value: "left", label: "Izquierda" }, { value: "right", label: "Derecha" }])}</div>${uploadFieldHtml("imageDesktop", "Imagen escritorio", content.imageDesktop || "")}${uploadFieldHtml("imageMobile", "Imagen móvil", content.imageMobile || "", "Opcional. Si está vacía se usa la imagen de escritorio.")}`;
             return;
         }
-        if (["product_marquee", "product_grid"].includes(type)) {
-            const filters = ["todos", "destacados", "desde14990", "lanzamiento", "vendidos", "vistos", "Linea Alma", "Linea Memories"];
-            root.innerHTML = `${fieldHtml("title", "Título", content.title || "")}<div class="admin-field"><label for="field-filter">Filtro</label><select id="field-filter" data-content-field="filter">${filters.map((option) => `<option value="${escapeHtml(option)}" ${String(content.filter || "") === option ? "selected" : ""}>${escapeHtml(option)}</option>`).join("")}</select></div>${fieldHtml("limit", "Límite", content.limit || 12, "number")}`;
+
+        if (type === "image_banner") {
+            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml("title", "Título", content.title || "")}${fieldHtml("subtitle", "Subtítulo", content.subtitle || "")}${fieldHtml("buttonText", "Texto botón", content.buttonText || "")}${fieldHtml("buttonUrl", "URL botón", content.buttonUrl || "pedido-personalizado.html")}${fieldHtml("alt", "Texto alternativo imagen", content.alt || "")}${selectFieldHtml("imagePosition", "Posición imagen", content.imagePosition || "center", ["center", "top", "bottom", "left", "right"])}</div>${uploadFieldHtml("imageDesktop", "Imagen escritorio", content.imageDesktop || "")}${uploadFieldHtml("imageMobile", "Imagen móvil", content.imageMobile || "")}`;
             return;
         }
+
+        if (type === "info_cards") {
+            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml("kicker", "Etiqueta superior", content.kicker || "Información")}${fieldHtml("title", "Título de sección", content.title || "Explora Emmagina")}</div>${repeaterHtml("cards", "Tarjetas", content.cards || [], "Cada tarjeta puede tener imagen, texto y enlace.")}`;
+            return;
+        }
+
+        if (type === "product_marquee" || type === "product_grid") {
+            const filters = [
+                { value: "todos", label: "Todos los productos" },
+                { value: "destacados", label: "Destacados" },
+                { value: "desde14990", label: "Desde $14.990" },
+                { value: "lanzamiento", label: "Lanzamiento" },
+                { value: "vendidos", label: "Más vendidos" },
+                { value: "vistos", label: "Más vistos" },
+                { value: "Linea Alma", label: "Categoría Línea Alma" },
+                { value: "Linea Memories", label: "Categoría Línea Memories" }
+            ];
+            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml("kicker", "Etiqueta superior", content.kicker || "Emmagina")}${fieldHtml("title", "Título", content.title || "")}${selectFieldHtml("filter", "Qué productos mostrar", content.filter || "todos", filters)}${fieldHtml("limit", "Cantidad máxima", content.limit || 12, "number", "min='1' max='36'")}</div><p class="admin-help compact">Para filtros por categoría personalizada, escribe luego en Avanzado <strong>filter</strong> con el nombre de la categoría exacta.</p>`;
+            return;
+        }
+
         if (type === "reviews_marquee") {
-            root.innerHTML = `${fieldHtml("title", "Título", content.title || "")}${fieldHtml("minRating", "Evaluación mínima", content.minRating || 4, "number")}`;
+            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml("title", "Título", content.title || "Lo que dicen nuestros clientes")}${fieldHtml("minRating", "Evaluación mínima", content.minRating || 4, "number", "min='1' max='5'")}${booleanSelectHtml("hideWhenEmpty", "Ocultar si no hay reseñas", content.hideWhenEmpty !== false)}</div>`;
             return;
         }
+
         if (type === "text_block") {
-            root.innerHTML = `${fieldHtml("title", "Título", content.title || "")}${textareaFieldHtml("text", "Texto", content.text || "", 6)}`;
+            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml("title", "Título", content.title || "")}${selectFieldHtml("align", "Alineación", content.align || "left", [{ value: "left", label: "Izquierda" }, { value: "center", label: "Centro" }, { value: "right", label: "Derecha" }])}</div>${textareaFieldHtml("text", "Texto", content.text || "", 7)}`;
             return;
         }
+
         if (type === "faq_block") {
-            root.innerHTML = `${fieldHtml("title", "Título", content.title || "Preguntas frecuentes")}<div class="admin-help">Edita las preguntas desde el JSON de contenido usando items: [{question, answer}].</div>`;
+            root.innerHTML = `${heading}${fieldHtml("title", "Título", content.title || "Preguntas frecuentes")}${repeaterHtml("items", "Preguntas", content.items || [], "Agrega preguntas y respuestas sin editar JSON.")}`;
             return;
         }
-        if (type === "custom_html" || type === "html_block") {
-            root.innerHTML = `${fieldHtml("title", "Título", content.title || "")}${textareaFieldHtml("html", "HTML controlado", content.html || "", 8)}`;
+
+        if (type === "contact_block") {
+            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml("title", "Título", content.title || "Contáctanos")}${fieldHtml("email", "Correo visible", content.email || "")}${fieldHtml("whatsapp", "WhatsApp visible", content.whatsapp || "")}</div>${textareaFieldHtml("text", "Texto", content.text || "", 4)}`;
             return;
         }
-        root.innerHTML = `<div class="admin-help">Edita las propiedades desde el JSON de contenido.</div>`;
+
+        if (type === "spacer") {
+            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml("height", "Alto del espacio", content.height || 32, "number", "min='0' max='260'")}</div>`;
+            return;
+        }
+
+        if (type === "cart_summary" || type === "checkout_form") {
+            root.innerHTML = `${heading}<div class="admin-form-grid one">${fieldHtml("title", "Título", content.title || blockMeta(type).name)}</div><p class="admin-help compact">Este bloque funciona como acceso o marcador visual. El flujo completo vive en su página correspondiente.</p>`;
+            return;
+        }
+
+        root.innerHTML = `${heading}${fieldHtml("title", "Título", content.title || "")}${textareaFieldHtml("html", "HTML controlado", content.html || "", 9)}<p class="admin-help compact">Usa HTML simple y seguro. Evita scripts.</p>`;
+    }
+
+    function renderSectionMiniEditor(section) {
+        const root = $("#site-editor-section-panel");
+        if (!root) return;
+        if (!section) {
+            root.innerHTML = `<div class="admin-empty small">Selecciona una sección para editar su nombre y layout.</div>`;
+            return;
+        }
+        const meta = sectionMeta(section.type);
+        root.innerHTML = `<details class="site-editor-section-details" open><summary><span><i class="fa-solid ${escapeHtml(meta.icon)}"></i> Sección seleccionada</span></summary>
+            <div class="site-editor-style-panel slim">
+                <div class="admin-form-grid one">
+                    <div class="admin-field"><label for="section-name">Nombre de sección</label><input id="section-name" value="${escapeHtml(section.name || "")}"></div>
+                    <div class="admin-field"><label for="section-type">Tipo de sección</label><select id="section-type">${renderSectionTypeOptions(section.type)}</select></div>
+                    <div class="admin-field"><label for="section-layout">Distribución</label><select id="section-layout"><option value="stack" ${section.layout === "stack" ? "selected" : ""}>Apilado vertical</option><option value="hero_with_sidebar" ${section.layout === "hero_with_sidebar" ? "selected" : ""}>Hero con lateral</option><option value="grid" ${section.layout === "grid" ? "selected" : ""}>Grilla</option></select></div>
+                    <div class="admin-field"><label for="section-visible">Visibilidad</label><select id="section-visible"><option value="true" ${section.isVisible !== false ? "selected" : ""}>Visible</option><option value="false" ${section.isVisible === false ? "selected" : ""}>Oculta</option></select></div>
+                </div>
+                <div class="admin-actions-row compact"><button class="admin-button secondary small" id="site-editor-save-section" type="button">Guardar sección</button><button class="admin-button danger small" id="site-editor-delete-section" type="button">Eliminar sección</button></div>
+            </div>
+        </details>`;
     }
 
     function renderProperties() {
@@ -374,27 +694,19 @@
         }
         form.hidden = false;
         empty.hidden = true;
+        const type = normalizeType(block.type);
         $("#site-editor-selected-title").textContent = block.name || blockLabel(block.type);
         $("#block-name").value = block.name || "";
-        $("#block-type").value = normalizeType(block.type);
+        $("#block-type").innerHTML = renderBlockTypeOptions(type);
+        $("#block-type").value = type;
         $("#block-visible").value = block.isVisible === false ? "false" : "true";
         $("#block-content-json").value = stringify(block.content);
         $("#block-style-json").value = stringify(block.style);
         renderSpecificFields(block);
-        document.querySelectorAll("[data-style-field]").forEach((input) => {
+        $all("[data-style-field]").forEach((input) => {
             const key = input.dataset.styleField;
             input.value = block.style?.[key] ?? "";
         });
-    }
-
-    function renderSectionMiniEditor(section) {
-        const root = $("#site-editor-section-panel");
-        if (!root) return;
-        if (!section) {
-            root.innerHTML = `<div class="admin-empty small">Selecciona una sección.</div>`;
-            return;
-        }
-        root.innerHTML = `<div class="site-editor-style-panel"><p class="admin-section-kicker">Sección seleccionada</p><div class="admin-form-grid one"><div class="admin-field"><label for="section-name">Nombre de sección</label><input id="section-name" value="${escapeHtml(section.name || "")}"></div><div class="admin-field"><label for="section-type">Tipo de sección</label><select id="section-type">${Object.entries(sectionTypes).map(([value, meta]) => `<option value="${value}" ${normalizeType(section.type, "generic_section") === value ? "selected" : ""}>${escapeHtml(meta.label)}</option>`).join("")}</select></div><div class="admin-field"><label for="section-visible">Visibilidad</label><select id="section-visible"><option value="true" ${section.isVisible !== false ? "selected" : ""}>Visible</option><option value="false" ${section.isVisible === false ? "selected" : ""}>Oculta</option></select></div><div class="admin-field"><label for="section-layout">Layout</label><select id="section-layout"><option value="stack" ${section.layout === "stack" ? "selected" : ""}>Apilado</option><option value="hero_with_sidebar" ${section.layout === "hero_with_sidebar" ? "selected" : ""}>Hero con lateral</option><option value="grid" ${section.layout === "grid" ? "selected" : ""}>Grilla</option></select></div></div><div class="admin-actions-row"><button class="admin-button secondary small" id="site-editor-save-section" type="button">Guardar sección</button><button class="admin-button danger small" id="site-editor-delete-section" type="button">Eliminar sección</button></div></div>`;
     }
 
     function renderAll() {
@@ -409,7 +721,16 @@
         if (!state.page) return AdminUI.toast("Primero carga o crea una página.", "warning");
         const button = $("#site-editor-save-page");
         const currentKey = activePageKey();
-        const payload = { title: $("#site-editor-page-title").value.trim() || "Página", slug: $("#site-editor-page-slug").value.trim(), description: $("#site-editor-page-description").value.trim(), isPublished: $("#site-editor-page-published").checked, showInNavigation: $("#site-editor-page-nav").checked, navigationLabel: $("#site-editor-page-navigation-label").value.trim(), sortOrder: Number($("#site-editor-page-sort-order")?.value || 50), seo: { title: $("#site-editor-page-seo-title").value.trim(), description: $("#site-editor-page-seo-description").value.trim() } };
+        const payload = {
+            title: $("#site-editor-page-title").value.trim() || "Página",
+            slug: $("#site-editor-page-slug").value.trim(),
+            description: $("#site-editor-page-description").value.trim(),
+            isPublished: $("#site-editor-page-published").checked,
+            showInNavigation: $("#site-editor-page-nav").checked,
+            navigationLabel: $("#site-editor-page-navigation-label").value.trim(),
+            sortOrder: Number($("#site-editor-page-sort-order")?.value || 50),
+            seo: { title: $("#site-editor-page-seo-title").value.trim(), description: $("#site-editor-page-seo-description").value.trim() }
+        };
         try {
             if (button) button.disabled = true;
             setStatus("Guardando página...", "");
@@ -424,8 +745,8 @@
         const title = prompt("Nombre de la nueva página", "Nueva página");
         if (!title) return;
         state.page = normalizePage(await AdminAPI.request("/admin/editor-sitio/pages", { method: "POST", body: { title, slug: "", isPublished: false, pageType: "custom", showInNavigation: false, sortOrder: 50 } }));
-        state.selectedSectionId = state.page.sections[0]?._id || "";
-        state.selectedBlockId = state.page.sections[0]?.blocks?.[0]?._id || "";
+        state.selectedSectionId = idOf(state.page.sections[0]) || "";
+        state.selectedBlockId = idOf(state.page.sections[0]?.blocks?.[0]) || "";
         await loadPages(state.page._id || state.page.key);
         AdminUI.toast("Página creada como borrador.", "success");
     }
@@ -443,19 +764,23 @@
     }
 
     function mergeSpecificFields(content) {
-        document.querySelectorAll("[data-content-field]").forEach((input) => {
+        $all("[data-content-field]").forEach((input) => {
             const key = input.dataset.contentField;
             if (!key) return;
-            if (key === "categoriesText") content.categories = parseCategoriesText(input.value);
+            if (input.tagName === "SELECT" && (input.value === "true" || input.value === "false")) content[key] = input.value === "true";
             else if (input.type === "number") content[key] = Number(input.value || 0);
+            else if (input.type === "checkbox") content[key] = input.checked;
             else content[key] = input.value;
         });
+        if ($("[data-array-list-root='categories']")) content.categories = collectArray("categories").map((item) => ({ label: item.label || "Categoría", href: item.href || `catalogo.html?categoria=${encodeURIComponent(item.label || "")}`, image: item.image || "" }));
+        if ($("[data-array-list-root='cards']")) content.cards = collectArray("cards").map((item) => ({ title: item.title || "Tarjeta", text: item.text || "", href: item.href || "catalogo.html", image: item.image || "" }));
+        if ($("[data-array-list-root='items']")) content.items = collectArray("items").map((item) => ({ question: item.question || "Pregunta", answer: item.answer || "" }));
         delete content.categoriesText;
         return content;
     }
 
     function mergeStyleFields(style) {
-        document.querySelectorAll("[data-style-field]").forEach((input) => {
+        $all("[data-style-field]").forEach((input) => {
             const key = input.dataset.styleField;
             if (!key) return;
             if (String(input.value).trim() === "") return;
@@ -471,28 +796,28 @@
         let content;
         let style;
         try {
-            content = mergeSpecificFields(parseJson($("#block-content-json").value));
-            style = mergeStyleFields(parseJson($("#block-style-json").value));
+            const selectedType = normalizeType($("#block-type").value);
+            const defaults = blockMeta(selectedType);
+            content = mergeSpecificFields({ ...clone(defaults.content), ...parseJson($("#block-content-json").value) });
+            style = mergeStyleFields({ ...clone(defaults.style), ...parseJson($("#block-style-json").value) });
         } catch (error) { AdminUI.toast(error.message, "danger"); return; }
         const payload = { name: $("#block-name").value.trim() || blockLabel($("#block-type").value), type: normalizeType($("#block-type").value), isVisible: $("#block-visible").value === "true", sectionId: block.sectionId || state.selectedSectionId, content, style };
-        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/blocks/${encodeURIComponent(block._id || block.id)}`, { method: "PATCH", body: payload });
+        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/blocks/${encodeURIComponent(idOf(block))}`, { method: "PATCH", body: payload });
         state.page = normalizePage(data.page);
         state.selectedSectionId = data.block?.sectionId || state.selectedSectionId;
-        state.selectedBlockId = data.block?._id || block._id || block.id;
+        state.selectedBlockId = data.block?._id || idOf(block);
         AdminUI.toast("Bloque guardado.", "success");
+        setStatus("Bloque guardado y sincronizado.", "success");
         renderAll();
     }
 
     async function addSection() {
         if (!state.page) return;
-        const select = prompt("Tipo de sección:\n1 = Hero\n2 = Contenido\n3 = Productos\n4 = Líneas de marca\n5 = Reseñas\n6 = Genérica", "3");
-        if (!select) return;
-        const map = { "1": "hero_section", "2": "content_section", "3": "products_section", "4": "brand_section", "5": "reviews_section", "6": "generic_section" };
-        const type = map[select] || normalizeType(select, "generic_section");
-        const meta = sectionTypes[type] || sectionTypes.generic_section;
+        const type = $("#site-editor-new-section-type")?.value || "generic_section";
+        const meta = sectionMeta(type);
         const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/sections`, { method: "POST", body: { type, name: meta.label, layout: meta.layout, isVisible: true } });
         state.page = normalizePage(data.page);
-        state.selectedSectionId = data.section?._id || state.page.sections.at(-1)?._id || "";
+        state.selectedSectionId = data.section?._id || idOf(state.page.sections.at(-1)) || "";
         state.selectedBlockId = "";
         AdminUI.toast("Sección agregada.", "success");
         renderAll();
@@ -501,9 +826,12 @@
     async function saveSection() {
         const section = getSelectedSection();
         if (!section || !state.page) return;
-        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/sections/${encodeURIComponent(section._id || section.id)}`, { method: "PATCH", body: { name: $("#section-name").value.trim() || section.name, type: $("#section-type").value, isVisible: $("#section-visible").value === "true", layout: $("#section-layout").value } });
+        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/sections/${encodeURIComponent(idOf(section))}`, {
+            method: "PATCH",
+            body: { name: $("#section-name").value.trim() || section.name, type: $("#section-type").value, isVisible: $("#section-visible").value === "true", layout: $("#section-layout").value }
+        });
         state.page = normalizePage(data.page);
-        state.selectedSectionId = data.section?._id || section._id || section.id;
+        state.selectedSectionId = data.section?._id || idOf(section);
         AdminUI.toast("Sección guardada.", "success");
         renderAll();
     }
@@ -513,19 +841,18 @@
         if (!section || !state.page) return;
         const ok = await AdminUI.confirmAction(`¿Eliminar la sección "${section.name}" y todos sus bloques?`);
         if (!ok) return;
-        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/sections/${encodeURIComponent(section._id || section.id)}`, { method: "DELETE" });
+        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/sections/${encodeURIComponent(idOf(section))}`, { method: "DELETE" });
         state.page = normalizePage(data.page || data);
-        state.selectedSectionId = state.page.sections[0]?._id || "";
-        state.selectedBlockId = state.page.sections[0]?.blocks?.[0]?._id || "";
+        state.selectedSectionId = idOf(state.page.sections[0]) || "";
+        state.selectedBlockId = idOf(state.page.sections[0]?.blocks?.[0]) || "";
         AdminUI.toast("Sección eliminada.", "success");
         renderAll();
     }
 
     async function addBlock(sectionId = state.selectedSectionId) {
         if (!state.page) return;
-        const selector = $("#site-editor-new-block-type");
-        const type = selector?.value || "image_banner";
-        const defaults = blockTypes[type] || blockTypes.custom_html;
+        const type = $("#site-editor-new-block-type")?.value || "image_banner";
+        const defaults = blockMeta(type);
         const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/blocks`, { method: "POST", body: { sectionId, type, name: defaults.name, position: 999, content: clone(defaults.content), style: clone(defaults.style), isVisible: true } });
         state.page = normalizePage(data.page);
         state.selectedSectionId = data.block?.sectionId || sectionId;
@@ -539,28 +866,28 @@
         if (!block || !state.page) return;
         const ok = await AdminUI.confirmAction("¿Eliminar este bloque? Esta acción no se puede deshacer.");
         if (!ok) return;
-        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/blocks/${encodeURIComponent(block._id || block.id)}`, { method: "DELETE" });
+        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/blocks/${encodeURIComponent(idOf(block))}`, { method: "DELETE" });
         state.page = normalizePage(data.page);
-        state.selectedBlockId = flattenBlocks()[0]?._id || "";
+        state.selectedBlockId = idOf(flattenBlocks()[0]) || "";
         AdminUI.toast("Bloque eliminado.", "success");
         renderAll();
     }
 
     async function reorderSectionsList(sections) {
         if (!state.page) return;
-        state.page = normalizePage(await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/sections/reorder`, { method: "PUT", body: { sections: sections.map((section, index) => ({ sectionId: section._id || section.id, position: index + 1 })) } }));
+        state.page = normalizePage(await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/sections/reorder`, { method: "PUT", body: { sections: sections.map((section, index) => ({ sectionId: idOf(section), position: index + 1 })) } }));
         renderAll();
     }
 
     async function reorderBlocks(section, blocks) {
         if (!state.page || !section) return;
-        state.page = normalizePage(await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/reorder`, { method: "PUT", body: { blocks: blocks.map((block, index) => ({ blockId: block._id || block.id, sectionId: section._id || section.id, position: index + 1 })) } }));
+        state.page = normalizePage(await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/reorder`, { method: "PUT", body: { blocks: blocks.map((block, index) => ({ blockId: idOf(block), sectionId: idOf(section), position: index + 1 })) } }));
         renderAll();
     }
 
     async function moveSection(sectionId, direction) {
         const sections = sortByPosition(state.page?.sections || []);
-        const index = sections.findIndex((section) => String(section._id || section.id) === String(sectionId));
+        const index = sections.findIndex((section) => idOf(section) === String(sectionId));
         const target = direction === "up" ? index - 1 : index + 1;
         if (index < 0 || target < 0 || target >= sections.length) return;
         [sections[index], sections[target]] = [sections[target], sections[index]];
@@ -568,28 +895,45 @@
     }
 
     async function moveBlock(blockId, direction) {
-        const block = flattenBlocks().find((item) => String(item._id || item.id) === String(blockId));
-        const section = (state.page?.sections || []).find((item) => String(item._id || item.id) === String(block?.sectionId));
+        const block = flattenBlocks().find((item) => idOf(item) === String(blockId));
+        const section = (state.page?.sections || []).find((item) => idOf(item) === String(block?.sectionId));
         if (!section) return;
         const blocks = sortByPosition(section.blocks || []);
-        const index = blocks.findIndex((item) => String(item._id || item.id) === String(blockId));
+        const index = blocks.findIndex((item) => idOf(item) === String(blockId));
         const target = direction === "up" ? index - 1 : index + 1;
         if (index < 0 || target < 0 || target >= blocks.length) return;
         [blocks[index], blocks[target]] = [blocks[target], blocks[index]];
         await reorderBlocks(section, blocks);
     }
 
+    async function uploadToCloudinary(file, name = "editor-sitio") {
+        const form = new FormData();
+        form.append("imagenes", file);
+        form.append("nombre", name);
+        const data = await AdminAPI.request("/uploads/productos", { method: "POST", body: form });
+        const url = data.urls?.[0] || data.assets?.[0]?.url || data.assets?.[0]?.secure_url || "";
+        if (!url) throw new Error("Cloudinary no devolvió una URL válida.");
+        return url;
+    }
+
     async function uploadImage(field) {
         const input = document.querySelector(`[data-upload-target="${field}"]`);
         const urlInput = document.querySelector(`[data-content-field="${field}"]`);
         if (!input?.files?.[0]) return AdminUI.toast("Selecciona una imagen primero.", "warning");
-        const form = new FormData();
-        form.append("imagenes", input.files[0]);
-        form.append("nombre", `editor-sitio-${field}`);
-        const data = await AdminAPI.request("/uploads/productos", { method: "POST", body: form });
-        const url = data.urls?.[0] || data.assets?.[0]?.url || data.assets?.[0]?.secure_url || "";
-        if (!url) return AdminUI.toast("Cloudinary no devolvió una URL válida.", "danger");
+        const url = await uploadToCloudinary(input.files[0], `editor-sitio-${field}`);
         urlInput.value = url;
+        AdminUI.toast("Imagen subida. Guarda el bloque para aplicar el cambio.", "success");
+    }
+
+    async function uploadArrayImage(button) {
+        const row = button.closest(".site-editor-repeater-item");
+        const fileInput = row?.querySelector("[data-upload-array-list]");
+        if (!fileInput?.files?.[0]) return AdminUI.toast("Selecciona una imagen primero.", "warning");
+        const list = fileInput.dataset.uploadArrayList;
+        const field = fileInput.dataset.uploadArrayField;
+        const target = row.querySelector(`[data-array-list="${list}"][data-array-field="${field}"]`);
+        const url = await uploadToCloudinary(fileInput.files[0], `editor-sitio-${list}-${field}`);
+        if (target) target.value = url;
         AdminUI.toast("Imagen subida. Guarda el bloque para aplicar el cambio.", "success");
     }
 
@@ -600,19 +944,37 @@
             setStatus("Reparando conexión del Editor del Sitio...", "");
             const result = await AdminAPI.request("/admin/editor-sitio/_repair", { method: "POST", body: {} });
             state.page = normalizePage(result.page || result);
-            state.selectedSectionId = state.page.sections[0]?._id || "";
-            state.selectedBlockId = state.page.sections[0]?.blocks?.[0]?._id || "";
+            state.selectedSectionId = idOf(state.page.sections[0]) || "";
+            state.selectedBlockId = idOf(state.page.sections[0]?.blocks?.[0]) || "";
             await loadPages(state.page._id || "home");
             AdminUI.toast("Editor del Sitio reparado y sincronizado.", "success");
             setStatus("Editor del Sitio reparado y conectado.", "success");
         } finally { if (button) button.disabled = false; }
     }
 
+    function appendRepeaterRow(listName) {
+        const root = $(`[data-array-list-root="${listName}"]`);
+        if (!root) return;
+        const index = root.querySelectorAll(".site-editor-repeater-item").length;
+        root.insertAdjacentHTML("beforeend", repeaterRowHtml(listName, {}, index));
+    }
+
+    function refreshCurrentBlockFieldsForType() {
+        const block = getSelectedBlock();
+        if (!block) return;
+        const type = normalizeType($("#block-type").value);
+        const defaults = blockMeta(type);
+        const temp = { ...block, type, name: block.name || defaults.name, content: { ...clone(defaults.content), ...clone(block.content) }, style: { ...clone(defaults.style), ...clone(block.style) } };
+        $("#block-content-json").value = stringify(temp.content);
+        $("#block-style-json").value = stringify(temp.style);
+        if (!$("#block-name").value.trim()) $("#block-name").value = defaults.name;
+        renderSpecificFields(temp);
+    }
+
     function showError(error) {
         console.error(error);
         const status = error?.status ? `Error ${error.status}: ` : "";
-        let detail = "";
-        if (error?.details?.requestId) detail = ` · ID: ${error.details.requestId}`;
+        const detail = error?.details?.requestId ? ` · ID: ${error.details.requestId}` : "";
         const message = `${status}${error.message || "No fue posible completar la acción."}${detail}`;
         setStatus(message, "danger");
         AdminUI.toast(message, "danger");
@@ -628,12 +990,17 @@
         $("#site-editor-add-block")?.addEventListener("click", () => addBlock().catch(showError));
         $("#site-editor-block-form")?.addEventListener("submit", (event) => saveBlock(event).catch(showError));
         $("#site-editor-delete-block")?.addEventListener("click", () => deleteBlock().catch(showError));
+        $("#block-type")?.addEventListener("change", refreshCurrentBlockFieldsForType);
 
         document.addEventListener("click", async (event) => {
             const saveSectionButton = event.target.closest("#site-editor-save-section");
             if (saveSectionButton) { await saveSection().catch(showError); return; }
             const deleteSectionButton = event.target.closest("#site-editor-delete-section");
             if (deleteSectionButton) { await deleteSection().catch(showError); return; }
+            const addRow = event.target.closest("[data-add-row]");
+            if (addRow) { appendRepeaterRow(addRow.dataset.addRow); return; }
+            const removeRow = event.target.closest("[data-remove-row]");
+            if (removeRow) { removeRow.closest(".site-editor-repeater-item")?.remove(); return; }
             const pageItem = event.target.closest("[data-page-key]");
             if (pageItem) { await loadPage(pageItem.dataset.pageKey).catch(showError); return; }
             const selectSection = event.target.closest("[data-select-section]");
@@ -649,7 +1016,9 @@
             const sectionMove = event.target.closest("[data-section-move]");
             if (sectionMove) { await moveSection(sectionMove.dataset.sectionId, sectionMove.dataset.sectionMove).catch(showError); return; }
             const upload = event.target.closest("[data-upload-button]");
-            if (upload) await uploadImage(upload.dataset.uploadButton).catch(showError);
+            if (upload) { await uploadImage(upload.dataset.uploadButton).catch(showError); return; }
+            const uploadArray = event.target.closest("[data-upload-array-button]");
+            if (uploadArray) { await uploadArrayImage(uploadArray).catch(showError); }
         });
 
         document.addEventListener("dragstart", (event) => {
@@ -668,11 +1037,11 @@
             const target = event.target.closest(".pagebuilder-block-item");
             if (!target || !state.draggedBlockId || !state.page) return;
             event.preventDefault();
-            const section = (state.page.sections || []).find((item) => String(item._id || item.id) === String(target.dataset.sectionId));
+            const section = (state.page.sections || []).find((item) => idOf(item) === String(target.dataset.sectionId));
             if (!section) return;
             const blocks = sortByPosition(section.blocks || []);
-            const from = blocks.findIndex((block) => String(block._id || block.id) === String(state.draggedBlockId));
-            const to = blocks.findIndex((block) => String(block._id || block.id) === String(target.dataset.blockId));
+            const from = blocks.findIndex((block) => idOf(block) === String(state.draggedBlockId));
+            const to = blocks.findIndex((block) => idOf(block) === String(target.dataset.blockId));
             if (from < 0 || to < 0 || from === to) return;
             const [moved] = blocks.splice(from, 1);
             blocks.splice(to, 0, moved);
@@ -681,15 +1050,20 @@
     }
 
     async function init() {
+        const blockSelect = $("#site-editor-new-block-type");
+        if (blockSelect) blockSelect.innerHTML = renderBlockTypeOptions("product_marquee");
+        const sectionSelect = $("#site-editor-new-section-type");
+        if (sectionSelect) sectionSelect.innerHTML = renderSectionTypeOptions("products_section");
         bindEvents();
         try { await loadPages("home"); }
         catch (error) {
             state.pages = [];
             state.page = null;
-            renderAll();
+            renderPageList();
             showError(error);
-            setStatus("No se pudo cargar el Editor del Sitio desde el backend. Verifica que el backend v2.5 esté desplegado y presiona Reparar conexión.", "danger");
+            setStatus("No se pudo cargar el Editor del Sitio. Verifica que el backend v2.6 esté desplegado y presiona Reparar conexión.", "danger");
         }
+        console.info(`Editor del Sitio ${VERSION} cargado`);
     }
 
     document.addEventListener("admin:ready", init);

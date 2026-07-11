@@ -1,4 +1,4 @@
-Emmagina Frontend v3.8 - Editor del Sitio con secciones
+Emmagina Frontend v4.0 - Editor del Sitio con secciones
 
 Cambios principales:
 - El panel Editor del Sitio muestra páginas, secciones y bloques.

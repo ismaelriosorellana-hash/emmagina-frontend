@@ -1,0 +1,35 @@
+Emmagina Frontend v4.0 - Editor del Sitio con editores visuales
+
+Esta versión mejora la experiencia del Editor del Sitio y reduce la dependencia del JSON técnico.
+
+Incluye:
+- Editor del Sitio más limpio y ordenado.
+- Selector visual de tipos de sección.
+- Selector visual de tipos de bloque agrupado por uso.
+- Formularios amigables por tipo de bloque:
+  - Hero / Banner principal.
+  - Lista lateral de categorías.
+  - Grilla de categorías.
+  - Tarjetas informativas.
+  - Carrusel de productos.
+  - Grilla de productos.
+  - Banner de imagen.
+  - Carrusel de reseñas.
+  - Texto simple.
+  - Preguntas frecuentes.
+  - Formulario de contacto.
+  - Resumen del carrito.
+  - Formulario de compra.
+  - Separador / espacio.
+  - HTML controlado.
+- Repetidores visuales para categorías, tarjetas y preguntas frecuentes.
+- Subida a Cloudinary desde campos principales y desde filas de tarjetas/categorías.
+- Vista rápida más clara de secciones y bloques.
+- JSON técnico queda colapsado en modo avanzado.
+- Caché actualizado a v4.0.0.
+
+Instalación:
+cd C:\Users\Ismael\Documents\Emmagina\emmagina-frontend
+git add .
+git commit -m "Emmagina frontend v4.0 editor visual"
+git push
