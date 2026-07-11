@@ -30,12 +30,6 @@
             icon: "fa-list-check"
         },
         {
-            id: "categorias",
-            label: "Categorías",
-            href: "categorias.html",
-            icon: "fa-tags"
-        },
-        {
             id: "inventario",
             label: "Inventario",
             href: "inventario.html",
@@ -48,36 +42,20 @@
             icon: "fa-chart-line"
         },
         {
-            id: "banners",
-            label: "Banners",
-            href: "banners.html",
-            icon: "fa-images"
-        },
-        {
-            id: "contenido",
-            label: "Contenido",
-            href: "contenido.html",
-            icon: "fa-file-pen"
-        },
-        {
-            id: "apariencia",
-            label: "Apariencia",
-            href: "apariencia.html",
-            icon: "fa-palette"
-        },
-        {
             id: "studio",
-            label: "Editor del sitio",
+            label: "Editor del Sitio",
             href: "editor-sitio.html",
             icon: "fa-layer-group"
-        },
-        {
-            id: "pagebuilder",
-            label: "Modo Dios",
-            href: "pagebuilder.html",
-            icon: "fa-wand-magic-sparkles"
         }
     ];
+
+    const deprecatedSiteEditorModules = new Set([
+        "categorias",
+        "banners",
+        "contenido",
+        "apariencia",
+        "pagebuilder"
+    ]);
 
     function escapeHtml(value) {
         return String(value ?? "")
@@ -313,11 +291,15 @@
         });
 
         items.forEach((item) => {
-            if (!item?.id) return;
+            if (!item?.id || deprecatedSiteEditorModules.has(item.id)) return;
             map.set(item.id, {
                 ...(map.get(item.id) || {}),
                 ...item
             });
+        });
+
+        deprecatedSiteEditorModules.forEach((id) => {
+            map.delete(id);
         });
 
         return Array.from(map.values());
@@ -368,7 +350,7 @@
             AdminAPI.getUser();
 
         const nav =
-            pages.map((item) => `
+            pages.filter((item) => !deprecatedSiteEditorModules.has(item.id)).map((item) => `
                 <a
                     href="${item.href}"
                     class="${item.id === page ? "active" : ""}"
