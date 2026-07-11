@@ -31,7 +31,7 @@ const PLACEHOLDER_IMAGE = "data:image/svg+xml;charset=UTF-8," + encodeURICompone
 </svg>`);
 
 window.CONFIG = Object.freeze({
-  APP_VERSION: "4.5.0-paleta-scroll-ui",
+  APP_VERSION: "4.7.0-carrito-checkout-variantes",
   SITE_NAME: "Emmagina",
   BRAND_NAME: "Emmagina",
   SITE_URL: "https://emmagina-frontend.onrender.com",

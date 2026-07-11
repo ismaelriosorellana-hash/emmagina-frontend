@@ -101,6 +101,21 @@
     return [];
   }
 
+  async function validateCart(items = []) {
+    return request("/pedidos/validar-carrito", {
+      method: "POST",
+      body: { items }
+    });
+  }
+
+  async function createOrder(payload = {}) {
+    return request("/pedidos", {
+      method: "POST",
+      body: payload
+    });
+  }
+
+
   API.request = request;
   API.getProducts = getProducts;
   API.getProductBySlug = getProductBySlug;
@@ -109,5 +124,7 @@
   API.getSiteSettings = getSiteSettings;
   API.getNavigation = getNavigation;
   API.getPage = getPage;
+  API.validateCart = validateCart;
+  API.createOrder = createOrder;
   window.EmmaginaAPI = Object.freeze(API);
 })();

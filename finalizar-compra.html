@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Estamos preparando un flujo de compra seguro y simple. Por ahora coordinamos el cierre del pedido de forma asistida.">
-  <meta name="theme-color" content="#f8f6f1">
+  <meta name="description" content="Finaliza tu compra en Emmagina con productos, variantes y datos de entrega validados.">
+  <meta name="theme-color" content="#EAF4F8">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=4.6.1">
-  <link rel="stylesheet" href="css/layout.css?v=4.6.1">
-  <link rel="stylesheet" href="css/components.css?v=4.6.1">
-  <link rel="stylesheet" href="css/home.css?v=4.6.1">
-  <link rel="stylesheet" href="css/catalog.css?v=4.6.1">
-  <link rel="stylesheet" href="css/product.css?v=4.6.1">
-  <link rel="stylesheet" href="css/pages.css?v=4.6.1">
+  <link rel="stylesheet" href="css/base.css?v=4.7.0">
+  <link rel="stylesheet" href="css/layout.css?v=4.7.0">
+  <link rel="stylesheet" href="css/components.css?v=4.7.0">
+  <link rel="stylesheet" href="css/home.css?v=4.7.0">
+  <link rel="stylesheet" href="css/catalog.css?v=4.7.0">
+  <link rel="stylesheet" href="css/product.css?v=4.7.0">
+  <link rel="stylesheet" href="css/pages.css?v=4.7.0">
   <title>Finalizar compra | Emmagina</title>
 </head>
 <body>
@@ -58,50 +58,66 @@
     </div>
   </section>
   <main id="main">
-    <header class="content-hero">
-      <p class="kicker">Emmagina</p>
+    <header class="content-hero checkout-hero">
+      <p class="kicker">Compra segura</p>
       <h1>Finalizar compra</h1>
-      <p>Estamos preparando un flujo de compra seguro y simple. Por ahora coordinamos el cierre del pedido de forma asistida.</p>
-      <p><a class="btn btn-primary" href="catalogo.html">Volver a la tienda</a></p>
+      <p>Confirma tus datos, revisa las variantes seleccionadas y crea tu pedido. El pago por transferencia queda preparado; Mercado Pago se habilitará cuando la cuenta esté configurada.</p>
     </header>
+
+    <section class="section checkout-section" aria-label="Finalizar compra">
+      <form class="checkout-layout" data-checkout-form>
+        <div class="checkout-main">
+          <section class="content-card checkout-card">
+            <div class="checkout-step-heading"><span>1</span><div><h2>Datos de contacto</h2><p>Usaremos estos datos para confirmar el pedido y coordinar la entrega.</p></div></div>
+            <div class="form-grid">
+              <div class="field"><label for="checkout-name">Nombre completo</label><input id="checkout-name" name="nombre" autocomplete="name" required maxlength="120"></div>
+              <div class="field"><label for="checkout-email">Correo</label><input id="checkout-email" name="email" type="email" autocomplete="email" required maxlength="160"></div>
+              <div class="field"><label for="checkout-phone">Teléfono / WhatsApp</label><input id="checkout-phone" name="telefono" autocomplete="tel" required maxlength="40"></div>
+              <div class="field"><label for="checkout-rut">RUT <small>(opcional)</small></label><input id="checkout-rut" name="rut" maxlength="20"></div>
+            </div>
+          </section>
+
+          <section class="content-card checkout-card">
+            <div class="checkout-step-heading"><span>2</span><div><h2>Entrega</h2><p>El costo de envío final puede coordinarse según comuna, tamaño y tipo de producto.</p></div></div>
+            <div class="form-grid">
+              <div class="field"><label for="checkout-delivery">Método</label><select id="checkout-delivery" name="metodoEntrega"><option value="envio">Envío</option><option value="retiro">Retiro coordinado</option></select></div>
+              <div class="field"><label for="checkout-comuna">Comuna</label><input id="checkout-comuna" name="comuna" maxlength="120"></div>
+              <div class="field full"><label for="checkout-address">Dirección</label><input id="checkout-address" name="direccion" maxlength="300"></div>
+              <div class="field full"><label for="checkout-notes">Observaciones</label><textarea id="checkout-notes" name="observaciones" rows="4" maxlength="1000" placeholder="Indica referencias, horarios o detalles importantes."></textarea></div>
+            </div>
+          </section>
+
+          <section class="content-card checkout-card">
+            <div class="checkout-step-heading"><span>3</span><div><h2>Pago</h2><p>El pedido queda registrado y recibirás instrucciones para completar el pago.</p></div></div>
+            <div class="checkout-payment-grid">
+              <label class="payment-option is-selected"><input type="radio" name="metodoPago" value="transferencia" checked><strong>Transferencia bancaria</strong><span>Reserva de stock y coordinación directa.</span></label>
+              <label class="payment-option" data-mp-option><input type="radio" name="metodoPago" value="mercadopago"><strong>Mercado Pago</strong><span data-mp-label>Preparado para activarse cuando esté configurado.</span></label>
+            </div>
+          </section>
+        </div>
+
+        <aside class="checkout-summary" data-checkout-summary>
+          <h2>Resumen</h2>
+          <p>Cargando carrito...</p>
+        </aside>
+      </form>
+    </section>
   </main>
   <footer class="site-footer">
     <div class="footer-inner">
-      <section class="footer-col" aria-label="Marca">
-        <h2 class="footer-brand">Emmagina</h2>
-        <p>Productos impresos en 3D, figuras personalizadas y decoraciones pensadas para regalar, crear y recordar.</p>
-      </section>
-      <nav class="footer-col" aria-label="Tienda">
-        <h3>Tienda</h3>
-        <a href="catalogo.html">Catálogo</a>
-        <a href="pedido-personalizado.html">Crea tu escena</a>
-        <a href="carrito.html">Carrito</a>
-        <a href="comparacion.html">Comparación</a>
-      </nav>
-      <nav class="footer-col" aria-label="Ayuda">
-        <h3>Ayuda</h3>
-        <a href="preguntas-frecuentes.html">Preguntas frecuentes</a>
-        <a href="despachos-retiros.html">Despachos y retiros</a>
-        <a href="cambios-pedidos.html">Cambios y pedidos</a>
-        <a href="seguimiento-pedido.html">Seguimiento</a>
-      </nav>
-      <section class="footer-col" aria-label="Soporte al cliente">
-        <h3>Soporte</h3>
-        <p>WhatsApp: +56 9 0000 0000</p>
-        <p>Correo: contacto@emmagina.cl</p>
-        <a class="btn btn-soft btn-small" href="https://wa.me/56900000000" target="_blank" rel="noopener">Contactar soporte</a>
-      </section>
+      <section class="footer-col" aria-label="Marca"><h2 class="footer-brand">Emmagina</h2><p>Productos impresos en 3D, figuras personalizadas y decoraciones pensadas para regalar, crear y recordar.</p></section>
+      <nav class="footer-col" aria-label="Tienda"><h3>Tienda</h3><a href="catalogo.html">Catálogo</a><a href="pedido-personalizado.html">Crea tu escena</a><a href="carrito.html">Carrito</a><a href="comparacion.html">Comparación</a></nav>
+      <nav class="footer-col" aria-label="Ayuda"><h3>Ayuda</h3><a href="preguntas-frecuentes.html">Preguntas frecuentes</a><a href="despachos-retiros.html">Despachos y retiros</a><a href="cambios-pedidos.html">Cambios y pedidos</a><a href="seguimiento-pedido.html">Seguimiento</a></nav>
+      <section class="footer-col" aria-label="Soporte al cliente"><h3>Soporte</h3><p>WhatsApp: +56 9 0000 0000</p><p>Correo: contacto@emmagina.cl</p><a class="btn btn-soft btn-small" href="https://wa.me/56900000000" target="_blank" rel="noopener">Contactar soporte</a></section>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Emmagina. Todos los derechos reservados.</span>
-      <span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span>
-    </div>
+    <div class="footer-bottom"><span>© 2026 Emmagina. Todos los derechos reservados.</span><span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span></div>
   </footer>
-  <script src="js/config.js?v=4.6.1"></script>
-  <script src="js/emmagina-data.js?v=4.6.1"></script>
-  <script src="js/emmagina-api.js?v=4.6.1"></script>
-  <script src="js/emmagina-cart.js?v=4.6.1"></script>
-  <script src="js/emmagina-ui.js?v=4.6.1"></script>
-  <script src="js/emmagina-common.js?v=4.6.1"></script>
+  <script src="js/config.js?v=4.7.0"></script>
+  <script src="js/emmagina-data.js?v=4.7.0"></script>
+  <script src="js/emmagina-api.js?v=4.7.0"></script>
+  <script src="js/emmagina-cart.js?v=4.7.0"></script>
+  <script src="js/emmagina-ui.js?v=4.7.0"></script>
+  <script src="js/emmagina-common.js?v=4.7.0"></script>
+  <script src="js/emmagina-checkout.js?v=4.7.0"></script>
 </body>
 </html>

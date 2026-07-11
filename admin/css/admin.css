@@ -1598,7 +1598,7 @@ body[data-admin-page="productos"] .admin-product-callout {
 }
 
 
-/* v4.6.1 - Productos: pestaña Ficha de venta visible y campos clave destacados */
+/* v4.7.0 - Productos: pestaña Ficha de venta visible y campos clave destacados */
 .admin-product-tabs {
     flex-wrap: wrap;
     align-items: center;
@@ -1619,4 +1619,66 @@ body[data-admin-page="productos"] .admin-product-callout {
     background: rgba(234, 244, 248, 0.68);
     border-radius: 14px;
     padding: 12px;
+}
+
+/* v4.7 · modales profesionales sin barras de desplazamiento duplicadas */
+body:has(.admin-modal:not([hidden])) {
+    overflow: hidden;
+}
+.admin-modal {
+    overflow: hidden;
+}
+.admin-modal-panel,
+body[data-admin-page="productos"] .admin-product-modal-panel {
+    max-height: calc(100dvh - 24px);
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+}
+body[data-admin-page="productos"] .admin-product-modal-body {
+    max-height: none;
+    overflow: visible;
+    min-height: auto;
+}
+body[data-admin-page="productos"] .admin-variant-list {
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+}
+body[data-admin-page="productos"] .admin-product-tabs {
+    position: sticky;
+    top: 82px;
+    z-index: 4;
+    flex-wrap: wrap;
+    background: rgba(255, 255, 255, .96);
+    backdrop-filter: blur(12px);
+}
+body[data-admin-page="productos"] .admin-modal-header {
+    z-index: 6;
+}
+body[data-admin-page="productos"] .admin-product-tab-sale,
+body[data-admin-page="productos"] .admin-product-tab-sale.active {
+    border-color: inherit;
+    background: inherit;
+    color: inherit;
+}
+body[data-admin-page="productos"] .admin-product-tab-sale:not(.active) {
+    border-color: transparent;
+    background: transparent;
+    color: var(--admin-muted);
+}
+body[data-admin-page="productos"] .admin-product-tab-sale.active {
+    border-color: rgba(33, 158, 188, .35);
+    background: rgba(142, 202, 230, .28);
+    color: #023047;
+}
+@media (max-width: 760px) {
+    .admin-modal-panel,
+    body[data-admin-page="productos"] .admin-product-modal-panel {
+        max-height: 100dvh;
+        border-radius: 0;
+    }
+    body[data-admin-page="productos"] .admin-product-tabs {
+        top: 76px;
+    }
 }

@@ -177,8 +177,14 @@
       variantId: variant.key || variant.id || variant.sku || variant.nombre,
       variantName: variant.nombre,
       sku: variant.sku || "",
+      type: variant.tipo || "opcion",
+      options: variant.opciones || {},
       price: priceFor(product, variant),
-      image: variant.imagenPrincipal || product.imagenPrincipal
+      originalPrice: originalPriceFor(product, variant),
+      image: variant.imagenPrincipal || product.imagenPrincipal,
+      stock: stockFor(product, variant),
+      status: stockText(product, variant),
+      preparationDays: Number(variant.diasPreparacion || product.diasPreparacion || 3)
     };
   }
 
