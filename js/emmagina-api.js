@@ -81,11 +81,34 @@
     return payload?.page || payload?.data || payload;
   }
 
+  async function getCmsPage(key = "home") {
+    const normalizedKey = String(key || "home").trim() || "home";
+    const payload = await request(`/cms/pages/${encodeURIComponent(normalizedKey)}`);
+    return payload?.page || payload?.data || payload;
+  }
+
+  async function getCategories() {
+    const payload = await request("/categorias");
+    if (Array.isArray(payload)) return payload;
+    if (Array.isArray(payload?.categorias)) return payload.categorias;
+    if (Array.isArray(payload?.categories)) return payload.categories;
+    if (Array.isArray(payload?.items)) return payload.items;
+    return [];
+  }
+
   async function getSiteSettings() {
     return request("/configuracion-sitio");
   }
 
   async function getNavigation() {
+    try {
+      const payload = await request("/cms/_navigation");
+      if (Array.isArray(payload)) return payload;
+      if (Array.isArray(payload?.items)) return payload.items;
+      if (Array.isArray(payload?.navigation)) return payload.navigation;
+    } catch (error) {
+      console.warn("Navegación CMS no disponible, usando navegación anterior:", error.message);
+    }
     const payload = await request("/pages/_navigation");
     if (Array.isArray(payload)) return payload;
     if (Array.isArray(payload?.items)) return payload.items;
@@ -124,6 +147,8 @@
   API.getSiteSettings = getSiteSettings;
   API.getNavigation = getNavigation;
   API.getPage = getPage;
+  API.getCmsPage = getCmsPage;
+  API.getCategories = getCategories;
   API.validateCart = validateCart;
   API.createOrder = createOrder;
   window.EmmaginaAPI = Object.freeze(API);

@@ -119,3 +119,21 @@ a[href*="pago"].primary-link:hover {
   background: var(--buy-dark);
   color: #fff;
 }
+
+/* Emmagina v4.8: motor universal CMS */
+.cms-section { width: 100%; }
+.cms-section .section-heading { width: var(--container); margin-inline: auto; }
+.cms-block { min-width: 0; }
+.cms-placeholder-image { display: block; min-height: 120px; background: linear-gradient(135deg, var(--cloud), var(--sky)); }
+.hero-layout > .hero-card.cms-block { width: 100%; }
+.product-grid-section .product-grid { width: var(--container); margin-inline: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; }
+.review-card { min-width: 280px; max-width: 380px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 18px; box-shadow: var(--shadow); }
+.review-card strong { display: block; color: var(--navy); margin-bottom: 8px; }
+.review-card p { margin: 0; color: var(--muted); line-height: 1.5; }
+.cms-section .html-block p { line-height: 1.65; }
+@media (max-width: 860px) {
+  .product-grid-section .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .product-grid-section .product-grid { grid-template-columns: 1fr; }
+}
