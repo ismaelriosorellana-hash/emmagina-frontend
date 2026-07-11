@@ -81,6 +81,10 @@
     return payload?.page || payload?.data || payload;
   }
 
+  async function getSiteSettings() {
+    return request("/configuracion-sitio");
+  }
+
   async function getNavigation() {
     const payload = await request("/pages/_navigation");
     if (Array.isArray(payload)) return payload;
@@ -102,6 +106,7 @@
   API.getProductBySlug = getProductBySlug;
   API.getProductById = getProductById;
   API.getBanners = getBanners;
+  API.getSiteSettings = getSiteSettings;
   API.getNavigation = getNavigation;
   API.getPage = getPage;
   window.EmmaginaAPI = Object.freeze(API);

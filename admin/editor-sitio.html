@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="robots" content="noindex, nofollow, noarchive">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>Editor del Sitio | Emmagina CMS v4.3</title>
+    <title>Editor del Sitio | Emmagina CMS v4.4</title>
     <link rel="icon" href="../assets/emmagina-logo.svg">
-    <link rel="stylesheet" href="css/admin.css?v=4.3.0">
+    <link rel="stylesheet" href="css/admin.css?v=4.4.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="css/admin-experience-v327.css?v=4.3.0">
-    <link rel="stylesheet" href="css/pagebuilder-admin.css?v=4.3.0">
-    <link rel="stylesheet" href="css/site-editor-admin.css?v=4.3.0">
+    <link rel="stylesheet" href="css/admin-experience-v327.css?v=4.4.0">
+    <link rel="stylesheet" href="css/pagebuilder-admin.css?v=4.4.0">
+    <link rel="stylesheet" href="css/site-editor-admin.css?v=4.4.0">
 </head>
 <body data-admin-page="studio" data-admin-title="Editor del Sitio">
     <section id="admin-page-content">
@@ -133,6 +133,82 @@
                         <summary>Historial de publicaciones</summary>
                         <div id="site-editor-history-list" class="site-editor-history-list">Aún no se ha cargado el historial.</div>
                     </details>
+                </section>
+
+
+                <section class="admin-card site-editor-settings-card" aria-label="Navegación, footer y estilos globales">
+                    <div class="admin-card-header compact">
+                        <div>
+                            <p class="admin-section-kicker">Diseño global</p>
+                            <h3>Navegación, footer y estilos</h3>
+                        </div>
+                        <button class="admin-button secondary small" id="site-editor-save-settings" type="button">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Guardar diseño global
+                        </button>
+                    </div>
+                    <div class="site-editor-settings-tabs" role="tablist" aria-label="Opciones globales del sitio">
+                        <button class="active" type="button" data-settings-tab="navigation">Menú</button>
+                        <button type="button" data-settings-tab="footer">Footer</button>
+                        <button type="button" data-settings-tab="style">Estilos</button>
+                    </div>
+                    <div class="site-editor-settings-panel active" data-settings-panel="navigation">
+                        <div class="admin-form-grid two">
+                            <div class="admin-field">
+                                <label for="settings-navigation-mode">Modo de navegación</label>
+                                <select id="settings-navigation-mode">
+                                    <option value="mixed">Menú manual + páginas publicadas</option>
+                                    <option value="manual">Solo menú manual</option>
+                                    <option value="auto">Menú base + páginas publicadas</option>
+                                </select>
+                            </div>
+                            <div class="admin-field">
+                                <label>Enlaces del menú superior</label>
+                                <button class="admin-button secondary small" id="settings-add-nav-item" type="button"><i class="fa-solid fa-plus"></i> Agregar enlace</button>
+                            </div>
+                        </div>
+                        <div id="settings-navigation-list" class="site-editor-mini-list"></div>
+                    </div>
+                    <div class="site-editor-settings-panel" data-settings-panel="footer">
+                        <div class="admin-form-grid two">
+                            <div class="admin-field">
+                                <label for="settings-footer-brand-title">Título footer</label>
+                                <input id="settings-footer-brand-title" placeholder="Emmagina">
+                            </div>
+                            <div class="admin-field">
+                                <label for="settings-footer-email">Correo footer</label>
+                                <input id="settings-footer-email" placeholder="contacto@emmagina.cl">
+                            </div>
+                            <div class="admin-field full">
+                                <label for="settings-footer-brand-text">Texto footer</label>
+                                <textarea id="settings-footer-brand-text" rows="2"></textarea>
+                            </div>
+                            <div class="admin-field">
+                                <label for="settings-footer-whatsapp">WhatsApp footer</label>
+                                <input id="settings-footer-whatsapp" placeholder="56900000000">
+                            </div>
+                            <div class="admin-field">
+                                <label for="settings-footer-copyright">Copyright</label>
+                                <input id="settings-footer-copyright">
+                            </div>
+                        </div>
+                        <div class="site-editor-repeater-title compact-title"><strong>Columnas del footer</strong><button class="admin-button secondary small" id="settings-add-footer-column" type="button"><i class="fa-solid fa-plus"></i> Agregar columna</button></div>
+                        <div id="settings-footer-columns" class="site-editor-mini-list"></div>
+                    </div>
+                    <div class="site-editor-settings-panel" data-settings-panel="style">
+                        <div class="admin-form-grid two">
+                            <div class="admin-field"><label for="settings-color-primary">Color principal</label><input id="settings-color-primary" type="color"></div>
+                            <div class="admin-field"><label for="settings-color-accent">Color acento</label><input id="settings-color-accent" type="color"></div>
+                            <div class="admin-field"><label for="settings-color-background">Fondo general</label><input id="settings-color-background" type="color"></div>
+                            <div class="admin-field"><label for="settings-color-text">Color texto</label><input id="settings-color-text" type="color"></div>
+                            <div class="admin-field"><label for="settings-color-footer-bg">Fondo footer</label><input id="settings-color-footer-bg" type="color"></div>
+                            <div class="admin-field"><label for="settings-color-footer-text">Texto footer</label><input id="settings-color-footer-text" type="color"></div>
+                            <div class="admin-field"><label for="settings-style-card-radius">Bordes tarjetas</label><input id="settings-style-card-radius" type="number" min="0" max="60"></div>
+                            <div class="admin-field"><label for="settings-style-section-spacing">Espacio secciones</label><input id="settings-style-section-spacing" type="number" min="0" max="120"></div>
+                            <div class="admin-field"><label for="settings-style-density">Densidad visual</label><select id="settings-style-density"><option value="compact">Compacta</option><option value="comfortable">Cómoda</option><option value="spacious">Amplia</option></select></div>
+                            <div class="admin-field"><label for="settings-style-shadow">Sombras</label><select id="settings-style-shadow"><option value="none">Sin sombras</option><option value="soft">Suaves</option><option value="medium">Medias</option></select></div>
+                        </div>
+                    </div>
                 </section>
 
                 <section class="pagebuilder-layout site-editor-builder-layout" aria-label="Constructor de bloques">
@@ -269,10 +345,10 @@
         </section>
     </section>
 
-    <script src="../js/config.js?v=4.3.0"></script>
-    <script src="js/admin-api.js?v=4.3.0"></script>
-    <script src="js/admin-common.js?v=4.3.0"></script>
-    <script src="js/admin-experience-v327.js?v=4.3.0"></script>
-    <script src="js/site-editor-admin.js?v=4.3.0"></script>
+    <script src="../js/config.js?v=4.4.0"></script>
+    <script src="js/admin-api.js?v=4.4.0"></script>
+    <script src="js/admin-common.js?v=4.4.0"></script>
+    <script src="js/admin-experience-v327.js?v=4.4.0"></script>
+    <script src="js/site-editor-admin.js?v=4.4.0"></script>
 </body>
 </html>

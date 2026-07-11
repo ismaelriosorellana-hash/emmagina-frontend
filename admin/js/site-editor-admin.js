@@ -1,7 +1,7 @@
 "use strict";
 
 (function () {
-    const VERSION = "4.3.0";
+    const VERSION = "4.4.0";
 
     const state = {
         pages: [],
@@ -9,7 +9,8 @@
         selectedSectionId: "",
         selectedBlockId: "",
         draggedBlockId: "",
-        catalog: { categorias: [], productos: [], filtros: [] }
+        catalog: { categorias: [], productos: [], filtros: [] },
+        settings: null
     };
 
     const sectionTypes = {
@@ -1280,6 +1281,204 @@
         renderSpecificFields(temp);
     }
 
+    function defaultSettings() {
+        return {
+            colors: {
+                primary: "#FCC0E6", accent: "#F59BCF", background: "#FFF9FD", text: "#372A32", footerBackground: "#2F292C", footerText: "#F9F3F5"
+            },
+            visualStyle: { cardRadius: 28, sectionSpacing: 28, density: "comfortable", shadowLevel: "soft" },
+            navigation: { mode: "mixed", items: [] },
+            footer: { enabled: true, brandTitle: "Emmagina", brandText: "", email: "contacto@emmagina.cl", whatsapp: "56900000000", copyright: "© 2026 Emmagina. Todos los derechos reservados.", columns: [], legalLinks: [] }
+        };
+    }
+
+    function getSettings() {
+        return state.settings || defaultSettings();
+    }
+
+    function renderSettingsPanels() {
+        const settings = getSettings();
+        const colors = settings.colors || {};
+        const visual = settings.visualStyle || {};
+        const nav = settings.navigation || {};
+        const footer = settings.footer || {};
+        const setValue = (id, value) => { const el = $(id); if (el) el.value = value ?? ""; };
+        setValue("#settings-navigation-mode", nav.mode || "mixed");
+        setValue("#settings-footer-brand-title", footer.brandTitle || "Emmagina");
+        setValue("#settings-footer-brand-text", footer.brandText || "");
+        setValue("#settings-footer-email", footer.email || "");
+        setValue("#settings-footer-whatsapp", footer.whatsapp || "");
+        setValue("#settings-footer-copyright", footer.copyright || "");
+        setValue("#settings-color-primary", colors.primary || "#FCC0E6");
+        setValue("#settings-color-accent", colors.accent || "#F59BCF");
+        setValue("#settings-color-background", colors.background || "#FFF9FD");
+        setValue("#settings-color-text", colors.text || "#372A32");
+        setValue("#settings-color-footer-bg", colors.footerBackground || "#2F292C");
+        setValue("#settings-color-footer-text", colors.footerText || "#F9F3F5");
+        setValue("#settings-style-card-radius", visual.cardRadius ?? 28);
+        setValue("#settings-style-section-spacing", visual.sectionSpacing ?? 28);
+        setValue("#settings-style-density", visual.density || "comfortable");
+        setValue("#settings-style-shadow", visual.shadowLevel || "soft");
+        renderNavigationItems();
+        renderFooterColumns();
+    }
+
+    function navItems() {
+        const settings = getSettings();
+        settings.navigation = settings.navigation || { mode: "mixed", items: [] };
+        if (!Array.isArray(settings.navigation.items)) settings.navigation.items = [];
+        return settings.navigation.items;
+    }
+
+    function footerColumns() {
+        const settings = getSettings();
+        settings.footer = settings.footer || {};
+        if (!Array.isArray(settings.footer.columns)) settings.footer.columns = [];
+        return settings.footer.columns;
+    }
+
+    function renderNavigationItems() {
+        const root = $("#settings-navigation-list");
+        if (!root) return;
+        const items = navItems();
+        if (!items.length) {
+            root.innerHTML = `<div class="admin-empty small">No hay enlaces manuales. Agrega enlaces o usa modo automático.</div>`;
+            return;
+        }
+        root.innerHTML = items.map((item, index) => `<article class="site-editor-mini-item" data-nav-index="${index}">
+            <label><span>Nombre</span><input data-nav-field="label" value="${escapeHtml(item.label || "")}"></label>
+            <label><span>URL</span><input data-nav-field="href" value="${escapeHtml(item.href || "")}"></label>
+            <label><span>Orden</span><input data-nav-field="sortOrder" type="number" min="1" value="${Number(item.sortOrder || index + 1)}"></label>
+            <label class="mini-check"><input data-nav-field="isVisible" type="checkbox" ${item.isVisible !== false ? "checked" : ""}> Visible</label>
+            <button class="pagebuilder-mini-button danger" type="button" data-remove-nav="${index}" title="Eliminar enlace"><i class="fa-solid fa-trash"></i></button>
+        </article>`).join("");
+    }
+
+    function renderFooterColumns() {
+        const root = $("#settings-footer-columns");
+        if (!root) return;
+        const columns = footerColumns();
+        if (!columns.length) {
+            root.innerHTML = `<div class="admin-empty small">No hay columnas. Agrega una columna para el footer.</div>`;
+            return;
+        }
+        root.innerHTML = columns.map((column, index) => `<article class="site-editor-mini-column" data-footer-column="${index}">
+            <div class="site-editor-mini-column-head">
+                <label><span>Título columna</span><input data-footer-column-field="title" value="${escapeHtml(column.title || "")}"></label>
+                <label><span>Orden</span><input data-footer-column-field="sortOrder" type="number" min="1" value="${Number(column.sortOrder || index + 1)}"></label>
+                <label class="mini-check"><input data-footer-column-field="isVisible" type="checkbox" ${column.isVisible !== false ? "checked" : ""}> Visible</label>
+                <button class="pagebuilder-mini-button danger" type="button" data-remove-footer-column="${index}" title="Eliminar columna"><i class="fa-solid fa-trash"></i></button>
+            </div>
+            <div class="site-editor-mini-list nested">
+                ${(Array.isArray(column.links) ? column.links : []).map((link, linkIndex) => `<div class="site-editor-mini-item" data-footer-link="${linkIndex}">
+                    <label><span>Enlace</span><input data-footer-link-field="label" value="${escapeHtml(link.label || "")}"></label>
+                    <label><span>URL</span><input data-footer-link-field="href" value="${escapeHtml(link.href || "")}"></label>
+                    <label class="mini-check"><input data-footer-link-field="isVisible" type="checkbox" ${link.isVisible !== false ? "checked" : ""}> Visible</label>
+                    <button class="pagebuilder-mini-button danger" type="button" data-remove-footer-link="${index}:${linkIndex}" title="Eliminar enlace"><i class="fa-solid fa-trash"></i></button>
+                </div>`).join("")}
+            </div>
+            <button class="admin-button secondary small" type="button" data-add-footer-link="${index}"><i class="fa-solid fa-plus"></i> Agregar enlace</button>
+        </article>`).join("");
+    }
+
+    async function loadSettings() {
+        try {
+            const payload = await AdminAPI.request("/admin/configuracion-sitio");
+            state.settings = payload.settings || payload || defaultSettings();
+        } catch (error) {
+            console.warn("No fue posible cargar diseño global", error);
+            state.settings = defaultSettings();
+        }
+        renderSettingsPanels();
+    }
+
+    function collectSettingsFromForm() {
+        const settings = clone(getSettings());
+        settings.navigation = settings.navigation || {};
+        settings.navigation.mode = $("#settings-navigation-mode")?.value || "mixed";
+        settings.navigation.items = navItems().map((item) => ({ ...item }));
+        settings.footer = settings.footer || {};
+        settings.footer.brandTitle = $("#settings-footer-brand-title")?.value || "Emmagina";
+        settings.footer.brandText = $("#settings-footer-brand-text")?.value || "";
+        settings.footer.email = $("#settings-footer-email")?.value || "";
+        settings.footer.whatsapp = $("#settings-footer-whatsapp")?.value || "";
+        settings.footer.copyright = $("#settings-footer-copyright")?.value || "";
+        settings.footer.columns = footerColumns().map((column) => ({ ...column, links: Array.isArray(column.links) ? column.links.map((link) => ({ ...link })) : [] }));
+        settings.colors = settings.colors || {};
+        settings.colors.primary = $("#settings-color-primary")?.value || settings.colors.primary;
+        settings.colors.accent = $("#settings-color-accent")?.value || settings.colors.accent;
+        settings.colors.background = $("#settings-color-background")?.value || settings.colors.background;
+        settings.colors.text = $("#settings-color-text")?.value || settings.colors.text;
+        settings.colors.footerBackground = $("#settings-color-footer-bg")?.value || settings.colors.footerBackground;
+        settings.colors.footerText = $("#settings-color-footer-text")?.value || settings.colors.footerText;
+        settings.visualStyle = settings.visualStyle || {};
+        settings.visualStyle.cardRadius = toNumber($("#settings-style-card-radius")?.value, 28);
+        settings.visualStyle.sectionSpacing = toNumber($("#settings-style-section-spacing")?.value, 28);
+        settings.visualStyle.density = $("#settings-style-density")?.value || "comfortable";
+        settings.visualStyle.shadowLevel = $("#settings-style-shadow")?.value || "soft";
+        return settings;
+    }
+
+    async function saveSettings() {
+        const button = $("#site-editor-save-settings");
+        if (button) button.disabled = true;
+        try {
+            const result = await AdminAPI.request("/admin/configuracion-sitio", { method: "PUT", body: collectSettingsFromForm() });
+            state.settings = result.settings || result || state.settings;
+            renderSettingsPanels();
+            AdminUI.toast("Diseño global guardado.", "success");
+            setStatus("Diseño global guardado. Recarga la tienda para verlo aplicado.", "success");
+        } finally {
+            if (button) button.disabled = false;
+        }
+    }
+
+    function bindSettingsEvents() {
+        $all("[data-settings-tab]").forEach((button) => button.addEventListener("click", () => {
+            const tab = button.dataset.settingsTab;
+            $all("[data-settings-tab]").forEach((item) => item.classList.toggle("active", item === button));
+            $all("[data-settings-panel]").forEach((panel) => panel.classList.toggle("active", panel.dataset.settingsPanel === tab));
+        }));
+        $("#site-editor-save-settings")?.addEventListener("click", () => saveSettings().catch(showError));
+        $("#settings-add-nav-item")?.addEventListener("click", () => { navItems().push({ label: "Nuevo enlace", href: "catalogo.html", isVisible: true, sortOrder: navItems().length + 1, source: "manual" }); renderNavigationItems(); });
+        $("#settings-add-footer-column")?.addEventListener("click", () => { footerColumns().push({ title: "Nueva columna", isVisible: true, sortOrder: footerColumns().length + 1, links: [{ label: "Nuevo enlace", href: "catalogo.html", isVisible: true }] }); renderFooterColumns(); });
+        document.addEventListener("input", (event) => {
+            const navRow = event.target.closest("[data-nav-index]");
+            if (navRow) {
+                const item = navItems()[Number(navRow.dataset.navIndex)];
+                if (!item) return;
+                const field = event.target.dataset.navField;
+                if (!field) return;
+                item[field] = event.target.type === "checkbox" ? event.target.checked : event.target.value;
+                return;
+            }
+            const colRow = event.target.closest("[data-footer-column]");
+            if (colRow) {
+                const column = footerColumns()[Number(colRow.dataset.footerColumn)];
+                if (!column) return;
+                const colField = event.target.dataset.footerColumnField;
+                if (colField) { column[colField] = event.target.type === "checkbox" ? event.target.checked : event.target.value; return; }
+                const linkRow = event.target.closest("[data-footer-link]");
+                const linkField = event.target.dataset.footerLinkField;
+                if (linkRow && linkField) {
+                    column.links = Array.isArray(column.links) ? column.links : [];
+                    const link = column.links[Number(linkRow.dataset.footerLink)];
+                    if (link) link[linkField] = event.target.type === "checkbox" ? event.target.checked : event.target.value;
+                }
+            }
+        });
+        document.addEventListener("click", (event) => {
+            const removeNav = event.target.closest("[data-remove-nav]");
+            if (removeNav) { navItems().splice(Number(removeNav.dataset.removeNav), 1); renderNavigationItems(); return; }
+            const removeCol = event.target.closest("[data-remove-footer-column]");
+            if (removeCol) { footerColumns().splice(Number(removeCol.dataset.removeFooterColumn), 1); renderFooterColumns(); return; }
+            const addLink = event.target.closest("[data-add-footer-link]");
+            if (addLink) { const col = footerColumns()[Number(addLink.dataset.addFooterLink)]; if (col) { col.links = Array.isArray(col.links) ? col.links : []; col.links.push({ label: "Nuevo enlace", href: "catalogo.html", isVisible: true }); renderFooterColumns(); } return; }
+            const removeLink = event.target.closest("[data-remove-footer-link]");
+            if (removeLink) { const [c, l] = String(removeLink.dataset.removeFooterLink).split(":").map(Number); const col = footerColumns()[c]; if (col?.links) { col.links.splice(l, 1); renderFooterColumns(); } }
+        });
+    }
+
     function showError(error) {
         console.error(error);
         const status = error?.status ? `Error ${error.status}: ` : "";
@@ -1290,6 +1489,7 @@
     }
 
     function bindEvents() {
+        bindSettingsEvents();
         $("#site-editor-refresh")?.addEventListener("click", () => loadPages(activePageKey()).catch(showError));
         $("#site-editor-repair")?.addEventListener("click", () => repairEditor().catch(showError));
         $("#site-editor-save-page")?.addEventListener("click", () => savePage().catch(showError));
@@ -1380,13 +1580,14 @@
         if (sectionSelect) sectionSelect.innerHTML = renderSectionTypeOptions("products_section");
         bindEvents();
         await loadCatalogData();
+        await loadSettings();
         try { await loadPages("home"); }
         catch (error) {
             state.pages = [];
             state.page = null;
             renderPageList();
             showError(error);
-            setStatus("No se pudo cargar el Editor del Sitio. Verifica que el backend v2.9 esté desplegado y presiona Reparar conexión.", "danger");
+            setStatus("No se pudo cargar el Editor del Sitio. Verifica que el backend v3.0 esté desplegado y presiona Reparar conexión.", "danger");
         }
         console.info(`Editor del Sitio ${VERSION} cargado`);
     }

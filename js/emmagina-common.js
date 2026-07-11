@@ -38,6 +38,63 @@
     });
   }
 
+  function asPx(value, fallback) {
+    const number = Number(value);
+    return Number.isFinite(number) ? `${number}px` : fallback;
+  }
+
+  function applySiteSettings(settings = {}) {
+    const root = document.documentElement;
+    const colors = settings.colors || {};
+    const style = settings.visualStyle || {};
+    const mapping = {
+      "--cloud": colors.background,
+      "--paper": colors.surface,
+      "--mist": colors.surfaceSoft || colors.primarySoft,
+      "--sand": colors.primarySoft,
+      "--clay": colors.accent,
+      "--sky": colors.primary,
+      "--ink": colors.text,
+      "--muted": colors.textSoft,
+      "--line": colors.border,
+      "--footer-bg": colors.footerBackground,
+      "--footer-text": colors.footerText,
+      "--button-text": colors.buttonText,
+      "--radius-xl": asPx(style.cardRadius, null),
+      "--radius-lg": asPx(Math.max(8, Number(style.cardRadius || 28) - 6), null),
+      "--radius-md": asPx(style.inputRadius, null),
+      "--section-spacing": asPx(style.sectionSpacing, null),
+      "--container": style.pageMaxWidth ? `min(${Number(style.pageMaxWidth)}px, calc(100vw - 32px))` : null,
+      "--button-radius": asPx(style.buttonRadius, null)
+    };
+    Object.entries(mapping).forEach(([key, value]) => {
+      if (value) root.style.setProperty(key, value);
+    });
+    const shadow = style.shadowLevel === "none" ? "none" : style.shadowLevel === "medium" ? "0 22px 60px rgba(48,55,68,.14)" : "0 18px 42px rgba(48,55,68,.09)";
+    root.style.setProperty("--shadow", shadow);
+    document.body.dataset.density = style.density || "comfortable";
+
+    const title = settings.branding?.title;
+    const brand = document.querySelector(".brand");
+    if (brand && title?.text) {
+      const small = brand.querySelector("small")?.outerHTML || "<small>3D Store</small>";
+      brand.innerHTML = `<strong>${escapeHtml(title.text)}</strong>${small}`;
+    }
+  }
+
+  async function loadAndApplySiteSettings() {
+    if (!window.EmmaginaAPI?.getSiteSettings) return null;
+    try {
+      const settings = await window.EmmaginaAPI.getSiteSettings();
+      applySiteSettings(settings);
+      renderFooter(settings.footer || {});
+      return settings;
+    } catch (error) {
+      console.warn("No fue posible cargar configuración visual:", error.message);
+      return null;
+    }
+  }
+
   async function renderDynamicNav() {
     const nav = document.querySelector(".main-nav");
     if (!nav || !window.EmmaginaAPI?.getNavigation) {
@@ -48,13 +105,46 @@
       const items = await window.EmmaginaAPI.getNavigation();
       const list = Array.isArray(items) && items.length ? items : BASE_NAV;
       nav.innerHTML = list
-        .filter((item) => item && item.label && item.href)
-        .map((item) => `<a href="${escapeHtml(cleanHref(item.href, "#"))}">${escapeHtml(item.label)}</a>`)
+        .filter((item) => item && item.label && item.href && item.isVisible !== false)
+        .map((item) => `<a href="${escapeHtml(cleanHref(item.href, "#"))}"${item.opensNewTab ? ' target="_blank" rel="noopener"' : ""}>${escapeHtml(item.label)}</a>`)
         .join("");
     } catch (error) {
       console.warn("No fue posible cargar navegación dinámica:", error.message);
     }
     markActiveNav();
+  }
+
+  function renderFooter(footer = {}) {
+    const target = document.querySelector(".site-footer");
+    if (!target || footer.enabled === false) return;
+    const columns = (Array.isArray(footer.columns) ? footer.columns : [])
+      .filter((column) => column && column.isVisible !== false)
+      .sort((a,b) => (Number(a.sortOrder)||0) - (Number(b.sortOrder)||0));
+    const colsHtml = columns.map((column) => `<nav class="footer-col" aria-label="${escapeHtml(column.title)}">
+      <h3>${escapeHtml(column.title)}</h3>
+      ${(Array.isArray(column.links) ? column.links : []).filter((link) => link.isVisible !== false).map((link) => `<a href="${escapeHtml(cleanHref(link.href, "#"))}">${escapeHtml(link.label)}</a>`).join("")}
+    </nav>`).join("");
+    const phone = String(footer.whatsapp || "").replace(/[^0-9]/g, "");
+    const legal = (Array.isArray(footer.legalLinks) ? footer.legalLinks : [])
+      .filter((link) => link.isVisible !== false)
+      .map((link) => `<a href="${escapeHtml(cleanHref(link.href, "#"))}">${escapeHtml(link.label)}</a>`).join(" · ");
+    target.innerHTML = `<div class="footer-inner">
+      <section class="footer-col" aria-label="Marca">
+        <h2 class="footer-brand">${escapeHtml(footer.brandTitle || window.CONFIG?.BRAND_NAME || "Emmagina")}</h2>
+        <p>${escapeHtml(footer.brandText || "")}</p>
+      </section>
+      ${colsHtml}
+      <section class="footer-col" aria-label="Soporte al cliente">
+        <h3>${escapeHtml(footer.contactTitle || "Soporte")}</h3>
+        ${phone ? `<p>WhatsApp: +${escapeHtml(phone)}</p>` : ""}
+        ${footer.email ? `<p>Correo: ${escapeHtml(footer.email)}</p>` : ""}
+        ${phone ? `<a class="btn btn-soft btn-small" href="https://wa.me/${escapeHtml(phone)}" target="_blank" rel="noopener">${escapeHtml(footer.supportButtonText || "Contactar soporte")}</a>` : ""}
+      </section>
+    </div>
+    <div class="footer-bottom">
+      <span>${escapeHtml(footer.copyright || `© ${new Date().getFullYear()} Emmagina`)}</span>
+      <span>${legal}</span>
+    </div>`;
   }
 
   function initNav() {
@@ -64,7 +154,7 @@
       const open = nav?.classList.toggle("is-open");
       menuButton.setAttribute("aria-expanded", String(Boolean(open)));
     });
-    renderDynamicNav();
+    loadAndApplySiteSettings().finally(renderDynamicNav);
   }
 
   function initSearch() {

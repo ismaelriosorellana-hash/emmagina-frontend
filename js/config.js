@@ -31,7 +31,7 @@ const PLACEHOLDER_IMAGE = "data:image/svg+xml;charset=UTF-8," + encodeURICompone
 </svg>`);
 
 window.CONFIG = Object.freeze({
-  APP_VERSION: "3.0.0-emmagina-html5-modular",
+  APP_VERSION: "4.4.0-editor-navegacion-footer-estilos",
   SITE_NAME: "Emmagina",
   BRAND_NAME: "Emmagina",
   SITE_URL: "https://emmagina-frontend.onrender.com",
