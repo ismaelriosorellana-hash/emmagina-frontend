@@ -1,0 +1,15 @@
+EMMAGINA FRONTEND v3.2 - HOME CONECTADA AL PAGE BUILDER
+
+Qué cambia:
+- La página de inicio intenta leer /api/pages/home.
+- Si la página existe en MongoDB, renderiza sus bloques públicos por position.
+- Si /api/pages/home falla o no tiene bloques visibles, usa la home fija anterior como respaldo.
+- Bloques soportados: hero_banner, info_cards, product_marquee, product_grid, image_banner, reviews_marquee, html_block/custom_html.
+- El admin Modo Dios puede editar bloques sin romper la tienda pública.
+
+Verificación después del deploy:
+1. Abrir https://emmagina-backend.onrender.com/api/pages/home
+2. Confirmar que responde JSON con blocks.
+3. Abrir https://emmagina-frontend.onrender.com con Ctrl+Shift+R.
+4. Entrar a /admin/pagebuilder.html, editar un texto de hero, guardar y recargar home.
+5. Si la home no cambia, revisar Console y Network para /api/pages/home.

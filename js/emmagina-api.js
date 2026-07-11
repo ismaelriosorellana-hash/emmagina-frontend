@@ -74,6 +74,13 @@
     return window.EmmaginaData.normalizeProduct(payload);
   }
 
+
+  async function getPage(key) {
+    const normalizedKey = String(key || "").trim() || "home";
+    const payload = await request(`/pages/${encodeURIComponent(normalizedKey)}`);
+    return payload?.page || payload?.data || payload;
+  }
+
   async function getBanners() {
     const payload = await request("/banners");
     if (Array.isArray(payload)) return payload;
@@ -87,5 +94,6 @@
   API.getProductBySlug = getProductBySlug;
   API.getProductById = getProductById;
   API.getBanners = getBanners;
+  API.getPage = getPage;
   window.EmmaginaAPI = Object.freeze(API);
 })();

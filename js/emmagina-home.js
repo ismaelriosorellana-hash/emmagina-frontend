@@ -1,17 +1,53 @@
-
 "use strict";
 
 (async function () {
+  const DEFAULT_CATEGORIES = [
+    "Accesorios",
+    "Coleccionables",
+    "Decoración",
+    "Herramientas",
+    "Linea Memories",
+    "Librería",
+    "Linea Alma",
+    "Ofertas",
+    "Vasos Temáticos",
+    "Todos"
+  ];
+
   const all = [];
   let publicBanners = [];
 
   function by(selector) { return document.querySelector(selector); }
+
+  function escape(value) {
+    return window.EmmaginaUI.escapeHtml(value);
+  }
 
   function textKey(value) {
     return String(value || "")
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase();
+  }
+
+  function toNumber(value, fallback = 0) {
+    const n = Number(value);
+    return Number.isFinite(n) ? n : fallback;
+  }
+
+  function cleanUrl(value, fallback = "#") {
+    const url = String(value || "").trim();
+    if (!url) return fallback;
+    if (/^javascript:/i.test(url)) return fallback;
+    return url;
+  }
+
+  function getContent(block) {
+    return block?.content && typeof block.content === "object" ? block.content : {};
+  }
+
+  function getStyle(block) {
+    return block?.style && typeof block.style === "object" ? block.style : {};
   }
 
   function uniqueById(list) {
@@ -48,33 +84,61 @@
       .sort((a, b) => (Number(a.orden) || 0) - (Number(b.orden) || 0));
   }
 
-  function fillMarqueeList(selected, products, minItems = 8) {
+  function fillMarqueeList(selected, products, minItems = 8, limit = 14) {
     const visible = uniqueById(products.filter(window.EmmaginaData.isVisible));
     const base = uniqueById(selected.filter(window.EmmaginaData.isVisible));
     const selectedKeys = new Set(base.map((p) => String(p.id || p.slug || p.nombre || "")));
     const fillers = visible.filter((p) => !selectedKeys.has(String(p.id || p.slug || p.nombre || "")));
     const merged = base.concat(fillers);
     if (!merged.length) return [];
+    const target = Math.min(Math.max(minItems, Math.min(limit, visible.length || minItems)), limit);
     const result = [];
     let i = 0;
-    while (result.length < Math.max(minItems, Math.min(14, visible.length || minItems))) {
+    while (result.length < target) {
       result.push(merged[i % merged.length]);
       i += 1;
       if (merged.length === result.length && result.length >= minItems) break;
     }
-    return result.slice(0, 14);
+    return result.slice(0, limit);
   }
 
-  function sectionProducts(kind, products) {
+  function sectionProducts(kind, products, limit = 14) {
     const visible = uniqueById(products.filter(window.EmmaginaData.isVisible));
+    const key = textKey(kind);
     let selected = [];
-    if (kind === "destacados") selected = visible.filter((p) => p.destacado || String(p.insignia || "").toLowerCase().includes("destacado"));
-    else if (kind === "desde14990") selected = visible.filter((p) => p.desde14990 || Number(p.precio) <= 14990);
-    else if (kind === "lanzamiento") selected = visible.filter((p) => p.lanzamiento || String(p.insignia || "").toLowerCase().includes("lanzamiento"));
-    else if (kind === "vendidos") selected = visible.filter((p) => p.masVendido);
-    else if (kind === "vistos") selected = visible.filter((p) => p.masVisto);
-    else selected = visible;
-    return fillMarqueeList(selected, visible, 8);
+
+    if (key === "destacados" || key === "featured") {
+      selected = visible.filter((p) => p.destacado || textKey(p.insignia).includes("destacado"));
+    } else if (key === "desde14990" || key === "desde-14990" || key === "entrada") {
+      selected = visible.filter((p) => p.desde14990 || Number(p.precio) <= 14990);
+    } else if (key === "lanzamiento" || key === "novedades") {
+      selected = visible.filter((p) => p.lanzamiento || textKey(p.insignia).includes("lanzamiento"));
+    } else if (key === "vendidos" || key === "masvendido" || key === "mas-vendido" || key === "mas vendidos") {
+      selected = visible.filter((p) => p.masVendido);
+    } else if (key === "vistos" || key === "masvisto" || key === "mas-visto" || key === "mas vistos") {
+      selected = visible.filter((p) => p.masVisto);
+    } else if (key.startsWith("categoria:")) {
+      const category = key.replace("categoria:", "").trim();
+      selected = visible.filter((p) => p.categorias?.some((cat) => textKey(cat) === category));
+    } else if (key && key !== "todos") {
+      selected = visible.filter((p) => p.categorias?.some((cat) => textKey(cat).includes(key)) || textKey(p.nombre).includes(key));
+    } else {
+      selected = visible;
+    }
+
+    return fillMarqueeList(selected, visible, 8, limit);
+  }
+
+  function renderMarqueeTrack(track, products, emptyMessage = "No hay productos disponibles por ahora.") {
+    if (!track) return;
+    if (!products.length) {
+      track.innerHTML = `<div class="state-box"><p>${escape(emptyMessage)}</p></div>`;
+      return;
+    }
+    const cards = products.map((p) => window.EmmaginaUI.productCard(p)).join("");
+    track.innerHTML = `<div class="marquee-group">${cards}</div><div class="marquee-group" aria-hidden="true">${cards}</div>`;
+    track.style.setProperty("--marquee-duration", `${Math.max(34, products.length * 6)}s`);
+    window.EmmaginaUI.attachCartButtons(all);
   }
 
   function renderProductMarquee(id, title, products) {
@@ -82,17 +146,202 @@
     if (!root) return;
     const track = root.querySelector("[data-marquee-track]");
     const selected = products.length ? products : all.slice(0, 12);
-    if (!track) return;
-    if (!selected.length) {
-      track.innerHTML = `<div class="state-box"><p>No hay productos disponibles para ${window.EmmaginaUI.escapeHtml(title)}.</p></div>`;
-      return;
-    }
+    renderMarqueeTrack(track, selected, `No hay productos disponibles para ${title}.`);
+  }
 
+  function categoriesHtml(categories = DEFAULT_CATEGORIES) {
+    const list = Array.isArray(categories) && categories.length ? categories : DEFAULT_CATEGORIES;
+    return list.map((item) => {
+      const label = typeof item === "string" ? item : item?.label || item?.nombre || "Categoría";
+      const href = typeof item === "string"
+        ? (label === "Todos" ? "catalogo.html" : `catalogo.html?categoria=${encodeURIComponent(label)}`)
+        : cleanUrl(item?.href || item?.url || item?.link, `catalogo.html?categoria=${encodeURIComponent(label)}`);
+      return `<a href="${escape(href)}">${escape(label)}</a>`;
+    }).join("");
+  }
+
+  function imageFromContent(content, fallback = window.CONFIG.placeholderImage) {
+    return content.imageDesktop || content.image || content.imagen || content.imageUrl || content.url || fallback;
+  }
+
+  function renderHeroBlock(block) {
+    const content = getContent(block);
+    const style = getStyle(block);
+    const heightDesktop = Math.max(160, Math.min(760, toNumber(style.heightDesktop || content.heightDesktop, 323)));
+    const image = imageFromContent(content, "assets/producto-referencia-emmagina.png");
+    const title = content.title || "Ideas que toman forma";
+    const subtitle = content.subtitle || content.eyebrow || "Impresión 3D · regalos · recuerdos";
+    const buttonText = content.buttonText || "Ver tienda";
+    const buttonUrl = cleanUrl(content.buttonUrl || content.url || content.href, "catalogo.html");
+    const categories = content.categories || content.categorias || DEFAULT_CATEGORIES;
+
+    return `<section class="hero-section builder-section" data-block-id="${escape(block._id || block.id || "")}">
+      <div class="hero-layout" style="--hero-height:${heightDesktop}px">
+        <aside class="category-panel" aria-label="Categorías principales">
+          <h2>${escape(content.categoryTitle || "Categorías")}</h2>
+          <nav class="category-list">${categoriesHtml(categories)}</nav>
+        </aside>
+        <a class="hero-card hero-card-banner" href="${escape(buttonUrl)}" aria-label="${escape(title)}">
+          <img src="${escape(image)}" alt="${escape(content.alt || title)}" loading="eager" style="object-position:${escape(content.imagePosition || style.objectPosition || "center")}">
+          <span class="hero-overlay">
+            <span class="kicker">${escape(subtitle)}</span>
+            <strong>${escape(title)}</strong>
+            <span class="hero-button">${escape(buttonText)}</span>
+          </span>
+        </a>
+      </div>
+    </section>`;
+  }
+
+  function renderInfoCardsBlock(block) {
+    const content = getContent(block);
+    const cards = Array.isArray(content.cards) && content.cards.length ? content.cards : [
+      { title: "Destacados", text: "Productos seleccionados para regalar o decorar.", image: "" },
+      { title: "Los más vendidos", text: "Lo favorito de nuestros clientes.", image: "" },
+      { title: "Los más vistos", text: "Opciones que más despiertan interés.", image: "" }
+    ];
+
+    return `<section class="section section-muted home-info-section builder-section" data-block-id="${escape(block._id || block.id || "")}" aria-labelledby="info-${escape(block._id || block.id || "block")}">
+      <div class="section-heading">
+        <div><p class="kicker">${escape(content.kicker || "Información")}</p><h2 id="info-${escape(block._id || block.id || "block")}">${escape(content.title || "Explora Emmagina")}</h2></div>
+      </div>
+      <div class="explore-grid">
+        ${cards.slice(0, 6).map((card) => {
+          const title = card.title || card.titulo || "Información";
+          const text = card.text || card.descripcion || card.description || "Conoce una sección de Emmagina.";
+          const image = card.image || card.imagen || card.url || window.CONFIG.placeholderImage;
+          const href = cleanUrl(card.href || card.urlDestino || card.link, "catalogo.html");
+          return `<a class="explore-card" href="${escape(href)}">
+            <img class="explore-image" src="${escape(image)}" alt="${escape(title)}" loading="lazy">
+            <h3>${escape(title)}</h3>
+            <p>${escape(text)}</p>
+          </a>`;
+        }).join("")}
+      </div>
+    </section>`;
+  }
+
+  function renderProductMarqueeBlock(block, products) {
+    const content = getContent(block);
+    const title = content.title || block.name || "Productos";
+    const filter = content.filter || content.grupo || content.category || "todos";
+    const limit = Math.max(4, Math.min(30, toNumber(content.limit, 14)));
+    const selected = sectionProducts(filter, products, limit);
     const cards = selected.map((p) => window.EmmaginaUI.productCard(p)).join("");
-    track.innerHTML = `<div class="marquee-group">${cards}</div><div class="marquee-group" aria-hidden="true">${cards}</div>`;
+    const track = selected.length
+      ? `<div class="marquee-group">${cards}</div><div class="marquee-group" aria-hidden="true">${cards}</div>`
+      : `<div class="state-box"><p>No hay productos disponibles por ahora.</p></div>`;
     const duration = Math.max(34, selected.length * 6);
-    track.style.setProperty("--marquee-duration", `${duration}s`);
-    window.EmmaginaUI.attachCartButtons(all);
+
+    return `<section class="section section-muted product-marquee builder-section" data-block-id="${escape(block._id || block.id || "")}" aria-label="${escape(title)}">
+      <header class="carousel-head"><div><p class="kicker">${escape(content.kicker || "Emmagina")}</p><h2>${escape(title)}</h2></div></header>
+      <div class="marquee-viewport"><div class="marquee-track" style="--marquee-duration:${duration}s">${track}</div></div>
+    </section>`;
+  }
+
+  function renderImageBannerBlock(block) {
+    const content = getContent(block);
+    const style = getStyle(block);
+    const title = content.title || block.name || "Emmagina";
+    const image = imageFromContent(content, "assets/producto-referencia-emmagina.png");
+    const href = cleanUrl(content.buttonUrl || content.href || content.url, "pedido-personalizado.html");
+    const buttonText = content.buttonText || "Pedir el mío";
+    const height = Math.max(54, Math.min(360, toNumber(style.heightDesktop || content.heightDesktop, 112)));
+
+    return `<section class="section scene-lines-section builder-section" data-block-id="${escape(block._id || block.id || "")}">
+      <a class="line-banner" href="${escape(href)}" aria-label="${escape(title)}" style="height:${height}px">
+        <img src="${escape(image)}" alt="${escape(content.alt || title)}" loading="lazy" style="object-position:${escape(content.imagePosition || style.objectPosition || "center")}">
+        <span class="line-banner-button">${escape(buttonText)}</span>
+      </a>
+    </section>`;
+  }
+
+  function normalizeReview(product, review = {}) {
+    const rating = Number(review.rating || review.estrellas || review.puntuacion || review.score || 0);
+    const text = String(review.texto || review.comentario || review.review || review.descripcion || "").trim();
+    if (!text || rating < 4) return null;
+    return {
+      rating: Math.min(5, Math.max(1, Math.round(rating))),
+      text,
+      author: String(review.nombre || review.autor || review.cliente || "Cliente Emmagina").trim(),
+      productName: product.nombre,
+      productUrl: window.ProductLinks.detail(product)
+    };
+  }
+
+  function collectReviews(products, minRating = 4) {
+    const reviews = [];
+    for (const product of products) {
+      const raw = product.raw || product;
+      const list = raw.resenas || raw.reseñas || raw.reviews || raw.valoraciones || [];
+      if (!Array.isArray(list)) continue;
+      for (const item of list) {
+        const normalized = normalizeReview(product, item);
+        if (normalized && normalized.rating >= minRating) reviews.push(normalized);
+      }
+    }
+    return reviews.sort((a, b) => b.rating - a.rating).slice(0, 12);
+  }
+
+  function renderReviewsBlock(block, products) {
+    const content = getContent(block);
+    const title = content.title || "Mejores reseñas";
+    const reviews = collectReviews(products, toNumber(content.minRating, 4));
+    if (!reviews.length && content.hideWhenEmpty !== false) return "";
+    const cards = reviews.map((review) => {
+      const stars = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
+      return `<article class="review-card">
+        <div class="review-stars" aria-label="${review.rating} de 5 estrellas">${stars}</div>
+        <blockquote>“${escape(review.text)}”</blockquote>
+        <footer><strong>${escape(review.author)}</strong><a href="${escape(review.productUrl)}">${escape(review.productName)}</a></footer>
+      </article>`;
+    }).join("") || `<div class="state-box"><p>Aún no hay reseñas visibles.</p></div>`;
+
+    return `<section class="section reviews-marquee builder-section" data-block-id="${escape(block._id || block.id || "")}" aria-labelledby="reviews-${escape(block._id || block.id || "block")}">
+      <div class="section-heading"><div><p class="kicker">${escape(content.kicker || "Confianza")}</p><h2 id="reviews-${escape(block._id || block.id || "block")}">${escape(title)}</h2></div></div>
+      <div class="marquee-viewport"><div class="marquee-track" style="--marquee-duration:${Math.max(32, reviews.length * 7 || 38)}s"><div class="marquee-group">${cards}</div><div class="marquee-group" aria-hidden="true">${cards}</div></div></div>
+    </section>`;
+  }
+
+  function renderHtmlBlock(block) {
+    const content = getContent(block);
+    const html = String(content.html || content.body || "").trim();
+    if (!html) return "";
+    return `<section class="section builder-section" data-block-id="${escape(block._id || block.id || "")}"><div class="html-block">${html}</div></section>`;
+  }
+
+  function renderGenericBlock(block) {
+    const name = block.name || block.type || "Bloque";
+    return `<section class="section builder-section" data-block-id="${escape(block._id || block.id || "")}"><div class="generic-builder-block"><strong>${escape(name)}</strong><span>Este tipo de bloque todavía no tiene render público configurado.</span></div></section>`;
+  }
+
+  function renderBuilderBlock(block, products) {
+    if (!block || block.isVisible === false) return "";
+    switch (block.type) {
+      case "hero_banner": return renderHeroBlock(block);
+      case "info_cards": return renderInfoCardsBlock(block);
+      case "product_marquee":
+      case "product_grid": return renderProductMarqueeBlock(block, products);
+      case "image_banner": return renderImageBannerBlock(block);
+      case "reviews_marquee": return renderReviewsBlock(block, products);
+      case "html_block":
+      case "custom_html": return renderHtmlBlock(block);
+      default: return renderGenericBlock(block);
+    }
+  }
+
+  function renderBuilderHome(page, products) {
+    const main = document.getElementById("main");
+    if (!main) return false;
+    const blocks = Array.isArray(page?.blocks) ? page.blocks.slice() : [];
+    const visibleBlocks = blocks
+      .filter((block) => block?.isVisible !== false)
+      .sort((a, b) => Number(a.position || 0) - Number(b.position || 0));
+
+    if (!visibleBlocks.length) return false;
+    main.innerHTML = visibleBlocks.map((block) => renderBuilderBlock(block, products)).join("");
+    window.EmmaginaUI.attachCartButtons(products);
+    return true;
   }
 
   function applyHeroBanner() {
@@ -138,10 +387,10 @@
         const image = bannerImage(banner) || window.CONFIG.placeholderImage;
         const title = banner.titulo || banner.nombre || "Información";
         const text = banner.eyebrow || "Conoce una sección de Emmagina.";
-        return `<a class="explore-card" href="${window.EmmaginaUI.escapeHtml(bannerTarget(banner, "catalogo.html"))}">
-          <img class="explore-image" src="${window.EmmaginaUI.escapeHtml(image)}" alt="${window.EmmaginaUI.escapeHtml(title)}" loading="lazy">
-          <h3>${window.EmmaginaUI.escapeHtml(title)}</h3>
-          <p>${window.EmmaginaUI.escapeHtml(text)}</p>
+        return `<a class="explore-card" href="${escape(bannerTarget(banner, "catalogo.html"))}">
+          <img class="explore-image" src="${escape(image)}" alt="${escape(title)}" loading="lazy">
+          <h3>${escape(title)}</h3>
+          <p>${escape(text)}</p>
         </a>`;
       }).join("");
       return;
@@ -155,45 +404,18 @@
       const product = sectionProducts(card.kind, products)[0] || products[0] || {};
       const image = product.imagenPrincipal || window.CONFIG.placeholderImage;
       return `<a class="explore-card" href="catalogo.html?grupo=${encodeURIComponent(card.kind)}">
-        <img class="explore-image" src="${window.EmmaginaUI.escapeHtml(image)}" alt="${window.EmmaginaUI.escapeHtml(card.title)}" loading="lazy">
-        <h3>${window.EmmaginaUI.escapeHtml(card.title)}</h3>
-        <p>${window.EmmaginaUI.escapeHtml(card.text)}</p>
+        <img class="explore-image" src="${escape(image)}" alt="${escape(card.title)}" loading="lazy">
+        <h3>${escape(card.title)}</h3>
+        <p>${escape(card.text)}</p>
       </a>`;
     }).join("");
   }
 
-  function normalizeReview(product, review = {}) {
-    const rating = Number(review.rating || review.estrellas || review.puntuacion || review.score || 0);
-    const text = String(review.texto || review.comentario || review.review || review.descripcion || "").trim();
-    if (!text || rating < 4) return null;
-    return {
-      rating: Math.min(5, Math.max(1, Math.round(rating))),
-      text,
-      author: String(review.nombre || review.autor || review.cliente || "Cliente Emmagina").trim(),
-      productName: product.nombre,
-      productUrl: window.ProductLinks.detail(product)
-    };
-  }
-
-  function collectReviews(products) {
-    const reviews = [];
-    for (const product of products) {
-      const raw = product.raw || product;
-      const list = raw.resenas || raw.reseñas || raw.reviews || raw.valoraciones || [];
-      if (!Array.isArray(list)) continue;
-      for (const item of list) {
-        const normalized = normalizeReview(product, item);
-        if (normalized) reviews.push(normalized);
-      }
-    }
-    return reviews.sort((a, b) => b.rating - a.rating).slice(0, 12);
-  }
-
-  function renderReviews(products) {
+  function renderLegacyReviews(products) {
     const section = by("[data-reviews-section]");
     const track = by("[data-reviews-track]");
     if (!section || !track) return;
-    const reviews = collectReviews(products);
+    const reviews = collectReviews(products, 4);
     if (!reviews.length) {
       section.hidden = true;
       return;
@@ -203,10 +425,10 @@
       const stars = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
       return `<article class="review-card">
         <div class="review-stars" aria-label="${review.rating} de 5 estrellas">${stars}</div>
-        <blockquote>“${window.EmmaginaUI.escapeHtml(review.text)}”</blockquote>
+        <blockquote>“${escape(review.text)}”</blockquote>
         <footer>
-          <strong>${window.EmmaginaUI.escapeHtml(review.author)}</strong>
-          <a href="${window.EmmaginaUI.escapeHtml(review.productUrl)}">${window.EmmaginaUI.escapeHtml(review.productName)}</a>
+          <strong>${escape(review.author)}</strong>
+          <a href="${escape(review.productUrl)}">${escape(review.productName)}</a>
         </footer>
       </article>`;
     }).join("");
@@ -214,16 +436,7 @@
     track.style.setProperty("--marquee-duration", `${Math.max(32, reviews.length * 7)}s`);
   }
 
-  try {
-    document.querySelectorAll("[data-marquee-track]").forEach((track) => window.EmmaginaUI.setLoading(track, "Cargando productos..."));
-    const [products, banners] = await Promise.all([
-      window.EmmaginaAPI.getProducts({ limit: 240 }),
-      window.EmmaginaAPI.getBanners().catch(() => [])
-    ]);
-    all.push(...products);
-    publicBanners = Array.isArray(banners) ? banners : [];
-    const visible = all.filter(window.EmmaginaData.isVisible);
-
+  function renderLegacyHome(visible) {
     applyHeroBanner();
     applyLineBanner("linea-memories", ["memories", "memoria"], "pedido-personalizado.html");
     applyLineBanner("linea-alma", ["alma"], "catalogo.html?categoria=Linea%20Alma");
@@ -231,7 +444,26 @@
     renderProductMarquee("desde14990", "Desde $14.990", sectionProducts("desde14990", visible));
     renderProductMarquee("lanzamiento", "Lanzamiento", sectionProducts("lanzamiento", visible));
     renderProductMarquee("destacados", "Destacados", sectionProducts("destacados", visible));
-    renderReviews(visible);
+    renderLegacyReviews(visible);
+  }
+
+  try {
+    document.querySelectorAll("[data-marquee-track]").forEach((track) => window.EmmaginaUI.setLoading(track, "Cargando productos..."));
+    const [products, banners, page] = await Promise.all([
+      window.EmmaginaAPI.getProducts({ limit: 240 }),
+      window.EmmaginaAPI.getBanners().catch(() => []),
+      window.EmmaginaAPI.getPage("home").catch((error) => {
+        console.warn("Page Builder no disponible; se usará home fija:", error.message);
+        return null;
+      })
+    ]);
+
+    all.push(...products);
+    publicBanners = Array.isArray(banners) ? banners : [];
+    const visible = all.filter(window.EmmaginaData.isVisible);
+
+    const renderedByBuilder = renderBuilderHome(page, visible);
+    if (!renderedByBuilder) renderLegacyHome(visible);
   } catch (error) {
     console.error("No fue posible cargar productos en inicio:", error);
     document.querySelectorAll("[data-home-marquee]").forEach((root) => window.EmmaginaUI.setError(root, error.message));
