@@ -1,7 +1,7 @@
 "use strict";
 
 (function () {
-    const VERSION = "4.0.0";
+    const VERSION = "4.1.0";
 
     const state = {
         pages: [],
@@ -268,6 +268,12 @@
         try { return JSON.parse(text || "{}"); }
         catch { throw new Error("JSON inválido. Revisa comas, llaves y comillas."); }
     }
+    function formatDate(value) {
+        if (!value) return "Sin publicar";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "Sin publicar";
+        return date.toLocaleString("es-CL", { dateStyle: "short", timeStyle: "short" });
+    }
 
     function setStatus(message = "", type = "") {
         const status = $("#site-editor-status");
@@ -490,12 +496,13 @@
         list.innerHTML = state.pages.map((page) => {
             const key = page._id || page.key || page.slug;
             const active = String(key) === String(activePageKey()) || String(page.key) === String(state.page?.key);
-            const status = page.isPublished === false ? "Borrador" : "Publicada";
+            const status = page.isPublished === false ? "Borrador" : (page.hasUnpublishedChanges ? "Cambios sin publicar" : "Publicada");
             const nav = page.showInNavigation ? " · Menú" : "";
-            return `<button class="site-editor-page-item${active ? " active" : ""}" type="button" data-page-key="${escapeHtml(key)}">
+            const version = Number(page.version || 0) ? ` · v${Number(page.version || 0)}` : "";
+            return `<button class="site-editor-page-item${active ? " active" : ""}${page.hasUnpublishedChanges ? " has-draft" : ""}" type="button" data-page-key="${escapeHtml(key)}">
                 <strong>${escapeHtml(page.title || "Página")}</strong>
                 <span>${escapeHtml(page.slug || page.key || "")}</span>
-                <em>${escapeHtml(status + nav)} · ${Number(page.sectionsCount || 0)} secciones</em>
+                <em>${escapeHtml(status + nav + version)} · ${Number(page.sectionsCount || 0)} secciones</em>
             </button>`;
         }).join("");
     }
@@ -518,6 +525,16 @@
         $("#site-editor-canvas-title").textContent = page.title || "Página";
         const link = $("#site-editor-public-link");
         if (link) link.href = publicPath(page);
+        const badge = $("#site-editor-publish-badge");
+        if (badge) {
+            const pending = page.hasUnpublishedChanges === true;
+            const version = Number(page.version || 0);
+            badge.textContent = pending ? `Cambios sin publicar${version ? ` · v${version}` : ""}` : `Publicado${version ? ` · v${version}` : ""}`;
+            badge.className = `site-editor-publish-badge ${pending ? "warning" : "success"}`;
+            badge.title = page.publishedAt ? `Última publicación: ${formatDate(page.publishedAt)}` : "Esta página todavía no tiene publicación guardada.";
+        }
+        const help = $("#site-editor-publish-help");
+        if (help) help.textContent = page.hasUnpublishedChanges === true ? "Hay cambios guardados como borrador. Publica para que se vean en la tienda." : `La tienda está usando la versión publicada${page.publishedAt ? ` el ${formatDate(page.publishedAt)}` : ""}.`;
         const deleteButton = $("#site-editor-delete-page");
         if (deleteButton) deleteButton.disabled = page.canDelete === false;
     }
@@ -736,8 +753,8 @@
             setStatus("Guardando página...", "");
             state.page = normalizePage(await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(currentKey)}`, { method: "PATCH", body: payload }));
             await loadPages(state.page._id || state.page.key || state.page.slug || currentKey);
-            AdminUI.toast("Página guardada.", "success");
-            setStatus("Página guardada correctamente.", "success");
+            AdminUI.toast("Borrador de página guardado.", "success");
+            setStatus("Borrador guardado. Publica para reflejarlo en la tienda.", "success");
         } finally { if (button) button.disabled = false; }
     }
 
@@ -806,8 +823,8 @@
         state.page = normalizePage(data.page);
         state.selectedSectionId = data.block?.sectionId || state.selectedSectionId;
         state.selectedBlockId = data.block?._id || idOf(block);
-        AdminUI.toast("Bloque guardado.", "success");
-        setStatus("Bloque guardado y sincronizado.", "success");
+        AdminUI.toast("Bloque guardado como borrador.", "success");
+        setStatus("Bloque guardado como borrador. Publica para verlo en la tienda.", "success");
         renderAll();
     }
 
@@ -832,7 +849,7 @@
         });
         state.page = normalizePage(data.page);
         state.selectedSectionId = data.section?._id || idOf(section);
-        AdminUI.toast("Sección guardada.", "success");
+        AdminUI.toast("Sección guardada como borrador.", "success");
         renderAll();
     }
 
@@ -937,6 +954,59 @@
         AdminUI.toast("Imagen subida. Guarda el bloque para aplicar el cambio.", "success");
     }
 
+    async function publishCurrentPage() {
+        if (!state.page) return AdminUI.toast("Primero carga una página.", "warning");
+        const ok = await AdminUI.confirmAction("¿Publicar los cambios de esta página en la tienda?");
+        if (!ok) return;
+        const button = $("#site-editor-publish-page");
+        try {
+            if (button) button.disabled = true;
+            setStatus("Publicando cambios...", "");
+            const result = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/publish`, { method: "POST", body: {} });
+            state.page = normalizePage(result.page || result);
+            await loadPages(state.page._id || state.page.key || state.page.slug);
+            AdminUI.toast("Cambios publicados en la tienda.", "success");
+            setStatus("Página publicada correctamente.", "success");
+        } finally {
+            if (button) button.disabled = false;
+        }
+    }
+
+    async function loadHistoryPanel(openPanel = true) {
+        if (!state.page) return;
+        const panel = $("#site-editor-history-panel");
+        const list = $("#site-editor-history-list");
+        if (openPanel && panel) panel.open = true;
+        if (list) list.innerHTML = `<div class="admin-empty small">Cargando historial...</div>`;
+        const result = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/history`);
+        const history = Array.isArray(result.history) ? result.history : [];
+        if (!list) return;
+        if (!history.length) {
+            list.innerHTML = `<div class="admin-empty small">Todavía no hay publicaciones guardadas. Publica una vez para crear la primera versión.</div>`;
+            return;
+        }
+        list.innerHTML = history.map((item) => `<article class="site-editor-history-item">
+            <div>
+                <strong>${escapeHtml(item.label || `Versión ${item.version || ""}`)}</strong>
+                <span>${escapeHtml(formatDate(item.createdAt))} · ${Number(item.sectionsCount || 0)} secciones · ${Number(item.blocksCount || 0)} bloques</span>
+            </div>
+            <button class="admin-button secondary small" type="button" data-restore-revision="${escapeHtml(item.id)}">Restaurar</button>
+        </article>`).join("");
+    }
+
+    async function restoreRevision(revisionId) {
+        if (!state.page || !revisionId) return;
+        const ok = await AdminUI.confirmAction("¿Restaurar esta versión como borrador? No se publicará hasta que presiones Publicar.");
+        if (!ok) return;
+        const result = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/history/${encodeURIComponent(revisionId)}/restore`, { method: "POST", body: {} });
+        state.page = normalizePage(result.page || result);
+        state.selectedSectionId = idOf(state.page.sections[0]) || "";
+        state.selectedBlockId = idOf(state.page.sections[0]?.blocks?.[0]) || "";
+        await loadPages(state.page._id || state.page.key || state.page.slug);
+        AdminUI.toast("Versión restaurada como borrador.", "success");
+        setStatus("Versión restaurada. Publica para aplicarla en la tienda.", "success");
+    }
+
     async function repairEditor() {
         const button = $("#site-editor-repair");
         try {
@@ -984,6 +1054,8 @@
         $("#site-editor-refresh")?.addEventListener("click", () => loadPages(activePageKey()).catch(showError));
         $("#site-editor-repair")?.addEventListener("click", () => repairEditor().catch(showError));
         $("#site-editor-save-page")?.addEventListener("click", () => savePage().catch(showError));
+        $("#site-editor-publish-page")?.addEventListener("click", () => publishCurrentPage().catch(showError));
+        $("#site-editor-history")?.addEventListener("click", () => loadHistoryPanel(true).catch(showError));
         $("#site-editor-new-page")?.addEventListener("click", () => createPage().catch(showError));
         $("#site-editor-delete-page")?.addEventListener("click", () => deletePage().catch(showError));
         $("#site-editor-add-section")?.addEventListener("click", () => addSection().catch(showError));
@@ -993,6 +1065,8 @@
         $("#block-type")?.addEventListener("change", refreshCurrentBlockFieldsForType);
 
         document.addEventListener("click", async (event) => {
+            const restore = event.target.closest("[data-restore-revision]");
+            if (restore) { await restoreRevision(restore.dataset.restoreRevision).catch(showError); return; }
             const saveSectionButton = event.target.closest("#site-editor-save-section");
             if (saveSectionButton) { await saveSection().catch(showError); return; }
             const deleteSectionButton = event.target.closest("#site-editor-delete-section");
@@ -1061,7 +1135,7 @@
             state.page = null;
             renderPageList();
             showError(error);
-            setStatus("No se pudo cargar el Editor del Sitio. Verifica que el backend v2.6 esté desplegado y presiona Reparar conexión.", "danger");
+            setStatus("No se pudo cargar el Editor del Sitio. Verifica que el backend v2.7 esté desplegado y presiona Reparar conexión.", "danger");
         }
         console.info(`Editor del Sitio ${VERSION} cargado`);
     }

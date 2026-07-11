@@ -558,3 +558,87 @@
         justify-content: flex-start;
     }
 }
+
+/* Editor del Sitio v4.1: borrador, publicación e historial */
+.site-editor-header-actions {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.site-editor-publish-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    border-radius: 999px;
+    padding: 7px 11px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .02em;
+    background: rgba(20, 32, 44, .08);
+    color: #44515d;
+    white-space: nowrap;
+}
+
+.site-editor-publish-badge.success {
+    background: rgba(40, 167, 69, .12);
+    color: #1f7a3a;
+}
+
+.site-editor-publish-badge.warning {
+    background: rgba(255, 193, 7, .18);
+    color: #8a5a00;
+}
+
+.site-editor-page-item.has-draft {
+    border-color: rgba(255, 193, 7, .42);
+    background: linear-gradient(135deg, #fff, #fffaf0);
+}
+
+.site-editor-history-panel {
+    border: 1px solid rgba(142, 61, 108, .12);
+    border-radius: 18px;
+    background: #fff;
+    padding: 10px 12px;
+}
+
+.site-editor-history-panel summary {
+    cursor: pointer;
+    color: #312633;
+    font-weight: 900;
+}
+
+.site-editor-history-list {
+    display: grid;
+    gap: 9px;
+    margin-top: 12px;
+}
+
+.site-editor-history-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid rgba(20, 32, 44, .08);
+    border-radius: 16px;
+    background: #fbfcfd;
+    padding: 10px 12px;
+}
+
+.site-editor-history-item strong,
+.site-editor-history-item span {
+    display: block;
+}
+
+.site-editor-history-item strong {
+    color: #1f2a33;
+    font-size: 13px;
+}
+
+.site-editor-history-item span {
+    margin-top: 3px;
+    color: #70808c;
+    font-size: 12px;
+}

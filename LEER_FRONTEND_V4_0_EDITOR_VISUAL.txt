@@ -1,4 +1,4 @@
-Emmagina Frontend v4.0 - Editor del Sitio con editores visuales
+Emmagina Frontend v4.1 - Editor del Sitio con editores visuales
 
 Esta versión mejora la experiencia del Editor del Sitio y reduce la dependencia del JSON técnico.
 
@@ -26,7 +26,7 @@ Incluye:
 - Subida a Cloudinary desde campos principales y desde filas de tarjetas/categorías.
 - Vista rápida más clara de secciones y bloques.
 - JSON técnico queda colapsado en modo avanzado.
-- Caché actualizado a v4.0.0.
+- Caché actualizado a v4.1.0.
 
 Instalación:
 cd C:\Users\Ismael\Documents\Emmagina\emmagina-frontend

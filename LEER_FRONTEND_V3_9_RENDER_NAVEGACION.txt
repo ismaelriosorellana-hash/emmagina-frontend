@@ -1,4 +1,4 @@
-Emmagina Frontend v4.0 - Render visual de bloques + navegación editable
+Emmagina Frontend v4.1 - Render visual de bloques + navegación editable
 
 Cambios principales:
 - La Home y las páginas creadas desde Editor del Sitio renderizan secciones + bloques.

@@ -1,0 +1,14 @@
+Emmagina Frontend v4.1 - Editor del Sitio con publicación e historial
+
+Incluye:
+- Botón Guardar borrador.
+- Botón Publicar.
+- Indicador de cambios sin publicar.
+- Historial de publicaciones.
+- Restaurar versiones anteriores como borrador.
+- La tienda pública muestra la última versión publicada.
+
+Instalación:
+git add .
+git commit -m "Emmagina frontend v4.1 editor sitio publicacion historial"
+git push

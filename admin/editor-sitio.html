@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="robots" content="noindex, nofollow, noarchive">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>Editor del Sitio | Emmagina CMS v4.0</title>
+    <title>Editor del Sitio | Emmagina CMS v4.1</title>
     <link rel="icon" href="../assets/emmagina-logo.svg">
-    <link rel="stylesheet" href="css/admin.css?v=4.0.0">
+    <link rel="stylesheet" href="css/admin.css?v=4.1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="css/admin-experience-v327.css?v=4.0.0">
-    <link rel="stylesheet" href="css/pagebuilder-admin.css?v=4.0.0">
-    <link rel="stylesheet" href="css/site-editor-admin.css?v=4.0.0">
+    <link rel="stylesheet" href="css/admin-experience-v327.css?v=4.1.0">
+    <link rel="stylesheet" href="css/pagebuilder-admin.css?v=4.1.0">
+    <link rel="stylesheet" href="css/site-editor-admin.css?v=4.1.0">
 </head>
 <body data-admin-page="studio" data-admin-title="Editor del Sitio">
     <section id="admin-page-content">
@@ -32,9 +32,17 @@
                     <i class="fa-solid fa-screwdriver-wrench"></i>
                     Reparar
                 </button>
-                <button class="admin-button" id="site-editor-save-page" type="button">
+                <button class="admin-button secondary" id="site-editor-history" type="button">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    Historial
+                </button>
+                <button class="admin-button secondary" id="site-editor-save-page" type="button">
                     <i class="fa-solid fa-floppy-disk"></i>
-                    Guardar página
+                    Guardar borrador
+                </button>
+                <button class="admin-button" id="site-editor-publish-page" type="button">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    Publicar
                 </button>
             </div>
         </div>
@@ -62,10 +70,13 @@
                             <p class="admin-section-kicker">Página seleccionada</p>
                             <h3>Datos generales</h3>
                         </div>
-                        <a class="admin-button secondary small" id="site-editor-public-link" href="../index.html" target="_blank" rel="noopener">
-                            <i class="fa-solid fa-store"></i>
-                            Ver página
-                        </a>
+                        <div class="site-editor-header-actions">
+                            <span id="site-editor-publish-badge" class="site-editor-publish-badge">Borrador sincronizado</span>
+                            <a class="admin-button secondary small" id="site-editor-public-link" href="../index.html" target="_blank" rel="noopener">
+                                <i class="fa-solid fa-store"></i>
+                                Ver publicada
+                            </a>
+                        </div>
                     </div>
 
                     <div class="admin-form-grid site-editor-page-grid">
@@ -111,11 +122,17 @@
                     </details>
 
                     <div class="site-editor-public-actions">
+                        <p class="admin-help compact" id="site-editor-publish-help">Los cambios se guardan como borrador. Usa Publicar para que se vean en la tienda.</p>
                         <button class="admin-button danger small" id="site-editor-delete-page" type="button">
                             <i class="fa-solid fa-trash"></i>
                             Eliminar página
                         </button>
                     </div>
+
+                    <details class="site-editor-history-panel" id="site-editor-history-panel">
+                        <summary>Historial de publicaciones</summary>
+                        <div id="site-editor-history-list" class="site-editor-history-list">Aún no se ha cargado el historial.</div>
+                    </details>
                 </section>
 
                 <section class="pagebuilder-layout site-editor-builder-layout" aria-label="Constructor de bloques">
@@ -248,10 +265,10 @@
         </section>
     </section>
 
-    <script src="../js/config.js?v=4.0.0"></script>
-    <script src="js/admin-api.js?v=4.0.0"></script>
-    <script src="js/admin-common.js?v=4.0.0"></script>
-    <script src="js/admin-experience-v327.js?v=4.0.0"></script>
-    <script src="js/site-editor-admin.js?v=4.0.0"></script>
+    <script src="../js/config.js?v=4.1.0"></script>
+    <script src="js/admin-api.js?v=4.1.0"></script>
+    <script src="js/admin-common.js?v=4.1.0"></script>
+    <script src="js/admin-experience-v327.js?v=4.1.0"></script>
+    <script src="js/site-editor-admin.js?v=4.1.0"></script>
 </body>
 </html>
