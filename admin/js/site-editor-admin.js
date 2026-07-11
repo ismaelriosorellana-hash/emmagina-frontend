@@ -1,14 +1,15 @@
 "use strict";
 
 (function () {
-    const VERSION = "4.2.0";
+    const VERSION = "4.3.0";
 
     const state = {
         pages: [],
         page: null,
         selectedSectionId: "",
         selectedBlockId: "",
-        draggedBlockId: ""
+        draggedBlockId: "",
+        catalog: { categorias: [], productos: [], filtros: [] }
     };
 
     const sectionTypes = {
@@ -273,6 +274,133 @@
         const date = new Date(value);
         if (Number.isNaN(date.getTime())) return "Sin publicar";
         return date.toLocaleString("es-CL", { dateStyle: "short", timeStyle: "short" });
+    }
+
+
+    function formatPrice(value) {
+        return new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", maximumFractionDigits: 0 }).format(Number(value) || 0);
+    }
+
+    function catalogCategories() {
+        return Array.isArray(state.catalog?.categorias) ? state.catalog.categorias : [];
+    }
+
+    function catalogProducts() {
+        return Array.isArray(state.catalog?.productos) ? state.catalog.productos : [];
+    }
+
+    function keyOfCatalogItem(item = {}) {
+        return String(item.id || item._id || item.slug || item.nombre || item.label || "");
+    }
+
+    function categoryHref(category = {}) {
+        return category.href || `catalogo.html?categoria=${encodeURIComponent(category.nombre || category.label || category.slug || "")}`;
+    }
+
+    function categoryToBlockItem(category = {}) {
+        return {
+            id: category.id || category._id || "",
+            slug: category.slug || safeKey(category.nombre || category.label || ""),
+            label: category.label || category.nombre || "Categoría",
+            href: categoryHref(category),
+            image: category.image || category.imagen || "",
+            color: category.color || "",
+            icono: category.icono || ""
+        };
+    }
+
+    function selectedCategoryKeys(content = {}) {
+        const keys = new Set((Array.isArray(content.categoryIds) ? content.categoryIds : []).map(String));
+        (Array.isArray(content.categories) ? content.categories : []).forEach((item) => {
+            const value = typeof item === "string" ? item : item.id || item._id || item.slug || item.label || item.nombre;
+            if (value) keys.add(String(value));
+        });
+        return keys;
+    }
+
+    function categoriesBySource(source = "manual", selectedKeys = new Set()) {
+        let categories = catalogCategories();
+        if (source === "real_home") categories = categories.filter((item) => item.mostrarInicio !== false && item.activa !== false);
+        else if (source === "real_menu") categories = categories.filter((item) => item.mostrarMenu !== false && item.activa !== false);
+        else if (source === "real_featured") categories = categories.filter((item) => item.destacada === true && item.activa !== false);
+        else if (selectedKeys.size) {
+            categories = categories.filter((item) => {
+                const keys = [item.id, item._id, item.slug, item.nombre, item.label].filter(Boolean).map(String);
+                return keys.some((key) => selectedKeys.has(key));
+            });
+        } else {
+            categories = [];
+        }
+        return categories.map(categoryToBlockItem);
+    }
+
+    function categoryPickerHtml(content = {}) {
+        const selected = selectedCategoryKeys(content);
+        const categories = catalogCategories();
+        if (!categories.length) return `<div class="admin-help compact">No hay categorías reales cargadas todavía. Puedes editarlas manualmente abajo.</div>`;
+        return `<section class="site-editor-data-picker" id="site-editor-category-picker">
+            <div class="site-editor-picker-head"><strong>Categorías reales</strong><span>Selecciona categorías existentes para no escribir enlaces manuales.</span></div>
+            <div class="site-editor-chip-grid">${categories.map((category) => {
+                const keys = [category.id, category._id, category.slug, category.nombre, category.label].filter(Boolean).map(String);
+                const checked = keys.some((key) => selected.has(key));
+                return `<label class="site-editor-chip"><input type="checkbox" data-category-pick value="${escapeHtml(category.id || category.slug || category.nombre)}" ${checked ? "checked" : ""}><span>${escapeHtml(category.nombre || category.label || "Categoría")}</span></label>`;
+            }).join("")}</div>
+        </section>`;
+    }
+
+    function categorySelectOptions(current = "") {
+        const categories = catalogCategories();
+        const fixed = [{ value: "", label: "Todas las categorías" }];
+        return fixed.concat(categories.map((category) => ({ value: category.slug || category.nombre, label: category.nombre || category.label || category.slug })));
+    }
+
+    function productFilterOptions(current = "") {
+        const filters = Array.isArray(state.catalog?.filtros) && state.catalog.filtros.length ? state.catalog.filtros : [
+            { value: "todos", label: "Todos los productos" },
+            { value: "destacados", label: "Destacados" },
+            { value: "desde14990", label: "Desde $14.990" },
+            { value: "lanzamiento", label: "Lanzamiento" },
+            { value: "vendidos", label: "Más vendidos" },
+            { value: "vistos", label: "Más vistos" }
+        ];
+        return filters;
+    }
+
+    function selectedProductKeys(content = {}) {
+        return new Set((Array.isArray(content.productIds) ? content.productIds : []).map(String));
+    }
+
+    function productPickerHtml(content = {}) {
+        const products = catalogProducts();
+        const selected = selectedProductKeys(content);
+        if (!products.length) return `<div class="admin-help compact">No hay productos reales cargados todavía. Revisa el módulo Productos.</div>`;
+        const ordered = products.slice().sort((a, b) => {
+            const ac = selected.has(String(a.id)) || selected.has(String(a.slug)) ? -1 : 0;
+            const bc = selected.has(String(b.id)) || selected.has(String(b.slug)) ? -1 : 0;
+            return ac - bc || String(a.nombre || "").localeCompare(String(b.nombre || ""), "es");
+        }).slice(0, 120);
+        return `<section class="site-editor-data-picker" id="site-editor-product-picker">
+            <div class="site-editor-picker-head"><strong>Productos específicos</strong><span>Úsalo cuando quieras elegir productos exactos. Si no marcas nada, el bloque usa el filtro o categoría.</span></div>
+            <div class="site-editor-product-picker-list">${ordered.map((product) => {
+                const checked = selected.has(String(product.id)) || selected.has(String(product._id)) || selected.has(String(product.slug));
+                const image = product.imagenPrincipal || "../assets/producto-referencia-emmagina.png";
+                return `<label class="site-editor-product-choice"><input type="checkbox" data-product-pick value="${escapeHtml(product.id || product.slug || product.nombre)}" ${checked ? "checked" : ""}><img src="${escapeHtml(image)}" alt="" loading="lazy"><span><strong>${escapeHtml(product.nombre || "Producto")}</strong><small>${escapeHtml(formatPrice(product.precio))} · ${escapeHtml((product.categorias || []).slice(0, 2).join(", ") || product.categoriaPrincipal || "Sin categoría")}</small></span></label>`;
+            }).join("")}</div>
+        </section>`;
+    }
+
+    async function loadCatalogData() {
+        try {
+            const data = await AdminAPI.request("/admin/editor-sitio/catalogo");
+            state.catalog = {
+                categorias: Array.isArray(data?.categorias) ? data.categorias : [],
+                productos: Array.isArray(data?.productos) ? data.productos : [],
+                filtros: Array.isArray(data?.filtros) ? data.filtros : []
+            };
+        } catch (error) {
+            console.warn("No se pudieron cargar categorías/productos reales para el Editor del Sitio.", error);
+            state.catalog = { categorias: [], productos: [], filtros: [] };
+        }
     }
 
     function setStatus(message = "", type = "") {
@@ -608,7 +736,14 @@
         const heading = `<div class="site-editor-editor-heading"><span class="site-editor-icon"><i class="fa-solid ${escapeHtml(blockMeta(type).icon)}"></i></span><div><strong>${escapeHtml(blockMeta(type).label)}</strong><p>${escapeHtml(blockMeta(type).description)}</p></div></div>`;
 
         if (type === "category_sidebar" || type === "category_grid") {
-            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml(type === "category_grid" ? "title" : "heading", "Título visible", content.heading || content.title || "Categorías")}${booleanSelectHtml("showViewAll", "Mostrar botón Ver todas", content.showViewAll !== false)}${fieldHtml("viewAllText", "Texto botón", content.viewAllText || "Ver todas")}${fieldHtml("viewAllUrl", "URL botón", content.viewAllUrl || "catalogo.html")}</div>${repeaterHtml("categories", "Categorías", content.categories || [], "Edita nombre, enlace e imagen opcional.")}`;
+            const sourceOptions = [
+                { value: "manual", label: "Lista manual editable" },
+                { value: "real_home", label: "Categorías reales visibles en inicio" },
+                { value: "real_menu", label: "Categorías reales visibles en menú" },
+                { value: "real_featured", label: "Categorías reales destacadas" },
+                { value: "selected", label: "Categorías reales seleccionadas abajo" }
+            ];
+            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml(type === "category_grid" ? "title" : "heading", "Título visible", content.heading || content.title || "Categorías")}${selectFieldHtml("source", "Origen de categorías", content.source || "manual", sourceOptions)}${booleanSelectHtml("showViewAll", "Mostrar botón Ver todas", content.showViewAll !== false)}${fieldHtml("viewAllText", "Texto botón", content.viewAllText || "Ver todas")}${fieldHtml("viewAllUrl", "URL botón", content.viewAllUrl || "catalogo.html")}</div>${categoryPickerHtml(content)}${repeaterHtml("categories", "Lista visible", content.categories || [], "Puedes ajustar manualmente nombre, enlace e imagen. Si eliges categorías reales, se actualiza al guardar.")}`;
             return;
         }
 
@@ -628,17 +763,12 @@
         }
 
         if (type === "product_marquee" || type === "product_grid") {
-            const filters = [
-                { value: "todos", label: "Todos los productos" },
-                { value: "destacados", label: "Destacados" },
-                { value: "desde14990", label: "Desde $14.990" },
-                { value: "lanzamiento", label: "Lanzamiento" },
-                { value: "vendidos", label: "Más vendidos" },
-                { value: "vistos", label: "Más vistos" },
-                { value: "Linea Alma", label: "Categoría Línea Alma" },
-                { value: "Linea Memories", label: "Categoría Línea Memories" }
+            const sourceOptions = [
+                { value: "filter", label: "Filtro automático" },
+                { value: "category", label: "Categoría real" },
+                { value: "manual", label: "Productos seleccionados" }
             ];
-            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml("kicker", "Etiqueta superior", content.kicker || "Emmagina")}${fieldHtml("title", "Título", content.title || "")}${selectFieldHtml("filter", "Qué productos mostrar", content.filter || "todos", filters)}${fieldHtml("limit", "Cantidad máxima", content.limit || 12, "number", "min='1' max='36'")}</div><p class="admin-help compact">Para filtros por categoría personalizada, escribe luego en Avanzado <strong>filter</strong> con el nombre de la categoría exacta.</p>`;
+            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml("kicker", "Etiqueta superior", content.kicker || "Emmagina")}${fieldHtml("title", "Título", content.title || "")}${selectFieldHtml("source", "Origen de productos", content.source || (content.productIds?.length ? "manual" : content.categorySlug ? "category" : "filter"), sourceOptions)}${selectFieldHtml("filter", "Filtro automático", content.filter || "todos", productFilterOptions(content.filter))}${selectFieldHtml("categorySlug", "Categoría real", content.categorySlug || content.category || "", categorySelectOptions(content.categorySlug || content.category))}${fieldHtml("limit", "Cantidad máxima", content.limit || 12, "number", "min='1' max='36'")}</div>${productPickerHtml(content)}<p class="admin-help compact">El bloque puede mostrar un filtro, una categoría real o productos exactos. No necesitas escribir nombres técnicos.</p>`;
             return;
         }
 
@@ -791,9 +921,23 @@
             else if (input.type === "checkbox") content[key] = input.checked;
             else content[key] = input.value;
         });
-        if ($("[data-array-list-root='categories']")) content.categories = collectArray("categories").map((item) => ({ label: item.label || "Categoría", href: item.href || `catalogo.html?categoria=${encodeURIComponent(item.label || "")}`, image: item.image || "" }));
+        if ($("[data-array-list-root='categories']")) {
+            const pickedKeys = new Set($all("[data-category-pick]:checked").map((input) => String(input.value)));
+            const source = String(content.source || "manual");
+            const realCategories = source === "manual" && !pickedKeys.size ? [] : categoriesBySource(source, pickedKeys);
+            const manualCategories = collectArray("categories").map((item) => ({ label: item.label || "Categoría", href: item.href || `catalogo.html?categoria=${encodeURIComponent(item.label || "")}`, image: item.image || "" }));
+            content.categoryIds = [...pickedKeys];
+            content.categories = realCategories.length ? realCategories : manualCategories;
+        }
         if ($("[data-array-list-root='cards']")) content.cards = collectArray("cards").map((item) => ({ title: item.title || "Tarjeta", text: item.text || "", href: item.href || "catalogo.html", image: item.image || "" }));
         if ($("[data-array-list-root='items']")) content.items = collectArray("items").map((item) => ({ question: item.question || "Pregunta", answer: item.answer || "" }));
+        if ($("#site-editor-product-picker")) {
+            content.productIds = $all("[data-product-pick]:checked").map((input) => String(input.value));
+            if (content.categorySlug) {
+                const category = catalogCategories().find((item) => String(item.slug || item.nombre) === String(content.categorySlug));
+                content.categoryName = category?.nombre || content.categorySlug;
+            }
+        }
         delete content.categoriesText;
         return content;
     }
@@ -1235,13 +1379,14 @@
         const sectionSelect = $("#site-editor-new-section-type");
         if (sectionSelect) sectionSelect.innerHTML = renderSectionTypeOptions("products_section");
         bindEvents();
+        await loadCatalogData();
         try { await loadPages("home"); }
         catch (error) {
             state.pages = [];
             state.page = null;
             renderPageList();
             showError(error);
-            setStatus("No se pudo cargar el Editor del Sitio. Verifica que el backend v2.8 esté desplegado y presiona Reparar conexión.", "danger");
+            setStatus("No se pudo cargar el Editor del Sitio. Verifica que el backend v2.9 esté desplegado y presiona Reparar conexión.", "danger");
         }
         console.info(`Editor del Sitio ${VERSION} cargado`);
     }

@@ -643,7 +643,7 @@
     font-size: 12px;
 }
 
-/* Editor del Sitio v4.2: limpieza visual, layout flexible y acciones rápidas */
+/* Editor del Sitio v4.3: limpieza visual, datos reales y acciones rápidas */
 .site-editor-intro {
     padding: 16px 18px;
 }
@@ -887,4 +887,121 @@
     .pagebuilder-form-actions {
         grid-template-columns: 1fr;
     }
+}
+
+/* Editor del Sitio v4.3: datos reales de catálogo y selectores visuales */
+.site-editor-data-picker {
+    border: 1px solid rgba(142, 61, 108, .12);
+    background: #fff;
+    border-radius: 18px;
+    padding: 12px;
+    margin: 12px 0;
+}
+
+.site-editor-picker-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.site-editor-picker-head strong {
+    color: #1f2a33;
+    font-size: 13px;
+}
+
+.site-editor-picker-head span {
+    color: #70808c;
+    font-size: 12px;
+    line-height: 1.35;
+    text-align: right;
+}
+
+.site-editor-chip-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-height: 180px;
+    overflow: auto;
+    padding-right: 4px;
+}
+
+.site-editor-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid rgba(142, 61, 108, .16);
+    border-radius: 999px;
+    background: #fff8fc;
+    padding: 8px 11px;
+    cursor: pointer;
+    color: #312633;
+    font-weight: 800;
+    font-size: 12px;
+}
+
+.site-editor-chip input {
+    width: 14px;
+    height: 14px;
+    accent-color: #8e3d6c;
+}
+
+.site-editor-product-picker-list {
+    display: grid;
+    gap: 8px;
+    max-height: 320px;
+    overflow: auto;
+    padding-right: 4px;
+}
+
+.site-editor-product-choice {
+    display: grid;
+    grid-template-columns: auto 46px minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(20, 32, 44, .08);
+    border-radius: 14px;
+    background: #fbfcfd;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.site-editor-product-choice:hover {
+    border-color: rgba(142, 61, 108, .35);
+    background: #fff8fc;
+}
+
+.site-editor-product-choice input {
+    width: 15px;
+    height: 15px;
+    accent-color: #8e3d6c;
+}
+
+.site-editor-product-choice img {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    object-fit: cover;
+    background: #f5eef3;
+}
+
+.site-editor-product-choice strong,
+.site-editor-product-choice small {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.site-editor-product-choice strong {
+    color: #1f2a33;
+    font-size: 13px;
+}
+
+.site-editor-product-choice small {
+    color: #70808c;
+    font-size: 11px;
+    margin-top: 2px;
 }

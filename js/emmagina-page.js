@@ -72,6 +72,36 @@
     });
   }
 
+  function productKeys(product = {}) {
+    return [product.id, product._id, product.slug, product.nombre, product.sku].filter(Boolean).map((value) => String(value));
+  }
+
+  function categoryMatchesProduct(product = {}, category = "") {
+    const key = textKey(category).replace(/[^a-z0-9]+/g, "");
+    if (!key) return false;
+    const categories = [product.categoriaPrincipal, ...(Array.isArray(product.categorias) ? product.categorias : [])].filter(Boolean);
+    return categories.some((cat) => {
+      const value = textKey(cat);
+      const compact = value.replace(/[^a-z0-9]+/g, "");
+      return compact === key || compact.includes(key) || key.includes(compact);
+    });
+  }
+
+  function selectProductsForBlock(content = {}, products = [], limit = 14) {
+    const visible = uniqueById(products.filter(window.EmmaginaData.isVisible));
+    const source = String(content.source || "filter");
+    const ids = Array.isArray(content.productIds) ? content.productIds.map(String).filter(Boolean) : [];
+    if (source === "manual" && ids.length) {
+      const selected = visible.filter((product) => productKeys(product).some((key) => ids.includes(String(key))));
+      return selected.slice(0, limit);
+    }
+    if (source === "category" && (content.categorySlug || content.categoryName || content.category)) {
+      const category = content.categorySlug || content.categoryName || content.category;
+      return fillList(visible.filter((product) => categoryMatchesProduct(product, category)), visible, 4, limit);
+    }
+    return sectionProducts(content.filter || content.grupo || content.category || "todos", products, limit);
+  }
+
   function fillList(selected, products, minItems = 8, limit = 14) {
     const visible = uniqueById(products.filter(window.EmmaginaData.isVisible));
     const base = uniqueById(selected.filter(window.EmmaginaData.isVisible));
@@ -132,14 +162,14 @@
   }
 
   function renderProductMarquee(block, products) {
-    const c = getContent(block); const title = c.title || block.name || "Productos"; const limit = Math.max(4, Math.min(30, toNumber(c.limit, 14))); const selected = sectionProducts(c.filter || c.category || "todos", products, limit);
+    const c = getContent(block); const title = c.title || block.name || "Productos"; const limit = Math.max(4, Math.min(30, toNumber(c.limit, 14))); const selected = selectProductsForBlock(c, products, limit);
     const cards = selected.map((p) => window.EmmaginaUI.productCard(p)).join("");
     const track = selected.length ? `<div class="marquee-group">${cards}</div><div class="marquee-group" aria-hidden="true">${cards}</div>` : `<div class="state-box"><p>No hay productos disponibles por ahora.</p></div>`;
     return `<section class="section section-muted product-marquee builder-section" data-block-id="${escape(block._id || block.id || "")}"${spacingStyle(block)}><header class="carousel-head"><div><p class="kicker">${escape(c.kicker || "Emmagina")}</p><h2>${escape(title)}</h2></div></header><div class="marquee-viewport"><div class="marquee-track" style="--marquee-duration:${Math.max(34, selected.length * 6)}s">${track}</div></div></section>`;
   }
 
   function renderProductGrid(block, products) {
-    const c = getContent(block); const title = c.title || block.name || "Productos"; const limit = Math.max(4, Math.min(36, toNumber(c.limit, 12))); const selected = sectionProducts(c.filter || c.category || "todos", products, limit).slice(0, limit);
+    const c = getContent(block); const title = c.title || block.name || "Productos"; const limit = Math.max(4, Math.min(36, toNumber(c.limit, 12))); const selected = selectProductsForBlock(c, products, limit).slice(0, limit);
     return `<section class="section section-muted builder-section product-grid-section" data-block-id="${escape(block._id || block.id || "")}"${spacingStyle(block)}><header class="carousel-head"><div><p class="kicker">${escape(c.kicker || "Emmagina")}</p><h2>${escape(title)}</h2></div></header>${selected.length ? `<div class="product-grid">${selected.map((p) => window.EmmaginaUI.productCard(p)).join("")}</div>` : `<div class="state-box"><p>No hay productos disponibles por ahora.</p></div>`}</section>`;
   }
 

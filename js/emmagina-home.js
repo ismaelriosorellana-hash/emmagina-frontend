@@ -129,6 +129,36 @@
     });
   }
 
+  function productKeys(product = {}) {
+    return [product.id, product._id, product.slug, product.nombre, product.sku].filter(Boolean).map((value) => String(value));
+  }
+
+  function categoryMatchesProduct(product = {}, category = "") {
+    const key = textKey(category).replace(/[^a-z0-9]+/g, "");
+    if (!key) return false;
+    const categories = [product.categoriaPrincipal, ...(Array.isArray(product.categorias) ? product.categorias : [])].filter(Boolean);
+    return categories.some((cat) => {
+      const value = textKey(cat);
+      const compact = value.replace(/[^a-z0-9]+/g, "");
+      return compact === key || compact.includes(key) || key.includes(compact);
+    });
+  }
+
+  function selectProductsForBlock(content = {}, products = [], limit = 14) {
+    const visible = uniqueById(products.filter(window.EmmaginaData.isVisible));
+    const source = String(content.source || "filter");
+    const ids = Array.isArray(content.productIds) ? content.productIds.map(String).filter(Boolean) : [];
+    if (source === "manual" && ids.length) {
+      const selected = visible.filter((product) => productKeys(product).some((key) => ids.includes(String(key))));
+      return selected.slice(0, limit);
+    }
+    if (source === "category" && (content.categorySlug || content.categoryName || content.category)) {
+      const category = content.categorySlug || content.categoryName || content.category;
+      return fillMarqueeList(visible.filter((product) => categoryMatchesProduct(product, category)), visible, 4, limit);
+    }
+    return sectionProducts(content.filter || content.grupo || content.category || "todos", products, limit);
+  }
+
   function bannerImage(banner) {
     return banner?.imagenEscritorio || banner?.imagen || banner?.image || banner?.url || "";
   }
@@ -330,7 +360,7 @@
     const title = content.title || block.name || "Productos";
     const filter = content.filter || content.grupo || content.category || "todos";
     const limit = Math.max(4, Math.min(30, toNumber(content.limit, 14)));
-    const selected = sectionProducts(filter, products, limit);
+    const selected = selectProductsForBlock(content, products, limit);
     const cards = selected.map((p) => window.EmmaginaUI.productCard(p)).join("");
     const track = selected.length
       ? `<div class="marquee-group">${cards}</div><div class="marquee-group" aria-hidden="true">${cards}</div>`
@@ -348,7 +378,7 @@
     const title = content.title || block.name || "Productos";
     const filter = content.filter || content.grupo || content.category || "todos";
     const limit = Math.max(4, Math.min(36, toNumber(content.limit, 12)));
-    const selected = sectionProducts(filter, products, limit).slice(0, limit);
+    const selected = selectProductsForBlock(content, products, limit).slice(0, limit);
     const cards = selected.map((p) => window.EmmaginaUI.productCard(p)).join("");
     return `<section class="section section-muted builder-section product-grid-section" data-block-id="${escape(block._id || block.id || "")}"${spacingStyle(block)}>
       <header class="carousel-head"><div><p class="kicker">${escape(content.kicker || "Emmagina")}</p><h2>${escape(title)}</h2></div></header>
