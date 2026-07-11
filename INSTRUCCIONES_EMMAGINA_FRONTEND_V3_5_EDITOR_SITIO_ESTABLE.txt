@@ -1,5 +1,0 @@
-Emmagina Frontend v3.5 - Editor del Sitio estable
-
-Esta versión mantiene el Editor del Sitio como único módulo central y se sincroniza con Backend v2.1, que usa la colección limpia site_pages.
-
-Subir después del backend v2.1.

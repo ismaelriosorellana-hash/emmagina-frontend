@@ -125,7 +125,7 @@
 
     async function loadPages(preferKey = "") {
         setStatus("Cargando páginas...", "");
-        const pages = await AdminAPI.request("/admin/pages");
+        const pages = await AdminAPI.request("/admin/editor-sitio/pages");
         state.pages = Array.isArray(pages) ? pages : [];
         renderPageList();
         const currentStillExists = state.page && state.pages.some((page) => [page.key, page.slug, page._id].map(String).includes(String(activePageKey())));
@@ -138,7 +138,7 @@
 
     async function loadPage(pageId = "home") {
         setStatus("Cargando página...", "");
-        state.page = normalizePage(await AdminAPI.request(`/admin/pages/${encodeURIComponent(pageId)}`));
+        state.page = normalizePage(await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(pageId)}`));
         state.selectedBlockId = state.page.blocks[0]?._id || "";
         renderAll();
         setStatus(`Página cargada: ${state.page.title || "Página"}.`, "success");
@@ -363,7 +363,7 @@
         try {
             if (button) button.disabled = true;
             setStatus("Guardando página...", "");
-            const saved = await AdminAPI.request(`/admin/pages/${encodeURIComponent(currentKey)}`, { method: "PATCH", body: payload });
+            const saved = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(currentKey)}`, { method: "PATCH", body: payload });
             state.page = normalizePage(saved);
             await loadPages(state.page._id || state.page.key || state.page.slug || currentKey);
             AdminUI.toast("Página guardada.", "success");
@@ -377,7 +377,7 @@
     async function createPage() {
         const title = prompt("Nombre de la nueva página", "Nueva página");
         if (!title) return;
-        const page = await AdminAPI.request("/admin/pages", {
+        const page = await AdminAPI.request("/admin/editor-sitio/pages", {
             method: "POST",
             body: {
                 title,
@@ -401,7 +401,7 @@
         }
         const ok = await AdminUI.confirmAction(`¿Eliminar la página "${state.page.title}"? Esta acción no se puede deshacer.`);
         if (!ok) return;
-        await AdminAPI.request(`/admin/pages/${encodeURIComponent(activePageKey())}`, { method: "DELETE" });
+        await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}`, { method: "DELETE" });
         state.page = null;
         state.selectedBlockId = "";
         await loadPages("home");
@@ -448,7 +448,7 @@
             content,
             style
         };
-        const data = await AdminAPI.request(`/admin/pages/${encodeURIComponent(activePageKey())}/blocks/${encodeURIComponent(block._id)}`, { method: "PATCH", body: payload });
+        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/blocks/${encodeURIComponent(block._id)}`, { method: "PATCH", body: payload });
         state.page = normalizePage(data.page);
         state.selectedBlockId = data.block?._id || block._id;
         AdminUI.toast("Bloque guardado.", "success");
@@ -460,7 +460,7 @@
         const type = prompt("Tipo de bloque: hero_banner, info_cards, product_marquee, product_grid, image_banner, reviews_marquee, custom_html", "image_banner");
         if (!type) return;
         const defaults = defaultBlocks[type] || defaultBlocks.custom_html;
-        const data = await AdminAPI.request(`/admin/pages/${encodeURIComponent(activePageKey())}/blocks`, {
+        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/blocks`, {
             method: "POST",
             body: {
                 type,
@@ -482,7 +482,7 @@
         if (!block || !state.page) return;
         const ok = await AdminUI.confirmAction("¿Eliminar este bloque? Esta acción no se puede deshacer.");
         if (!ok) return;
-        const data = await AdminAPI.request(`/admin/pages/${encodeURIComponent(activePageKey())}/blocks/${encodeURIComponent(block._id)}`, { method: "DELETE" });
+        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/blocks/${encodeURIComponent(block._id)}`, { method: "DELETE" });
         state.page = normalizePage(data.page);
         state.selectedBlockId = state.page.blocks[0]?._id || "";
         AdminUI.toast("Bloque eliminado.", "success");
@@ -491,7 +491,7 @@
 
     async function reorderByList(blocks) {
         if (!state.page) return;
-        state.page = normalizePage(await AdminAPI.request(`/admin/pages/${encodeURIComponent(activePageKey())}/reorder`, {
+        state.page = normalizePage(await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/reorder`, {
             method: "PUT",
             body: { blocks: blocks.map((block, index) => ({ blockId: block._id, position: index + 1 })) }
         }));
@@ -534,7 +534,7 @@
         try {
             if (button) button.disabled = true;
             setStatus("Reparando conexión del Editor del Sitio...", "");
-            const result = await AdminAPI.request("/admin/pages/_repair", { method: "POST", body: {} });
+            const result = await AdminAPI.request("/admin/editor-sitio/_repair", { method: "POST", body: {} });
             state.page = normalizePage(result.page || result);
             state.selectedBlockId = state.page.blocks[0]?._id || "";
             await loadPages(state.page._id || "home");
@@ -632,7 +632,7 @@
             state.page = null;
             renderAll();
             showError(error);
-            setStatus("No se pudo cargar el Editor del Sitio desde el backend. Revisa el deploy del backend y presiona Actualizar.", "danger");
+            setStatus("No se pudo cargar el Editor del Sitio desde el backend. Esta versión usa /api/admin/editor-sitio; revisa que el backend v2.2 esté desplegado y presiona Reparar conexión.", "danger");
         }
     }
 
