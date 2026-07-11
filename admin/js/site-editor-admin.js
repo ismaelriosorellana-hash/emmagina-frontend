@@ -79,6 +79,13 @@
     function $(selector) { return document.querySelector(selector); }
     function escapeHtml(value) { return AdminUI.escapeHtml(value); }
 
+    function setStatus(message = "", type = "") {
+        const status = $("#site-editor-status");
+        if (!status) return;
+        status.textContent = message;
+        status.className = `admin-inline-status ${type}`.trim();
+    }
+
     function sortBlocks(blocks = []) {
         return [...blocks].sort((a, b) => Number(a.position || 0) - Number(b.position || 0));
     }
@@ -117,19 +124,24 @@
     }
 
     async function loadPages(preferKey = "") {
+        setStatus("Cargando páginas...", "");
         const pages = await AdminAPI.request("/admin/pages");
         state.pages = Array.isArray(pages) ? pages : [];
         renderPageList();
-        if (!state.page) {
-            const first = state.pages.find((page) => page.key === preferKey || page.slug === preferKey) || state.pages[0];
+        const currentStillExists = state.page && state.pages.some((page) => [page.key, page.slug, page._id].map(String).includes(String(activePageKey())));
+        if (!state.page || !currentStillExists || preferKey) {
+            const first = state.pages.find((page) => page.key === preferKey || page.slug === preferKey || String(page._id) === String(preferKey)) || state.pages[0];
             await loadPage(first?.key || preferKey || "home");
         }
+        setStatus("Editor conectado al backend.", "success");
     }
 
     async function loadPage(pageId = "home") {
+        setStatus("Cargando página...", "");
         state.page = normalizePage(await AdminAPI.request(`/admin/pages/${encodeURIComponent(pageId)}`));
         state.selectedBlockId = state.page.blocks[0]?._id || "";
         renderAll();
+        setStatus(`Página cargada: ${state.page.title || "Página"}.`, "success");
     }
 
     function renderPageList() {
@@ -330,7 +342,12 @@
     }
 
     async function savePage() {
-        if (!state.page) return;
+        if (!state.page) {
+            AdminUI.toast("Primero carga o crea una página.", "warning");
+            return;
+        }
+        const button = $("#site-editor-save-page");
+        const currentKey = activePageKey();
         const payload = {
             title: $("#site-editor-page-title").value.trim() || "Página",
             slug: $("#site-editor-page-slug").value.trim(),
@@ -343,10 +360,18 @@
                 description: $("#site-editor-page-seo-description").value.trim()
             }
         };
-        state.page = normalizePage(await AdminAPI.request(`/admin/pages/${encodeURIComponent(activePageKey())}`, { method: "PATCH", body: payload }));
-        await loadPages(activePageKey());
-        AdminUI.toast("Página guardada.", "success");
-        renderAll();
+        try {
+            if (button) button.disabled = true;
+            setStatus("Guardando página...", "");
+            const saved = await AdminAPI.request(`/admin/pages/${encodeURIComponent(currentKey)}`, { method: "PATCH", body: payload });
+            state.page = normalizePage(saved);
+            await loadPages(state.page.key || state.page.slug || currentKey);
+            AdminUI.toast("Página guardada.", "success");
+            setStatus("Página guardada correctamente. Los cambios visibles de la Home se hacen desde cada bloque.", "success");
+            renderAll();
+        } finally {
+            if (button) button.disabled = false;
+        }
     }
 
     async function createPage() {
@@ -504,7 +529,7 @@
     }
 
     function bindEvents() {
-        $("#site-editor-refresh")?.addEventListener("click", () => loadPage(activePageKey()).catch(showError));
+        $("#site-editor-refresh")?.addEventListener("click", () => loadPages(activePageKey()).catch(showError));
         $("#site-editor-save-page")?.addEventListener("click", () => savePage().catch(showError));
         $("#site-editor-new-page")?.addEventListener("click", () => createPage().catch(showError));
         $("#site-editor-delete-page")?.addEventListener("click", () => deletePage().catch(showError));
@@ -571,15 +596,22 @@
 
     function showError(error) {
         console.error(error);
-        AdminUI.toast(error.message || "No fue posible completar la acción.", "danger");
+        const status = error?.status ? `Error ${error.status}: ` : "";
+        const message = `${status}${error.message || "No fue posible completar la acción."}`;
+        setStatus(message, "danger");
+        AdminUI.toast(message, "danger");
     }
 
     async function init() {
+        bindEvents();
         try {
             await loadPages("home");
-            bindEvents();
         } catch (error) {
+            state.pages = [];
+            state.page = null;
+            renderAll();
             showError(error);
+            setStatus("No se pudo cargar el Editor del Sitio desde el backend. Revisa el deploy del backend y presiona Actualizar.", "danger");
         }
     }
 

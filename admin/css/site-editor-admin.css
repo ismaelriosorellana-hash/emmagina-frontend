@@ -115,3 +115,12 @@
         min-height: auto;
     }
 }
+
+.admin-inline-status {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--admin-muted, #706570);
+}
+.admin-inline-status.success { color: #217346; font-weight: 700; }
+.admin-inline-status.danger { color: #b42318; font-weight: 700; }
+.admin-inline-status.warning { color: #8a5a00; font-weight: 700; }
