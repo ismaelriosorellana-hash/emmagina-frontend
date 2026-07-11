@@ -1596,3 +1596,27 @@ body[data-admin-page="productos"] .admin-product-callout {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* v4.6.1 - Productos: pestaña Ficha de venta visible y campos clave destacados */
+.admin-product-tabs {
+    flex-wrap: wrap;
+    align-items: center;
+    max-height: none;
+}
+.admin-product-tab-sale {
+    border-color: rgba(251, 133, 0, 0.35);
+    background: rgba(255, 183, 3, 0.13);
+    color: #023047;
+}
+.admin-product-tab-sale.active {
+    border-color: rgba(251, 133, 0, 0.6);
+    background: rgba(251, 133, 0, 0.18);
+    color: #023047;
+}
+.admin-field-highlight {
+    border: 1px solid rgba(33, 158, 188, 0.22);
+    background: rgba(234, 244, 248, 0.68);
+    border-radius: 14px;
+    padding: 12px;
+}

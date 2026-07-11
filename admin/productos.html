@@ -8,10 +8,10 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Productos | Emmagina</title>
     <link rel="icon" href="../assets/emmagina-logo.svg">
-    <link rel="stylesheet" href="css/admin.css?v=4.6.0">
+    <link rel="stylesheet" href="css/admin.css?v=4.6.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="css/admin-experience-v327.css?v=4.6.0">
-    <link rel="stylesheet" href="../css/mobile-polish-v3370.css?v=4.6.0">
+    <link rel="stylesheet" href="css/admin-experience-v327.css?v=4.6.1">
+    <link rel="stylesheet" href="../css/mobile-polish-v3370.css?v=4.6.1">
 </head>
 <body data-admin-page="productos" data-admin-title="Productos">
     <section id="admin-page-content">
@@ -86,9 +86,9 @@
                             <i class="fa-solid fa-magnifying-glass"></i>
                             SEO
                         </button>
-                        <button class="admin-product-tab" type="button" role="tab" aria-selected="false" data-product-tab="pdp">
-                            <i class="fa-solid fa-window-maximize"></i>
-                            Ficha venta
+                        <button class="admin-product-tab admin-product-tab-sale" type="button" role="tab" aria-selected="false" data-product-tab="pdp">
+                            <i class="fa-solid fa-store"></i>
+                            Ficha de venta
                         </button>
                         <button class="admin-product-tab" type="button" role="tab" aria-selected="false" data-product-tab="personalizacion">
                             <i class="fa-solid fa-wand-magic-sparkles"></i>
@@ -116,6 +116,12 @@
                                 <div class="admin-field full">
                                     <label for="product-name">Nombre del producto</label>
                                     <input id="product-name" required maxlength="180" autocomplete="off">
+                                </div>
+
+                                <div class="admin-field full admin-field-highlight">
+                                    <label for="product-short-description">Descripción corta para tarjetas y ficha</label>
+                                    <textarea id="product-short-description" rows="3" maxlength="360" placeholder="Resumen comercial breve: qué es, para quién sirve y qué lo hace especial."></textarea>
+                                    <small>Este campo aparece en tarjetas y al inicio de la ficha pública del producto.</small>
                                 </div>
 
                                 <div class="admin-field">
@@ -197,11 +203,6 @@
                                     <small>Separa por coma o por línea. Se permiten letras, números y guiones para rangos.</small>
                                 </div>
 
-                                <div class="admin-field full">
-                                    <label for="product-short-description">Descripción corta para tarjetas y ficha</label>
-                                    <textarea id="product-short-description" rows="3" maxlength="360" placeholder="Resumen comercial breve: qué es, para quién sirve y qué lo hace especial."></textarea>
-                                    <small>Se usa en tarjetas de producto y al inicio de la ficha.</small>
-                                </div>
 
                                 <div class="admin-field full">
                                     <label for="product-description">Descripción completa</label>
@@ -488,10 +489,10 @@
         </div>
     </section>
 
-    <script src="../js/config.js?v=4.6.0"></script>
-    <script src="js/admin-api.js?v=4.6.0"></script>
-    <script src="js/admin-common.js?v=4.6.0"></script>
-    <script src="js/admin-experience-v327.js?v=4.6.0"></script>
-    <script src="js/products-admin.js?v=4.6.0"></script>
+    <script src="../js/config.js?v=4.6.1"></script>
+    <script src="js/admin-api.js?v=4.6.1"></script>
+    <script src="js/admin-common.js?v=4.6.1"></script>
+    <script src="js/admin-experience-v327.js?v=4.6.1"></script>
+    <script src="js/products-admin.js?v=4.6.1"></script>
 </body>
 </html>

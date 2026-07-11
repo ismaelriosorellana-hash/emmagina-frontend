@@ -9,6 +9,7 @@ const PRODUCT_TAB_LABELS = Object.freeze({
     general: "Información general",
     logistica: "Logística y despacho",
     seo: "SEO del producto",
+    pdp: "Ficha venta",
     personalizacion: "Personalización",
     variantes: "Variantes"
 });
