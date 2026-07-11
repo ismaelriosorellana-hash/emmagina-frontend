@@ -16,5 +16,5 @@ Qué validar después del deploy:
 
 Comandos:
 git add .
-git commit -m "Emmagina frontend v3.4 editor del sitio clean"
+git commit -m "Emmagina frontend v3.4 editor del sitio estable"
 git push
