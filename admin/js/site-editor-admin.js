@@ -103,7 +103,7 @@
     }
 
     function activePageKey() {
-        return state.page?.key || state.page?.slug || state.page?._id || "home";
+        return state.page?._id || state.page?.key || state.page?.slug || "home";
     }
 
     function getSelectedBlock() {
@@ -156,7 +156,7 @@
             const active = [page.key, page.slug, page._id].map(String).includes(String(current)) ? " active" : "";
             const status = page.isPublished === false ? "Borrador" : "Publicada";
             const system = page.isSystem ? " · Sistema" : "";
-            return `<button class="site-editor-page-item${active}" type="button" data-page-key="${escapeHtml(page.key || page.slug || page._id)}">
+            return `<button class="site-editor-page-item${active}" type="button" data-page-key="${escapeHtml(page._id || page.key || page.slug)}">
                 <strong>${escapeHtml(page.title || page.key || "Página")}</strong>
                 <span>/${escapeHtml(page.slug || page.key || "")} · ${escapeHtml(status)}${escapeHtml(system)} · ${Number(page.blocksCount || 0)} bloques</span>
             </button>`;
@@ -365,7 +365,7 @@
             setStatus("Guardando página...", "");
             const saved = await AdminAPI.request(`/admin/pages/${encodeURIComponent(currentKey)}`, { method: "PATCH", body: payload });
             state.page = normalizePage(saved);
-            await loadPages(state.page.key || state.page.slug || currentKey);
+            await loadPages(state.page._id || state.page.key || state.page.slug || currentKey);
             AdminUI.toast("Página guardada.", "success");
             setStatus("Página guardada correctamente. Los cambios visibles de la Home se hacen desde cada bloque.", "success");
             renderAll();
@@ -389,7 +389,7 @@
         });
         state.page = normalizePage(page);
         state.selectedBlockId = state.page.blocks[0]?._id || "";
-        await loadPages(state.page.key);
+        await loadPages(state.page._id || state.page.key);
         AdminUI.toast("Página creada como borrador.", "success");
         renderAll();
     }
@@ -528,8 +528,27 @@
         AdminUI.toast("Imagen subida. Guarda el bloque para aplicar el cambio.", "success");
     }
 
+
+    async function repairEditor() {
+        const button = $("#site-editor-repair");
+        try {
+            if (button) button.disabled = true;
+            setStatus("Reparando conexión del Editor del Sitio...", "");
+            const result = await AdminAPI.request("/admin/pages/_repair", { method: "POST", body: {} });
+            state.page = normalizePage(result.page || result);
+            state.selectedBlockId = state.page.blocks[0]?._id || "";
+            await loadPages(state.page._id || "home");
+            AdminUI.toast("Editor del Sitio reparado y sincronizado.", "success");
+            setStatus("Editor del Sitio reparado y conectado.", "success");
+            renderAll();
+        } finally {
+            if (button) button.disabled = false;
+        }
+    }
+
     function bindEvents() {
         $("#site-editor-refresh")?.addEventListener("click", () => loadPages(activePageKey()).catch(showError));
+        $("#site-editor-repair")?.addEventListener("click", () => repairEditor().catch(showError));
         $("#site-editor-save-page")?.addEventListener("click", () => savePage().catch(showError));
         $("#site-editor-new-page")?.addEventListener("click", () => createPage().catch(showError));
         $("#site-editor-delete-page")?.addEventListener("click", () => deletePage().catch(showError));
@@ -597,7 +616,9 @@
     function showError(error) {
         console.error(error);
         const status = error?.status ? `Error ${error.status}: ` : "";
-        const message = `${status}${error.message || "No fue posible completar la acción."}`;
+        let detail = "";
+        if (error?.details?.requestId) detail = ` · ID: ${error.details.requestId}`;
+        const message = `${status}${error.message || "No fue posible completar la acción."}${detail}`;
         setStatus(message, "danger");
         AdminUI.toast(message, "danger");
     }

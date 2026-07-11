@@ -1,0 +1,20 @@
+EMMAGINA FRONTEND v3.4.0 - EDITOR DEL SITIO CLEAN
+
+Objetivo:
+- Dejar un solo módulo central de control visual: Editor del Sitio.
+- Redirigir Banners, Contenido, Apariencia, Categorías y Modo Dios al Editor del Sitio.
+- Mejorar mensajes de error y botón de reparación del Editor.
+- Usar IDs internos de página para guardar, evitando problemas si cambia slug o título.
+
+Qué validar después del deploy:
+1. Entrar a /admin/editor-sitio.html.
+2. Ver solo Editor del Sitio como módulo central de control visual.
+3. Presionar Actualizar.
+4. Cambiar un dato general y presionar Guardar página.
+5. Seleccionar Hero principal, cambiar título y presionar Guardar bloque.
+6. Abrir la Home pública y recargar con Ctrl + Shift + R.
+
+Comandos:
+git add .
+git commit -m "Emmagina frontend v3.4 editor del sitio clean"
+git push
