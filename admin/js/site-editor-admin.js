@@ -1,7 +1,7 @@
 "use strict";
 
 (function () {
-    const VERSION = "4.1.0";
+    const VERSION = "4.2.0";
 
     const state = {
         pages: [],
@@ -555,7 +555,7 @@
             return `<section class="site-editor-layer-section${activeSection}" data-section-id="${escapeHtml(sectionId)}">
                 <header class="site-editor-layer-section-head" data-select-section="${escapeHtml(sectionId)}">
                     <div class="site-editor-layer-title"><span class="site-editor-icon"><i class="fa-solid ${escapeHtml(meta.icon)}"></i></span><div><strong>${sectionIndex + 1}. ${escapeHtml(section.name || meta.label)}</strong><span>${escapeHtml(meta.label)} · ${blocks.length} bloques ${section.isVisible === false ? "· Oculta" : ""}</span></div></div>
-                    <div class="pagebuilder-block-actions"><button class="pagebuilder-mini-button" type="button" data-section-move="up" data-section-id="${escapeHtml(sectionId)}" title="Subir sección">↑</button><button class="pagebuilder-mini-button" type="button" data-section-move="down" data-section-id="${escapeHtml(sectionId)}" title="Bajar sección">↓</button></div>
+                    <div class="pagebuilder-block-actions section-actions"><button class="pagebuilder-mini-button" type="button" data-section-move="up" data-section-id="${escapeHtml(sectionId)}" title="Subir sección"><i class="fa-solid fa-arrow-up"></i></button><button class="pagebuilder-mini-button" type="button" data-section-move="down" data-section-id="${escapeHtml(sectionId)}" title="Bajar sección"><i class="fa-solid fa-arrow-down"></i></button><button class="pagebuilder-mini-button" type="button" data-duplicate-section="${escapeHtml(sectionId)}" title="Duplicar sección"><i class="fa-regular fa-copy"></i></button><button class="pagebuilder-mini-button" type="button" data-toggle-section="${escapeHtml(sectionId)}" title="Mostrar / ocultar sección"><i class="fa-solid ${section.isVisible === false ? "fa-eye" : "fa-eye-slash"}"></i></button></div>
                 </header>
                 <div class="site-editor-layer-blocks">
                     ${blocks.map((block, blockIndex) => {
@@ -564,7 +564,7 @@
                         const active = id === String(state.selectedBlockId) ? " active" : "";
                         return `<article class="pagebuilder-block-item${active}" draggable="true" data-block-id="${escapeHtml(id)}" data-section-id="${escapeHtml(sectionId)}">
                             <div class="pagebuilder-block-main"><span class="site-editor-icon soft"><i class="fa-solid ${escapeHtml(blockInfo.icon)}"></i></span><div><strong>${escapeHtml(block.name || blockInfo.short || blockInfo.label)}</strong><span>${blockIndex + 1}. ${escapeHtml(blockInfo.short || blockInfo.label)} ${block.isVisible === false ? "· Oculto" : ""}</span></div></div>
-                            <div class="pagebuilder-block-actions"><button class="pagebuilder-mini-button" type="button" data-move="up" data-block-id="${escapeHtml(id)}">↑</button><button class="pagebuilder-mini-button" type="button" data-move="down" data-block-id="${escapeHtml(id)}">↓</button></div>
+                            <div class="pagebuilder-block-actions block-actions"><button class="pagebuilder-mini-button" type="button" data-move="up" data-block-id="${escapeHtml(id)}" title="Subir bloque"><i class="fa-solid fa-arrow-up"></i></button><button class="pagebuilder-mini-button" type="button" data-move="down" data-block-id="${escapeHtml(id)}" title="Bajar bloque"><i class="fa-solid fa-arrow-down"></i></button><button class="pagebuilder-mini-button" type="button" data-duplicate-block="${escapeHtml(id)}" title="Duplicar bloque"><i class="fa-regular fa-copy"></i></button><button class="pagebuilder-mini-button" type="button" data-toggle-block="${escapeHtml(id)}" title="Mostrar / ocultar bloque"><i class="fa-solid ${block.isVisible === false ? "fa-eye" : "fa-eye-slash"}"></i></button></div>
                         </article>`;
                     }).join("") || `<div class="admin-empty small">Sin bloques.</div>`}
                     <button class="admin-button secondary small site-editor-add-block-to-section" type="button" data-add-block-section="${escapeHtml(sectionId)}"><i class="fa-solid fa-plus"></i> Agregar bloque aquí</button>
@@ -683,7 +683,9 @@
             return;
         }
         const meta = sectionMeta(section.type);
-        root.innerHTML = `<details class="site-editor-section-details" open><summary><span><i class="fa-solid ${escapeHtml(meta.icon)}"></i> Sección seleccionada</span></summary>
+        const hasSelectedBlock = Boolean(getSelectedBlock());
+        const openAttr = hasSelectedBlock ? "" : " open";
+        root.innerHTML = `<details class="site-editor-section-details"${openAttr}><summary><span><i class="fa-solid ${escapeHtml(meta.icon)}"></i> Sección: ${escapeHtml(section.name || meta.label)}</span></summary>
             <div class="site-editor-style-panel slim">
                 <div class="admin-form-grid one">
                     <div class="admin-field"><label for="section-name">Nombre de sección</label><input id="section-name" value="${escapeHtml(section.name || "")}"></div>
@@ -691,7 +693,7 @@
                     <div class="admin-field"><label for="section-layout">Distribución</label><select id="section-layout"><option value="stack" ${section.layout === "stack" ? "selected" : ""}>Apilado vertical</option><option value="hero_with_sidebar" ${section.layout === "hero_with_sidebar" ? "selected" : ""}>Hero con lateral</option><option value="grid" ${section.layout === "grid" ? "selected" : ""}>Grilla</option></select></div>
                     <div class="admin-field"><label for="section-visible">Visibilidad</label><select id="section-visible"><option value="true" ${section.isVisible !== false ? "selected" : ""}>Visible</option><option value="false" ${section.isVisible === false ? "selected" : ""}>Oculta</option></select></div>
                 </div>
-                <div class="admin-actions-row compact"><button class="admin-button secondary small" id="site-editor-save-section" type="button">Guardar sección</button><button class="admin-button danger small" id="site-editor-delete-section" type="button">Eliminar sección</button></div>
+                <div class="admin-actions-row compact"><button class="admin-button secondary small" id="site-editor-save-section" type="button">Guardar sección</button><button class="admin-button secondary small" id="site-editor-duplicate-section" type="button"><i class="fa-regular fa-copy"></i> Duplicar</button><button class="admin-button danger small" id="site-editor-delete-section" type="button">Eliminar</button></div>
             </div>
         </details>`;
     }
@@ -875,6 +877,99 @@
         state.selectedSectionId = data.block?.sectionId || sectionId;
         state.selectedBlockId = data.block?._id || data.block?.id || "";
         AdminUI.toast("Bloque agregado.", "success");
+        renderAll();
+    }
+
+
+    function cleanForDuplicate(value) {
+        if (Array.isArray(value)) return value.map(cleanForDuplicate);
+        if (!value || typeof value !== "object") return value;
+        const result = {};
+        Object.entries(value).forEach(([key, item]) => {
+            if (["_id", "id", "sectionId", "createdAt", "updatedAt"].includes(key)) return;
+            result[key] = cleanForDuplicate(item);
+        });
+        return result;
+    }
+
+    async function duplicateBlock(blockId = state.selectedBlockId) {
+        const block = flattenBlocks().find((item) => idOf(item) === String(blockId));
+        if (!block || !state.page) return;
+        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/blocks`, {
+            method: "POST",
+            body: {
+                sectionId: block.sectionId || state.selectedSectionId,
+                type: normalizeType(block.type),
+                name: `Copia de ${block.name || blockLabel(block.type)}`,
+                position: 999,
+                isVisible: block.isVisible !== false,
+                content: cleanForDuplicate(block.content || {}),
+                style: cleanForDuplicate(block.style || {}),
+                settings: cleanForDuplicate(block.settings || {})
+            }
+        });
+        state.page = normalizePage(data.page);
+        state.selectedSectionId = data.block?.sectionId || block.sectionId || state.selectedSectionId;
+        state.selectedBlockId = data.block?._id || data.block?.id || "";
+        AdminUI.toast("Bloque duplicado como borrador.", "success");
+        renderAll();
+    }
+
+    async function duplicateSection(sectionId = state.selectedSectionId) {
+        const section = (state.page?.sections || []).find((item) => idOf(item) === String(sectionId));
+        if (!section || !state.page) return;
+        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/sections`, {
+            method: "POST",
+            body: {
+                type: normalizeType(section.type, "generic_section"),
+                name: `Copia de ${section.name || sectionLabel(section.type)}`,
+                layout: section.layout || "stack",
+                isVisible: section.isVisible !== false,
+                content: cleanForDuplicate(section.content || {}),
+                style: cleanForDuplicate(section.style || {}),
+                settings: cleanForDuplicate(section.settings || {}),
+                blocks: (section.blocks || []).map((block, index) => ({
+                    type: normalizeType(block.type),
+                    name: block.name || blockLabel(block.type),
+                    position: index + 1,
+                    isVisible: block.isVisible !== false,
+                    content: cleanForDuplicate(block.content || {}),
+                    style: cleanForDuplicate(block.style || {}),
+                    settings: cleanForDuplicate(block.settings || {})
+                }))
+            }
+        });
+        state.page = normalizePage(data.page);
+        state.selectedSectionId = data.section?._id || data.section?.id || idOf(state.page.sections.at(-1)) || "";
+        state.selectedBlockId = idOf(getSelectedSection()?.blocks?.[0]) || "";
+        AdminUI.toast("Sección duplicada como borrador.", "success");
+        renderAll();
+    }
+
+    async function toggleBlockVisibility(blockId) {
+        const block = flattenBlocks().find((item) => idOf(item) === String(blockId));
+        if (!block || !state.page) return;
+        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/blocks/${encodeURIComponent(idOf(block))}`, {
+            method: "PATCH",
+            body: { sectionId: block.sectionId || state.selectedSectionId, isVisible: block.isVisible === false }
+        });
+        state.page = normalizePage(data.page);
+        state.selectedSectionId = data.block?.sectionId || block.sectionId || state.selectedSectionId;
+        state.selectedBlockId = data.block?._id || idOf(block);
+        AdminUI.toast(block.isVisible === false ? "Bloque visible." : "Bloque oculto.", "success");
+        renderAll();
+    }
+
+    async function toggleSectionVisibility(sectionId) {
+        const section = (state.page?.sections || []).find((item) => idOf(item) === String(sectionId));
+        if (!section || !state.page) return;
+        const data = await AdminAPI.request(`/admin/editor-sitio/pages/${encodeURIComponent(activePageKey())}/sections/${encodeURIComponent(idOf(section))}`, {
+            method: "PATCH",
+            body: { isVisible: section.isVisible === false }
+        });
+        state.page = normalizePage(data.page);
+        state.selectedSectionId = data.section?._id || idOf(section);
+        AdminUI.toast(section.isVisible === false ? "Sección visible." : "Sección oculta.", "success");
         renderAll();
     }
 
@@ -1062,6 +1157,7 @@
         $("#site-editor-add-block")?.addEventListener("click", () => addBlock().catch(showError));
         $("#site-editor-block-form")?.addEventListener("submit", (event) => saveBlock(event).catch(showError));
         $("#site-editor-delete-block")?.addEventListener("click", () => deleteBlock().catch(showError));
+        $("#site-editor-duplicate-block")?.addEventListener("click", () => duplicateBlock().catch(showError));
         $("#block-type")?.addEventListener("change", refreshCurrentBlockFieldsForType);
 
         document.addEventListener("click", async (event) => {
@@ -1071,6 +1167,16 @@
             if (saveSectionButton) { await saveSection().catch(showError); return; }
             const deleteSectionButton = event.target.closest("#site-editor-delete-section");
             if (deleteSectionButton) { await deleteSection().catch(showError); return; }
+            const duplicateSectionButton = event.target.closest("#site-editor-duplicate-section");
+            if (duplicateSectionButton) { await duplicateSection().catch(showError); return; }
+            const duplicateSectionLayer = event.target.closest("[data-duplicate-section]");
+            if (duplicateSectionLayer) { await duplicateSection(duplicateSectionLayer.dataset.duplicateSection).catch(showError); return; }
+            const toggleSectionLayer = event.target.closest("[data-toggle-section]");
+            if (toggleSectionLayer) { await toggleSectionVisibility(toggleSectionLayer.dataset.toggleSection).catch(showError); return; }
+            const duplicateBlockLayer = event.target.closest("[data-duplicate-block]");
+            if (duplicateBlockLayer) { await duplicateBlock(duplicateBlockLayer.dataset.duplicateBlock).catch(showError); return; }
+            const toggleBlockLayer = event.target.closest("[data-toggle-block]");
+            if (toggleBlockLayer) { await toggleBlockVisibility(toggleBlockLayer.dataset.toggleBlock).catch(showError); return; }
             const addRow = event.target.closest("[data-add-row]");
             if (addRow) { appendRepeaterRow(addRow.dataset.addRow); return; }
             const removeRow = event.target.closest("[data-remove-row]");
@@ -1135,7 +1241,7 @@
             state.page = null;
             renderPageList();
             showError(error);
-            setStatus("No se pudo cargar el Editor del Sitio. Verifica que el backend v2.7 esté desplegado y presiona Reparar conexión.", "danger");
+            setStatus("No se pudo cargar el Editor del Sitio. Verifica que el backend v2.8 esté desplegado y presiona Reparar conexión.", "danger");
         }
         console.info(`Editor del Sitio ${VERSION} cargado`);
     }
