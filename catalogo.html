@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Catálogo de productos impresos en 3D de Rhema Diseños.">
-  <meta name="theme-color" content="#f8f6f1">
+  <meta name="description" content="Tienda de Rhema Diseños: productos impresos en 3D, figuras, decoración, librería y servicio de impresión a pedido.">
+  <meta name="theme-color" content="#EAF4F8">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=5.0.0">
-  <link rel="stylesheet" href="css/layout.css?v=5.0.0">
-  <link rel="stylesheet" href="css/components.css?v=5.0.0">
-  <link rel="stylesheet" href="css/home.css?v=5.0.0">
-  <link rel="stylesheet" href="css/catalog.css?v=5.0.0">
-  <link rel="stylesheet" href="css/product.css?v=5.0.0">
-  <link rel="stylesheet" href="css/pages.css?v=5.0.0">
-  <title>Catálogo | Rhema Diseños</title>
+  <link rel="stylesheet" href="css/base.css?v=5.1.0">
+  <link rel="stylesheet" href="css/layout.css?v=5.1.0">
+  <link rel="stylesheet" href="css/components.css?v=5.1.0">
+  <link rel="stylesheet" href="css/home.css?v=5.1.0">
+  <link rel="stylesheet" href="css/catalog.css?v=5.1.0">
+  <link rel="stylesheet" href="css/product.css?v=5.1.0">
+  <link rel="stylesheet" href="css/pages.css?v=5.1.0">
+  <title>Tienda | Rhema Diseños</title>
 </head>
 <body>
   <a href="#main" class="skip-link">Saltar al contenido</a>
@@ -29,7 +29,7 @@
           <span aria-hidden="true">🔎</span><span>Buscar</span>
         </button>
         <a class="brand" href="index.html" aria-label="Ir al inicio de Rhema Diseños">
-          <strong>Rhema Diseños</strong><small>Diseños 3D</small>
+          <strong>Rhema Diseños</strong><small>Impresión 3D · regalos · soluciones</small>
         </a>
         <div class="header-actions" aria-label="Acciones de usuario">
           <button class="icon-button mobile-menu-button" type="button" data-mobile-menu aria-expanded="false" aria-controls="main-nav">Menú</button>
@@ -39,7 +39,7 @@
       </div>
       <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
-        <a href="catalogo.html">Tienda</a>
+        <a href="catalogo.html" aria-current="page">Tienda</a>
         <a href="pedido-personalizado.html">Crea tu Figura</a>
         <a href="quienes-somos.html">Sobre Nosotros</a>
         <a href="preguntas-frecuentes.html">Preguntas Frecuentes</a>
@@ -47,6 +47,7 @@
       </nav>
     </div>
   </header>
+
   <section class="search-panel" data-search-panel aria-label="Buscador" aria-hidden="true">
     <div class="search-box" role="search">
       <form action="catalogo.html" method="get">
@@ -57,34 +58,106 @@
       <button class="btn btn-soft search-close" type="button" data-close-search>Cerrar</button>
     </div>
   </section>
-  <main id="main">
-    <header class="content-hero catalog-hero">
-      <p class="kicker">Tienda</p>
-      <h1>Catálogo Rhema Diseños</h1>
-      <p>Explora productos impresos en 3D, piezas a pedido, regalos y decoración para el hogar.</p>
-    </header>
-    <section class="section catalog-section" aria-label="Listado de productos">
-      <form class="catalog-tools" role="search" onsubmit="return false;">
-        <label class="sr-only" for="catalog-search">Buscar en catálogo</label>
-        <input id="catalog-search" class="sort-select" data-catalog-search placeholder="Buscar en el catálogo...">
-        <label class="sr-only" for="catalog-sort">Ordenar productos</label>
-        <select id="catalog-sort" class="sort-select" data-catalog-sort>
-          <option value="orden">Orden recomendado</option>
-          <option value="destacados">Destacados primero</option>
-          <option value="precio-menor">Precio menor</option>
-          <option value="precio-mayor">Precio mayor</option>
-          <option value="nombre">Nombre</option>
-        </select>
-      </form>
-      <nav class="filter-row" data-catalog-filters aria-label="Filtros de categoría"></nav>
-      <div class="product-grid" data-catalog-grid></div>
+
+  <main id="main" class="catalog-page">
+    <section class="store-hero" aria-label="Tienda Rhema Diseños">
+      <div class="store-hero-copy">
+        <p class="kicker">Tienda 3D</p>
+        <h1>Compra productos listos o pide algo hecho para ti.</h1>
+        <p>Encuentra regalos, decoración, piezas útiles y diseños personalizados fabricados en impresión 3D.</p>
+        <div class="store-hero-actions">
+          <a class="btn btn-primary" href="#catalog-list">Ver productos</a>
+          <a class="btn btn-buy" href="pedido-personalizado.html">Cotizar impresión 3D</a>
+        </div>
+      </div>
+      <aside class="store-hero-card" aria-label="Opciones de compra">
+        <strong>¿Qué necesitas hoy?</strong>
+        <a href="catalogo.html?segmento=listos">Productos listos para comprar</a>
+        <a href="pedido-personalizado.html">Servicio de impresión a pedido</a>
+        <a href="pedido-personalizado.html?tipo=retrato">Crea tu Figura / Retrato 3D</a>
+      </aside>
+    </section>
+
+    <section class="store-paths" aria-label="Formas de comprar">
+      <article>
+        <span aria-hidden="true">🛍️</span>
+        <h2>Productos listos</h2>
+        <p>Diseños del catálogo para regalar, decorar o usar en escritorio.</p>
+      </article>
+      <article>
+        <span aria-hidden="true">🧩</span>
+        <h2>Impresión a pedido</h2>
+        <p>Envía tu archivo, idea o referencia y revisamos factibilidad.</p>
+      </article>
+      <article>
+        <span aria-hidden="true">💛</span>
+        <h2>Figuras y recuerdos</h2>
+        <p>Retratos, escenas familiares y detalles personalizados con sentido.</p>
+      </article>
+    </section>
+
+    <section class="catalog-section" id="catalog-list" aria-label="Listado de productos">
+      <div class="catalog-layout">
+        <aside class="catalog-sidebar" aria-label="Filtros de tienda">
+          <div class="sidebar-card sidebar-search">
+            <label for="catalog-search">Buscar en tienda</label>
+            <input id="catalog-search" data-catalog-search placeholder="Ej. llavero, figura, macetero...">
+          </div>
+
+          <div class="sidebar-card">
+            <div class="sidebar-head">
+              <strong>Categorías</strong>
+              <button type="button" data-clear-category>Ver todo</button>
+            </div>
+            <nav class="category-filter-list" data-catalog-categories aria-label="Categorías de productos"></nav>
+          </div>
+
+          <div class="sidebar-card sidebar-help">
+            <strong>¿No encuentras lo que buscas?</strong>
+            <p>Podemos revisar tu idea, archivo o referencia y cotizar una impresión personalizada.</p>
+            <a class="btn btn-buy btn-small" href="pedido-personalizado.html">Solicitar cotización</a>
+          </div>
+        </aside>
+
+        <div class="catalog-content">
+          <div class="catalog-topbar">
+            <div>
+              <p class="kicker">Catálogo</p>
+              <h2 data-catalog-title>Todos los productos</h2>
+              <p data-catalog-count>Preparando productos...</p>
+            </div>
+            <label class="sort-control">
+              <span>Ordenar</span>
+              <select id="catalog-sort" data-catalog-sort>
+                <option value="orden">Recomendado</option>
+                <option value="destacados">Destacados primero</option>
+                <option value="precio-menor">Precio menor</option>
+                <option value="precio-mayor">Precio mayor</option>
+                <option value="nombre">Nombre</option>
+              </select>
+            </label>
+          </div>
+
+          <nav class="intent-filters" data-catalog-segments aria-label="Filtros rápidos">
+            <button type="button" class="intent-chip is-active" data-segment="todos">Todo</button>
+            <button type="button" class="intent-chip" data-segment="listos">Listos para comprar</button>
+            <button type="button" class="intent-chip" data-segment="pedido">A pedido</button>
+            <button type="button" class="intent-chip" data-segment="premium">Retratos / Premium</button>
+            <button type="button" class="intent-chip" data-segment="servicio">Servicio 3D</button>
+          </nav>
+
+          <div class="active-filters" data-active-filters hidden></div>
+          <div class="product-grid catalog-product-grid" data-catalog-grid></div>
+        </div>
+      </div>
     </section>
   </main>
+
   <footer class="site-footer">
     <div class="footer-inner">
       <section class="footer-col" aria-label="Marca">
         <h2 class="footer-brand">Rhema Diseños</h2>
-        <p>Productos impresos en 3D, figuras personalizadas y decoraciones pensadas para regalar, crear y recordar.</p>
+        <p>Productos impresos en 3D, figuras personalizadas y soluciones fabricadas para regalar, crear y resolver.</p>
       </section>
       <nav class="footer-col" aria-label="Tienda">
         <h3>Tienda</h3>
@@ -112,12 +185,12 @@
       <span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span>
     </div>
   </footer>
-  <script src="js/config.js?v=5.0.0"></script>
-  <script src="js/emmagina-data.js?v=5.0.0"></script>
-  <script src="js/emmagina-api.js?v=5.0.0"></script>
-  <script src="js/emmagina-cart.js?v=5.0.0"></script>
-  <script src="js/emmagina-ui.js?v=5.0.0"></script>
-  <script src="js/emmagina-common.js?v=5.0.0"></script>
-  <script src="js/emmagina-catalog.js?v=5.0.0"></script>
+  <script src="js/config.js?v=5.1.0"></script>
+  <script src="js/emmagina-data.js?v=5.1.0"></script>
+  <script src="js/emmagina-api.js?v=5.1.0"></script>
+  <script src="js/emmagina-cart.js?v=5.1.0"></script>
+  <script src="js/emmagina-ui.js?v=5.1.0"></script>
+  <script src="js/emmagina-common.js?v=5.1.0"></script>
+  <script src="js/emmagina-catalog.js?v=5.1.0"></script>
 </body>
 </html>
