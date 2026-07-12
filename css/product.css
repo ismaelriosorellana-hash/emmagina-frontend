@@ -76,3 +76,23 @@
   .pdp-content-grid { grid-template-columns: 1fr; }
   .pdp-delivery-grid, .pdp-spec-grid { grid-template-columns: 1fr; }
 }
+
+/* V5.7.1 · Corrección de superposición en la ficha de producto */
+.product-detail-root {
+  width: 100%;
+  min-width: 0;
+  display: block;
+}
+.product-detail-root > .pdp-shell,
+.product-detail-root > .pdp-content-grid,
+.product-detail-root > .pdp-related {
+  position: relative;
+  z-index: 1;
+}
+.pdp-shell > *,
+.pdp-content-grid > * {
+  min-width: 0;
+}
+.pdp-buy-panel {
+  overflow-wrap: anywhere;
+}
