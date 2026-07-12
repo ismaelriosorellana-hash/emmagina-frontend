@@ -1682,3 +1682,176 @@ body[data-admin-page="productos"] .admin-product-tab-sale.active {
         top: 76px;
     }
 }
+
+/* Rhema v5.4 solicitudes: cotización, notas y conversión */
+.admin-modal-panel:has(#request-detail) {
+    width: min(1180px, calc(100vw - 28px));
+    max-height: calc(100vh - 28px);
+    display: flex;
+    flex-direction: column;
+}
+
+#request-detail {
+    overflow: auto;
+    padding-right: 4px;
+}
+
+.request-detail-layout {
+    display: grid;
+    grid-template-columns: minmax(240px, 310px) minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.request-detail-side {
+    display: grid;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+}
+
+.request-detail-main {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+}
+
+.request-card {
+    border: 1px solid rgba(2, 48, 71, .1);
+    border-radius: 18px;
+    box-shadow: 0 12px 28px rgba(2, 48, 71, .07);
+}
+
+.request-card.compact .admin-card-body {
+    display: grid;
+    gap: 8px;
+}
+
+.request-project-grid,
+.request-quote-grid,
+.request-convert-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.request-project-grid .full,
+.request-quote-grid .full,
+.request-convert-grid .full {
+    grid-column: 1 / -1;
+}
+
+.request-quote-grid label,
+.request-convert-grid label,
+.request-card label {
+    display: grid;
+    gap: 7px;
+    color: #023047;
+    font-weight: 700;
+}
+
+.request-quote-grid input,
+.request-quote-grid textarea,
+.request-convert-grid input,
+.request-convert-grid textarea,
+.request-convert-grid select,
+#request-new-note {
+    width: 100%;
+    border: 1px solid rgba(2, 48, 71, .18);
+    border-radius: 14px;
+    padding: 11px 12px;
+    font: inherit;
+    color: #023047;
+    background: #fff;
+}
+
+.request-check {
+    display: flex !important;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 10px !important;
+    background: #EAF4F8;
+    border-radius: 14px;
+    padding: 12px;
+}
+
+.request-check input {
+    width: auto;
+}
+
+.compact-actions {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.request-file-list {
+    max-height: 220px;
+    overflow: auto;
+}
+
+.request-file-list a {
+    display: block;
+    padding: 8px 0;
+    color: #125373;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(2, 48, 71, .08);
+}
+
+.request-timeline {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+    max-height: 320px;
+    overflow: auto;
+}
+
+.request-timeline-item {
+    border-left: 4px solid #8ECAE6;
+    background: #EAF4F8;
+    border-radius: 14px;
+    padding: 12px 14px;
+}
+
+.request-timeline-item strong {
+    color: #023047;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-size: .78rem;
+}
+
+.request-timeline-item span {
+    display: block;
+    color: #125373;
+    font-size: .82rem;
+    margin: 3px 0 6px;
+}
+
+.request-timeline-item p,
+.request-muted {
+    margin: 0;
+    color: #125373;
+}
+
+.requests-table-pro small {
+    color: #125373;
+}
+
+@media (max-width: 920px) {
+    .request-detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .request-detail-side {
+        position: static;
+    }
+
+    .request-project-grid,
+    .request-quote-grid,
+    .request-convert-grid {
+        grid-template-columns: 1fr;
+    }
+}
