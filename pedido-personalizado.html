@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Formulario para crear una escena personalizada impresa en 3D.">
-  <meta name="theme-color" content="#f8f6f1">
+  <meta name="description" content="Crea tu figura personalizada o solicita una cotización de impresión 3D a pedido con Rhema Diseños.">
+  <meta name="theme-color" content="#EAF4F8">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=5.1.0">
-  <link rel="stylesheet" href="css/layout.css?v=5.1.0">
-  <link rel="stylesheet" href="css/components.css?v=5.1.0">
-  <link rel="stylesheet" href="css/home.css?v=5.1.0">
-  <link rel="stylesheet" href="css/catalog.css?v=5.1.0">
-  <link rel="stylesheet" href="css/product.css?v=5.1.0">
-  <link rel="stylesheet" href="css/pages.css?v=5.1.0">
-  <title>Crea tu Figura | Rhema Diseños</title>
+  <link rel="stylesheet" href="css/base.css?v=5.2.0">
+  <link rel="stylesheet" href="css/layout.css?v=5.2.0">
+  <link rel="stylesheet" href="css/components.css?v=5.2.0">
+  <link rel="stylesheet" href="css/home.css?v=5.2.0">
+  <link rel="stylesheet" href="css/catalog.css?v=5.2.0">
+  <link rel="stylesheet" href="css/product.css?v=5.2.0">
+  <link rel="stylesheet" href="css/pages.css?v=5.2.0">
+  <title>Crea tu Figura y Cotiza Impresión 3D | Rhema Diseños</title>
 </head>
 <body>
   <a href="#main" class="skip-link">Saltar al contenido</a>
@@ -29,7 +29,7 @@
           <span aria-hidden="true">🔎</span><span>Buscar</span>
         </button>
         <a class="brand" href="index.html" aria-label="Ir al inicio de Rhema Diseños">
-          <strong>Rhema Diseños</strong><small>Diseños 3D</small>
+          <strong>Rhema Diseños</strong><small>Impresión 3D · regalos · soluciones</small>
         </a>
         <div class="header-actions" aria-label="Acciones de usuario">
           <button class="icon-button mobile-menu-button" type="button" data-mobile-menu aria-expanded="false" aria-controls="main-nav">Menú</button>
@@ -40,13 +40,14 @@
       <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
         <a href="catalogo.html">Tienda</a>
-        <a href="pedido-personalizado.html">Crea tu Figura</a>
+        <a href="pedido-personalizado.html" aria-current="page">Crea tu Figura</a>
         <a href="quienes-somos.html">Sobre Nosotros</a>
         <a href="preguntas-frecuentes.html">Preguntas Frecuentes</a>
         <a href="contacto.html">Contáctanos</a>
       </nav>
     </div>
   </header>
+
   <section class="search-panel" data-search-panel aria-label="Buscador" aria-hidden="true">
     <div class="search-box" role="search">
       <form action="catalogo.html" method="get">
@@ -57,44 +58,169 @@
       <button class="btn btn-soft search-close" type="button" data-close-search>Cerrar</button>
     </div>
   </section>
-  <main id="main">
-    <header class="content-hero">
-      <p class="kicker">Personalización</p>
-      <h1>Crea tu Figura</h1>
-      <p>Cuéntanos el momento que quieres recrear y envía tus referencias para preparar una figura o escena personalizada.</p>
-    </header>
-    <section class="section form-section" aria-label="Formulario crea tu escena">
-      <article class="content-card">
-        <h2>Guía rápida</h2>
-        <ol class="step-list">
-          <li>Elige el tipo de producto o escena.</li>
-          <li>Envía 2 fotos por persona y una referencia del contexto.</li>
-          <li>Agrega frase para placa, fecha o detalle especial.</li>
-          <li>Revisaremos viabilidad antes de iniciar producción.</li>
-        </ol>
-      </article>
-      <article class="content-card">
-        <h2>Solicitud personalizada</h2>
-        <form class="form-grid" data-scene-form>
-          <div class="field"><label for="scene-name">Nombre</label><input id="scene-name" required name="nombre"></div>
-          <div class="field"><label for="scene-whatsapp">WhatsApp</label><input id="scene-whatsapp" required name="whatsapp"></div>
-          <div class="field"><label for="scene-email">Correo</label><input id="scene-email" type="email" name="correo"></div>
-          <div class="field"><label for="scene-city">Ciudad / comuna</label><input id="scene-city" name="comuna"></div>
-          <div class="field"><label for="scene-people">Cantidad de personas</label><select id="scene-people" name="personas"><option>1 persona</option><option>2 personas</option><option>3 personas</option></select></div>
-          <div class="field"><label for="scene-plaque">Frase para placa</label><input id="scene-plaque" name="placa" maxlength="60"></div>
-          <div class="field full"><label for="scene-moment">Descripción del momento</label><textarea id="scene-moment" rows="5" name="momento" placeholder="Ej: mamá, papá y bebé en su primer paseo..."></textarea></div>
-          <div class="field full"><label for="scene-files">Fotos de referencia</label><input id="scene-files" type="file" multiple accept="image/*"><small>Idealmente 2 fotos por persona y una imagen del contexto.</small></div>
-          <div class="field full"><button class="btn btn-primary" type="submit">Enviar solicitud</button></div>
-        </form>
-        <div data-scene-message class="form-message"></div>
-      </article>
+
+  <main id="main" class="custom-page">
+    <section class="custom-hero" aria-labelledby="custom-title">
+      <div class="custom-hero-copy">
+        <p class="kicker">Personalización y servicio local</p>
+        <h1 id="custom-title">Crea una figura, un recuerdo o una pieza útil en 3D.</h1>
+        <p>En Rhema Diseños puedes pedir productos personalizados con valor emocional o cotizar la fabricación de una pieza a pedido para proyectos, repuestos livianos, prototipos y organización.</p>
+        <div class="custom-hero-actions">
+          <a class="btn btn-buy" href="#solicitud">Solicitar cotización</a>
+          <a class="btn btn-soft" href="catalogo.html">Ver productos listos</a>
+        </div>
+      </div>
+      <div class="custom-hero-visual" aria-hidden="true">
+        <div class="print-object print-object-a">3D</div>
+        <div class="print-object print-object-b">PLA</div>
+        <div class="print-object print-object-c">Idea</div>
+      </div>
+    </section>
+
+    <section class="section custom-paths" aria-labelledby="paths-title">
+      <div class="section-heading">
+        <div>
+          <p class="kicker">Elige el camino</p>
+          <h2 id="paths-title">Tres formas simples de crear con nosotros</h2>
+          <p>La idea es que no necesites saber de modelado 3D para empezar. Tú nos cuentas qué necesitas y nosotros revisamos viabilidad, tiempo y material.</p>
+        </div>
+      </div>
+      <div class="custom-path-grid">
+        <article class="custom-path-card" data-path-card="figura">
+          <span>01</span>
+          <h3>Crea tu figura o retrato</h3>
+          <p>Para regalos familiares, mascotas, recuerdos, fechas especiales y piezas emotivas basadas en fotos o referencias.</p>
+          <a href="#solicitud" class="inline-link" data-select-service="figura">Quiero una figura</a>
+        </article>
+        <article class="custom-path-card" data-path-card="servicio">
+          <span>02</span>
+          <h3>Impresión 3D a pedido</h3>
+          <p>Para archivos STL/3MF/OBJ, repuestos no críticos, organizadores, prototipos simples y piezas funcionales livianas.</p>
+          <a href="#solicitud" class="inline-link" data-select-service="servicio">Cotizar una impresión</a>
+        </article>
+        <article class="custom-path-card" data-path-card="idea">
+          <span>03</span>
+          <h3>Tengo una idea, no un archivo</h3>
+          <p>Para quienes tienen una foto, dibujo o referencia y necesitan saber si se puede convertir en una pieza imprimible.</p>
+          <a href="#solicitud" class="inline-link" data-select-service="idea">Evaluar mi idea</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section custom-service-guide" aria-labelledby="guide-title">
+      <div class="guide-shell">
+        <article class="guide-panel">
+          <p class="kicker">Cómo funciona</p>
+          <h2 id="guide-title">Un proceso claro antes de fabricar</h2>
+          <div class="guide-steps">
+            <div><strong>1</strong><span>Envías fotos, archivo o descripción</span></div>
+            <div><strong>2</strong><span>Revisamos si es viable imprimirlo en PLA</span></div>
+            <div><strong>3</strong><span>Te enviamos precio y tiempo estimado</span></div>
+            <div><strong>4</strong><span>Confirmas y coordinamos fabricación</span></div>
+          </div>
+        </article>
+        <aside class="guide-note">
+          <h3>Importante sobre PLA</h3>
+          <p>El PLA es ideal para regalos, decoración, organización, prototipos, piezas de escritorio y usos livianos. Para piezas expuestas a calor, carga fuerte o seguridad crítica, revisaremos cada caso antes de aceptar la fabricación.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section custom-form-section" id="solicitud" aria-labelledby="form-title">
+      <div class="section-heading">
+        <div>
+          <p class="kicker">Solicitud guiada</p>
+          <h2 id="form-title">Cuéntanos qué quieres crear</h2>
+          <p>Completa lo esencial. No es una compra automática: primero revisaremos tu solicitud y te responderemos con una cotización.</p>
+        </div>
+      </div>
+
+      <div class="custom-form-layout">
+        <aside class="request-type-card" aria-label="Tipo de solicitud">
+          <h3>Tipo de pedido</h3>
+          <button type="button" class="request-type is-active" data-request-type="figura">
+            <strong>Figura / retrato 3D</strong>
+            <span>Fotos familiares, mascotas, regalos y recuerdos.</span>
+          </button>
+          <button type="button" class="request-type" data-request-type="servicio">
+            <strong>Impresión a pedido</strong>
+            <span>Archivo 3D, pieza, repuesto liviano o prototipo.</span>
+          </button>
+          <button type="button" class="request-type" data-request-type="idea">
+            <strong>Solo tengo una idea</strong>
+            <span>Dibujo, foto o referencia para evaluar.</span>
+          </button>
+          <div class="request-help" data-request-help>
+            Envíanos fotos claras y una descripción del recuerdo que quieres convertir en figura.
+          </div>
+        </aside>
+
+        <article class="request-form-card">
+          <form class="custom-request-form" data-scene-form>
+            <input type="hidden" name="tipoSolicitud" value="figura" data-request-input>
+
+            <fieldset>
+              <legend>1. Datos de contacto</legend>
+              <div class="form-grid">
+                <div class="field"><label for="scene-name">Nombre</label><input id="scene-name" required name="nombre" autocomplete="name" placeholder="Tu nombre"></div>
+                <div class="field"><label for="scene-whatsapp">WhatsApp</label><input id="scene-whatsapp" required name="whatsapp" inputmode="tel" placeholder="+56 9..."></div>
+                <div class="field"><label for="scene-email">Correo</label><input id="scene-email" type="email" name="correo" autocomplete="email" placeholder="correo@ejemplo.cl"></div>
+                <div class="field"><label for="scene-city">Ciudad / comuna</label><input id="scene-city" name="comuna" placeholder="Ej. Talca, Linares, Santiago..."></div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>2. Detalles del proyecto</legend>
+              <div class="form-grid">
+                <div class="field" data-figura-field><label for="scene-people">Personas o mascotas</label><select id="scene-people" name="personas"><option>1 persona / mascota</option><option>2 personas / mascotas</option><option>3 personas / mascotas</option><option>4 o más</option></select></div>
+                <div class="field" data-figura-field><label for="scene-format">Formato deseado</label><select id="scene-format" name="formato"><option>Figura decorativa</option><option>Retrato / relieve 3D</option><option>Litofanía</option><option>Escena familiar</option><option>No estoy seguro</option></select></div>
+                <div class="field" data-service-field hidden><label for="service-use">Uso de la pieza</label><select id="service-use" name="uso"><option>Prototipo simple</option><option>Repuesto no crítico</option><option>Organizador / soporte</option><option>Decoración</option><option>Otro</option></select></div>
+                <div class="field" data-service-field hidden><label for="service-qty">Cantidad</label><input id="service-qty" name="cantidad" type="number" min="1" placeholder="Ej. 1, 5, 10"></div>
+                <div class="field"><label for="scene-size">Tamaño aproximado</label><input id="scene-size" name="tamano" placeholder="Ej. 12 cm, tamaño escritorio, pequeño..."></div>
+                <div class="field"><label for="scene-color">Color preferido</label><input id="scene-color" name="color" placeholder="Ej. blanco, negro, azul, multicolor..."></div>
+                <div class="field full"><label for="scene-moment">Descripción</label><textarea id="scene-moment" rows="6" name="descripcion" placeholder="Describe qué quieres crear, para qué lo necesitas, qué detalle no debe faltar y cuándo idealmente lo necesitas."></textarea></div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>3. Archivos y referencias</legend>
+              <div class="upload-guide" data-upload-guide>
+                Para figuras o retratos, sube fotos claras de frente y referencias del estilo que buscas.
+              </div>
+              <div class="field full file-field"><label for="scene-files">Subir fotos, referencias o archivos 3D</label><input id="scene-files" type="file" multiple accept="image/*,.stl,.obj,.3mf,.step,.stp,.zip,.rar"><small>Acepta imágenes y archivos 3D. Si aún no tienes archivo, puedes subir una foto o dibujo de referencia.</small></div>
+            </fieldset>
+
+            <div class="request-actions">
+              <button class="btn btn-buy" type="submit">Enviar solicitud</button>
+              <a class="btn btn-soft" href="contacto.html">Prefiero consultar antes</a>
+            </div>
+          </form>
+          <div data-scene-message class="form-message"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section premium-preview" aria-labelledby="premium-title">
+      <div class="premium-card">
+        <div>
+          <p class="kicker">Línea emotiva</p>
+          <h2 id="premium-title">Retratos y recuerdos 3D</h2>
+          <p>Ideal para aniversarios, familia, mascotas, día de la madre, regalos especiales o momentos que merecen algo más personal que una foto común.</p>
+        </div>
+        <ul>
+          <li>Fotos familiares convertidas en piezas decorativas.</li>
+          <li>Formatos de relieve, litofanía o figura simple.</li>
+          <li>Revisión previa de calidad de imagen antes de fabricar.</li>
+        </ul>
+      </div>
     </section>
   </main>
+
   <footer class="site-footer">
     <div class="footer-inner">
       <section class="footer-col" aria-label="Marca">
         <h2 class="footer-brand">Rhema Diseños</h2>
-        <p>Productos impresos en 3D, figuras personalizadas y decoraciones pensadas para regalar, crear y recordar.</p>
+        <p>Impresión 3D, regalos personalizados, decoración y soluciones fabricadas a pedido.</p>
       </section>
       <nav class="footer-col" aria-label="Tienda">
         <h3>Tienda</h3>
@@ -122,12 +248,12 @@
       <span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span>
     </div>
   </footer>
-  <script src="js/config.js?v=5.1.0"></script>
-  <script src="js/emmagina-data.js?v=5.1.0"></script>
-  <script src="js/emmagina-api.js?v=5.1.0"></script>
-  <script src="js/emmagina-cart.js?v=5.1.0"></script>
-  <script src="js/emmagina-ui.js?v=5.1.0"></script>
-  <script src="js/emmagina-common.js?v=5.1.0"></script>
-  <script src="js/emmagina-custom-scene.js?v=5.1.0"></script>
+  <script src="js/config.js?v=5.2.0"></script>
+  <script src="js/emmagina-data.js?v=5.2.0"></script>
+  <script src="js/emmagina-api.js?v=5.2.0"></script>
+  <script src="js/emmagina-cart.js?v=5.2.0"></script>
+  <script src="js/emmagina-ui.js?v=5.2.0"></script>
+  <script src="js/emmagina-common.js?v=5.2.0"></script>
+  <script src="js/emmagina-custom-scene.js?v=5.2.0"></script>
 </body>
 </html>

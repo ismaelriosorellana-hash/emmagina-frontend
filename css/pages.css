@@ -81,3 +81,98 @@
   .cart-qty-control { grid-column: 1 / -1; justify-items: stretch; grid-template-columns: auto 1fr auto; align-items: center; }
   .cart-qty-control input { width: 100%; }
 }
+
+/* Rhema v5.2 · Página Crea tu Figura / Servicio 3D */
+.custom-page { overflow: hidden; }
+.custom-hero {
+  width: var(--container);
+  margin: 30px auto 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+  gap: 24px;
+  align-items: stretch;
+  min-height: clamp(420px, 58vw, 620px);
+}
+.custom-hero-copy,
+.custom-hero-visual {
+  border: 1px solid var(--line);
+  border-radius: 36px;
+  background: rgba(255, 255, 255, .92);
+  box-shadow: var(--shadow);
+}
+.custom-hero-copy {
+  padding: clamp(28px, 4.8vw, 58px);
+  display: grid;
+  align-content: center;
+}
+.custom-hero-copy h1 {
+  margin: 0 0 18px;
+  font-family: Nunito, Inter, system-ui, sans-serif;
+  font-size: clamp(42px, 5.8vw, 76px);
+  line-height: .94;
+  letter-spacing: -.055em;
+  color: var(--navy);
+}
+.custom-hero-copy p:not(.kicker) {
+  max-width: 680px;
+  margin: 0;
+  color: var(--deep-blue);
+  line-height: 1.75;
+  font-size: clamp(1rem, 1.4vw, 1.16rem);
+}
+.custom-hero-actions { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+.custom-hero-visual {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 25% 25%, rgba(142, 202, 230, .85) 0 15%, transparent 16%),
+    radial-gradient(circle at 80% 18%, rgba(33, 158, 188, .72) 0 15%, transparent 16%),
+    radial-gradient(circle at 50% 82%, rgba(255, 183, 3, .55) 0 25%, transparent 26%),
+    linear-gradient(135deg, #FFFFFF 0%, #EAF4F8 100%);
+}
+.custom-hero-visual::before { content: ""; position: absolute; inset: 18%; border-radius: 42px; border: 2px dashed rgba(2, 48, 71, .18); transform: rotate(-7deg); }
+.print-object { position: absolute; display: grid; place-items: center; border-radius: 28px; background: #fff; color: var(--navy); font-family: Nunito, Inter, sans-serif; font-weight: 1000; box-shadow: 0 18px 42px rgba(2, 48, 71, .13); border: 1px solid rgba(2, 48, 71, .12); }
+.print-object-a { width: 150px; height: 150px; left: 14%; top: 18%; font-size: 42px; transform: rotate(-10deg); }
+.print-object-b { width: 116px; height: 116px; right: 16%; top: 26%; font-size: 32px; background: var(--cloud); }
+.print-object-c { width: 178px; height: 112px; left: 30%; bottom: 16%; font-size: 30px; background: #fff; }
+.custom-path-grid { width: var(--container); margin-inline: auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.custom-path-card { display: grid; gap: 12px; padding: 24px; border-radius: 28px; background: #fff; border: 1px solid var(--line); box-shadow: 0 14px 34px rgba(2, 48, 71, .065); }
+.custom-path-card span { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 999px; background: var(--cloud); color: var(--deep-blue); font-weight: 950; }
+.custom-path-card h3 { margin: 0; font-family: Nunito, Inter, sans-serif; font-size: 1.4rem; color: var(--navy); }
+.custom-path-card p { margin: 0; color: var(--muted); line-height: 1.65; }
+.inline-link { color: var(--blue); font-weight: 900; }
+.inline-link::after { content: " →"; }
+.guide-shell { width: var(--container); margin-inline: auto; display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(280px, .55fr); gap: 18px; align-items: stretch; }
+.guide-panel, .guide-note, .request-type-card, .request-form-card, .premium-card { border: 1px solid var(--line); border-radius: 30px; background: #fff; box-shadow: var(--shadow); }
+.guide-panel { padding: clamp(24px, 3.5vw, 42px); }
+.guide-panel h2, .premium-card h2 { margin: 0 0 18px; font-family: Nunito, Inter, sans-serif; font-size: clamp(30px, 3.8vw, 48px); line-height: 1; }
+.guide-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.guide-steps div { min-height: 144px; display: grid; align-content: start; gap: 12px; padding: 18px; border-radius: 22px; background: var(--cloud); }
+.guide-steps strong { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 999px; background: var(--blue); color: #fff; }
+.guide-steps span { color: var(--deep-blue); font-weight: 800; line-height: 1.45; }
+.guide-note { padding: 24px; background: linear-gradient(180deg, #fff, #EAF4F8); }
+.guide-note h3 { margin: 0 0 10px; font-family: Nunito, Inter, sans-serif; font-size: 1.45rem; }
+.guide-note p { margin: 0; color: var(--muted); line-height: 1.7; }
+.custom-form-layout { width: var(--container); margin-inline: auto; display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 18px; align-items: start; }
+.request-type-card { padding: 18px; position: sticky; top: 122px; display: grid; gap: 12px; }
+.request-type-card h3 { margin: 0 0 4px; font-family: Nunito, Inter, sans-serif; }
+.request-type { border: 1px solid var(--line); background: #fff; border-radius: 20px; padding: 15px; text-align: left; display: grid; gap: 4px; color: var(--ink); }
+.request-type strong { font-weight: 950; }
+.request-type span { color: var(--muted); font-size: .9rem; line-height: 1.45; }
+.request-type.is-active { border-color: var(--blue); background: var(--cloud); box-shadow: 0 12px 28px rgba(2, 48, 71, .08); }
+.request-help { border-radius: 18px; background: rgba(255, 183, 3, .18); color: var(--navy); padding: 14px; font-weight: 800; line-height: 1.45; }
+.request-form-card { padding: clamp(18px, 3vw, 30px); }
+.custom-request-form { display: grid; gap: 22px; }
+.custom-request-form fieldset { margin: 0; padding: 0 0 22px; border: 0; border-bottom: 1px solid var(--line); }
+.custom-request-form fieldset:last-of-type { border-bottom: 0; padding-bottom: 0; }
+.custom-request-form legend { display: block; margin: 0 0 14px; font-family: Nunito, Inter, sans-serif; font-weight: 950; color: var(--navy); font-size: 1.15rem; }
+.upload-guide { margin-bottom: 12px; padding: 14px 16px; border-radius: 18px; background: var(--cloud); color: var(--deep-blue); font-weight: 800; line-height: 1.45; }
+.file-field input[type="file"] { background: #fff; }
+.request-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.premium-preview { padding-top: 12px; }
+.premium-card { width: var(--container); margin-inline: auto; padding: clamp(24px, 4vw, 44px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .72fr); gap: 22px; align-items: center; background: radial-gradient(circle at 100% 0%, rgba(142, 202, 230, .55), transparent 35%), #fff; }
+.premium-card p { color: var(--muted); line-height: 1.75; }
+.premium-card ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.premium-card li { padding: 12px 14px; border-radius: 16px; background: var(--cloud); color: var(--deep-blue); font-weight: 800; }
+@media (max-width: 980px) { .custom-hero, .guide-shell, .custom-form-layout, .premium-card { grid-template-columns: 1fr; } .custom-hero-visual { min-height: 340px; } .custom-path-grid, .guide-steps { grid-template-columns: 1fr 1fr; } .request-type-card { position: static; } }
+@media (max-width: 640px) { .custom-hero { width: min(100% - 24px, 1220px); margin-top: 18px; } .custom-path-grid, .guide-steps { grid-template-columns: 1fr; } .custom-hero-actions, .request-actions { display: grid; } .custom-hero-actions .btn, .request-actions .btn { width: 100%; } .print-object-a { left: 8%; top: 14%; } .print-object-b { right: 8%; top: 28%; } .print-object-c { left: 18%; bottom: 13%; } }
