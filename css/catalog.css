@@ -64,3 +64,21 @@
   .catalog-product-grid { grid-template-columns: 1fr; }
   .catalog-product-grid .product-card { height: 340px; }
 }
+
+
+.catalog-launch-guide {
+  display: grid;
+  gap: .55rem;
+  margin: 1rem 0 1.25rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid #8ecae6;
+  border-radius: 16px;
+  background: #eaf4f8;
+  color: #023047;
+}
+.catalog-launch-guide strong { font-size: 1.05rem; }
+.catalog-launch-guide span { line-height: 1.45; }
+@media (min-width: 860px) {
+  .catalog-launch-guide { grid-template-columns: 1fr 1fr 1fr; }
+  .catalog-launch-guide strong { grid-column: 1 / -1; }
+}

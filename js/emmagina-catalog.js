@@ -19,7 +19,8 @@
     todos: "Todo",
     listos: "Listos para comprar",
     pedido: "A pedido",
-    premium: "Retratos / Premium",
+    memories: "Memories",
+    alma: "Alma",
     servicio: "Servicio 3D"
   };
 
@@ -57,7 +58,8 @@
     const text = [product.nombre, product.descripcion, product.descripcionCorta, product.categoriaPrincipal, ...(product.categorias || [])].join(" ");
     if (activeSegment === "listos") return !product.personalizable && !product.bajoPedido && Number(product.stockDisponible || product.stock || 0) > 0;
     if (activeSegment === "pedido") return product.personalizable || product.fabricadoPedido || product.bajoPedido || includesAny(text, ["pedido", "personaliz", "cotiz"]);
-    if (activeSegment === "premium") return includesAny(text, ["retrato", "premium", "familia", "litofania", "relieve", "recuerdo", "figura"]);
+    if (activeSegment === "memories") return includesAny(text, ["memories", "retrato", "litofania", "relieve", "foto", "recuerdo"]);
+    if (activeSegment === "alma") return includesAny(text, ["alma", "figura personalizada", "escena", "persona", "mascota"]);
     if (activeSegment === "servicio") return includesAny(text, ["servicio", "repuesto", "prototipo", "herramienta", "archivo", "stl", "impresion"]);
     return true;
   }

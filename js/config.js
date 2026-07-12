@@ -28,7 +28,7 @@ const PLACEHOLDER_IMAGE = "data:image/svg+xml;charset=UTF-8," + encodeURICompone
 </svg>`);
 
 window.CONFIG = Object.freeze({
-  APP_VERSION: "5.6.0-costos-cobertura",
+  APP_VERSION: "5.7.0-catalogo-inicial",
   SITE_NAME: "Rhema Diseños",
   BRAND_NAME: "Rhema Diseños",
   SITE_URL: "https://emmagina-frontend.onrender.com",

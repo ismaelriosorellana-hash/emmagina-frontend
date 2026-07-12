@@ -512,5 +512,5 @@ a[href*="pago"].primary-link:hover {
 @media (max-width: 1180px) { .rhema-category-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 760px) { .premium-lines, .rhema-category-grid { grid-template-columns: 1fr; } }
 
-/* v5.6.0 — lanzamiento local Santiago */
+/* v5.7.0 — lanzamiento local Santiago */
 .rhema-launch-section{background:#fff;border:2px solid #bfdce8;border-radius:28px;padding:clamp(22px,4vw,44px);margin-block:28px}.rhema-launch-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.rhema-launch-grid article{display:flex;flex-direction:column;gap:8px;background:#eaf4f8;border:1px solid #bfdce8;border-radius:20px;padding:20px}.rhema-launch-grid strong{color:#023047;font-family:Nunito,Inter,sans-serif;font-size:1.05rem}.rhema-launch-grid span{color:#125373;line-height:1.55}@media(max-width:900px){.rhema-launch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.rhema-launch-grid{grid-template-columns:1fr}.rhema-launch-section{border-radius:20px;padding:20px}}
