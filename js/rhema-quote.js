@@ -47,6 +47,7 @@
     current = item;
     const quote = item.cotizacion;
     const canRespond = item.estado === "cotizada" && quote && !quote.vencida;
+    const canCreateOrder = item.estado === "aceptada" && quote && !item.pedido?.numeroPedido;
     const statusText = quote?.vencida ? "Cotización vencida" : statusLabels[item.estado] || item.estado;
 
     result.innerHTML = `
@@ -67,6 +68,32 @@
             ${quote.condiciones ? `<div class="quote-detail full"><span>Condiciones</span><p>${escape(quote.condiciones)}</p></div>` : ""}
           </div>` : `<div class="quote-note">Todavía no hay una cotización disponible. Rhema Diseños está revisando tu solicitud.</div>`}
         ${item.pedido?.numeroPedido ? `<div class="quote-note"><strong>Pedido creado:</strong> ${escape(item.pedido.numeroPedido)}. Puedes continuar el seguimiento desde la sección de pedidos.</div>` : ""}
+        ${canCreateOrder ? `
+          <form class="quote-order-form" data-order-form>
+            <div class="section-heading quote-heading"><div><p class="kicker">Siguiente paso</p><h2>Crear pedido y pagar</h2></div></div>
+            <p class="quote-summary">Confirma estos datos para convertir la cotización aceptada en un pedido. No se creará más de un pedido para el mismo folio.</p>
+            <div class="quote-grid">
+              <label class="quote-field">Correo para la confirmación
+                <input name="correoPedido" type="email" required value="${escape(lookup?.correo || "")}" placeholder="nombre@correo.cl">
+              </label>
+              <label class="quote-field">WhatsApp
+                <input name="whatsappPedido" type="tel" required value="${escape(lookup?.whatsapp || "")}" placeholder="+56 9 1234 5678">
+              </label>
+              <label class="quote-field">Modalidad de entrega
+                <select name="metodoEntrega" required>
+                  <option value="retiro">Retiro coordinado</option>
+                  <option value="envio">Envío en Santiago</option>
+                </select>
+              </label>
+              <label class="quote-field">Comuna
+                <input name="comuna" placeholder="Ej: Santiago, Maipú, Ñuñoa">
+              </label>
+              <label class="quote-field full" data-address-field hidden>Dirección de envío
+                <input name="direccion" placeholder="Calle, número y referencia">
+              </label>
+            </div>
+            <button class="btn btn-primary" type="submit">Crear pedido y continuar al pago</button>
+          </form>` : ""}
         ${canRespond ? `
           <div class="quote-actions">
             <button class="btn btn-primary" type="button" data-quote-accept>Aceptar cotización</button>
@@ -90,6 +117,36 @@
       render(payload.solicitud);
     } catch (error) {
       showError(error.message || "No fue posible registrar tu respuesta.");
+    }
+  }
+
+  async function createOrder(orderForm) {
+    if (!current || !lookup) return;
+    const data = new FormData(orderForm);
+    const payload = {
+      contactoCorreo: lookup.correo || "",
+      contactoWhatsapp: lookup.whatsapp || "",
+      correo: String(data.get("correoPedido") || "").trim().toLowerCase(),
+      whatsapp: String(data.get("whatsappPedido") || "").trim(),
+      metodoEntrega: String(data.get("metodoEntrega") || "retiro"),
+      comuna: String(data.get("comuna") || "").trim(),
+      direccion: String(data.get("direccion") || "").trim()
+    };
+    setLoading("Creando pedido y preparando el pago...");
+    try {
+      const response = await window.EmmaginaAPI.createOrderFromQuote(current.folio, payload);
+      const checkoutUrl = response.pago?.checkoutUrl || "";
+      result.innerHTML = `
+        <article class="quote-card">
+          <p class="kicker">Pedido ${escape(response.pedido?.numeroPedido || "creado")}</p>
+          <h2>Tu pedido está listo</h2>
+          <div class="quote-amount-box"><span>${response.pedido?.esAbono ? "Abono a pagar" : "Total a pagar"}</span><strong>${money(response.pedido?.total)}</strong></div>
+          <p class="quote-summary">${escape(response.mensaje || "Pedido creado correctamente.")}</p>
+          ${checkoutUrl ? `<a class="btn btn-primary" href="${escape(checkoutUrl)}">Pagar con Mercado Pago</a>` : `<div class="quote-note">Mercado Pago todavía no está disponible. Conserva el número de pedido y espera la coordinación de Rhema Diseños.</div>`}
+          <a class="btn btn-soft" href="cotizacion.html?folio=${encodeURIComponent(current.folio)}">Volver a consultar</a>
+        </article>`;
+    } catch (error) {
+      showError(error.message || "No fue posible crear el pedido.");
     }
   }
 
@@ -122,7 +179,23 @@
     }
   });
 
+  result.addEventListener("change", (event) => {
+    const delivery = event.target.closest('[name="metodoEntrega"]');
+    if (!delivery) return;
+    const addressField = result.querySelector("[data-address-field]");
+    const addressInput = addressField?.querySelector("input");
+    const isShipping = delivery.value === "envio";
+    if (addressField) addressField.hidden = !isShipping;
+    if (addressInput) addressInput.required = isShipping;
+  });
+
   result.addEventListener("submit", (event) => {
+    const orderForm = event.target.closest("[data-order-form]");
+    if (orderForm) {
+      event.preventDefault();
+      createOrder(orderForm);
+      return;
+    }
     const rejectForm = event.target.closest("[data-reject-form]");
     if (!rejectForm) return;
     event.preventDefault();

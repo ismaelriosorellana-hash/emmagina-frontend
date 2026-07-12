@@ -160,6 +160,13 @@
     });
   }
 
+  async function createOrderFromQuote(folio, payload = {}) {
+    return request(`/solicitudes-personalizadas/${encodeURIComponent(folio)}/crear-pedido`, {
+      method: "POST",
+      body: payload
+    });
+  }
+
 
   API.request = request;
   API.getProducts = getProducts;
@@ -176,5 +183,6 @@
   API.createCustomRequest = createCustomRequest;
   API.getCustomQuote = getCustomQuote;
   API.respondCustomQuote = respondCustomQuote;
+  API.createOrderFromQuote = createOrderFromQuote;
   window.EmmaginaAPI = Object.freeze(API);
 })();
