@@ -8,4 +8,9 @@
   <url><loc>https://emmagina-frontend.onrender.com/preguntas-frecuentes.html</loc></url>
   <url><loc>https://rhemadisenos.cl/lanzamiento-santiago.html</loc></url>
   <url><loc>https://rhemadisenos.cl/precios-cobertura.html</loc></url>
+  <url>
+    <loc>https://emmagina-frontend.onrender.com/memories.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
