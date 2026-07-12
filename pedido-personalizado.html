@@ -11,13 +11,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=5.3.0">
-  <link rel="stylesheet" href="css/layout.css?v=5.3.0">
-  <link rel="stylesheet" href="css/components.css?v=5.3.0">
-  <link rel="stylesheet" href="css/home.css?v=5.3.0">
-  <link rel="stylesheet" href="css/catalog.css?v=5.3.0">
-  <link rel="stylesheet" href="css/product.css?v=5.3.0">
-  <link rel="stylesheet" href="css/pages.css?v=5.3.0">
+  <link rel="stylesheet" href="css/base.css?v=5.4.0">
+  <link rel="stylesheet" href="css/layout.css?v=5.4.0">
+  <link rel="stylesheet" href="css/components.css?v=5.4.0">
+  <link rel="stylesheet" href="css/home.css?v=5.4.0">
+  <link rel="stylesheet" href="css/catalog.css?v=5.4.0">
+  <link rel="stylesheet" href="css/product.css?v=5.4.0">
+  <link rel="stylesheet" href="css/pages.css?v=5.4.0">
   <title>Crea tu Figura y Cotiza Impresión 3D | Rhema Diseños</title>
 </head>
 <body>
@@ -165,7 +165,7 @@
                 <div class="field"><label for="scene-name">Nombre</label><input id="scene-name" required name="nombre" autocomplete="name" placeholder="Tu nombre"></div>
                 <div class="field"><label for="scene-whatsapp">WhatsApp</label><input id="scene-whatsapp" required name="whatsapp" inputmode="tel" placeholder="+56 9..."></div>
                 <div class="field"><label for="scene-email">Correo</label><input id="scene-email" type="email" name="correo" autocomplete="email" placeholder="correo@ejemplo.cl"></div>
-                <div class="field"><label for="scene-city">Ciudad / comuna</label><input id="scene-city" name="comuna" placeholder="Ej. Talca, Linares, Santiago..."></div>
+                <div class="field"><label for="scene-city">Ciudad / comuna</label><input id="scene-city" name="comuna" placeholder="Ej. Santiago, Puente Alto, Maipú..."></div>
               </div>
             </fieldset>
 
@@ -173,7 +173,7 @@
               <legend>2. Detalles del proyecto</legend>
               <div class="form-grid">
                 <div class="field" data-figura-field><label for="scene-people">Personas o mascotas</label><select id="scene-people" name="personas"><option>1 persona / mascota</option><option>2 personas / mascotas</option><option>3 personas / mascotas</option><option>4 o más</option></select></div>
-                <div class="field" data-figura-field><label for="scene-format">Formato deseado</label><select id="scene-format" name="formato"><option>Figura decorativa</option><option>Retrato / relieve 3D</option><option>Litofanía</option><option>Escena familiar</option><option>No estoy seguro</option></select></div>
+                <div class="field" data-figura-field><label for="scene-format">Formato deseado</label><select id="scene-format" name="formato"><option>Figura decorativa</option><option>Memories · Retrato / relieve 3D</option><option>Memories · Litofanía</option><option>Alma · Figura personalizada</option><option>Alma · Escena familiar</option><option>No estoy seguro</option></select></div>
                 <div class="field" data-service-field hidden><label for="service-use">Uso de la pieza</label><select id="service-use" name="uso"><option>Prototipo simple</option><option>Repuesto no crítico</option><option>Organizador / soporte</option><option>Decoración</option><option>Otro</option></select></div>
                 <div class="field" data-service-field hidden><label for="service-qty">Cantidad</label><input id="service-qty" name="cantidad" type="number" min="1" placeholder="Ej. 1, 5, 10"></div>
                 <div class="field"><label for="scene-size">Tamaño aproximado</label><input id="scene-size" name="tamano" placeholder="Ej. 12 cm, tamaño escritorio, pequeño..."></div>
@@ -200,16 +200,16 @@
       </div>
     </section>
 
-    <section class="section premium-preview" aria-labelledby="premium-title">
+    <section class="section premium-preview" id="memories-alma" aria-labelledby="premium-title">
       <div class="premium-card">
         <div>
-          <p class="kicker">Línea emotiva</p>
-          <h2 id="premium-title">Retratos y recuerdos 3D</h2>
-          <p>Ideal para aniversarios, familia, mascotas, día de la madre, regalos especiales o momentos que merecen algo más personal que una foto común.</p>
+          <p class="kicker">Líneas emocionales</p>
+          <h2 id="premium-title">Memories y Alma</h2>
+          <p><strong>Memories</strong> convierte fotografías en relieves, litofanías y cuadros 3D. <strong>Alma</strong> crea figuras y escenas con mayor volumen y expresión.</p>
         </div>
         <ul>
-          <li>Fotos familiares convertidas en piezas decorativas.</li>
-          <li>Formatos de relieve, litofanía o figura simple.</li>
+          <li><strong>Memories:</strong> fotos familiares, parejas y mascotas convertidas en piezas decorativas.</li>
+          <li><strong>Alma:</strong> figuras y escenas personalizadas con una propuesta más artística.</li>
           <li>Revisión previa de calidad de imagen antes de fabricar.</li>
         </ul>
       </div>
@@ -248,12 +248,12 @@
       <span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span>
     </div>
   </footer>
-  <script src="js/config.js?v=5.3.0"></script>
-  <script src="js/emmagina-data.js?v=5.3.0"></script>
-  <script src="js/emmagina-api.js?v=5.3.0"></script>
-  <script src="js/emmagina-cart.js?v=5.3.0"></script>
-  <script src="js/emmagina-ui.js?v=5.3.0"></script>
-  <script src="js/emmagina-common.js?v=5.3.0"></script>
-  <script src="js/emmagina-custom-scene.js?v=5.3.0"></script>
+  <script src="js/config.js?v=5.4.0"></script>
+  <script src="js/emmagina-data.js?v=5.4.0"></script>
+  <script src="js/emmagina-api.js?v=5.4.0"></script>
+  <script src="js/emmagina-cart.js?v=5.4.0"></script>
+  <script src="js/emmagina-ui.js?v=5.4.0"></script>
+  <script src="js/emmagina-common.js?v=5.4.0"></script>
+  <script src="js/emmagina-custom-scene.js?v=5.4.0"></script>
 </body>
 </html>

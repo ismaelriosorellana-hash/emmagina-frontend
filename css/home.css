@@ -69,7 +69,7 @@
 
 
 /* Rhema Diseños v4.5: Home con paleta azul y acento naranja solo comercial */
-.hero-section { background: linear-gradient(180deg, var(--paper), var(--cloud)); }
+.hero-section { background: var(--cloud); }
 .category-panel { scrollbar-gutter: stable; }
 .category-panel h2, .carousel-head h2, .explore-card h3 { color: var(--navy); }
 .category-list a:hover { background: var(--cloud); color: var(--navy); }
@@ -124,7 +124,7 @@ a[href*="pago"].primary-link:hover {
 .cms-section { width: 100%; }
 .cms-section .section-heading { width: var(--container); margin-inline: auto; }
 .cms-block { min-width: 0; }
-.cms-placeholder-image { display: block; min-height: 120px; background: linear-gradient(135deg, var(--cloud), var(--sky)); }
+.cms-placeholder-image { display: block; min-height: 120px; background: var(--sky); }
 .hero-layout > .hero-card.cms-block { width: 100%; }
 .product-grid-section .product-grid { width: var(--container); margin-inline: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; }
 .review-card { min-width: 280px; max-width: 380px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 18px; box-shadow: var(--shadow); }
@@ -140,7 +140,7 @@ a[href*="pago"].primary-link:hover {
 
 
 /* Rhema Diseños v4.9: Home más amigable y sin imágenes rotas en categorías */
-.hero-section { padding: 30px 0 40px; background: linear-gradient(180deg, #FFFFFF 0%, var(--cloud) 100%); }
+.hero-section { padding: 30px 0 40px; background: var(--cloud); }
 .hero-layout { grid-template-columns: minmax(220px, 290px) 1fr; gap: 24px; --hero-height: 360px; }
 .category-panel {
   border-color: rgba(33, 158, 188, .28);
@@ -175,10 +175,7 @@ a[href*="pago"].primary-link:hover {
   box-shadow: 0 18px 48px rgba(2,48,71,.08);
 }
 .hero-card-no-image {
-  background: radial-gradient(circle at 78% 20%, rgba(33,158,188,.38) 0 92px, transparent 93px),
-              radial-gradient(circle at 58% 14%, rgba(142,202,230,.65) 0 86px, transparent 87px),
-              radial-gradient(circle at 72% 84%, rgba(255,183,3,.48) 0 210px, transparent 211px),
-              linear-gradient(135deg, #FFFFFF 0%, #EAF4F8 58%, rgba(142,202,230,.34) 100%);
+  background: #EAF4F8;
 }
 .hero-card-no-image .hero-overlay {
   color: var(--navy);
@@ -226,10 +223,7 @@ a[href*="pago"].primary-link:hover {
 
 .rhema-hero {
   padding: 30px 0 46px;
-  background:
-    radial-gradient(circle at 7% 12%, rgba(142, 202, 230, .58), transparent 28%),
-    radial-gradient(circle at 88% 18%, rgba(255, 183, 3, .18), transparent 26%),
-    linear-gradient(180deg, #FFFFFF 0%, var(--cloud) 100%);
+  background: #FFFFFF;
 }
 .rhema-hero-layout {
   grid-template-columns: 250px 1fr;
@@ -285,9 +279,7 @@ a[href*="pago"].primary-link:hover {
   padding: clamp(26px, 5vw, 54px);
   border: 1px solid rgba(33, 158, 188, .24);
   border-radius: 38px;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,.88), rgba(234,244,248,.88)),
-    radial-gradient(circle at 85% 20%, rgba(142,202,230,.55), transparent 30%);
+  background: #FFFFFF;
   box-shadow: 0 28px 70px rgba(2, 48, 71, .09);
   overflow: hidden;
   position: relative;
@@ -420,7 +412,7 @@ a[href*="pago"].primary-link:hover {
   width: 42px;
   height: 42px;
   border-radius: 16px;
-  background: linear-gradient(135deg, var(--sky), var(--cloud));
+  background: var(--sky);
 }
 .rhema-carousel-stack { display: grid; gap: 34px; }
 .rhema-carousel-stack .carousel-head { width: 100%; display: flex; align-items: end; justify-content: space-between; gap: 16px; }
@@ -441,7 +433,7 @@ a[href*="pago"].primary-link:hover {
   display: grid;
   align-content: center;
   gap: 18px;
-  background: linear-gradient(135deg, #FFFFFF, var(--cloud));
+  background: #FFFFFF;
   border: 1px solid rgba(33, 158, 188, .18);
   border-radius: 34px;
 }
@@ -474,7 +466,7 @@ a[href*="pago"].primary-link:hover {
   font-weight: 900;
 }
 .steps-list span { color: rgba(255,255,255,.86); }
-.premium-panel { background: linear-gradient(135deg, var(--deep-blue), var(--navy)); }
+.premium-panel { background: var(--navy); }
 .premium-badge { justify-self: start; border-radius: 999px; background: rgba(255,255,255,.13); padding: 8px 12px; font-weight: 900; }
 .premium-mini-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 .premium-mini-grid span { background: rgba(255,255,255,.11); border-radius: 14px; padding: 12px; font-weight: 800; }
@@ -505,3 +497,17 @@ a[href*="pago"].primary-link:hover {
   .hero-actions .btn { width: 100%; }
   .rhema-carousel-stack .carousel-head { align-items: start; flex-direction: column; }
 }
+
+
+/* Rhema Diseños v5.4: Memories + Alma, enfoque Santiago y colores 100% sólidos */
+.rhema-category-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.premium-lines { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.premium-line-card { min-height: 220px; border-radius: 26px; padding: 26px; display: grid; align-content: start; gap: 14px; color: var(--navy); border: 2px solid transparent; }
+.premium-line-card h3, .premium-line-card p { margin: 0; }
+.premium-line-card h3 { font-size: clamp(24px, 3vw, 34px); line-height: 1.05; }
+.premium-line-card p { line-height: 1.62; }
+.memories-card { background: #DFF3FA; border-color: #8ECAE6; }
+.alma-card { background: #FFF0D6; border-color: #FFB703; }
+.premium-line-card .premium-badge { background: #FFFFFF; color: var(--navy); border: 1px solid currentColor; }
+@media (max-width: 1180px) { .rhema-category-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .premium-lines, .rhema-category-grid { grid-template-columns: 1fr; } }

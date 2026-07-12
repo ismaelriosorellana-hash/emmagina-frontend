@@ -27,7 +27,7 @@
   align-items: start;
 }
 .pdp-gallery { position: sticky; top: 128px; }
-.pdp-main-image { background: linear-gradient(180deg, #fff, var(--cloud)); }
+.pdp-main-image { background: var(--cloud); }
 .product-detail-badges { position: static; margin: 12px 0 4px; display: flex; flex-wrap: wrap; gap: 8px; }
 .pdp-buy-panel { top: 128px; }
 .pdp-short-description { margin: 0 0 18px; color: var(--deep-blue); line-height: 1.65; }

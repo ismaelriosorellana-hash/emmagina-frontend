@@ -404,7 +404,7 @@
             label: name.trim(),
             path: `pagina.html?slug=${slug}`,
             enabled: true,
-            seoTitle: `${name.trim()} | Emmagina`,
+            seoTitle: `${name.trim()} | Rhema Diseños`,
             seoDescription: "",
             layout: { maxWidth: 1100, contentPadding: 20, sectionGap: 36, backgroundColor: "#FFF9FD" },
             sections: [newSection("hero")]

@@ -6,7 +6,7 @@
             logo: {
                 url: "../assets/emmagina-logo.svg",
                 publicId: "",
-                alt: "Logo Emmagina",
+                alt: "Logo Rhema Diseños",
                 width: 52,
                 offsetX: 0,
                 offsetY: 0
@@ -15,7 +15,7 @@
                 mode: "text",
                 url: "",
                 publicId: "",
-                text: "Emmagina",
+                text: "Rhema Diseños",
                 width: 220,
                 fontSize: 32,
                 offsetX: 0,
@@ -281,7 +281,7 @@
         setRange("site-logo-y", logo.offsetY);
 
         $("#site-title-mode").value = title.mode || "image";
-        $("#site-title-text").value = title.text || "Emmagina";
+        $("#site-title-text").value = title.text || "Rhema Diseños";
         setRange("site-title-width", title.width);
         setRange("site-title-font-size", title.fontSize);
         setRange("site-title-x", title.offsetX);
@@ -493,7 +493,7 @@
             titleImage.style.width = `${title.width}px`;
             titleImage.style.transform = `translate(${title.offsetX}px, ${title.offsetY}px)`;
         } else {
-            titleText.textContent = title.text || "Emmagina";
+            titleText.textContent = title.text || "Rhema Diseños";
             titleText.style.fontSize = `${title.fontSize}px`;
             titleText.style.transform = `translate(${title.offsetX}px, ${title.offsetY}px)`;
             titleText.style.color = colors.primaryDark;
