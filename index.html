@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Tienda online de productos impresos en 3D, figuras personalizadas, decoración y recuerdos familiares.">
-  <meta name="theme-color" content="#f8f6f1">
+  <meta name="description" content="Rhema Diseños: productos impresos en 3D, regalos personalizados, decoración y soluciones a pedido en PLA.">
+  <meta name="theme-color" content="#EAF4F8">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=4.9.0">
-  <link rel="stylesheet" href="css/layout.css?v=4.9.0">
-  <link rel="stylesheet" href="css/components.css?v=4.9.0">
-  <link rel="stylesheet" href="css/home.css?v=4.9.0">
-  <link rel="stylesheet" href="css/catalog.css?v=4.9.0">
-  <link rel="stylesheet" href="css/product.css?v=4.9.0">
-  <link rel="stylesheet" href="css/pages.css?v=4.9.0">
-  <title>Rhema Diseños | Tienda 3D</title>
+  <link rel="stylesheet" href="css/base.css?v=5.0.0">
+  <link rel="stylesheet" href="css/layout.css?v=5.0.0">
+  <link rel="stylesheet" href="css/components.css?v=5.0.0">
+  <link rel="stylesheet" href="css/home.css?v=5.0.0">
+  <link rel="stylesheet" href="css/catalog.css?v=5.0.0">
+  <link rel="stylesheet" href="css/product.css?v=5.0.0">
+  <link rel="stylesheet" href="css/pages.css?v=5.0.0">
+  <title>Rhema Diseños | Impresión 3D, regalos y soluciones</title>
 </head>
 <body>
   <a href="#main" class="skip-link">Saltar al contenido</a>
@@ -47,6 +47,7 @@
       </nav>
     </div>
   </header>
+
   <section class="search-panel" data-search-panel aria-label="Buscador" aria-hidden="true">
     <div class="search-box" role="search">
       <form action="catalogo.html" method="get">
@@ -57,77 +58,172 @@
       <button class="btn btn-soft search-close" type="button" data-close-search>Cerrar</button>
     </div>
   </section>
-  <main id="main" data-cms-page="home" data-cms-fallback-static="true">
-    <section class="hero-section" aria-labelledby="home-hero-title">
-      <div class="hero-layout">
-        <aside class="category-panel" aria-label="Categorías principales">
+
+  <main id="main" data-direct-home="true">
+    <section class="hero-section rhema-hero" aria-labelledby="home-hero-title">
+      <div class="hero-layout rhema-hero-layout">
+        <aside class="category-panel rhema-category-panel" aria-label="Categorías principales">
+          <p class="panel-kicker">Explora rápido</p>
           <h2>Categorías</h2>
-          <nav class="category-list">
-            <a href="catalogo.html?categoria=Librer%C3%ADa">Librería</a>
-            <a href="catalogo.html?categoria=Jugueter%C3%ADa">Juguetería</a>
-            <a href="catalogo.html?categoria=Decoraci%C3%B3n">Decoración</a>
-            <a href="catalogo.html?categoria=Retratos%203D">Retratos 3D</a>
-            <a href="pedido-personalizado.html">Servicio 3D</a>
-            <a href="catalogo.html?categoria=Regalos">Regalos</a>
-            <a href="catalogo.html">Todos</a>
+          <nav class="category-list rhema-category-list">
+            <a href="catalogo.html?categoria=Librer%C3%ADa"><span>Librería y escritorio</span></a>
+            <a href="catalogo.html?categoria=Jugueter%C3%ADa"><span>Juguetería y tendencias</span></a>
+            <a href="catalogo.html?categoria=Decoraci%C3%B3n"><span>Decoración y hogar</span></a>
+            <a href="catalogo.html?categoria=Retratos%203D"><span>Retratos 3D premium</span></a>
+            <a href="pedido-personalizado.html"><span>Servicio 3D a pedido</span></a>
+            <a href="catalogo.html"><span>Ver todo</span></a>
           </nav>
         </aside>
-        <a class="hero-card hero-card-banner" href="catalogo.html" data-hero-link aria-label="Ver tienda Rhema Diseños">
-          <img data-hero-image src="assets/producto-referencia-emmagina.png" alt="Banner principal Rhema Diseños" loading="eager">
-          <span class="hero-overlay" data-hero-overlay>
-            <span class="kicker" data-hero-kicker>Impresión 3D · regalos · soluciones</span>
-            <strong id="home-hero-title" data-hero-title>Diseños 3D para regalar, crear y resolver</strong>
-            <span class="hero-button" data-hero-button>Ver tienda</span>
-          </span>
+
+        <section class="rhema-hero-card" aria-labelledby="home-hero-title">
+          <div class="rhema-hero-copy">
+            <p class="kicker">Taller creativo de impresión 3D</p>
+            <h1 id="home-hero-title">Regalos, decoración y soluciones impresas en 3D.</h1>
+            <p>Elige productos listos para comprar o cuéntanos tu idea para crear una pieza personalizada, un retrato familiar o una solución práctica en PLA.</p>
+            <div class="hero-actions">
+              <a class="btn btn-buy" href="catalogo.html">Ver tienda</a>
+              <a class="btn btn-primary" href="pedido-personalizado.html">Cotizar impresión 3D</a>
+            </div>
+            <div class="hero-trust-row" aria-label="Beneficios principales">
+              <span>Fabricación local</span>
+              <span>PLA</span>
+              <span>Pedidos personalizados</span>
+            </div>
+          </div>
+          <div class="rhema-hero-visual" aria-hidden="true">
+            <div class="shape shape-one"></div>
+            <div class="shape shape-two"></div>
+            <div class="shape shape-three"></div>
+            <div class="mini-card mini-card-a">Figuras</div>
+            <div class="mini-card mini-card-b">Repuestos</div>
+            <div class="mini-card mini-card-c">Retratos 3D</div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="section home-choice-section" aria-labelledby="choice-title">
+      <div class="section-heading">
+        <div>
+          <p class="kicker">Dos caminos, un mismo taller</p>
+          <h2 id="choice-title">¿Qué quieres crear hoy?</h2>
+          <p>Rhema Diseños combina tienda de productos listos con fabricación personalizada para ideas, regalos y piezas útiles.</p>
+        </div>
+      </div>
+      <div class="rhema-choice-grid">
+        <a class="choice-card" href="catalogo.html">
+          <span class="choice-icon">🛍️</span>
+          <h3>Comprar productos listos</h3>
+          <p>Figuras, escritorio, decoración, regalos y productos impresos en 3D listos para elegir.</p>
+          <strong>Ir a tienda</strong>
+        </a>
+        <a class="choice-card" href="pedido-personalizado.html">
+          <span class="choice-icon">🧩</span>
+          <h3>Cotizar impresión a pedido</h3>
+          <p>Envía un archivo, una foto o una idea para evaluar fabricación, tamaño, material y tiempo.</p>
+          <strong>Cotizar ahora</strong>
+        </a>
+        <a class="choice-card" href="pedido-personalizado.html#retrato-3d">
+          <span class="choice-icon">💙</span>
+          <h3>Crear un retrato 3D</h3>
+          <p>Transforma una foto familiar, de pareja o mascota en una pieza decorativa con valor emocional.</p>
+          <strong>Crear mi figura</strong>
         </a>
       </div>
     </section>
 
-    <section class="section section-muted home-info-section" aria-labelledby="home-info-title">
+    <section class="section section-muted rhema-category-grid-section" aria-labelledby="category-title">
       <div class="section-heading">
-        <div><p class="kicker">Información</p><h2 id="home-info-title">Elige cómo crear con nosotros</h2></div>
+        <div>
+          <p class="kicker">Catálogo inicial</p>
+          <h2 id="category-title">Categorías pensadas para vender rápido</h2>
+          <p>Productos simples de entender, visuales para redes y adecuados para producción inicial en PLA.</p>
+        </div>
       </div>
-      <div class="explore-grid" data-explore-grid></div>
-    </section>
-
-    <section class="section scene-lines-section" aria-label="Líneas personalizadas Rhema Diseños">
-      <a class="line-banner line-banner-memories" href="pedido-personalizado.html" data-line-banner="linea-memories" aria-label="Pedir una pieza de Linea Memories">
-        <img src="assets/producto-referencia-emmagina.png" alt="Linea Memories Rhema Diseños" loading="lazy">
-        <span class="line-banner-button">Pedir el mío</span>
-      </a>
-      <a class="line-banner line-banner-alma" href="pedido-personalizado.html" data-line-banner="linea-alma" aria-label="Pedir una pieza de Linea Alma">
-        <img src="assets/producto-referencia-emmagina.png" alt="Linea Alma Rhema Diseños" loading="lazy">
-        <span class="line-banner-button">Pedir el mío</span>
-      </a>
+      <div class="rhema-category-grid">
+        <a href="catalogo.html?categoria=Librer%C3%ADa"><strong>Librería</strong><span>Organizadores, soportes, porta lápices y accesorios de escritorio.</span></a>
+        <a href="catalogo.html?categoria=Jugueter%C3%ADa"><strong>Juguetería</strong><span>Figuras articuladas, fidgets y coleccionables propios.</span></a>
+        <a href="catalogo.html?categoria=Decoraci%C3%B3n"><strong>Decoración</strong><span>Maceteros, cuadros 3D, piezas para hogar y detalles decorativos.</span></a>
+        <a href="pedido-personalizado.html"><strong>Servicio 3D</strong><span>Prototipos simples, repuestos no críticos, herramientas y piezas a pedido.</span></a>
+      </div>
     </section>
 
     <section class="section section-muted" aria-label="Productos destacados Rhema Diseños">
-      <div class="shop-layout">
-        <aside class="gift-panel" aria-label="Ideas para regalar">
-          <h3>Ideas para regalar</h3>
-          <div class="gift-buttons">
-            <a href="catalogo.html?categoria=Linea%20Memories">Familia</a>
-            <a href="catalogo.html?categoria=Decoración">Hogar</a>
-            <a href="catalogo.html?categoria=Herramientas">Útiles 3D</a>
-            <a href="catalogo.html?categoria=Coleccionables">Colección</a>
-            <a href="catalogo.html?categoria=Vasos%20Temáticos">Vasos</a>
-            <a href="catalogo.html?categoria=Ofertas">Ofertas</a>
-          </div>
-        </aside>
-        <div class="carousel-stack">
-          <section class="product-marquee" data-home-marquee="desde14990" aria-label="Productos desde 14.990">
-            <header class="carousel-head"><div><p class="kicker">Entrada</p><h2>Desde $14.990</h2></div></header>
-            <div class="marquee-viewport"><div class="marquee-track" data-marquee-track></div></div>
-          </section>
-          <section class="product-marquee" data-home-marquee="lanzamiento" aria-label="Productos de lanzamiento">
-            <header class="carousel-head"><div><p class="kicker">Novedades</p><h2>Lanzamiento</h2></div></header>
-            <div class="marquee-viewport"><div class="marquee-track" data-marquee-track></div></div>
-          </section>
-          <section class="product-marquee" data-home-marquee="destacados" aria-label="Productos destacados">
-            <header class="carousel-head"><div><p class="kicker">Selección</p><h2>Destacados</h2></div></header>
-            <div class="marquee-viewport"><div class="marquee-track" data-marquee-track></div></div>
-          </section>
+      <div class="carousel-stack rhema-carousel-stack">
+        <section class="product-marquee" data-home-marquee="desde14990" aria-label="Productos de entrada">
+          <header class="carousel-head"><div><p class="kicker">Entrada</p><h2>Ideas desde $14.990</h2></div><a class="link-more" href="catalogo.html">Ver tienda</a></header>
+          <div class="marquee-viewport"><div class="marquee-track" data-marquee-track></div></div>
+        </section>
+        <section class="product-marquee" data-home-marquee="lanzamiento" aria-label="Productos nuevos">
+          <header class="carousel-head"><div><p class="kicker">Novedades</p><h2>Nuevos diseños</h2></div><a class="link-more" href="catalogo.html?grupo=lanzamiento">Ver novedades</a></header>
+          <div class="marquee-viewport"><div class="marquee-track" data-marquee-track></div></div>
+        </section>
+        <section class="product-marquee" data-home-marquee="destacados" aria-label="Productos destacados">
+          <header class="carousel-head"><div><p class="kicker">Selección</p><h2>Destacados del taller</h2></div><a class="link-more" href="catalogo.html?grupo=destacados">Ver destacados</a></header>
+          <div class="marquee-viewport"><div class="marquee-track" data-marquee-track></div></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="section service-section" aria-labelledby="service-title">
+      <div class="split-section">
+        <div class="split-copy">
+          <p class="kicker">Servicio bajo demanda</p>
+          <h2 id="service-title">¿Tienes una idea, archivo o pieza que necesitas fabricar?</h2>
+          <p>Envíanos tu archivo 3D, una foto de referencia o una descripción. Revisamos si es viable en PLA y te respondemos con precio, tiempo estimado y recomendaciones.</p>
+          <ul class="check-list">
+            <li>Archivos STL, 3MF u OBJ.</li>
+            <li>Organizadores, prototipos y piezas livianas.</li>
+            <li>Repuestos no críticos y soluciones de uso cotidiano.</li>
+          </ul>
+          <a class="btn btn-buy" href="pedido-personalizado.html">Solicitar cotización</a>
         </div>
+        <div class="friendly-panel">
+          <h3>Flujo simple</h3>
+          <ol class="steps-list compact">
+            <li><strong>1</strong><span>Describe lo que necesitas.</span></li>
+            <li><strong>2</strong><span>Sube archivo o foto.</span></li>
+            <li><strong>3</strong><span>Recibe cotización.</span></li>
+            <li><strong>4</strong><span>Fabricamos y coordinamos entrega.</span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section premium-section" id="retrato-3d" aria-labelledby="premium-title">
+      <div class="split-section split-section-reverse">
+        <div class="friendly-panel premium-panel">
+          <span class="premium-badge">Línea emocional</span>
+          <h3>Retratos 3D Premium</h3>
+          <p>Ideal para regalos familiares, aniversarios, recuerdos de mascotas y momentos especiales.</p>
+          <div class="premium-mini-grid">
+            <span>Litofanías</span>
+            <span>Relieve 3D</span>
+            <span>Escenas familiares</span>
+            <span>Mascotas</span>
+          </div>
+        </div>
+        <div class="split-copy">
+          <p class="kicker">Crea tu Figura</p>
+          <h2 id="premium-title">Un recuerdo familiar que puedes tocar.</h2>
+          <p>Transformamos fotos o referencias en piezas decorativas impresas en 3D. Esta línea se comunica con emoción, cuidado y valor de regalo, no como producto común.</p>
+          <a class="btn btn-primary" href="pedido-personalizado.html">Enviar mi foto</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-muted how-section" aria-labelledby="how-title">
+      <div class="section-heading">
+        <div>
+          <p class="kicker">Cómo funciona</p>
+          <h2 id="how-title">De la idea a una pieza real</h2>
+        </div>
+      </div>
+      <div class="process-grid">
+        <article><span>1</span><h3>Elige o envía tu idea</h3><p>Compra desde el catálogo o solicita una cotización personalizada.</p></article>
+        <article><span>2</span><h3>Revisamos viabilidad</h3><p>Validamos tamaño, material, tiempo de impresión y terminación.</p></article>
+        <article><span>3</span><h3>Confirmas el pedido</h3><p>Te damos precio y plazo antes de fabricar.</p></article>
+        <article><span>4</span><h3>Fabricamos y entregamos</h3><p>Coordinamos retiro o despacho según disponibilidad.</p></article>
       </div>
     </section>
 
@@ -137,12 +233,28 @@
       </div>
       <div class="marquee-viewport"><div class="marquee-track" data-reviews-track></div></div>
     </section>
+
+    <section class="section faq-preview-section" aria-labelledby="faq-preview-title">
+      <div class="section-heading">
+        <div>
+          <p class="kicker">Dudas rápidas</p>
+          <h2 id="faq-preview-title">Preguntas frecuentes</h2>
+        </div>
+        <a class="btn btn-soft btn-small" href="preguntas-frecuentes.html">Ver todas</a>
+      </div>
+      <div class="faq-list faq-preview-list">
+        <details open><summary>¿Puedo enviar mi propio archivo?</summary><p>Sí. Puedes enviar STL, 3MF, OBJ o una referencia para revisar si se puede fabricar.</p></details>
+        <details><summary>¿Qué material usan inicialmente?</summary><p>La base inicial es PLA, ideal para decoración, prototipos, accesorios y piezas de uso liviano.</p></details>
+        <details><summary>¿Hacen retratos desde una foto?</summary><p>Sí. La línea Crea tu Figura permite enviar una foto familiar, de pareja o mascota para evaluar una propuesta.</p></details>
+      </div>
+    </section>
   </main>
+
   <footer class="site-footer">
     <div class="footer-inner">
       <section class="footer-col" aria-label="Marca">
         <h2 class="footer-brand">Rhema Diseños</h2>
-        <p>Productos impresos en 3D, figuras personalizadas, decoración y soluciones prácticas hechas con cercanía.</p>
+        <p>Impresión 3D para regalos, decoración, figuras personalizadas y soluciones prácticas hechas con cercanía.</p>
       </section>
       <nav class="footer-col" aria-label="Tienda">
         <h3>Tienda</h3>
@@ -170,13 +282,13 @@
       <span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span>
     </div>
   </footer>
-  <script src="js/config.js?v=4.9.0"></script>
-  <script src="js/emmagina-data.js?v=4.9.0"></script>
-  <script src="js/emmagina-api.js?v=4.9.0"></script>
-  <script src="js/emmagina-cart.js?v=4.9.0"></script>
-  <script src="js/emmagina-ui.js?v=4.9.0"></script>
-  <script src="js/emmagina-common.js?v=4.9.0"></script>
-  <script src="js/emmagina-render-engine.js?v=4.9.0"></script>
-  <script src="js/emmagina-cms-page-loader.js?v=4.9.0"></script>
+
+  <script src="js/config.js?v=5.0.0"></script>
+  <script src="js/emmagina-data.js?v=5.0.0"></script>
+  <script src="js/emmagina-api.js?v=5.0.0"></script>
+  <script src="js/emmagina-cart.js?v=5.0.0"></script>
+  <script src="js/emmagina-ui.js?v=5.0.0"></script>
+  <script src="js/emmagina-common.js?v=5.0.0"></script>
+  <script src="js/emmagina-home.js?v=5.0.0"></script>
 </body>
 </html>

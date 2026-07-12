@@ -255,8 +255,7 @@
       const href = typeof item === "string"
         ? (label === "Todos" ? "catalogo.html" : `catalogo.html?categoria=${encodeURIComponent(label)}`)
         : cleanUrl(item?.href || item?.url || item?.link, `catalogo.html?categoria=${encodeURIComponent(label)}`);
-      const image = typeof item === "object" ? item?.image || item?.imagen || "" : "";
-      return `<a href="${escape(href)}">${image ? `<img src="${escape(image)}" alt="" loading="lazy">` : ""}<span>${escape(label)}</span></a>`;
+      return `<a href="${escape(href)}"><span>${escape(label)}</span></a>`;
     }).join("");
   }
 
@@ -658,21 +657,16 @@
 
   try {
     document.querySelectorAll("[data-marquee-track]").forEach((track) => window.EmmaginaUI.setLoading(track, "Cargando productos..."));
-    const [products, banners, page] = await Promise.all([
+    const [products, banners] = await Promise.all([
       window.EmmaginaAPI.getProducts({ limit: 240 }),
-      window.EmmaginaAPI.getBanners().catch(() => []),
-      window.EmmaginaAPI.getPage("home").catch((error) => {
-        console.warn("Page Builder no disponible; se usará home fija:", error.message);
-        return null;
-      })
+      window.EmmaginaAPI.getBanners().catch(() => [])
     ]);
 
     all.push(...products);
     publicBanners = Array.isArray(banners) ? banners : [];
     const visible = all.filter(window.EmmaginaData.isVisible);
 
-    const renderedByBuilder = renderBuilderHome(page, visible);
-    if (!renderedByBuilder) renderLegacyHome(visible);
+    renderLegacyHome(visible);
   } catch (error) {
     console.error("No fue posible cargar productos en inicio:", error);
     document.querySelectorAll("[data-home-marquee]").forEach((root) => window.EmmaginaUI.setError(root, error.message));
