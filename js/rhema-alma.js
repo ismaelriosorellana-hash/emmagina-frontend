@@ -93,7 +93,7 @@
       const folio = result?.folio || result?.solicitud?.folio || "";
       showMessage("success", `
         <p><strong>Solicitud Alma recibida.</strong></p>
-        ${folio ? `<p>Tu folio es <strong>${escapeHtml(folio)}</strong>. Guárdalo para seguimiento.</p>` : ""}
+        ${folio ? `<p>Tu folio es <strong>${escapeHtml(folio)}</strong>. Guárdalo para seguimiento.</p><p><a class="btn btn-soft btn-small" href="cotizacion.html?folio=${encodeURIComponent(folio)}">Consultar esta solicitud</a></p>` : ""}
         <p>Revisaremos las referencias y te enviaremos una propuesta con alcance, precio y plazo.</p>
       `);
       form.reset();

@@ -123,7 +123,7 @@
 
       showMessage("success", `
         <p><strong>Solicitud recibida correctamente.</strong></p>
-        ${folio ? `<p>Tu folio es <strong>${escapeHtml(folio)}</strong>. Guárdalo para seguimiento.</p>` : ""}
+        ${folio ? `<p>Tu folio es <strong>${escapeHtml(folio)}</strong>. Guárdalo para seguimiento.</p><p><a class="btn btn-soft btn-small" href="cotizacion.html?folio=${encodeURIComponent(folio)}">Consultar esta solicitud</a></p>` : ""}
         <p>Revisaremos tu solicitud de ${escapeHtml(label)} y te responderemos con precio, tiempo estimado y recomendaciones.</p>
       `);
 

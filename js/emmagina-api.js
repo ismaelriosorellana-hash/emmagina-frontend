@@ -146,6 +146,20 @@
     });
   }
 
+  async function getCustomQuote(folio, contact = {}) {
+    const query = new URLSearchParams();
+    if (contact.correo) query.set("correo", contact.correo);
+    if (contact.whatsapp) query.set("whatsapp", contact.whatsapp);
+    return request(`/solicitudes-personalizadas/${encodeURIComponent(folio)}?${query.toString()}`);
+  }
+
+  async function respondCustomQuote(folio, payload = {}) {
+    return request(`/solicitudes-personalizadas/${encodeURIComponent(folio)}/responder`, {
+      method: "POST",
+      body: payload
+    });
+  }
+
 
   API.request = request;
   API.getProducts = getProducts;
@@ -160,5 +174,7 @@
   API.validateCart = validateCart;
   API.createOrder = createOrder;
   API.createCustomRequest = createCustomRequest;
+  API.getCustomQuote = getCustomQuote;
+  API.respondCustomQuote = respondCustomQuote;
   window.EmmaginaAPI = Object.freeze(API);
 })();

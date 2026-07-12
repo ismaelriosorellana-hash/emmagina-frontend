@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Consulta y responde una cotización de Rhema Diseños.">
+  <meta name="theme-color" content="#f8f6f1">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css?v=5.12.0">
+  <link rel="stylesheet" href="css/layout.css?v=5.12.0">
+  <link rel="stylesheet" href="css/components.css?v=5.12.0">
+  <link rel="stylesheet" href="css/pages.css?v=5.12.0">
+  <title>Mi cotización | Rhema Diseños</title>
+</head>
+<body>
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+  <header class="site-header" data-site-header>
+    <div class="header-shell">
+      <div class="header-top">
+        <button class="icon-button search-trigger" type="button" data-open-search><span aria-hidden="true">🔎</span><span>Buscar</span></button>
+        <a class="brand" href="index.html"><strong>Rhema Diseños</strong><small>Diseños 3D</small></a>
+        <div class="header-actions">
+          <button class="icon-button mobile-menu-button" type="button" data-mobile-menu aria-expanded="false" aria-controls="main-nav">Menú</button>
+          <a class="header-link login-link" href="acceso.html">Iniciar sesión</a>
+          <a class="header-link cart-pill" href="carrito.html">Carrito <span class="cart-count" data-cart-count>0</span></a>
+        </div>
+      </div>
+      <nav class="main-nav" id="main-nav">
+        <a href="index.html">Inicio</a><a href="catalogo.html">Tienda</a><a href="pedido-personalizado.html">Crea tu Figura</a><a href="quienes-somos.html">Sobre Nosotros</a><a href="preguntas-frecuentes.html">Preguntas Frecuentes</a><a href="contacto.html">Contáctanos</a>
+      </nav>
+    </div>
+  </header>
+  <section class="search-panel" data-search-panel aria-hidden="true"><div class="search-box"><form action="catalogo.html" method="get"><label class="sr-only" for="global-search">Buscar productos</label><input id="global-search" type="search" name="q" placeholder="Buscar productos..."><button class="btn btn-primary" type="submit">Buscar</button></form><button class="btn btn-soft search-close" type="button" data-close-search>Cerrar</button></div></section>
+
+  <main id="main">
+    <header class="content-hero quote-hero">
+      <p class="kicker">Cotizaciones Rhema</p>
+      <h1>Consulta y responde tu cotización</h1>
+      <p>Usa el folio y el correo o WhatsApp que registraste. Podrás revisar precio, plazo, condiciones y aceptar o rechazar la propuesta.</p>
+    </header>
+
+    <section class="quote-shell">
+      <form class="quote-lookup-card" data-quote-form>
+        <div class="section-heading quote-heading"><div><p class="kicker">Buscar solicitud</p><h2>Ingresa tus datos</h2></div></div>
+        <label>Folio de solicitud
+          <input name="folio" data-quote-folio required autocomplete="off" placeholder="Ej: RD-20260712-AB12">
+        </label>
+        <label>Correo usado en la solicitud
+          <input name="correo" type="email" autocomplete="email" placeholder="nombre@correo.cl">
+        </label>
+        <div class="quote-or">o</div>
+        <label>WhatsApp usado en la solicitud
+          <input name="whatsapp" type="tel" autocomplete="tel" placeholder="Ej: +56 9 1234 5678">
+        </label>
+        <button class="btn btn-primary" type="submit">Consultar cotización</button>
+        <p class="quote-privacy">Pedimos un dato de contacto para proteger la información de tu solicitud.</p>
+      </form>
+
+      <section class="quote-result" data-quote-result aria-live="polite">
+        <div class="state-box"><p>Tu cotización aparecerá aquí después de consultar.</p></div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <section class="footer-col"><h2 class="footer-brand">Rhema Diseños</h2><p>Productos impresos en 3D, figuras personalizadas y soluciones creadas en Santiago.</p></section>
+      <nav class="footer-col"><h3>Tienda</h3><a href="catalogo.html">Catálogo</a><a href="memories.html">Memories</a><a href="alma.html">Alma</a><a href="servicio-3d.html">Servicio 3D</a></nav>
+      <nav class="footer-col"><h3>Ayuda</h3><a href="cotizacion.html">Mi cotización</a><a href="preguntas-frecuentes.html">Preguntas frecuentes</a><a href="despachos-retiros.html">Despachos y retiros</a></nav>
+      <section class="footer-col"><h3>Soporte</h3><p>Correo: contacto@rhemadisenos.cl</p><a class="btn btn-soft btn-small" href="contacto.html">Contactar soporte</a></section>
+    </div>
+  </footer>
+  <script src="js/config.js?v=5.12.0"></script>
+  <script src="js/emmagina-data.js?v=5.12.0"></script>
+  <script src="js/emmagina-api.js?v=5.12.0"></script>
+  <script src="js/emmagina-cart.js?v=5.12.0"></script>
+  <script src="js/emmagina-ui.js?v=5.12.0"></script>
+  <script src="js/emmagina-common.js?v=5.12.0"></script>
+  <script src="js/rhema-quote.js?v=5.12.0"></script>
+</body>
+</html>

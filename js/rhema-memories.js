@@ -80,7 +80,7 @@
       const folio = result?.folio || result?.solicitud?.folio || "";
       showMessage("success", `
         <p><strong>Solicitud Memories recibida.</strong></p>
-        ${folio ? `<p>Tu folio es <strong>${escapeHtml(folio)}</strong>. Guárdalo para seguimiento.</p>` : ""}
+        ${folio ? `<p>Tu folio es <strong>${escapeHtml(folio)}</strong>. Guárdalo para seguimiento.</p><p><a class="btn btn-soft btn-small" href="cotizacion.html?folio=${encodeURIComponent(folio)}">Consultar esta solicitud</a></p>` : ""}
         <p>Revisaremos la calidad de las fotografías y te enviaremos una recomendación con precio y plazo.</p>
       `);
       form.reset();
