@@ -2,16 +2,24 @@
 
 (function () {
   const BASE_NAV = [
-    { label: "Inicio", href: "index.html" },
-    { label: "Tienda", href: "catalogo.html" },
-    { label: "Crea tu Escena", href: "pedido-personalizado.html" },
-    { label: "Sobre Nosotros", href: "quienes-somos.html" },
-    { label: "Contáctanos", href: "contacto.html" },
-    { label: "Preguntas Frecuentes", href: "preguntas-frecuentes.html" }
+    { label: "Inicio", href: "index.html", sortOrder: 10, source: "system" },
+    { label: "Tienda", href: "catalogo.html", sortOrder: 20, source: "system" },
+    { label: "Crea tu Figura", href: "pedido-personalizado.html", sortOrder: 30, source: "system" },
+    { label: "Sobre Nosotros", href: "quienes-somos.html", sortOrder: 40, source: "system" },
+    { label: "Preguntas Frecuentes", href: "preguntas-frecuentes.html", sortOrder: 50, source: "system" },
+    { label: "Contáctanos", href: "contacto.html", sortOrder: 60, source: "system" }
   ];
 
-  function escapeHtml(value) {
+  function displayBrandText(value) {
     return String(value ?? "")
+      .replace(/EMMAGINA/g, "RHEMA DISEÑOS")
+      .replace(/Emmagina/g, "Rhema Diseños")
+      .replace(/Crea tu Escena/g, "Crea tu Figura")
+      .replace(/3D Store/g, "Diseños 3D");
+  }
+
+  function escapeHtml(value) {
+    return displayBrandText(value)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
@@ -105,7 +113,7 @@
     const title = settings.branding?.title;
     const brand = document.querySelector(".brand");
     if (brand && title?.text) {
-      const small = brand.querySelector("small")?.outerHTML || "<small>3D Store</small>";
+      const small = brand.querySelector("small")?.outerHTML || "<small>Diseños 3D</small>";
       brand.innerHTML = `<strong>${escapeHtml(title.text)}</strong>${small}`;
     }
   }
@@ -123,6 +131,34 @@
     }
   }
 
+  function normalizeNavKey(item = {}) {
+    const href = cleanHref(item.href || "", "").split("?")[0].split("#")[0].toLowerCase();
+    const label = String(item.label || "").trim().toLowerCase();
+    if (href) return href;
+    return label;
+  }
+
+  function mergeNavigation(cmsItems = []) {
+    const map = new Map();
+    BASE_NAV.forEach((item) => map.set(normalizeNavKey(item), { ...item, isVisible: true }));
+    (Array.isArray(cmsItems) ? cmsItems : []).forEach((item) => {
+      if (!item || item.isVisible === false || !item.label || !item.href) return;
+      const cleanItem = {
+        ...item,
+        label: String(item.label).replace(/Emmagina/g, "Rhema Diseños").replace(/Crea tu Escena/g, "Crea tu Figura"),
+        href: cleanHref(item.href, "#"),
+        sortOrder: Number(item.sortOrder ?? item.orden ?? 100)
+      };
+      const key = normalizeNavKey(cleanItem);
+      if (map.has(key)) {
+        map.set(key, { ...map.get(key), ...cleanItem, href: map.get(key).href, label: map.get(key).label });
+      } else {
+        map.set(key, cleanItem);
+      }
+    });
+    return [...map.values()].filter((item) => item.isVisible !== false).sort((a, b) => Number(a.sortOrder || a.orden || 100) - Number(b.sortOrder || b.orden || 100));
+  }
+
   async function renderDynamicNav() {
     const nav = document.querySelector(".main-nav");
     if (!nav || !window.EmmaginaAPI?.getNavigation) {
@@ -131,7 +167,7 @@
     }
     try {
       const items = await window.EmmaginaAPI.getNavigation();
-      const list = Array.isArray(items) && items.length ? items : BASE_NAV;
+      const list = mergeNavigation(items);
       nav.innerHTML = list
         .filter((item) => item && item.label && item.href && item.isVisible !== false)
         .map((item) => `<a href="${escapeHtml(cleanHref(item.href, "#"))}"${item.opensNewTab ? ' target="_blank" rel="noopener"' : ""}>${escapeHtml(item.label)}</a>`)
@@ -158,7 +194,7 @@
       .map((link) => `<a href="${escapeHtml(cleanHref(link.href, "#"))}">${escapeHtml(link.label)}</a>`).join(" · ");
     target.innerHTML = `<div class="footer-inner">
       <section class="footer-col" aria-label="Marca">
-        <h2 class="footer-brand">${escapeHtml(footer.brandTitle || window.CONFIG?.BRAND_NAME || "Emmagina")}</h2>
+        <h2 class="footer-brand">${escapeHtml(footer.brandTitle || window.CONFIG?.BRAND_NAME || "Rhema Diseños")}</h2>
         <p>${escapeHtml(footer.brandText || "")}</p>
       </section>
       ${colsHtml}
@@ -170,7 +206,7 @@
       </section>
     </div>
     <div class="footer-bottom">
-      <span>${escapeHtml(footer.copyright || `© ${new Date().getFullYear()} Emmagina`)}</span>
+      <span>${escapeHtml(footer.copyright || `© ${new Date().getFullYear()} Rhema Diseños`)}</span>
       <span>${legal}</span>
     </div>`;
   }

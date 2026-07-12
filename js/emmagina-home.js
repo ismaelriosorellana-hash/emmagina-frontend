@@ -280,7 +280,7 @@
     const content = getContent(block);
     const categories = content.categories || content.categorias || DEFAULT_CATEGORIES;
     return `<section class="section section-muted builder-section category-grid-section" data-block-id="${escape(block._id || block.id || "")}">
-      <div class="section-heading"><div><p class="kicker">Emmagina</p><h2>${escape(content.title || content.heading || "Categorías")}</h2></div></div>
+      <div class="section-heading"><div><p class="kicker">Rhema Diseños</p><h2>${escape(content.title || content.heading || "Categorías")}</h2></div></div>
       <div class="explore-grid">${categories.slice(0, 12).map((item) => {
         const label = typeof item === "string" ? item : item?.label || item?.nombre || "Categoría";
         const href = typeof item === "string" ? `catalogo.html?categoria=${encodeURIComponent(label)}` : cleanUrl(item?.href || item?.url, `catalogo.html?categoria=${encodeURIComponent(label)}`);
@@ -337,12 +337,12 @@
 
     return `<section class="section section-muted home-info-section builder-section" data-block-id="${escape(block._id || block.id || "")}" aria-labelledby="info-${escape(block._id || block.id || "block")}">
       <div class="section-heading">
-        <div><p class="kicker">${escape(content.kicker || "Información")}</p><h2 id="info-${escape(block._id || block.id || "block")}">${escape(content.title || "Explora Emmagina")}</h2></div>
+        <div><p class="kicker">${escape(content.kicker || "Información")}</p><h2 id="info-${escape(block._id || block.id || "block")}">${escape(content.title || "Explora Rhema Diseños")}</h2></div>
       </div>
       <div class="explore-grid">
         ${cards.slice(0, 6).map((card) => {
           const title = card.title || card.titulo || "Información";
-          const text = card.text || card.descripcion || card.description || "Conoce una sección de Emmagina.";
+          const text = card.text || card.descripcion || card.description || "Conoce una sección de Rhema Diseños.";
           const image = card.image || card.imagen || card.url || window.CONFIG.placeholderImage;
           const href = cleanUrl(card.href || card.urlDestino || card.link, "catalogo.html");
           return `<a class="explore-card" href="${escape(href)}">
@@ -368,7 +368,7 @@
     const duration = Math.max(34, selected.length * 6);
 
     return `<section class="section section-muted product-marquee builder-section" data-block-id="${escape(block._id || block.id || "")}" aria-label="${escape(title)}"${spacingStyle(block)}>
-      <header class="carousel-head"><div><p class="kicker">${escape(content.kicker || "Emmagina")}</p><h2>${escape(title)}</h2></div></header>
+      <header class="carousel-head"><div><p class="kicker">${escape(content.kicker || "Rhema Diseños")}</p><h2>${escape(title)}</h2></div></header>
       <div class="marquee-viewport"><div class="marquee-track" style="--marquee-duration:${duration}s">${track}</div></div>
     </section>`;
   }
@@ -381,7 +381,7 @@
     const selected = selectProductsForBlock(content, products, limit).slice(0, limit);
     const cards = selected.map((p) => window.EmmaginaUI.productCard(p)).join("");
     return `<section class="section section-muted builder-section product-grid-section" data-block-id="${escape(block._id || block.id || "")}"${spacingStyle(block)}>
-      <header class="carousel-head"><div><p class="kicker">${escape(content.kicker || "Emmagina")}</p><h2>${escape(title)}</h2></div></header>
+      <header class="carousel-head"><div><p class="kicker">${escape(content.kicker || "Rhema Diseños")}</p><h2>${escape(title)}</h2></div></header>
       ${selected.length ? `<div class="product-grid">${cards}</div>` : `<div class="state-box"><p>No hay productos disponibles por ahora.</p></div>`}
     </section>`;
   }
@@ -389,7 +389,7 @@
   function renderImageBannerBlock(block) {
     const content = getContent(block);
     const style = getStyle(block);
-    const title = content.title || block.name || "Emmagina";
+    const title = content.title || block.name || "Rhema Diseños";
     const image = imageFromContent(content, "assets/producto-referencia-emmagina.png");
     const href = cleanUrl(content.buttonUrl || content.href || content.url, "pedido-personalizado.html");
     const buttonText = content.buttonText || "Pedir el mío";
@@ -410,7 +410,7 @@
     return {
       rating: Math.min(5, Math.max(1, Math.round(rating))),
       text,
-      author: String(review.nombre || review.autor || review.cliente || "Cliente Emmagina").trim(),
+      author: String(review.nombre || review.autor || review.cliente || "Cliente Rhema Diseños").trim(),
       productName: product.nombre,
       productUrl: window.ProductLinks.detail(product)
     };
@@ -563,10 +563,10 @@
     if (!banner || !image) return;
     const src = bannerImage(banner);
     if (src) image.src = src;
-    image.alt = banner.titulo || banner.nombre || "Banner principal Emmagina";
+    image.alt = banner.titulo || banner.nombre || "Banner principal Rhema Diseños";
     image.style.objectPosition = banner.posicion || "center";
     if (link) link.href = bannerTarget(banner, "catalogo.html");
-    if (kicker) kicker.textContent = banner.eyebrow || "Emmagina";
+    if (kicker) kicker.textContent = banner.eyebrow || "Rhema Diseños";
     if (title) title.textContent = banner.titulo || "Ideas que toman forma";
     if (button) button.textContent = banner.textoBoton || "Ver tienda";
   }
@@ -595,7 +595,7 @@
       container.innerHTML = infoBanners.map((banner) => {
         const image = bannerImage(banner) || window.CONFIG.placeholderImage;
         const title = banner.titulo || banner.nombre || "Información";
-        const text = banner.eyebrow || "Conoce una sección de Emmagina.";
+        const text = banner.eyebrow || "Conoce una sección de Rhema Diseños.";
         return `<a class="explore-card" href="${escape(bannerTarget(banner, "catalogo.html"))}">
           <img class="explore-image" src="${escape(image)}" alt="${escape(title)}" loading="lazy">
           <h3>${escape(title)}</h3>

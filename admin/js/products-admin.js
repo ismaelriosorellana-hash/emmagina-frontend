@@ -286,7 +286,7 @@ function renderProducts() {
                                     <div>
                                         <strong>${AdminUI.escapeHtml(product.nombre)}</strong>
                                         <small>SKU: ${AdminUI.escapeHtml(product.sku || "Pendiente")}</small>
-                                        <small>${AdminUI.escapeHtml(product.marca || "Emmagina")}</small>
+                                        <small>${AdminUI.escapeHtml(product.marca || "Rhema Diseños")}</small>
                                     </div>
                                 </div>
                             </td>
@@ -372,7 +372,7 @@ function openProductForm(product = null) {
 
     setValue("product-name", product?.nombre || "");
     setValue("product-sku", product?.sku || "");
-    setValue("product-brand", product?.marca || "Emmagina");
+    setValue("product-brand", product?.marca || "Rhema Diseños");
     setValue("product-barcode", product?.codigoBarras || "");
     setValue("product-price", product?.precio ?? "");
     setValue("product-original-price", product?.precioOriginal || "");
@@ -767,13 +767,13 @@ function updateProductFormStatus() {
     document.getElementById("product-seo-description-count").textContent = String(description.length);
 
     document.getElementById("product-seo-preview-title").textContent =
-        title || `${productName || "Nombre del producto"} | Emmagina`;
+        title || `${productName || "Nombre del producto"} | Rhema Diseños`;
 
     document.getElementById("product-seo-preview-description").textContent =
         description || "Agrega una descripción SEO clara para explicar qué hace especial este producto.";
 
     document.getElementById("product-seo-preview-url").textContent =
-        `emmagina.cl/producto/${slug || "nombre-del-producto"}`;
+        `rhemadisenos.cl/producto/${slug || "nombre-del-producto"}`;
 
     const checks = [
         { label: "nombre", ok: Boolean(productName) },
@@ -887,7 +887,7 @@ async function saveProduct(event) {
         nombre: stringFrom("product-name"),
         slug,
         sku: normalizeSkuClient(stringFrom("product-sku")),
-        marca: stringFrom("product-brand") || "Emmagina",
+        marca: stringFrom("product-brand") || "Rhema Diseños",
         codigoBarras: stringFrom("product-barcode"),
         precio: numberFrom("product-price"),
         precioOriginal: numberFrom("product-original-price"),

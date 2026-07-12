@@ -1536,7 +1536,7 @@ body[data-admin-page="productos"] .admin-variant-card-header span {
 }
 
 
-/* Emmagina admin v4.5: paleta 60-30-10 */
+/* Rhema Diseños admin v4.5: paleta 60-30-10 */
 .admin-button { background: var(--admin-primary); color: #fff; }
 .admin-button:hover, .admin-button:focus-visible { background: var(--admin-primary-dark); }
 .admin-button.buy, .admin-button.checkout, .admin-button[data-sale-action="true"] { background: var(--admin-accent); color: var(--admin-primary-dark); }

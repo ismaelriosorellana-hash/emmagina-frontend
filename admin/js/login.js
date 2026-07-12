@@ -39,7 +39,7 @@ document.addEventListener(
         if (siteHost) {
             siteHost.textContent =
                 location.hostname ||
-                "Emmagina";
+                "Rhema Diseños";
         }
 
         if (connectionStatus) {

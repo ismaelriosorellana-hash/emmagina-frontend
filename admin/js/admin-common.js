@@ -373,9 +373,9 @@
             <div class="admin-shell">
                 <aside class="admin-sidebar">
                     <a class="admin-brand" href="index.html">
-                        <img src="${LOGO}" alt="Emmagina">
+                        <img src="${LOGO}" alt="Rhema Diseños">
                         <div>
-                            <strong>Emmagina</strong>
+                            <strong>Rhema Diseños</strong>
                             <span>Panel administrador</span>
                         </div>
                     </a>

@@ -302,7 +302,7 @@
             }
 
             throw new AdminApiError(
-                "No fue posible conectar con el servidor de Emmagina. Intenta nuevamente en un momento.",
+                "No fue posible conectar con el servidor de Rhema Diseños. Intenta nuevamente en un momento.",
                 0,
                 error
             );

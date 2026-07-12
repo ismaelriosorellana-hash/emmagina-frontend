@@ -446,7 +446,7 @@ function designWhatsAppUrl(order, item) {
     if (!phone) return "";
 
     const message = encodeURIComponent(
-        `Hola ${order.cliente?.nombre || ""}, publicamos el diseño final de ${item.nombre} para el pedido ${order.numeroPedido}. Ingresa a tu cuenta en Emmagina para revisarlo, aprobarlo o solicitar cambios.`
+        `Hola ${order.cliente?.nombre || ""}, publicamos el diseño final de ${item.nombre} para el pedido ${order.numeroPedido}. Ingresa a tu cuenta en Rhema Diseños para revisarlo, aprobarlo o solicitar cambios.`
     );
 
     return `https://wa.me/${phone}?text=${message}`;
@@ -597,7 +597,7 @@ function renderOrderCommunication(order) {
                     </div>
 
                     <p class="order-communication-note">
-                        El correo se enviará con la plantilla oficial Emmagina si Resend está configurado. Si no, el sistema deja el mensaje listo para copiar o enviar por WhatsApp.
+                        El correo se enviará con la plantilla oficial Rhema Diseños si Resend está configurado. Si no, el sistema deja el mensaje listo para copiar o enviar por WhatsApp.
                     </p>
                 </div>
             </section>
@@ -684,7 +684,7 @@ function customerWhatsAppUrl(order) {
     if (!phone) return "";
 
     const message = encodeURIComponent(
-        `Hola ${order.cliente?.nombre || ""}, te contactamos por tu pedido ${order.numeroPedido} en Emmagina. Estado actual: ${orderStatusLabel(order.estadoPedido)}.`
+        `Hola ${order.cliente?.nombre || ""}, te contactamos por tu pedido ${order.numeroPedido} en Rhema Diseños. Estado actual: ${orderStatusLabel(order.estadoPedido)}.`
     );
 
     return `https://wa.me/${phone}?text=${message}`;

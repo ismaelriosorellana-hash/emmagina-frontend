@@ -145,7 +145,7 @@
 
   function normalizeProduct(raw = {}) {
     const id = String(raw.id || raw._id || "");
-    const nombre = String(raw.nombre || raw.name || "Producto Emmagina").trim();
+    const nombre = String(raw.nombre || raw.name || "Producto Rhema Diseños").trim();
     const precio = Number(raw.precio || raw.price || 0);
     const precioOriginal = Number(raw.precioOriginal || raw.originalPrice || 0);
     const categorias = normalizeCategories(raw);
@@ -190,8 +190,8 @@
       slug,
       nombre,
       sku: String(raw.sku || "").trim(),
-      marca: String(raw.marca || "Emmagina").trim(),
-      descripcion: raw.descripcion || raw.description || "Producto impreso en 3D por Emmagina.",
+      marca: String(raw.marca || "Rhema Diseños").trim(),
+      descripcion: raw.descripcion || raw.description || "Producto impreso en 3D por Rhema Diseños.",
       descripcionCorta: raw.descripcionCorta || raw.shortDescription || raw.descripcion || "Diseñado y fabricado con detalles cuidados.",
       precio,
       precioOriginal,

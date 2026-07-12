@@ -3,10 +3,16 @@
 (function () {
   const Engine = {};
 
+  function displayBrandText(value) {
+    return String(value ?? "")
+      .replace(/EMMAGINA/g, "RHEMA DISEÑOS")
+      .replace(/Emmagina/g, "Rhema Diseños")
+      .replace(/Crea tu Escena/g, "Crea tu Figura")
+      .replace(/3D Store/g, "Diseños 3D");
+  }
+
   function escape(value) {
-    return window.EmmaginaUI?.escapeHtml
-      ? window.EmmaginaUI.escapeHtml(value)
-      : String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char]));
+    return displayBrandText(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char]));
   }
 
   function textKey(value) {
@@ -111,7 +117,7 @@
     return {
       name: item?.nombre || item?.name || item?.titulo || item?.title || "Categoría",
       url: item?.url || item?.href || normalizedCategoryUrl(item),
-      image: item?.imagen || item?.image || item?.icono || ""
+      image: ""
     };
   }
 
@@ -185,7 +191,7 @@
       return `<aside class="category-panel cms-block${mobileHidden}" data-block-id="${escape(block.id || "")}">
         <h2>${escape(c.titulo || c.title || "Categorías")}</h2>
         <nav class="category-list">
-          ${categories.map((cat) => `<a href="${escape(safeUrl(cat.url, "catalogo.html"))}">${cat.image ? `<img src="${escape(cat.image)}" alt="" loading="lazy">` : ""}<span>${escape(cat.name)}</span></a>`).join("")}
+          ${categories.map((cat) => `<a href="${escape(safeUrl(cat.url, "catalogo.html"))}"><span>${escape(cat.name)}</span></a>`).join("")}
         </nav>
         ${c.mostrarVerTodas === false ? "" : `<a class="category-view-all" href="${escape(safeUrl(c.verTodasUrl || c.viewAllUrl, "catalogo.html"))}">${escape(c.verTodasTexto || c.viewAllText || "Ver todas")}</a>`}
       </aside>`;
@@ -206,14 +212,15 @@
       const c = content(block);
       const s = style(block);
       const height = Math.max(180, Math.min(760, number(s.alturaDesktop || c.alturaDesktop || s.heightDesktop, 420)));
-      const image = c.imagenDesktop || c.imageDesktop || c.imagen || c.image || window.CONFIG?.placeholderImage || "";
-      const title = c.titulo || c.title || "Emmagina";
-      const subtitle = c.subtitulo || c.subtitle || "Productos impresos en 3D para regalar, decorar y crear recuerdos.";
+      const image = c.imagenDesktop || c.imageDesktop || c.imagen || c.image || "";
+      const title = c.titulo || c.title || "Rhema Diseños";
+      const subtitle = c.subtitulo || c.subtitle || "Regalos, decoración y soluciones personalizadas impresas en 3D.";
       const url = safeUrl(c.botonUrl || c.buttonUrl, "catalogo.html");
-      const btn = c.botonTexto || c.buttonText || "Ver productos";
-      return `<a class="hero-card hero-card-banner cms-block" data-block-id="${escape(block.id || "")}" href="${escape(url)}" style="--hero-height:${height}px;background:${escape(s.fondo || c.fondo || "#EAF4F8")}">
-        ${image ? `<img src="${escape(image)}" alt="${escape(title)}" loading="eager">` : ""}
-        <span class="hero-overlay"><span class="kicker">${escape(c.kicker || "Emmagina 3D Store")}</span><strong>${escape(title)}</strong><span>${escape(subtitle)}</span>${btn ? `<span class="hero-button">${escape(btn)}</span>` : ""}</span>
+      const btn = c.botonTexto || c.buttonText || "Ver tienda";
+      const imageClass = image ? "" : " hero-card-no-image";
+      return `<a class="hero-card hero-card-banner cms-block${imageClass}" data-block-id="${escape(block.id || "")}" href="${escape(url)}" style="--hero-height:${height}px;background:${escape(s.fondo || c.fondo || "#EAF4F8")}">
+        ${image ? `<img src="${escape(image)}" alt="${escape(title)}" loading="eager">` : `<span class="hero-shapes" aria-hidden="true"><i></i><i></i><i></i></span>`}
+        <span class="hero-overlay"><span class="kicker">${escape(c.kicker || "Impresión 3D · regalos · soluciones")}</span><strong>${escape(title)}</strong><span>${escape(subtitle)}</span>${btn ? `<span class="hero-button">${escape(btn)}</span>` : ""}</span>
       </a>`;
     },
 
@@ -225,7 +232,7 @@
         { titulo: "Atención cercana", texto: "Te ayudamos a transformar una idea en producto." }
       ];
       return `<section class="section section-muted home-info-section cms-block" data-block-id="${escape(block.id || "")}"${inlineSpacing(block)}>
-        <div class="section-heading"><div><p class="kicker">Información</p><h2>${escape(c.titulo || c.title || "Explora Emmagina")}</h2></div></div>
+        <div class="section-heading"><div><p class="kicker">Información</p><h2>${escape(c.titulo || c.title || "Elige cómo crear con nosotros")}</h2></div></div>
         <div class="explore-grid">
           ${cards.map((card) => `<a class="explore-card" href="${escape(safeUrl(card.url || card.href, "#"))}">${card.imagen || card.image ? `<img src="${escape(card.imagen || card.image)}" alt="${escape(card.titulo || card.title || "")}" loading="lazy">` : `<span class="explore-image cms-placeholder-image"></span>`}<h3>${escape(card.titulo || card.title || "Título")}</h3><p>${escape(card.texto || card.text || "")}</p></a>`).join("")}
         </div>
@@ -253,7 +260,7 @@
 
     image_banner(block) {
       const c = content(block);
-      const image = c.imagenDesktop || c.imageDesktop || c.imagen || c.image || window.CONFIG?.placeholderImage || "";
+      const image = c.imagenDesktop || c.imageDesktop || c.imagen || c.image || "";
       const url = safeUrl(c.botonUrl || c.buttonUrl, "catalogo.html");
       return `<section class="section scene-lines-section cms-block" data-block-id="${escape(block.id || "")}"${inlineSpacing(block)}>
         <a class="line-banner" href="${escape(url)}" aria-label="${escape(c.titulo || c.title || "Banner")}">
@@ -344,7 +351,7 @@
 
   function applyMeta(page) {
     const seo = page?.seo || {};
-    if (seo.titulo || page?.titulo) document.title = `${seo.titulo || page.titulo} | Emmagina`;
+    if (seo.titulo || page?.titulo) document.title = `${displayText(seo.titulo || page.titulo)} | Rhema Diseños`;
     const description = seo.descripcion || "";
     if (description) {
       let meta = document.querySelector('meta[name="description"]');

@@ -194,9 +194,9 @@
     currentVariant = variants.find((variant) => [variant.key, variant.id, variant.sku, variant.nombre].map(String).includes(String(requestedVariant))) || product.variantePredeterminada || variants[0] || null;
     currentImages = imageListFor(product, currentVariant);
 
-    document.title = `${product.seo?.titulo || product.nombre} | Emmagina`;
+    document.title = `${product.seo?.titulo || product.nombre} | Rhema Diseños`;
     const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) metaDescription.setAttribute("content", product.seo?.descripcion || product.descripcionCorta || product.descripcion || "Producto Emmagina.");
+    if (metaDescription) metaDescription.setAttribute("content", product.seo?.descripcion || product.descripcionCorta || product.descripcion || "Producto Rhema Diseños.");
 
     const price = priceFor(product, currentVariant);
     const original = originalPriceFor(product, currentVariant);
@@ -207,14 +207,14 @@
       <section class="pdp-shell">
         ${renderGallery(currentImages, product)}
         <aside class="product-panel pdp-buy-panel">
-          <p class="kicker">${escape(product.categoriaPrincipal || "Emmagina")}</p>
+          <p class="kicker">${escape(product.categoriaPrincipal || "Rhema Diseños")}</p>
           <h1>${escape(product.nombre)}</h1>
           ${renderDetailBadges(product)}
           <div class="detail-price" data-pdp-price>
             <strong>${product.tieneRangoPrecio && !currentVariant ? `Desde ${money(product.precioDesde)}` : money(price)}</strong>
             ${original > price ? `<span class="product-old-price">${money(original)}</span>` : ""}
           </div>
-          <p class="pdp-short-description">${escape(product.descripcionCorta || product.descripcion || "Producto impreso en 3D por Emmagina.")}</p>
+          <p class="pdp-short-description">${escape(product.descripcionCorta || product.descripcion || "Producto impreso en 3D por Rhema Diseños.")}</p>
           <div class="pdp-status-row">
             <span class="pdp-status ${stock > 0 ? "is-available" : "is-custom"}">${escape(stockText(product, currentVariant))}</span>
             ${product.sku || currentVariant?.sku ? `<span>SKU: ${escape(currentVariant?.sku || product.sku)}</span>` : ""}
@@ -234,7 +234,7 @@
       <section class="pdp-content-grid">
         <article class="pdp-card pdp-description-card">
           <h2>Descripción</h2>
-          <p>${escape(product.descripcion || product.descripcionCorta || "Producto creado por Emmagina.")}</p>
+          <p>${escape(product.descripcion || product.descripcionCorta || "Producto creado por Rhema Diseños.")}</p>
         </article>
         ${renderBenefits(product)}
         ${renderCharacteristics(product)}

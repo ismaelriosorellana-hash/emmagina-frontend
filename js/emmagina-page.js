@@ -47,9 +47,9 @@
   const slug = params.get("slug") || params.get("page") || "home";
 
   function pageMeta(page) {
-    document.title = `${page.title || "Página"} | Emmagina`;
+    document.title = `${page.title || "Página"} | Rhema Diseños`;
     const description = document.querySelector("meta[name='description']");
-    if (description) description.setAttribute("content", page.seo?.description || page.description || "Contenido de Emmagina.");
+    if (description) description.setAttribute("content", page.seo?.description || page.description || "Contenido de Rhema Diseños.");
   }
 
   function categoriesHtml(categories = DEFAULT_CATEGORIES) {
@@ -140,12 +140,12 @@
   function renderCategoryGrid(block) {
     const c = getContent(block);
     const list = c.categories || c.categorias || DEFAULT_CATEGORIES;
-    return `<section class="section section-muted home-info-section builder-section" data-block-id="${escape(block._id || block.id || "")}"${spacingStyle(block)}><div class="section-heading"><div><p class="kicker">Emmagina</p><h2>${escape(c.title || c.heading || "Categorías")}</h2></div></div><div class="explore-grid">${list.map((item) => { const label = typeof item === "string" ? item : item.label || item.nombre || "Categoría"; const href = typeof item === "string" ? `catalogo.html?categoria=${encodeURIComponent(label)}` : cleanUrl(item.href || item.url, `catalogo.html?categoria=${encodeURIComponent(label)}`); const image = typeof item === "object" ? item.image || item.imagen || window.CONFIG.placeholderImage : window.CONFIG.placeholderImage; return `<a class="explore-card" href="${escape(href)}"><img class="explore-image" src="${escape(image)}" alt="${escape(label)}" loading="lazy"><h3>${escape(label)}</h3></a>`; }).join("")}</div></section>`;
+    return `<section class="section section-muted home-info-section builder-section" data-block-id="${escape(block._id || block.id || "")}"${spacingStyle(block)}><div class="section-heading"><div><p class="kicker">Rhema Diseños</p><h2>${escape(c.title || c.heading || "Categorías")}</h2></div></div><div class="explore-grid">${list.map((item) => { const label = typeof item === "string" ? item : item.label || item.nombre || "Categoría"; const href = typeof item === "string" ? `catalogo.html?categoria=${encodeURIComponent(label)}` : cleanUrl(item.href || item.url, `catalogo.html?categoria=${encodeURIComponent(label)}`); const image = typeof item === "object" ? item.image || item.imagen || window.CONFIG.placeholderImage : window.CONFIG.placeholderImage; return `<a class="explore-card" href="${escape(href)}"><img class="explore-image" src="${escape(image)}" alt="${escape(label)}" loading="lazy"><h3>${escape(label)}</h3></a>`; }).join("")}</div></section>`;
   }
 
   function renderHero(block, standalone = true) {
     const c = getContent(block); const s = getStyle(block);
-    const title = c.title || block.name || "Emmagina";
+    const title = c.title || block.name || "Rhema Diseños";
     const subtitle = c.subtitle || c.eyebrow || "Contenido editable";
     const image = c.imageDesktop || c.image || window.CONFIG.placeholderImage;
     const href = cleanUrl(c.buttonUrl || c.href || c.url, "catalogo.html");
@@ -158,23 +158,23 @@
   function renderInfoCards(block) {
     const c = getContent(block);
     const cards = Array.isArray(c.cards) && c.cards.length ? c.cards : [{ title: "Información", text: "Contenido editable", image: "", href: "catalogo.html" }];
-    return `<section class="section section-muted home-info-section builder-section" data-block-id="${escape(block._id || block.id || "")}"${spacingStyle(block)}><div class="section-heading"><div><p class="kicker">${escape(c.kicker || "Emmagina")}</p><h2>${escape(c.title || "Contenido")}</h2></div></div><div class="explore-grid">${cards.slice(0, 6).map((card) => `<a class="explore-card" href="${escape(cleanUrl(card.href || card.link, "catalogo.html"))}"><img class="explore-image" src="${escape(card.image || card.imagen || window.CONFIG.placeholderImage)}" alt="${escape(card.title || "Tarjeta")}" loading="lazy"><h3>${escape(card.title || "Tarjeta")}</h3><p>${escape(card.text || card.description || "")}</p></a>`).join("")}</div></section>`;
+    return `<section class="section section-muted home-info-section builder-section" data-block-id="${escape(block._id || block.id || "")}"${spacingStyle(block)}><div class="section-heading"><div><p class="kicker">${escape(c.kicker || "Rhema Diseños")}</p><h2>${escape(c.title || "Contenido")}</h2></div></div><div class="explore-grid">${cards.slice(0, 6).map((card) => `<a class="explore-card" href="${escape(cleanUrl(card.href || card.link, "catalogo.html"))}"><img class="explore-image" src="${escape(card.image || card.imagen || window.CONFIG.placeholderImage)}" alt="${escape(card.title || "Tarjeta")}" loading="lazy"><h3>${escape(card.title || "Tarjeta")}</h3><p>${escape(card.text || card.description || "")}</p></a>`).join("")}</div></section>`;
   }
 
   function renderProductMarquee(block, products) {
     const c = getContent(block); const title = c.title || block.name || "Productos"; const limit = Math.max(4, Math.min(30, toNumber(c.limit, 14))); const selected = selectProductsForBlock(c, products, limit);
     const cards = selected.map((p) => window.EmmaginaUI.productCard(p)).join("");
     const track = selected.length ? `<div class="marquee-group">${cards}</div><div class="marquee-group" aria-hidden="true">${cards}</div>` : `<div class="state-box"><p>No hay productos disponibles por ahora.</p></div>`;
-    return `<section class="section section-muted product-marquee builder-section" data-block-id="${escape(block._id || block.id || "")}"${spacingStyle(block)}><header class="carousel-head"><div><p class="kicker">${escape(c.kicker || "Emmagina")}</p><h2>${escape(title)}</h2></div></header><div class="marquee-viewport"><div class="marquee-track" style="--marquee-duration:${Math.max(34, selected.length * 6)}s">${track}</div></div></section>`;
+    return `<section class="section section-muted product-marquee builder-section" data-block-id="${escape(block._id || block.id || "")}"${spacingStyle(block)}><header class="carousel-head"><div><p class="kicker">${escape(c.kicker || "Rhema Diseños")}</p><h2>${escape(title)}</h2></div></header><div class="marquee-viewport"><div class="marquee-track" style="--marquee-duration:${Math.max(34, selected.length * 6)}s">${track}</div></div></section>`;
   }
 
   function renderProductGrid(block, products) {
     const c = getContent(block); const title = c.title || block.name || "Productos"; const limit = Math.max(4, Math.min(36, toNumber(c.limit, 12))); const selected = selectProductsForBlock(c, products, limit).slice(0, limit);
-    return `<section class="section section-muted builder-section product-grid-section" data-block-id="${escape(block._id || block.id || "")}"${spacingStyle(block)}><header class="carousel-head"><div><p class="kicker">${escape(c.kicker || "Emmagina")}</p><h2>${escape(title)}</h2></div></header>${selected.length ? `<div class="product-grid">${selected.map((p) => window.EmmaginaUI.productCard(p)).join("")}</div>` : `<div class="state-box"><p>No hay productos disponibles por ahora.</p></div>`}</section>`;
+    return `<section class="section section-muted builder-section product-grid-section" data-block-id="${escape(block._id || block.id || "")}"${spacingStyle(block)}><header class="carousel-head"><div><p class="kicker">${escape(c.kicker || "Rhema Diseños")}</p><h2>${escape(title)}</h2></div></header>${selected.length ? `<div class="product-grid">${selected.map((p) => window.EmmaginaUI.productCard(p)).join("")}</div>` : `<div class="state-box"><p>No hay productos disponibles por ahora.</p></div>`}</section>`;
   }
 
   function renderImageBanner(block) {
-    const c = getContent(block); const s = getStyle(block); const title = c.title || block.name || "Emmagina"; const image = c.imageDesktop || c.image || window.CONFIG.placeholderImage; const href = cleanUrl(c.buttonUrl || c.href || c.url, "catalogo.html"); const height = Math.max(54, Math.min(360, toNumber(s.heightDesktop || c.heightDesktop, 112)));
+    const c = getContent(block); const s = getStyle(block); const title = c.title || block.name || "Rhema Diseños"; const image = c.imageDesktop || c.image || window.CONFIG.placeholderImage; const href = cleanUrl(c.buttonUrl || c.href || c.url, "catalogo.html"); const height = Math.max(54, Math.min(360, toNumber(s.heightDesktop || c.heightDesktop, 112)));
     return `<section class="section scene-lines-section builder-section" data-block-id="${escape(block._id || block.id || "")}"${spacingStyle(block)}><a class="line-banner" href="${escape(href)}" aria-label="${escape(title)}" style="height:${height}px"><img src="${escape(image)}" alt="${escape(c.alt || title)}" loading="lazy" style="object-position:${escape(c.imagePosition || s.objectPosition || "center")}"><span class="line-banner-button">${escape(c.buttonText || "Ver más")}</span></a></section>`;
   }
 
@@ -231,10 +231,10 @@
     if (!main) return;
     const sections = Array.isArray(page.sections) ? page.sections.filter((section) => section?.isVisible !== false).sort((a, b) => Number(a.position || 0) - Number(b.position || 0)) : [];
     const html = sections.length ? sections.map((section) => renderSection(section, products)).join("") : (page.blocks || []).map((block) => renderBlock(block, products)).join("");
-    main.innerHTML = html || `<header class="content-hero"><p class="kicker">Emmagina</p><h1>${escape(page.title || "Página")}</h1><p>${escape(page.description || "Contenido próximamente.")}</p></header>`;
+    main.innerHTML = html || `<header class="content-hero"><p class="kicker">Rhema Diseños</p><h1>${escape(page.title || "Página")}</h1><p>${escape(page.description || "Contenido próximamente.")}</p></header>`;
     window.EmmaginaUI.attachCartButtons(products);
   } catch (error) {
     const main = by("#main");
-    if (main) main.innerHTML = `<header class="content-hero"><p class="kicker">Emmagina</p><h1>Página no disponible</h1><p>${escape(error.message || "No fue posible cargar esta página.")}</p><p><a class="btn btn-primary" href="index.html">Volver al inicio</a></p></header>`;
+    if (main) main.innerHTML = `<header class="content-hero"><p class="kicker">Rhema Diseños</p><h1>Página no disponible</h1><p>${escape(error.message || "No fue posible cargar esta página.")}</p><p><a class="btn btn-primary" href="index.html">Volver al inicio</a></p></header>`;
   }
 })();

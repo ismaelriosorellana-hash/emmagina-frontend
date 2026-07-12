@@ -8,8 +8,16 @@
   let delegated = false;
   let modalReady = false;
 
-  function escapeHtml(value) {
+  function displayBrandText(value) {
     return String(value ?? "")
+      .replace(/EMMAGINA/g, "RHEMA DISEÑOS")
+      .replace(/Emmagina/g, "Rhema Diseños")
+      .replace(/Crea tu Escena/g, "Crea tu Figura")
+      .replace(/3D Store/g, "Diseños 3D");
+  }
+
+  function escapeHtml(value) {
+    return displayBrandText(value)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
@@ -50,7 +58,7 @@
       ? `<span class="product-old-price">${window.EmmaginaData.formatPrice(product.precioOriginal)}</span>`
       : "";
     const meta = product.availabilityText || (product.personalizable ? "Fabricado a pedido" : product.stock > 0 ? `${product.stock} disponibles` : "Disponible para vitrina");
-    const category = product.categoriaPrincipal || product.categorias?.[0] || "Emmagina";
+    const category = product.categoriaPrincipal || product.categorias?.[0] || "Diseño 3D";
     const productId = escapeHtml(product.id);
 
     return `
@@ -182,9 +190,9 @@
     image.src = product.imagenPrincipal;
     image.alt = product.nombre;
     title.textContent = product.nombre;
-    text.textContent = product.descripcionCorta || product.descripcion || "Producto impreso en 3D por Emmagina.";
+    text.textContent = product.descripcionCorta || product.descripcion || "Producto impreso en 3D por Rhema Diseños.";
     price.textContent = window.EmmaginaData.formatPrice(product.precio);
-    category.textContent = product.categoriaPrincipal || product.categorias?.[0] || "Emmagina";
+    category.textContent = product.categoriaPrincipal || product.categorias?.[0] || "Diseño 3D";
     stage.classList.remove("is-zooming");
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");

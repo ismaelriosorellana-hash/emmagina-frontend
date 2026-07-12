@@ -1,4 +1,4 @@
-/* Emmagina · Frontend 3.47.0 · Panel admin de pedidos profesional */
+/* Rhema Diseños · Frontend 3.47.0 · Panel admin de pedidos profesional */
 
 body[data-admin-page="pedidos"] .orders-page-actions {
     display: flex;
@@ -431,7 +431,7 @@ body[data-admin-page="pedidos"] .order-asset-card {
     }
 }
 
-/* Emmagina · Frontend 3.63.0 · Comunicación post-compra */
+/* Rhema Diseños · Frontend 3.63.0 · Comunicación post-compra */
 .order-communication-panel .admin-card-body {
     display: grid;
     gap: 16px;

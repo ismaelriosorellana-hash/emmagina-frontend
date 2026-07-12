@@ -100,11 +100,11 @@
             name: "Hero principal",
             description: "Imagen principal con título, subtítulo y botón.",
             content: {
-                title: "Emmagina",
+                title: "Rhema Diseños",
                 subtitle: "Productos impresos en 3D para regalar, decorar y crear recuerdos.",
                 imageDesktop: "",
                 imageMobile: "",
-                alt: "Banner principal Emmagina",
+                alt: "Banner principal Rhema Diseños",
                 imagePosition: "center",
                 buttonText: "Comprar ahora",
                 buttonUrl: "catalogo.html"
@@ -120,7 +120,7 @@
             description: "Bloques con imagen, título, texto y enlace.",
             content: {
                 kicker: "Información",
-                title: "Explora Emmagina",
+                title: "Explora Rhema Diseños",
                 cards: [
                     { title: "Destacados", text: "Selección especial de productos.", image: "", href: "catalogo.html?grupo=destacados" },
                     { title: "Más vendidos", text: "Lo favorito de nuestros clientes.", image: "", href: "catalogo.html?grupo=vendidos" },
@@ -136,7 +136,7 @@
             group: "Productos",
             name: "Carrusel de productos",
             description: "Vitrina horizontal automática de productos.",
-            content: { kicker: "Emmagina", title: "Productos destacados", filter: "destacados", limit: 12 },
+            content: { kicker: "Rhema Diseños", title: "Productos destacados", filter: "destacados", limit: 12 },
             style: { marginTop: 0, marginBottom: 24 }
         },
         product_grid: {
@@ -146,7 +146,7 @@
             group: "Productos",
             name: "Grilla de productos",
             description: "Listado visual de productos en columnas.",
-            content: { kicker: "Emmagina", title: "Productos", filter: "todos", limit: 12 },
+            content: { kicker: "Rhema Diseños", title: "Productos", filter: "todos", limit: 12 },
             style: { marginTop: 0, marginBottom: 24 }
         },
         image_banner: {
@@ -161,7 +161,7 @@
                 subtitle: "Personaliza un recuerdo único.",
                 imageDesktop: "",
                 imageMobile: "",
-                alt: "Banner Emmagina",
+                alt: "Banner Rhema Diseños",
                 imagePosition: "center",
                 buttonText: "Pedir el mío",
                 buttonUrl: "pedido-personalizado.html"
@@ -759,7 +759,7 @@
         }
 
         if (type === "info_cards") {
-            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml("kicker", "Etiqueta superior", content.kicker || "Información")}${fieldHtml("title", "Título de sección", content.title || "Explora Emmagina")}</div>${repeaterHtml("cards", "Tarjetas", content.cards || [], "Cada tarjeta puede tener imagen, texto y enlace.")}`;
+            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml("kicker", "Etiqueta superior", content.kicker || "Información")}${fieldHtml("title", "Título de sección", content.title || "Explora Rhema Diseños")}</div>${repeaterHtml("cards", "Tarjetas", content.cards || [], "Cada tarjeta puede tener imagen, texto y enlace.")}`;
             return;
         }
 
@@ -769,7 +769,7 @@
                 { value: "category", label: "Categoría real" },
                 { value: "manual", label: "Productos seleccionados" }
             ];
-            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml("kicker", "Etiqueta superior", content.kicker || "Emmagina")}${fieldHtml("title", "Título", content.title || "")}${selectFieldHtml("source", "Origen de productos", content.source || (content.productIds?.length ? "manual" : content.categorySlug ? "category" : "filter"), sourceOptions)}${selectFieldHtml("filter", "Filtro automático", content.filter || "todos", productFilterOptions(content.filter))}${selectFieldHtml("categorySlug", "Categoría real", content.categorySlug || content.category || "", categorySelectOptions(content.categorySlug || content.category))}${fieldHtml("limit", "Cantidad máxima", content.limit || 12, "number", "min='1' max='36'")}</div>${productPickerHtml(content)}<p class="admin-help compact">El bloque puede mostrar un filtro, una categoría real o productos exactos. No necesitas escribir nombres técnicos.</p>`;
+            root.innerHTML = `${heading}<div class="admin-form-grid two">${fieldHtml("kicker", "Etiqueta superior", content.kicker || "Rhema Diseños")}${fieldHtml("title", "Título", content.title || "")}${selectFieldHtml("source", "Origen de productos", content.source || (content.productIds?.length ? "manual" : content.categorySlug ? "category" : "filter"), sourceOptions)}${selectFieldHtml("filter", "Filtro automático", content.filter || "todos", productFilterOptions(content.filter))}${selectFieldHtml("categorySlug", "Categoría real", content.categorySlug || content.category || "", categorySelectOptions(content.categorySlug || content.category))}${fieldHtml("limit", "Cantidad máxima", content.limit || 12, "number", "min='1' max='36'")}</div>${productPickerHtml(content)}<p class="admin-help compact">El bloque puede mostrar un filtro, una categoría real o productos exactos. No necesitas escribir nombres técnicos.</p>`;
             return;
         }
 
@@ -1288,7 +1288,7 @@
             },
             visualStyle: { cardRadius: 28, sectionSpacing: 28, density: "comfortable", shadowLevel: "soft" },
             navigation: { mode: "mixed", items: [] },
-            footer: { enabled: true, brandTitle: "Emmagina", brandText: "", email: "contacto@emmagina.cl", whatsapp: "56900000000", copyright: "© 2026 Emmagina. Todos los derechos reservados.", columns: [], legalLinks: [] }
+            footer: { enabled: true, brandTitle: "Rhema Diseños", brandText: "", email: "contacto@rhemadisenos.cl", whatsapp: "56900000000", copyright: "© 2026 Rhema Diseños. Todos los derechos reservados.", columns: [], legalLinks: [] }
         };
     }
 
@@ -1304,7 +1304,7 @@
         const footer = settings.footer || {};
         const setValue = (id, value) => { const el = $(id); if (el) el.value = value ?? ""; };
         setValue("#settings-navigation-mode", nav.mode || "mixed");
-        setValue("#settings-footer-brand-title", footer.brandTitle || "Emmagina");
+        setValue("#settings-footer-brand-title", footer.brandTitle || "Rhema Diseños");
         setValue("#settings-footer-brand-text", footer.brandText || "");
         setValue("#settings-footer-email", footer.email || "");
         setValue("#settings-footer-whatsapp", footer.whatsapp || "");
@@ -1398,7 +1398,7 @@
         settings.navigation.mode = $("#settings-navigation-mode")?.value || "mixed";
         settings.navigation.items = navItems().map((item) => ({ ...item }));
         settings.footer = settings.footer || {};
-        settings.footer.brandTitle = $("#settings-footer-brand-title")?.value || "Emmagina";
+        settings.footer.brandTitle = $("#settings-footer-brand-title")?.value || "Rhema Diseños";
         settings.footer.brandText = $("#settings-footer-brand-text")?.value || "";
         settings.footer.email = $("#settings-footer-email")?.value || "";
         settings.footer.whatsapp = $("#settings-footer-whatsapp")?.value || "";

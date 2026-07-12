@@ -31,7 +31,7 @@
 @media (max-width: 560px) { .footer-inner { grid-template-columns: 1fr; } .cart-pill { padding-inline: 10px; } .cart-pill::before { content: ""; } }
 
 
-/* Emmagina v4.5: navegación azul, acento naranja reservado */
+/* Rhema Diseños v4.5: navegación azul, acento naranja reservado */
 .site-header { background: rgba(255,255,255,.96); backdrop-filter: blur(14px); }
 .brand { color: var(--navy); }
 .main-nav a:hover, .main-nav a.is-active { color: var(--blue); }
@@ -42,3 +42,34 @@
 .cart-pill:hover { background: var(--cream); }
 .site-footer { background: var(--footer-bg, var(--navy)); }
 .search-panel { background: rgba(234,244,248,.96); }
+
+
+/* Rhema Diseños v4.9: navegación completa y cercana */
+.site-header {
+  border-bottom-color: rgba(33, 158, 188, .22);
+  box-shadow: 0 10px 30px rgba(2, 48, 71, .04);
+}
+.header-top { height: 78px; }
+.brand { letter-spacing: .08em; text-transform: none; gap: 2px; }
+.brand strong { font-size: clamp(22px, 2vw, 31px); letter-spacing: .08em; text-transform: uppercase; }
+.brand small { letter-spacing: .08em; text-transform: none; font-size: 11px; color: var(--deep-blue); }
+.main-nav { gap: 12px; min-height: 54px; flex-wrap: wrap; }
+.main-nav a {
+  border-radius: 999px;
+  padding: 9px 14px;
+  color: var(--deep-blue);
+  transition: background .18s ease, color .18s ease, transform .18s ease;
+}
+.main-nav a:hover,
+.main-nav a.is-active {
+  background: var(--cloud);
+  color: var(--blue);
+  transform: translateY(-1px);
+}
+.search-trigger span:first-child { filter: hue-rotate(12deg); }
+.cart-pill { border-color: rgba(33, 158, 188, .30); }
+.cart-pill:hover { border-color: var(--buy); background: var(--cream); }
+@media (max-width: 940px) {
+  .main-nav { gap: 4px; }
+  .main-nav a { padding: 10px 4px; border-radius: 14px; }
+}
