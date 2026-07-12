@@ -24,6 +24,12 @@
             icon: "fa-bag-shopping"
         },
         {
+            id: "solicitudes",
+            label: "Solicitudes",
+            href: "solicitudes.html",
+            icon: "fa-file-pen"
+        },
+        {
             id: "operaciones",
             label: "Operaciones",
             href: "operaciones.html",

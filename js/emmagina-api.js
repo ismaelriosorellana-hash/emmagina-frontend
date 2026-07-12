@@ -138,6 +138,14 @@
     });
   }
 
+  async function createCustomRequest(formData) {
+    return request("/solicitudes-personalizadas", {
+      method: "POST",
+      body: formData,
+      timeoutMs: 120000
+    });
+  }
+
 
   API.request = request;
   API.getProducts = getProducts;
@@ -151,5 +159,6 @@
   API.getCategories = getCategories;
   API.validateCart = validateCart;
   API.createOrder = createOrder;
+  API.createCustomRequest = createCustomRequest;
   window.EmmaginaAPI = Object.freeze(API);
 })();
