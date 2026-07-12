@@ -328,3 +328,74 @@
   .alma-stage { border-width: 12px; box-shadow: 10px 10px 0 #fb8500; }
   .alma-style-grid, .alma-reference-grid, .alma-process-grid { grid-template-columns: 1fr; }
 }
+
+/* V5.11.0 · Servicio 3D a Pedido */
+.service3d-page { overflow: hidden; }
+.service3d-hero {
+  width: var(--container);
+  margin: 28px auto 52px;
+  min-height: 520px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr);
+  gap: 34px;
+  align-items: center;
+  padding: clamp(28px, 5vw, 68px);
+  border: 1px solid var(--line);
+  border-radius: 34px;
+  background: #eaf4f8;
+}
+.service3d-hero-copy h1 { margin: 0; max-width: 800px; color: var(--navy); font-family: Nunito, Inter, sans-serif; font-size: clamp(2.7rem, 5.8vw, 5.5rem); line-height: .97; }
+.service3d-hero-copy > p:not(.kicker) { max-width: 720px; color: var(--deep-blue); font-size: clamp(1rem, 2vw, 1.23rem); line-height: 1.7; }
+.service3d-machine { display: grid; place-items: center; }
+.service3d-frame { width: min(100%, 430px); aspect-ratio: 1; position: relative; border: 18px solid var(--navy); border-radius: 34px; background: #fff; box-shadow: 18px 18px 0 #ffb703; }
+.service3d-frame::before, .service3d-frame::after { content: ""; position: absolute; top: 11%; bottom: 13%; width: 16px; border-radius: 999px; background: #219ebc; }
+.service3d-frame::before { left: 12%; }
+.service3d-frame::after { right: 12%; }
+.service3d-head { position: absolute; z-index: 2; top: 18%; left: 50%; transform: translateX(-50%); width: 110px; height: 70px; display: grid; place-items: center; border-radius: 18px; background: var(--navy); color: #fff; font-weight: 900; font-size: 1.5rem; }
+.service3d-head::after { content: ""; position: absolute; left: 50%; bottom: -34px; transform: translateX(-50%); border-left: 18px solid transparent; border-right: 18px solid transparent; border-top: 36px solid var(--navy); }
+.service3d-bed { position: absolute; left: 14%; right: 14%; bottom: 12%; height: 22px; border-radius: 999px; background: var(--navy); }
+.service3d-model { position: absolute; left: 50%; bottom: 17%; transform: translateX(-50%); width: 150px; height: 125px; clip-path: polygon(50% 0, 100% 30%, 90% 100%, 10% 100%, 0 30%); background: #fb8500; }
+.service3d-type-grid { width: var(--container); margin-inline: auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.service3d-type-card { padding: 28px; border: 2px solid var(--line); border-radius: 26px; background: #fff; cursor: pointer; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.service3d-type-card:hover { transform: translateY(-3px); border-color: var(--blue); }
+.service3d-type-card.is-selected { border-color: var(--blue); box-shadow: 0 0 0 5px rgba(33, 158, 188, .13); }
+.service3d-type-card > span { color: var(--blue); font-size: .8rem; font-weight: 900; letter-spacing: .12em; }
+.service3d-type-card h3 { margin: 12px 0 8px; color: var(--navy); font-size: 1.45rem; }
+.service3d-type-card p { color: var(--deep-blue); line-height: 1.6; }
+.service3d-scope { width: var(--container); margin: 70px auto; padding: clamp(28px, 5vw, 58px); display: grid; grid-template-columns: .8fr 1.2fr; gap: 30px; border-radius: 30px; background: #fff7df; border: 1px solid #f2e1a8; }
+.service3d-scope-copy h2 { margin: 0; color: var(--navy); font-size: clamp(2rem, 4vw, 3.6rem); }
+.service3d-scope-copy p:not(.kicker) { color: var(--deep-blue); line-height: 1.7; }
+.service3d-scope-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.service3d-scope-grid article { padding: 20px; border-radius: 20px; background: #fff; border: 1px solid var(--line); }
+.service3d-scope-grid strong, .service3d-scope-grid span { display: block; }
+.service3d-scope-grid strong { color: var(--navy); }
+.service3d-scope-grid span { margin-top: 7px; color: var(--deep-blue); line-height: 1.48; }
+.service3d-process-grid { width: var(--container); margin-inline: auto; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.service3d-process-grid div { min-height: 170px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid var(--line); border-radius: 24px; background: #fff; }
+.service3d-process-grid strong { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: var(--navy); color: #fff; }
+.service3d-process-grid span { color: var(--deep-blue); font-weight: 800; line-height: 1.45; }
+.service3d-request-section { margin-top: 70px; padding-top: 10px; }
+.service3d-request-layout { width: var(--container); margin-inline: auto; display: grid; grid-template-columns: minmax(260px, .62fr) minmax(0, 1.38fr); gap: 22px; align-items: start; }
+.service3d-request-summary { position: sticky; top: 130px; padding: 28px; border-radius: 26px; background: #eaf4f8; border: 1px solid var(--line); }
+.service3d-request-summary h3 { margin: 0 0 12px; color: var(--navy); font-size: 1.7rem; }
+.service3d-request-summary p, .service3d-request-summary li { color: var(--deep-blue); line-height: 1.55; }
+.service3d-request-summary ul { padding-left: 20px; }
+.service3d-form fieldset { margin: 0 0 24px; padding: 0; border: 0; }
+.service3d-form legend { margin-bottom: 16px; color: var(--navy); font-size: 1.2rem; font-weight: 900; }
+.service3d-file-list { display: grid; gap: 7px; margin-top: 12px; color: var(--deep-blue); font-size: .9rem; }
+.service3d-file-list span { padding: 9px 12px; border-radius: 12px; background: var(--cloud); border: 1px solid var(--line); }
+.service3d-file-note { margin: 12px 0 0; color: var(--deep-blue); font-size: .9rem; }
+.service3d-consent { display: flex; gap: 10px; align-items: flex-start; margin: 8px 0 22px; color: var(--deep-blue); line-height: 1.5; }
+.service3d-consent input { margin-top: 4px; }
+.service3d-form button[disabled] { opacity: .72; cursor: progress; }
+@media (max-width: 920px) {
+  .service3d-hero, .service3d-scope, .service3d-request-layout { grid-template-columns: 1fr; }
+  .service3d-type-grid { grid-template-columns: 1fr; }
+  .service3d-process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .service3d-request-summary { position: static; }
+}
+@media (max-width: 620px) {
+  .service3d-hero { padding: 24px; border-radius: 24px; }
+  .service3d-frame { border-width: 12px; box-shadow: 10px 10px 0 #ffb703; }
+  .service3d-scope-grid, .service3d-process-grid { grid-template-columns: 1fr; }
+}

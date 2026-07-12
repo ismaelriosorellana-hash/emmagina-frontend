@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Cotiza impresión 3D a pedido en Santiago con Rhema Diseños. Sube archivos STL, 3MF, OBJ, STEP, imágenes o referencias.">
+  <meta name="theme-color" content="#EAF4F8">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css?v=5.11.0">
+  <link rel="stylesheet" href="css/layout.css?v=5.11.0">
+  <link rel="stylesheet" href="css/components.css?v=5.11.0">
+  <link rel="stylesheet" href="css/home.css?v=5.11.0">
+  <link rel="stylesheet" href="css/catalog.css?v=5.11.0">
+  <link rel="stylesheet" href="css/product.css?v=5.11.0">
+  <link rel="stylesheet" href="css/pages.css?v=5.11.0">
+  <title>Servicio 3D a Pedido | Rhema Diseños</title>
+</head>
+<body>
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+  <header class="site-header" data-site-header>
+    <div class="header-shell">
+      <div class="header-top" aria-label="Barra superior Rhema Diseños">
+        <button class="icon-button search-trigger" type="button" data-open-search aria-label="Buscar productos"><span aria-hidden="true">🔎</span><span>Buscar</span></button>
+        <a class="brand" href="index.html" aria-label="Ir al inicio de Rhema Diseños"><strong>Rhema Diseños</strong><small>Impresión 3D · regalos · soluciones</small></a>
+        <div class="header-actions" aria-label="Acciones de usuario">
+          <button class="icon-button mobile-menu-button" type="button" data-mobile-menu aria-expanded="false" aria-controls="main-nav">Menú</button>
+          <a class="header-link login-link" href="acceso.html">Iniciar sesión</a>
+          <a class="header-link cart-pill" href="carrito.html">Carrito <span class="cart-count" data-cart-count>0</span></a>
+        </div>
+      </div>
+      <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="catalogo.html">Tienda</a>
+        <a href="pedido-personalizado.html">Crea tu Figura</a>
+        <a href="quienes-somos.html">Sobre Nosotros</a>
+        <a href="preguntas-frecuentes.html">Preguntas Frecuentes</a>
+        <a href="contacto.html">Contáctanos</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="search-panel" data-search-panel aria-label="Buscador" aria-hidden="true">
+    <div class="search-box" role="search">
+      <form action="catalogo.html" method="get">
+        <label class="sr-only" for="global-search">Buscar productos</label>
+        <input id="global-search" type="search" name="q" placeholder="Buscar figuras, decoración, herramientas...">
+        <button class="btn btn-primary" type="submit">Buscar</button>
+      </form>
+      <button class="btn btn-soft search-close" type="button" data-close-search>Cerrar</button>
+    </div>
+  </section>
+
+  <main id="main" class="service3d-page">
+    <section class="service3d-hero" aria-labelledby="service3d-title">
+      <div class="service3d-hero-copy">
+        <p class="kicker">Servicio 3D a Pedido</p>
+        <h1 id="service3d-title">Envía tu archivo o referencia y revisamos cómo fabricarlo.</h1>
+        <p>Cotizamos piezas en PLA para organización, prototipos simples, repuestos no críticos, decoración, proyectos personales y modelos que ya tengas preparados.</p>
+        <div class="custom-hero-actions">
+          <a class="btn btn-buy" href="#service3d-request">Solicitar cotización</a>
+          <a class="btn btn-soft" href="precios-cobertura.html">Ver precios y cobertura</a>
+        </div>
+      </div>
+      <div class="service3d-machine" aria-hidden="true">
+        <div class="service3d-frame">
+          <div class="service3d-head">3D</div>
+          <div class="service3d-model"></div>
+          <div class="service3d-bed"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="service3d-path-title">
+      <div class="section-heading"><div><p class="kicker">¿Qué necesitas?</p><h2 id="service3d-path-title">Elige el punto de partida</h2><p>No necesitas conocer términos técnicos. Selecciona la opción más cercana y describe el uso de la pieza.</p></div></div>
+      <div class="service3d-type-grid">
+        <article class="service3d-type-card is-selected" data-service-type="Tengo un archivo 3D">
+          <span>01</span><h3>Tengo un archivo 3D</h3><p>STL, 3MF, OBJ o STEP listo para revisar, dimensionar y cotizar.</p>
+        </article>
+        <article class="service3d-type-card" data-service-type="Tengo fotos o una referencia">
+          <span>02</span><h3>Tengo fotos o una referencia</h3><p>Imágenes, dibujo, pieza existente o una idea que necesita evaluación.</p>
+        </article>
+        <article class="service3d-type-card" data-service-type="Necesito replicar una pieza">
+          <span>03</span><h3>Necesito replicar una pieza</h3><p>Repuesto liviano o pieza no crítica que debe medirse y revisarse.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section service3d-scope" aria-labelledby="service3d-scope-title">
+      <div class="service3d-scope-copy">
+        <p class="kicker">Alcance inicial</p>
+        <h2 id="service3d-scope-title">Qué podemos evaluar en esta etapa</h2>
+        <p>Trabajamos inicialmente con PLA y una Bambu Lab A1. Revisamos cada solicitud antes de confirmar que la pieza es adecuada.</p>
+      </div>
+      <div class="service3d-scope-grid">
+        <article><strong>Sí evaluamos</strong><span>Organizadores, soportes, prototipos visuales, decoración, maquetas y repuestos de uso liviano.</span></article>
+        <article><strong>Requiere revisión</strong><span>Piezas con encajes, tolerancias, tornillos, esfuerzo repetido o exposición a temperatura.</span></article>
+        <article><strong>No recomendado</strong><span>Uso médico, alimentario, eléctrico crítico, seguridad personal o piezas sometidas a altas cargas.</span></article>
+        <article><strong>Volumen máximo</strong><span>Hasta 256 × 256 × 256 mm por pieza, sujeto a orientación y soportes.</span></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="service3d-process-title">
+      <div class="section-heading"><div><p class="kicker">Proceso de cotización</p><h2 id="service3d-process-title">Revisamos antes de prometer precio y plazo</h2></div></div>
+      <div class="service3d-process-grid">
+        <div><strong>1</strong><span>Envías archivo, medidas, cantidad y uso esperado.</span></div>
+        <div><strong>2</strong><span>Revisamos geometría, material, tiempo y soportes.</span></div>
+        <div><strong>3</strong><span>Recibes precio, plazo y observaciones técnicas.</span></div>
+        <div><strong>4</strong><span>Fabricamos solo después de tu aprobación.</span></div>
+      </div>
+    </section>
+
+    <section class="section service3d-request-section" id="service3d-request" aria-labelledby="service3d-form-title">
+      <div class="section-heading"><div><p class="kicker">Solicitud técnica</p><h2 id="service3d-form-title">Cuéntanos qué pieza necesitas</h2><p>Esta solicitud no genera un cobro automático. Primero confirmaremos si el proyecto es viable.</p></div></div>
+      <div class="service3d-request-layout">
+        <aside class="service3d-request-summary">
+          <p class="kicker">Tu solicitud</p>
+          <h3 data-service3d-selection>Tengo un archivo 3D</h3>
+          <p>Pedido mínimo referencial: $5.990. El precio final depende de material, horas de impresión, soportes y preparación.</p>
+          <ul>
+            <li>Hasta 8 archivos por solicitud.</li>
+            <li>Máximo 20 MB por archivo.</li>
+            <li>Atención inicial en Santiago.</li>
+          </ul>
+        </aside>
+
+        <article class="request-form-card">
+          <form class="service3d-form" data-service3d-form>
+            <input type="hidden" name="tipoSolicitud" value="servicio">
+            <input type="hidden" name="formato" value="Tengo un archivo 3D" data-service3d-format-input>
+            <input type="hidden" name="uso" value="Servicio 3D a Pedido">
+
+            <fieldset>
+              <legend>1. Datos de contacto</legend>
+              <div class="form-grid">
+                <div class="field"><label for="service3d-name">Nombre</label><input id="service3d-name" required name="nombre" autocomplete="name" placeholder="Tu nombre"></div>
+                <div class="field"><label for="service3d-whatsapp">WhatsApp</label><input id="service3d-whatsapp" required name="whatsapp" inputmode="tel" placeholder="+56 9..."></div>
+                <div class="field"><label for="service3d-email">Correo</label><input id="service3d-email" type="email" name="correo" autocomplete="email" placeholder="correo@ejemplo.cl"></div>
+                <div class="field"><label for="service3d-comuna">Comuna</label><input id="service3d-comuna" name="comuna" placeholder="Ej. Santiago, Maipú, Puente Alto..."></div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>2. Datos de la pieza</legend>
+              <div class="form-grid">
+                <div class="field"><label for="service3d-quantity">Cantidad</label><input id="service3d-quantity" name="cantidad" type="number" min="1" max="10000" value="1" required></div>
+                <div class="field"><label for="service3d-size">Medidas aproximadas</label><input id="service3d-size" name="tamano" placeholder="Ej. 12 × 8 × 4 cm"></div>
+                <div class="field"><label for="service3d-color">Color preferido</label><input id="service3d-color" name="color" placeholder="Ej. Negro, blanco o sin preferencia"></div>
+                <div class="field"><label for="service3d-date">Fecha ideal</label><input id="service3d-date" name="fechaIdeal" type="date"></div>
+              </div>
+              <div class="field"><label for="service3d-use">¿Para qué se utilizará?</label><select id="service3d-use" name="usoTecnico"><option>Organización o escritorio</option><option>Prototipo o maqueta</option><option>Repuesto no crítico</option><option>Decoración</option><option>Herramienta o apoyo liviano</option><option>Otro uso</option></select></div>
+              <div class="field"><label for="service3d-description">Describe la pieza y qué necesitas lograr</label><textarea id="service3d-description" required name="descripcion" rows="6" placeholder="Ej. Necesito imprimir este soporte para ordenar cables. La pieza no estará expuesta al sol ni soportará peso importante."></textarea></div>
+            </fieldset>
+
+            <fieldset>
+              <legend>3. Archivos o referencias</legend>
+              <div class="field"><label for="service3d-files">Sube hasta 8 archivos</label><input id="service3d-files" name="archivos" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf,.stl,.obj,.3mf,.step,.stp,.zip,.rar" multiple><small>Formatos admitidos: imágenes, PDF, STL, OBJ, 3MF, STEP, ZIP o RAR. Máximo 20 MB por archivo.</small></div>
+              <div class="service3d-file-list" data-service3d-file-list>Sin archivos seleccionados.</div>
+              <p class="service3d-file-note">Puedes enviar la solicitud sin archivo únicamente si explicas claramente la idea y las medidas disponibles.</p>
+            </fieldset>
+
+            <label class="service3d-consent"><input type="checkbox" required> Confirmo que la información entregada es correcta y entiendo que Rhema Diseños debe revisar la viabilidad antes de aceptar el trabajo.</label>
+            <button class="btn btn-buy" type="submit">Enviar solicitud técnica</button>
+            <div data-service3d-message aria-live="polite"></div>
+          </form>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <section class="footer-col"><h2 class="footer-brand">Rhema Diseños</h2><p>Productos impresos en 3D, figuras personalizadas y soluciones fabricadas a pedido.</p></section>
+      <nav class="footer-col"><h3>Tienda</h3><a href="catalogo.html">Catálogo</a><a href="memories.html">Memories</a><a href="alma.html">Alma</a><a href="servicio-3d.html">Servicio 3D</a></nav>
+      <nav class="footer-col"><h3>Ayuda</h3><a href="preguntas-frecuentes.html">Preguntas frecuentes</a><a href="precios-cobertura.html">Precios y cobertura</a><a href="despachos-retiros.html">Despachos y retiros</a></nav>
+      <section class="footer-col"><h3>Soporte</h3><p>Correo: contacto@rhemadisenos.cl</p><a class="btn btn-soft btn-small" href="contacto.html">Contactar</a></section>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Rhema Diseños.</span><span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span></div>
+  </footer>
+
+  <script src="js/config.js?v=5.11.0"></script>
+  <script src="js/emmagina-data.js?v=5.11.0"></script>
+  <script src="js/emmagina-api.js?v=5.11.0"></script>
+  <script src="js/emmagina-cart.js?v=5.11.0"></script>
+  <script src="js/emmagina-ui.js?v=5.11.0"></script>
+  <script src="js/emmagina-common.js?v=5.11.0"></script>
+  <script src="js/rhema-service3d.js?v=5.11.0"></script>
+</body>
+</html>
