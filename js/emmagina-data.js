@@ -130,6 +130,7 @@
     const list = (items) => Array.isArray(items) ? items.map(String).map((item) => item.trim()).filter(Boolean) : String(items || "").split(/\n|,/).map((item) => item.trim()).filter(Boolean);
     const faqs = Array.isArray(source.preguntasFrecuentes || source.faqs) ? (source.preguntasFrecuentes || source.faqs) : [];
     return {
+      mostrarLoQueDebesSaber: source.mostrarLoQueDebesSaber !== false && source.showWhatYouShouldKnow !== false,
       tituloBeneficio: String(source.tituloBeneficio || source.benefitTitle || "").trim(),
       textoBeneficio: String(source.textoBeneficio || source.benefitText || "").trim(),
       beneficios: list(source.beneficios || source.benefits),

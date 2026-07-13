@@ -8,9 +8,9 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Productos | Rhema Diseños</title>
     <link rel="icon" href="../assets/emmagina-logo.svg">
-    <link rel="stylesheet" href="css/admin.css?v=5.23.4">
+    <link rel="stylesheet" href="css/admin.css?v=5.23.5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="css/admin-experience-v327.css?v=5.23.4">
+    <link rel="stylesheet" href="css/admin-experience-v327.css?v=5.23.5">
 </head>
 <body data-admin-page="productos" data-admin-title="Productos">
     <section id="admin-page-content">
@@ -398,24 +398,29 @@
                             <div class="admin-product-section-heading">
                                 <div>
                                     <span class="admin-product-eyebrow">Ficha pública</span>
-                                    <h4>Contenido comercial de la PDP</h4>
+                                    <h4>Información desplegable de la ficha</h4>
                                 </div>
-                                <p>Estos campos alimentan la ficha de producto avanzada: beneficios, cuidados, preguntas frecuentes y mensajes de compra.</p>
+                                <p>Controla los bloques contraídos de la columna central y la información complementaria del producto.</p>
                             </div>
 
                             <div class="admin-form-grid">
                                 <div class="admin-field full">
-                                    <label for="product-benefit-title">Título del bloque de beneficios</label>
+                                    <label class="admin-check"><input id="product-show-know" type="checkbox" checked> Mostrar el bloque “Lo que debes saber” en la ficha</label>
+                                    <small>Al desactivarlo, el bloque no aparecerá públicamente. La descripción y las características seguirán disponibles.</small>
+                                </div>
+
+                                <div class="admin-field full">
+                                    <label for="product-benefit-title">Título del bloque “Lo que debes saber”</label>
                                     <input id="product-benefit-title" maxlength="120" placeholder="Lo que debes saber">
                                 </div>
 
                                 <div class="admin-field full">
-                                    <label for="product-benefit-text">Texto principal de beneficios</label>
+                                    <label for="product-benefit-text">Texto principal de “Lo que debes saber”</label>
                                     <textarea id="product-benefit-text" rows="4" maxlength="800" placeholder="Explica el valor principal del producto."></textarea>
                                 </div>
 
                                 <div class="admin-field full">
-                                    <label for="product-benefits">Beneficios</label>
+                                    <label for="product-benefits">Puntos adicionales de “Lo que debes saber”</label>
                                     <textarea id="product-benefits" rows="5" placeholder="Una línea por beneficio"></textarea>
                                 </div>
 
@@ -518,10 +523,10 @@
         </div>
     </section>
 
-    <script src="../js/config.js?v=5.23.4"></script>
-    <script src="js/admin-api.js?v=5.23.4"></script>
-    <script src="js/admin-common.js?v=5.23.4"></script>
-    <script src="js/admin-experience-v327.js?v=5.23.4"></script>
-    <script src="js/products-admin.js?v=5.23.4"></script>
+    <script src="../js/config.js?v=5.23.5"></script>
+    <script src="js/admin-api.js?v=5.23.5"></script>
+    <script src="js/admin-common.js?v=5.23.5"></script>
+    <script src="js/admin-experience-v327.js?v=5.23.5"></script>
+    <script src="js/products-admin.js?v=5.23.5"></script>
 </body>
 </html>

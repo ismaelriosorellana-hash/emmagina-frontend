@@ -108,6 +108,7 @@
 
   function renderBenefits(product) {
     const content = product.contenidoPDP || {};
+    if (content.mostrarLoQueDebesSaber === false) return "";
     const benefits = Array.isArray(content.beneficios) ? content.beneficios : [];
     const title = content.tituloBeneficio || "Lo que debes saber";
     const text = content.textoBeneficio || "Producto preparado con cuidado para entregar una experiencia especial desde la compra hasta la entrega.";
@@ -214,21 +215,21 @@
     root.innerHTML = `
       <section class="pdp-commerce-grid">
         <div class="pdp-commerce-gallery">${renderGallery(currentImages, product)}</div>
-        <div class="pdp-commerce-body">
-          <div class="pdp-commerce-top">
-            <article class="pdp-commerce-info">
-              <div class="pdp-title-block">
-                <div class="pdp-title-meta"><span>${escape(product.categoriaPrincipal || "Rhema Diseños")}</span>${product.marca ? `<span>${escape(product.marca)}</span>` : ""}</div>
-                <h1>${escape(product.nombre)}</h1>
-                <a class="pdp-review-link" href="#pdp-reviews" aria-label="Ver reseñas"><span aria-hidden="true">☆</span> Aún no hay reseñas</a>
-              </div>
-              <details class="pdp-quick-facts" open>
-                <summary>Lo que debes saber</summary>
-                <div><p>${escape(product.descripcionCorta || product.descripcion || "Producto impreso en 3D por Rhema Diseños.")}</p></div>
-              </details>
-              ${customScene}
-            </article>
-            <aside class="pdp-commerce-buy">
+        <article class="pdp-commerce-info">
+          <div class="pdp-title-block">
+            <div class="pdp-title-meta"><span>${escape(product.categoriaPrincipal || "Rhema Diseños")}</span>${product.marca ? `<span>${escape(product.marca)}</span>` : ""}</div>
+            <h1>${escape(product.nombre)}</h1>
+            <a class="pdp-review-link" href="#pdp-reviews" aria-label="Ver reseñas"><span aria-hidden="true">☆</span> Aún no hay reseñas</a>
+          </div>
+          <div class="pdp-middle-accordions" aria-label="Información principal del producto">
+            <details class="pdp-card pdp-accordion"><summary>Descripción del producto</summary><div class="pdp-accordion-body"><p>${escape(product.descripcion || product.descripcionCorta || "Producto creado por Rhema Diseños.")}</p></div></details>
+            ${renderCharacteristics(product)}
+            ${renderBenefits(product)}
+          </div>
+          ${customScene}
+          <div class="pdp-secondary-accordions">${renderCare(product)}${renderFaq(product)}</div>
+        </article>
+        <aside class="pdp-commerce-buy">
           <span class="pdp-price-label">Precio</span>
           <div class="detail-price" data-pdp-price>
             <strong>${product.tieneRangoPrecio && !currentVariant ? `Desde ${money(product.precioDesde)}` : money(price)}</strong>
@@ -253,13 +254,7 @@
             <div><strong>Fabricación local</strong><span>Santiago de Chile</span></div>
             <div><strong>Orientación</strong><span>Te ayudamos antes de confirmar</span></div>
           </div>
-            </aside>
-          </div>
-          <section class="pdp-content-grid" aria-label="Información del producto">
-            <details class="pdp-card pdp-accordion" open><summary>Descripción del producto</summary><div class="pdp-accordion-body"><p>${escape(product.descripcion || product.descripcionCorta || "Producto creado por Rhema Diseños.")}</p></div></details>
-            ${renderBenefits(product)}${renderCharacteristics(product)}${renderDelivery(product)}${renderCare(product)}${renderFaq(product)}
-          </section>
-        </div>
+        </aside>
       </section>
       <section id="pdp-reviews" class="pdp-reviews-empty"><div><span>☆</span><h2>Reseñas del producto</h2><p>Aún no hay reseñas publicadas para este producto.</p></div></section>
       <section class="pdp-related" data-related-products></section>

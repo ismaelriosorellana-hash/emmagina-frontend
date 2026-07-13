@@ -433,6 +433,7 @@ function openProductForm(product = null) {
     const pdp = product?.contenidoPDP && typeof product.contenidoPDP === "object"
         ? product.contenidoPDP
         : {};
+    setChecked("product-show-know", pdp.mostrarLoQueDebesSaber !== false);
     setValue("product-benefit-title", pdp.tituloBeneficio || "");
     setValue("product-benefit-text", pdp.textoBeneficio || "");
     setValue("product-benefits", Array.isArray(pdp.beneficios) ? pdp.beneficios.join("\n") : "");
@@ -955,6 +956,7 @@ async function saveProduct(event) {
             noIndex: checkedFrom("product-seo-noindex")
         },
         contenidoPDP: {
+            mostrarLoQueDebesSaber: checkedFrom("product-show-know"),
             tituloBeneficio: stringFrom("product-benefit-title"),
             textoBeneficio: stringFrom("product-benefit-text"),
             beneficios: parseLineList(stringFrom("product-benefits")),
