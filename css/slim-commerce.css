@@ -1,4 +1,4 @@
-/* Rhema Diseños v5.23.1 · Slim & High-Conversion */
+/* Rhema Diseños v5.23.2 · Slim & High-Conversion */
 :root { --slim-section: clamp(36px, 5vw, 64px); }
 .section { padding-block: var(--slim-section); }
 .section-heading { margin-bottom: 18px; align-items:center; }
@@ -79,7 +79,7 @@
   .choice-card { padding:17px; }
 }
 
-/* v5.23.1 · PDP Slim & High-Conversion v2 */
+/* v5.23.2 · PDP Slim & High-Conversion v2 */
 .product-detail-root { padding-bottom: 0; }
 .product-detail-root .pdp-shell {
   max-width: 1180px;
@@ -269,7 +269,7 @@
 }
 
 
-/* V5.23.1 · Ficha uniforme de tres columnas */
+/* V5.23.2 · Ficha uniforme de tres columnas */
 .product-detail-root .pdp-commerce-grid{width:min(1500px,calc(100% - 40px));margin:18px auto 38px;display:grid;grid-template-columns:minmax(420px,1.45fr) minmax(300px,.92fr) minmax(300px,.82fr);gap:22px;align-items:start}
 .pdp-commerce-gallery,.pdp-commerce-info,.pdp-commerce-buy{min-width:0}
 .pdp-commerce-gallery .pdp-gallery{position:sticky;top:112px;grid-template-columns:72px minmax(0,1fr);gap:12px;padding:14px;border:1px solid var(--line);border-radius:20px;background:#fff}
@@ -294,9 +294,9 @@
 @media(max-width:860px){.product-detail-root .pdp-commerce-grid{width:min(100% - 24px,760px);grid-template-columns:1fr;gap:14px}.pdp-commerce-gallery .pdp-gallery{position:static;grid-template-columns:1fr}.pdp-commerce-gallery .pdp-main-image{grid-column:1;grid-row:1}.pdp-commerce-gallery .gallery-thumbs{grid-column:1;grid-row:2;display:flex;max-height:none;overflow-x:auto}.pdp-commerce-info{position:static}.pdp-title-block,.pdp-quick-facts,.pdp-scene-card,.pdp-commerce-buy{padding:16px;border-radius:16px}.pdp-commerce-info{order:2}.pdp-commerce-buy{order:3}.pdp-purchase-row{grid-template-columns:92px 1fr}}
 
 
-/* V5.23.1 · Ajustes de jerarquía PDP y legibilidad de tarjetas */
-.pdp-commerce-buy .product-detail-badges{display:flex;justify-content:flex-start;align-items:flex-start;width:100%;text-align:left;margin:4px 0 10px}
-.pdp-commerce-buy .product-detail-badges .product-badge{margin:0;align-self:flex-start}
+/* V5.23.2 · Ajustes de jerarquía PDP y legibilidad de tarjetas */
+.pdp-commerce-buy .product-detail-badges{display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:8px;width:100%;text-align:right;margin:4px 0 10px}
+.pdp-commerce-buy .product-detail-badges .product-badge{margin:0;align-self:center}
 .pdp-commerce-buy .pdp-variant-panel{order:initial;margin:12px 0 10px}
 .pdp-commerce-buy .pdp-purchase-row{margin-top:10px}
 .pdp-commerce-buy .pdp-delivery-links{margin:16px 0 0;padding-top:14px}
