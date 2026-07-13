@@ -11,13 +11,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=5.13.0">
-  <link rel="stylesheet" href="css/layout.css?v=5.13.0">
-  <link rel="stylesheet" href="css/components.css?v=5.13.0">
-  <link rel="stylesheet" href="css/home.css?v=5.13.0">
-  <link rel="stylesheet" href="css/catalog.css?v=5.13.0">
-  <link rel="stylesheet" href="css/product.css?v=5.13.0">
-  <link rel="stylesheet" href="css/pages.css?v=5.13.0">
+  <link rel="stylesheet" href="css/base.css?v=5.14.0">
+  <link rel="stylesheet" href="css/layout.css?v=5.14.0">
+  <link rel="stylesheet" href="css/components.css?v=5.14.0">
+  <link rel="stylesheet" href="css/home.css?v=5.14.0">
+  <link rel="stylesheet" href="css/catalog.css?v=5.14.0">
+  <link rel="stylesheet" href="css/product.css?v=5.14.0">
+  <link rel="stylesheet" href="css/pages.css?v=5.14.0">
   <title>Seguimiento | Rhema Diseños</title>
 </head>
 <body>
@@ -57,13 +57,31 @@
       <button class="btn btn-soft search-close" type="button" data-close-search>Cerrar</button>
     </div>
   </section>
-  <main id="main">
-    <header class="content-hero">
-      <p class="kicker">Rhema Diseños</p>
-      <h1>Seguimiento de pedido</h1>
-      <p>Consulta el avance de tu pedido personalizado o producto comprado.</p>
-      <p><a class="btn btn-primary" href="catalogo.html">Volver a la tienda</a></p>
+  <main id="main" class="tracking-page">
+    <header class="content-hero tracking-hero">
+      <p class="kicker">Seguimiento Rhema Diseños</p>
+      <h1>¿En qué etapa está tu pedido?</h1>
+      <p>Consulta el avance usando el número de pedido y el correo o WhatsApp que registraste.</p>
     </header>
+
+    <section class="tracking-search-shell">
+      <form class="tracking-search-card" data-order-tracking-form>
+        <div>
+          <label for="tracking-order-number">Número de pedido</label>
+          <input id="tracking-order-number" name="numeroPedido" required placeholder="Ej. RHE-2026-000123" autocomplete="off">
+        </div>
+        <div>
+          <label for="tracking-contact">Correo o WhatsApp</label>
+          <input id="tracking-contact" name="contacto" required placeholder="El mismo dato usado en la compra" autocomplete="email">
+        </div>
+        <button class="btn btn-primary" type="submit">Consultar avance</button>
+      </form>
+      <p class="tracking-privacy-note">Usamos ambos datos para proteger la información del pedido.</p>
+    </section>
+
+    <section class="tracking-result-shell" data-order-tracking-result aria-live="polite">
+      <div class="state-box"><p>Ingresa tus datos para ver el seguimiento.</p></div>
+    </section>
   </main>
   <footer class="site-footer">
     <div class="footer-inner">
@@ -97,11 +115,12 @@
       <span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span>
     </div>
   </footer>
-  <script src="js/config.js?v=5.13.0"></script>
-  <script src="js/emmagina-data.js?v=5.13.0"></script>
-  <script src="js/emmagina-api.js?v=5.13.0"></script>
-  <script src="js/emmagina-cart.js?v=5.13.0"></script>
-  <script src="js/emmagina-ui.js?v=5.13.0"></script>
-  <script src="js/emmagina-common.js?v=5.13.0"></script>
+  <script src="js/config.js?v=5.14.0"></script>
+  <script src="js/emmagina-data.js?v=5.14.0"></script>
+  <script src="js/emmagina-api.js?v=5.14.0"></script>
+  <script src="js/emmagina-cart.js?v=5.14.0"></script>
+  <script src="js/emmagina-ui.js?v=5.14.0"></script>
+  <script src="js/emmagina-common.js?v=5.14.0"></script>
+  <script src="js/rhema-order-tracking.js?v=5.14.0"></script>
 </body>
 </html>

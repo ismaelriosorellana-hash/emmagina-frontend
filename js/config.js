@@ -28,7 +28,7 @@ const PLACEHOLDER_IMAGE = "data:image/svg+xml;charset=UTF-8," + encodeURICompone
 </svg>`);
 
 window.CONFIG = Object.freeze({
-  APP_VERSION: "5.13.0-cotizacion-a-pedido",
+  APP_VERSION: "5.14.0-seguimiento-produccion",
   SITE_NAME: "Rhema Diseños",
   BRAND_NAME: "Rhema Diseños",
   SITE_URL: "https://emmagina-frontend.onrender.com",

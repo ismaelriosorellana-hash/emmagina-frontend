@@ -1318,6 +1318,33 @@ function openOrder(id) {
                 <label for="order-note-edit">Notas internas</label>
                 <textarea id="order-note-edit">${AdminUI.escapeHtml(order.notasInternas || "")}</textarea>
             </div>
+
+            <div class="admin-field">
+                <label for="order-production-stage">Etapa de producción</label>
+                <select id="order-production-stage">
+                    ${[
+                        ["revision", "Revisión"], ["diseno", "Diseño"], ["preparacion", "Preparación"],
+                        ["impresion", "Impresión"], ["postprocesado", "Terminaciones"],
+                        ["control_calidad", "Control de calidad"], ["listo_entrega", "Listo para entrega"],
+                        ["en_ruta", "En ruta"], ["completado", "Completado"], ["pausado", "Pausado"]
+                    ].map(([value, label]) => `<option value="${value}" ${value === (order.produccion?.etapa || "revision") ? "selected" : ""}>${label}</option>`).join("")}
+                </select>
+            </div>
+
+            <div class="admin-field">
+                <label for="order-production-progress">Avance visible (%)</label>
+                <input id="order-production-progress" type="number" min="0" max="100" value="${Number(order.produccion?.progreso ?? 10)}">
+            </div>
+
+            <div class="admin-field">
+                <label for="order-production-date">Fecha estimada</label>
+                <input id="order-production-date" type="date" value="${order.produccion?.fechaEstimada ? new Date(order.produccion.fechaEstimada).toISOString().slice(0,10) : ""}">
+            </div>
+
+            <div class="admin-field full">
+                <label for="order-production-message">Mensaje visible para el cliente</label>
+                <textarea id="order-production-message" maxlength="1200">${AdminUI.escapeHtml(order.produccion?.mensajeCliente || "Estamos revisando los detalles de tu pedido.")}</textarea>
+            </div>
         </div>
         </details>
     `;
@@ -1587,7 +1614,13 @@ async function saveOrder() {
                 body: {
                     estadoPedido: document.getElementById("order-status-edit").value,
                     estadoPago: document.getElementById("order-payment-edit").value,
-                    notasInternas: document.getElementById("order-note-edit").value
+                    notasInternas: document.getElementById("order-note-edit").value,
+                    produccion: {
+                        etapa: document.getElementById("order-production-stage").value,
+                        progreso: Number(document.getElementById("order-production-progress").value || 0),
+                        fechaEstimada: document.getElementById("order-production-date").value || null,
+                        mensajeCliente: document.getElementById("order-production-message").value
+                    }
                 }
             }
         );
