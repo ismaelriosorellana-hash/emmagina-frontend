@@ -234,11 +234,6 @@
           </div>
           ${renderDetailBadges(product)}
           <div class="pdp-status-row"><span class="pdp-status ${stock > 0 ? "is-available" : "is-custom"}">${escape(stockText(product, currentVariant))}</span></div>
-          <div class="pdp-delivery-links">
-            <details><summary>Preparación estimada</summary><p>${days} días hábiles antes de la entrega.</p></details>
-            <details><summary>Envío</summary><p>${escape(product.entrega?.envio?.instrucciones || "Despacho según comuna, tamaño y disponibilidad.")}</p></details>
-            <details><summary>Retiro</summary><p>${escape(product.entrega?.retiro?.instrucciones || "Retiro coordinado en salida norte de Metro Macul, Peñalolén.")}</p></details>
-          </div>
           ${renderVariantSelector(product)}
           <p class="pdp-buy-ready">Opciones listas. Puedes agregar este producto al carrito.</p>
           <div class="pdp-purchase-row">
@@ -246,6 +241,11 @@
             <button class="btn btn-buy" type="button" data-pdp-add-cart>Agregar al carrito</button>
           </div>
           <p class="pdp-buy-note">${escape(buyMessage)}</p>
+          <div class="pdp-delivery-links" aria-label="Preparación y entrega">
+            <details><summary>Preparación estimada</summary><p>${days} días hábiles antes de la entrega.</p></details>
+            <details><summary>Envío</summary><p>${escape(product.entrega?.envio?.instrucciones || "Despacho según comuna, tamaño y disponibilidad.")}</p></details>
+            <details><summary>Retiro</summary><p>${escape(product.entrega?.retiro?.instrucciones || "Retiro coordinado en salida norte de Metro Macul, Peñalolén.")}</p></details>
+          </div>
           <div class="pdp-trust-list" aria-label="Confianza de compra">
             <div><strong>Pago protegido</strong><span>Mercado Pago</span></div>
             <div><strong>Fabricación local</strong><span>Santiago de Chile</span></div>
