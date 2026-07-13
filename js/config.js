@@ -28,10 +28,10 @@ const PLACEHOLDER_IMAGE = "data:image/svg+xml;charset=UTF-8," + encodeURICompone
 </svg>`);
 
 window.CONFIG = Object.freeze({
-  APP_VERSION: "5.17.1-mercadopago-unico",
+  APP_VERSION: "5.18.0-seo-tecnico-local",
   SITE_NAME: "Rhema Diseños",
   BRAND_NAME: "Rhema Diseños",
-  SITE_URL: "https://emmagina-frontend.onrender.com",
+  SITE_URL: window.location.origin,
   API_BASE_URL,
   CATEGORIES: Object.freeze(CATEGORIES),
   locale: "es-CL",

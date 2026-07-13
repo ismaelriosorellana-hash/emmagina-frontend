@@ -1,3 +1,13 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /acceso.html
+Disallow: /cuenta.html
+Disallow: /carrito.html
+Disallow: /finalizar-compra.html
+Disallow: /pago.html
+Disallow: /pedido.html
+Disallow: /cotizacion.html
+Disallow: /seguimiento-pedido.html
+Disallow: /comparacion.html
 Sitemap: https://emmagina-frontend.onrender.com/sitemap.xml
