@@ -582,3 +582,29 @@
   color: var(--deep-blue);
   line-height: 1.45;
 }
+
+/* V5.16.0 · Contenido institucional, confianza y centro de ayuda */
+.trust-hero { padding-bottom: 34px; }
+.trust-shell { width: var(--container); margin: 0 auto 80px; display: grid; gap: 26px; }
+.trust-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.trust-grid-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.trust-card, .help-card, .policy-copy section { padding: clamp(20px, 3vw, 30px); border: 1px solid var(--line); border-radius: 24px; background: #fff; box-shadow: 0 12px 30px rgba(2, 48, 71, .05); }
+.trust-card span, .help-card span { display: inline-flex; min-height: 30px; align-items: center; padding: 0 11px; border-radius: 999px; background: var(--cloud); color: var(--deep-blue); font-size: .78rem; font-weight: 900; text-transform: uppercase; letter-spacing: .05em; }
+.trust-card h2, .help-card h2, .policy-copy h2 { margin: 14px 0 8px; color: var(--navy); font-size: clamp(1.2rem, 2vw, 1.65rem); }
+.trust-card p, .help-card p, .policy-copy p { margin: 0; color: var(--deep-blue); line-height: 1.65; }
+.trust-panel { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: clamp(24px, 4vw, 40px); border: 1px solid var(--line); border-radius: 28px; background: #eaf4f8; }
+.trust-panel h2 { margin: 0 0 8px; color: var(--navy); font-size: clamp(1.7rem, 3vw, 2.6rem); }
+.trust-panel p:not(.kicker) { margin: 0; max-width: 720px; color: var(--deep-blue); line-height: 1.6; }
+.trust-panel .btn { flex: 0 0 auto; }
+.trust-steps { display: grid; gap: 14px; }
+.trust-steps article { display: grid; grid-template-columns: 52px minmax(0,1fr); gap: 16px; align-items: start; padding: 22px; border: 1px solid var(--line); border-radius: 22px; background: #fff; }
+.trust-steps article > strong { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 50%; background: var(--navy); color: #fff; }
+.trust-steps h2 { margin: 0 0 6px; color: var(--navy); }
+.trust-steps p { margin: 0; color: var(--deep-blue); line-height: 1.55; }
+.trust-notice { padding: 18px 20px; border: 1px solid #f2e1a8; border-radius: 18px; background: #fff7df; color: var(--navy); line-height: 1.55; }
+.policy-copy { gap: 16px; }
+.help-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.help-card { display: block; color: inherit; transition: transform .18s ease, border-color .18s ease; }
+.help-card:hover { transform: translateY(-2px); border-color: var(--blue); }
+@media (max-width: 980px) { .trust-grid-three, .help-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .trust-grid, .trust-grid-three, .help-grid { grid-template-columns: 1fr; } .trust-panel { align-items: stretch; flex-direction: column; } .trust-panel .btn { width: 100%; justify-content: center; } }

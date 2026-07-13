@@ -90,7 +90,6 @@
       <div class="checkout-items">${cartItems.map((item) => `<article><img src="${escape(item.image || window.CONFIG.placeholderImage)}" alt="${escape(item.name)}"><div><strong>${escape(item.name)}</strong><span>${escape(item.option?.variantName || "Opción principal")} · ${Number(item.quantity) || 1} un.</span></div><b>${money(Number(item.price || 0) * Number(item.quantity || 1))}</b></article>`).join("")}</div>
       <div class="summary-line"><span>Subtotal</span><strong>${money(subtotal)}</strong></div>
       <div class="summary-line"><span>Entrega</span><strong>${preview.label}</strong></div>
-      ${deliveryMethod() === "retiro" ? '<p class="checkout-pickup-summary"><strong>Retiro:</strong> salida norte de Metro Macul, Peñalolén. Horario a coordinar.</p>' : ""}
       <div class="summary-total"><span>Total estimado</span><strong>${money(total)}</strong></div>
       ${message ? `<p class="cart-info">${escape(message)}</p>` : ""}
       <button class="btn btn-primary btn-checkout" type="submit" ${submitting ? "disabled" : ""}>${submitting ? "Creando pedido..." : "Crear pedido"}</button>
