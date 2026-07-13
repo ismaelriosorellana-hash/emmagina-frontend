@@ -94,16 +94,16 @@
     const characteristics = Array.isArray(product.caracteristicas) ? product.caracteristicas : [];
     if (!characteristics.length) return "";
     return `
-      <section class="pdp-card">
-        <h2>Características</h2>
-        <dl class="pdp-spec-grid">
+      <details class="pdp-card pdp-accordion">
+        <summary>Características y especificaciones</summary>
+        <div class="pdp-accordion-body"><dl class="pdp-spec-grid">
           ${characteristics.map((item) => `
             <div>
               <dt>${escape(item.titulo || "Detalle")}</dt>
               <dd>${escape(item.valor || "")}</dd>
             </div>`).join("")}
-        </dl>
-      </section>`;
+        </dl></div>
+      </details>`;
   }
 
   function renderBenefits(product) {
@@ -112,50 +112,50 @@
     const title = content.tituloBeneficio || "Lo que debes saber";
     const text = content.textoBeneficio || "Producto preparado con cuidado para entregar una experiencia especial desde la compra hasta la entrega.";
     return `
-      <section class="pdp-card pdp-benefits">
-        <h2>${escape(title)}</h2>
-        <p>${escape(text)}</p>
-        ${benefits.length ? `<ul>${benefits.map((item) => `<li>${escape(item)}</li>`).join("")}</ul>` : ""}
-      </section>`;
+      <details class="pdp-card pdp-accordion pdp-benefits">
+        <summary>${escape(title)}</summary>
+        <div class="pdp-accordion-body"><p>${escape(text)}</p>
+        ${benefits.length ? `<ul>${benefits.map((item) => `<li>${escape(item)}</li>`).join("")}</ul>` : ""}</div>
+      </details>`;
   }
 
   function renderCare(product) {
     const care = product.contenidoPDP?.cuidados || [];
     if (!Array.isArray(care) || !care.length) return "";
     return `
-      <section class="pdp-card">
-        <h2>Cuidados y recomendaciones</h2>
-        <ul class="pdp-check-list">${care.map((item) => `<li>${escape(item)}</li>`).join("")}</ul>
-      </section>`;
+      <details class="pdp-card pdp-accordion">
+        <summary>Cuidados y recomendaciones</summary>
+        <div class="pdp-accordion-body"><ul class="pdp-check-list">${care.map((item) => `<li>${escape(item)}</li>`).join("")}</ul></div>
+      </details>`;
   }
 
   function renderFaq(product) {
     const faqs = product.contenidoPDP?.preguntasFrecuentes || [];
     if (!Array.isArray(faqs) || !faqs.length) return "";
     return `
-      <section class="pdp-card">
-        <h2>Preguntas frecuentes</h2>
-        <div class="pdp-faq-list">
+      <details class="pdp-card pdp-accordion">
+        <summary>Preguntas frecuentes</summary>
+        <div class="pdp-accordion-body"><div class="pdp-faq-list">
           ${faqs.map((faq) => `
             <details>
               <summary>${escape(faq.pregunta)}</summary>
               <p>${escape(faq.respuesta)}</p>
             </details>`).join("")}
-        </div>
-      </section>`;
+        </div></div>
+      </details>`;
   }
 
   function renderDelivery(product) {
     const days = Number(currentVariant?.diasPreparacion || product.diasPreparacion || 3);
     return `
-      <section class="pdp-card pdp-delivery-card">
-        <h2>Entrega</h2>
-        <div class="pdp-delivery-grid">
+      <details class="pdp-card pdp-accordion pdp-delivery-card">
+        <summary>Preparación y entrega</summary>
+        <div class="pdp-accordion-body"><div class="pdp-delivery-grid">
           <div><strong>${days} días hábiles</strong><span>Preparación estimada</span></div>
           <div><strong>Retiro o envío</strong><span>Según disponibilidad del producto</span></div>
           <div><strong>Confirmación</strong><span>Te contactaremos si falta algún dato</span></div>
-        </div>
-      </section>`;
+        </div></div>
+      </details>`;
   }
 
   function renderGallery(images, product) {
@@ -229,20 +229,29 @@
             <a class="btn btn-soft" href="pedido-personalizado.html">Crear una escena personalizada</a>
           </div>
           <p class="pdp-buy-note">${escape(buyMessage)}</p>
+          <div class="pdp-trust-strip" aria-label="Confianza de compra">
+            <div><strong>Pago protegido</strong><span>Mercado Pago</span></div>
+            <div><strong>Fabricación local</strong><span>Santiago de Chile</span></div>
+            <div><strong>Entrega coordinada</strong><span>Retiro o despacho</span></div>
+          </div>
         </aside>
       </section>
-      <section class="pdp-content-grid">
-        <article class="pdp-card pdp-description-card">
-          <h2>Descripción</h2>
-          <p>${escape(product.descripcion || product.descripcionCorta || "Producto creado por Rhema Diseños.")}</p>
-        </article>
+      <section class="pdp-content-grid" aria-label="Información del producto">
+        <details class="pdp-card pdp-accordion" open>
+          <summary>Descripción del producto</summary>
+          <div class="pdp-accordion-body"><p>${escape(product.descripcion || product.descripcionCorta || "Producto creado por Rhema Diseños.")}</p></div>
+        </details>
         ${renderBenefits(product)}
         ${renderCharacteristics(product)}
         ${renderDelivery(product)}
         ${renderCare(product)}
         ${renderFaq(product)}
       </section>
-      <section class="pdp-related" data-related-products></section>`;
+      <section class="pdp-related" data-related-products></section>
+      <div class="pdp-mobile-buybar" aria-label="Compra rápida">
+        <div><strong data-mobile-pdp-price>${product.tieneRangoPrecio && !currentVariant ? `Desde ${money(product.precioDesde)}` : money(price)}</strong><span data-mobile-pdp-status>${escape(stockText(product, currentVariant))}</span></div>
+        <button class="btn btn-buy" type="button" data-pdp-add-cart>Agregar al carrito</button>
+      </div>`;
 
     attachEvents(product);
     loadRelated(product);
@@ -269,6 +278,9 @@
       <strong>${money(priceFor(currentProduct, currentVariant))}</strong>
       ${originalPriceFor(currentProduct, currentVariant) > priceFor(currentProduct, currentVariant) ? `<span class="product-old-price">${money(originalPriceFor(currentProduct, currentVariant))}</span>` : ""}`;
 
+    const mobilePrice = root.querySelector("[data-mobile-pdp-price]");
+    if (mobilePrice) mobilePrice.textContent = money(priceFor(currentProduct, currentVariant));
+
     root.querySelector("[data-selected-variant-name]").textContent = currentVariant?.nombre || "";
     root.querySelectorAll("[data-variant-index]").forEach((button) => {
       button.classList.toggle("is-selected", Number(button.dataset.variantIndex) === Number(index));
@@ -280,6 +292,8 @@
       status.classList.toggle("is-available", stockFor(currentProduct, currentVariant) > 0);
       status.classList.toggle("is-custom", stockFor(currentProduct, currentVariant) <= 0);
     }
+    const mobileStatus = root.querySelector("[data-mobile-pdp-status]");
+    if (mobileStatus) mobileStatus.textContent = stockText(currentProduct, currentVariant);
   }
 
   function attachEvents(product) {
