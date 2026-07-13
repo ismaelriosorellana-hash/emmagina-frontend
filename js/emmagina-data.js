@@ -214,6 +214,7 @@
       lanzamiento: Boolean(raw.lanzamiento || raw.launch),
       desde14990: Boolean(raw.desde14990 || precioDesde <= 14990),
       personalizable: personalizado,
+      habilitarEscenaPersonalizada: Boolean(raw.habilitarEscenaPersonalizada || raw.crearEscenaPersonalizada),
       fabricadoPedido: Boolean(raw.fabricadoPedido || raw.fabricadoAPedido || raw.madeToOrder),
       bajoPedido: Boolean(raw.bajoPedido),
       diasPreparacion: Number(raw.diasPreparacion || 3),

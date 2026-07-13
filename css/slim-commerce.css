@@ -1,4 +1,4 @@
-/* Rhema Diseños v5.22.0 · Slim & High-Conversion */
+/* Rhema Diseños v5.23.0 · Slim & High-Conversion */
 :root { --slim-section: clamp(36px, 5vw, 64px); }
 .section { padding-block: var(--slim-section); }
 .section-heading { margin-bottom: 18px; align-items:center; }
@@ -79,7 +79,7 @@
   .choice-card { padding:17px; }
 }
 
-/* v5.22.0 · PDP Slim & High-Conversion v2 */
+/* v5.23.0 · PDP Slim & High-Conversion v2 */
 .product-detail-root { padding-bottom: 0; }
 .product-detail-root .pdp-shell {
   max-width: 1180px;
@@ -267,3 +267,28 @@
   .product-detail-root .pdp-variant-list { grid-template-columns: 1fr; }
   .pdp-mobile-buybar { grid-template-columns: minmax(90px, .65fr) minmax(140px, 1.35fr); }
 }
+
+
+/* V5.23.0 · Ficha uniforme de tres columnas */
+.product-detail-root .pdp-commerce-grid{width:min(1500px,calc(100% - 40px));margin:18px auto 38px;display:grid;grid-template-columns:minmax(420px,1.45fr) minmax(300px,.92fr) minmax(300px,.82fr);gap:22px;align-items:start}
+.pdp-commerce-gallery,.pdp-commerce-info,.pdp-commerce-buy{min-width:0}
+.pdp-commerce-gallery .pdp-gallery{position:sticky;top:112px;grid-template-columns:72px minmax(0,1fr);gap:12px;padding:14px;border:1px solid var(--line);border-radius:20px;background:#fff}
+.pdp-commerce-gallery .gallery-thumbs{grid-column:1;grid-row:1;display:grid;align-content:start;gap:9px;max-height:650px;overflow:auto}
+.pdp-commerce-gallery .gallery-thumbs button{width:58px;height:58px;border-radius:10px}
+.pdp-commerce-gallery .pdp-main-image{grid-column:2;grid-row:1;aspect-ratio:1;border-radius:16px;background:var(--cloud)}
+.pdp-commerce-info{display:grid;gap:16px}.pdp-title-block,.pdp-quick-facts,.pdp-scene-card,.pdp-commerce-buy{border:1px solid var(--line);border-radius:20px;background:#fff;padding:20px}
+.pdp-title-meta{display:flex;justify-content:space-between;gap:12px;color:var(--deep-blue);font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.07em}
+.pdp-title-block h1{margin:12px 0;font:900 clamp(1.8rem,3vw,3rem)/1.06 Nunito,Inter,sans-serif;color:var(--navy)}
+.pdp-review-link{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid #b9d9f5;border-radius:999px;font-size:.82rem;font-weight:800;color:#2463a9}
+.pdp-quick-facts{padding:0;overflow:hidden}.pdp-quick-facts summary{cursor:pointer;padding:17px 18px;font-weight:900;color:var(--navy)}.pdp-quick-facts>div{padding:0 18px 18px;color:var(--deep-blue)}
+.pdp-scene-card span,.pdp-price-label{font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.07em;color:var(--deep-blue)}.pdp-scene-card h2{font-size:1.15rem;margin:7px 0}.pdp-scene-card p{font-size:.9rem;line-height:1.55;color:var(--deep-blue)}
+.pdp-commerce-buy{position:sticky;top:112px}.pdp-commerce-buy .detail-price{margin:6px 0 8px}.pdp-commerce-buy .detail-price strong{font-size:clamp(2rem,3vw,2.7rem)}
+.pdp-commerce-buy .product-detail-badges{margin:4px 0 10px}.pdp-commerce-buy .pdp-status-row{margin:10px 0 12px}.pdp-commerce-buy .pdp-status{min-height:30px;font-size:.78rem}
+.pdp-delivery-links{display:grid;gap:8px;margin:12px 0 16px;border-top:1px solid var(--line);padding-top:14px}.pdp-delivery-links details{border:1px solid var(--line);border-radius:13px;padding:0 12px}.pdp-delivery-links summary{cursor:pointer;padding:11px 0;font-size:.82rem;font-weight:900;color:var(--navy)}.pdp-delivery-links p{margin:0 0 11px;font-size:.78rem;line-height:1.45;color:var(--deep-blue)}
+.pdp-commerce-buy .pdp-variant-panel{margin:12px 0;padding:12px;border-radius:15px}.pdp-commerce-buy .pdp-variant-list{grid-template-columns:1fr;max-height:220px}.pdp-commerce-buy .pdp-variant-option{min-height:48px;border-radius:12px}
+.pdp-buy-ready{padding:11px 12px;border:1px solid #c7ddf6;border-radius:13px;background:#f3f8ff;color:#244d7b;font-size:.78rem;font-weight:800}
+.pdp-purchase-row{display:grid;grid-template-columns:98px 1fr;gap:10px;align-items:end}.pdp-purchase-row .pdp-quantity-row{display:grid;gap:6px;margin:0;padding:0;border:0}.pdp-purchase-row .pdp-quantity-row input{width:100%;text-align:center}.pdp-purchase-row .btn{min-height:52px;width:100%}
+.pdp-trust-list{display:grid;gap:8px;margin-top:14px}.pdp-trust-list div{display:grid;grid-template-columns:1fr auto;gap:8px;padding:11px 12px;border:1px solid var(--line);border-radius:13px;font-size:.78rem}.pdp-trust-list span{color:var(--deep-blue)}
+.pdp-reviews-empty{width:var(--container);margin:0 auto 38px;padding:24px;border:1px dashed var(--line);border-radius:18px;text-align:center;background:#fff}.pdp-reviews-empty span{font-size:1.5rem}.pdp-reviews-empty h2{margin:5px 0;font-size:1.1rem}.pdp-reviews-empty p{margin:0;color:var(--deep-blue);font-size:.86rem}
+@media(max-width:1180px){.product-detail-root .pdp-commerce-grid{grid-template-columns:minmax(360px,1.2fr) minmax(280px,.8fr)}.pdp-commerce-buy{grid-column:1/-1;position:static}.pdp-commerce-info{position:sticky;top:112px}}
+@media(max-width:860px){.product-detail-root .pdp-commerce-grid{width:min(100% - 24px,760px);grid-template-columns:1fr;gap:14px}.pdp-commerce-gallery .pdp-gallery{position:static;grid-template-columns:1fr}.pdp-commerce-gallery .pdp-main-image{grid-column:1;grid-row:1}.pdp-commerce-gallery .gallery-thumbs{grid-column:1;grid-row:2;display:flex;max-height:none;overflow-x:auto}.pdp-commerce-info{position:static}.pdp-title-block,.pdp-quick-facts,.pdp-scene-card,.pdp-commerce-buy{padding:16px;border-radius:16px}.pdp-commerce-info{order:2}.pdp-commerce-buy{order:3}.pdp-purchase-row{grid-template-columns:92px 1fr}}

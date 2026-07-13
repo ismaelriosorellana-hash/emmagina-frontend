@@ -444,7 +444,7 @@ function openProductForm(product = null) {
     setChecked("product-active", product?.activo !== false);
     setChecked("product-publish", product?.publicarCatalogo !== false);
     setChecked("product-featured", product?.destacado);
-    setChecked("product-customizable", product?.personalizable);
+    setChecked("product-scene-request", product?.habilitarEscenaPersonalizada);
 
     const delivery = product?.entrega && typeof product.entrega === "object"
         ? product.entrega
@@ -943,7 +943,7 @@ async function saveProduct(event) {
         activo: checkedFrom("product-active"),
         publicarCatalogo: checkedFrom("product-publish"),
         destacado: checkedFrom("product-featured"),
-        personalizable: checkedFrom("product-customizable"),
+        habilitarEscenaPersonalizada: checkedFrom("product-scene-request"),
         seo: {
             titulo: stringFrom("product-seo-title"),
             descripcion: stringFrom("product-seo-description"),

@@ -201,57 +201,65 @@
     const price = priceFor(product, currentVariant);
     const original = originalPriceFor(product, currentVariant);
     const stock = stockFor(product, currentVariant);
-    const buyMessage = product.contenidoPDP?.mensajeCompra || "Agrega al carrito y continúa con el checkout cuando esté disponible.";
+    const buyMessage = product.contenidoPDP?.mensajeCompra || "Agrega el producto al carrito para continuar con el pago seguro.";
+    const days = Number(currentVariant?.diasPreparacion || product.diasPreparacion || 3);
+    const customScene = product.habilitarEscenaPersonalizada === true ? `
+      <section class="pdp-scene-card">
+        <span>Servicio opcional</span>
+        <h2>Crea una escena personalizada</h2>
+        <p>Envíanos fotografías e ideas. Diseñaremos una propuesta y te pediremos confirmación antes de fabricar.</p>
+        <a class="btn btn-soft" href="pedido-personalizado.html?producto=${encodeURIComponent(product.slug || product.id || "")}">Solicitar diseño personalizado</a>
+      </section>` : "";
 
     root.innerHTML = `
-      <section class="pdp-shell">
-        ${renderGallery(currentImages, product)}
-        <aside class="product-panel pdp-buy-panel">
-          <p class="kicker">${escape(product.categoriaPrincipal || "Rhema Diseños")}</p>
-          <h1>${escape(product.nombre)}</h1>
-          ${renderDetailBadges(product)}
+      <section class="pdp-commerce-grid">
+        <div class="pdp-commerce-gallery">${renderGallery(currentImages, product)}</div>
+        <article class="pdp-commerce-info">
+          <div class="pdp-title-block">
+            <div class="pdp-title-meta"><span>${escape(product.categoriaPrincipal || "Rhema Diseños")}</span>${product.marca ? `<span>${escape(product.marca)}</span>` : ""}</div>
+            <h1>${escape(product.nombre)}</h1>
+            <a class="pdp-review-link" href="#pdp-reviews" aria-label="Ver reseñas"><span aria-hidden="true">☆</span> Aún no hay reseñas</a>
+          </div>
+          <details class="pdp-quick-facts" open>
+            <summary>Lo que debes saber</summary>
+            <div><p>${escape(product.descripcionCorta || product.descripcion || "Producto impreso en 3D por Rhema Diseños.")}</p></div>
+          </details>
+          ${customScene}
+        </article>
+        <aside class="pdp-commerce-buy">
+          <span class="pdp-price-label">Precio</span>
           <div class="detail-price" data-pdp-price>
             <strong>${product.tieneRangoPrecio && !currentVariant ? `Desde ${money(product.precioDesde)}` : money(price)}</strong>
             ${original > price ? `<span class="product-old-price">${money(original)}</span>` : ""}
           </div>
-          <p class="pdp-short-description">${escape(product.descripcionCorta || product.descripcion || "Producto impreso en 3D por Rhema Diseños.")}</p>
-          <div class="pdp-status-row">
-            <span class="pdp-status ${stock > 0 ? "is-available" : "is-custom"}">${escape(stockText(product, currentVariant))}</span>
-            ${product.sku || currentVariant?.sku ? `<span>SKU: ${escape(currentVariant?.sku || product.sku)}</span>` : ""}
+          ${renderDetailBadges(product)}
+          <div class="pdp-status-row"><span class="pdp-status ${stock > 0 ? "is-available" : "is-custom"}">${escape(stockText(product, currentVariant))}</span></div>
+          <div class="pdp-delivery-links">
+            <details><summary>Preparación estimada</summary><p>${days} días hábiles antes de la entrega.</p></details>
+            <details><summary>Envío</summary><p>${escape(product.entrega?.envio?.instrucciones || "Despacho según comuna, tamaño y disponibilidad.")}</p></details>
+            <details><summary>Retiro</summary><p>${escape(product.entrega?.retiro?.instrucciones || "Retiro coordinado en salida norte de Metro Macul, Peñalolén.")}</p></details>
           </div>
           ${renderVariantSelector(product)}
-          <div class="pdp-quantity-row">
-            <label for="pdp-quantity">Cantidad</label>
-            <input id="pdp-quantity" type="number" min="1" step="1" value="1">
-          </div>
-          <div class="detail-actions pdp-actions">
+          <p class="pdp-buy-ready">Opciones listas. Puedes agregar este producto al carrito.</p>
+          <div class="pdp-purchase-row">
+            <div class="pdp-quantity-row"><label for="pdp-quantity">Cantidad</label><input id="pdp-quantity" type="number" min="1" step="1" value="1"></div>
             <button class="btn btn-buy" type="button" data-pdp-add-cart>Agregar al carrito</button>
-            <a class="btn btn-soft" href="pedido-personalizado.html">Crear una escena personalizada</a>
           </div>
           <p class="pdp-buy-note">${escape(buyMessage)}</p>
-          <div class="pdp-trust-strip" aria-label="Confianza de compra">
+          <div class="pdp-trust-list" aria-label="Confianza de compra">
             <div><strong>Pago protegido</strong><span>Mercado Pago</span></div>
             <div><strong>Fabricación local</strong><span>Santiago de Chile</span></div>
-            <div><strong>Entrega coordinada</strong><span>Retiro o despacho</span></div>
+            <div><strong>Orientación</strong><span>Te ayudamos antes de confirmar</span></div>
           </div>
         </aside>
       </section>
       <section class="pdp-content-grid" aria-label="Información del producto">
-        <details class="pdp-card pdp-accordion" open>
-          <summary>Descripción del producto</summary>
-          <div class="pdp-accordion-body"><p>${escape(product.descripcion || product.descripcionCorta || "Producto creado por Rhema Diseños.")}</p></div>
-        </details>
-        ${renderBenefits(product)}
-        ${renderCharacteristics(product)}
-        ${renderDelivery(product)}
-        ${renderCare(product)}
-        ${renderFaq(product)}
+        <details class="pdp-card pdp-accordion" open><summary>Descripción del producto</summary><div class="pdp-accordion-body"><p>${escape(product.descripcion || product.descripcionCorta || "Producto creado por Rhema Diseños.")}</p></div></details>
+        ${renderBenefits(product)}${renderCharacteristics(product)}${renderDelivery(product)}${renderCare(product)}${renderFaq(product)}
       </section>
+      <section id="pdp-reviews" class="pdp-reviews-empty"><div><span>☆</span><h2>Reseñas del producto</h2><p>Aún no hay reseñas publicadas para este producto.</p></div></section>
       <section class="pdp-related" data-related-products></section>
-      <div class="pdp-mobile-buybar" aria-label="Compra rápida">
-        <div><strong data-mobile-pdp-price>${product.tieneRangoPrecio && !currentVariant ? `Desde ${money(product.precioDesde)}` : money(price)}</strong><span data-mobile-pdp-status>${escape(stockText(product, currentVariant))}</span></div>
-        <button class="btn btn-buy" type="button" data-pdp-add-cart>Agregar al carrito</button>
-      </div>`;
+      <div class="pdp-mobile-buybar" aria-label="Compra rápida"><div><strong data-mobile-pdp-price>${product.tieneRangoPrecio && !currentVariant ? `Desde ${money(product.precioDesde)}` : money(price)}</strong><span data-mobile-pdp-status>${escape(stockText(product, currentVariant))}</span></div><button class="btn btn-buy" type="button" data-pdp-add-cart>Agregar al carrito</button></div>`;
 
     attachEvents(product);
     loadRelated(product);
