@@ -18,6 +18,7 @@
   const dateHelp = form.querySelector("[data-preferred-date-help]");
   let validation = null;
   let submitting = false;
+  let paymentReady = false;
 
   function items() { return window.EmmaginaCart.read(); }
   function orderItems() { return window.EmmaginaCart.toOrderItems(); }
@@ -92,7 +93,7 @@
       <div class="summary-line"><span>Entrega</span><strong>${preview.label}</strong></div>
       <div class="summary-total"><span>Total estimado</span><strong>${money(total)}</strong></div>
       ${message ? `<p class="cart-info">${escape(message)}</p>` : ""}
-      <button class="btn btn-primary btn-checkout" type="submit" ${submitting ? "disabled" : ""}>${submitting ? "Creando pedido..." : "Crear pedido"}</button>
+      <button class="btn btn-primary btn-checkout" type="submit" ${submitting || !paymentReady ? "disabled" : ""}>${submitting ? "Creando pedido..." : paymentReady ? "Crear pedido y pagar" : "Mercado Pago no disponible"}</button>
       <a class="btn btn-soft" href="carrito.html">Volver al carrito</a>
       <small>Los precios, stock y costo final de entrega se validan nuevamente al crear el pedido.</small>`;
   }
@@ -121,13 +122,15 @@
       const mpInput = mpOption?.querySelector("input");
       const mpLabel = form.querySelector("[data-mp-label]");
       const mpReady = validation?.metodosPago?.mercadopago === true;
+      paymentReady = mpReady;
       if (mpInput) mpInput.disabled = !mpReady;
       if (mpOption) mpOption.classList.toggle("is-disabled", !mpReady);
-      if (mpLabel) mpLabel.textContent = mpReady ? "Disponible para pagar en línea." : "Preparado para activarse cuando Mercado Pago esté configurado.";
+      if (mpLabel) mpLabel.textContent = mpReady ? "Pago online disponible." : "Mercado Pago aún no está configurado en la tienda.";
       syncDeliveryFields();
       renderSummary("Carrito validado correctamente.");
     } catch (error) {
       validation = null;
+      paymentReady = false;
       syncDeliveryFields();
       renderSummary(error.message || "No fue posible validar el carrito.");
     }
@@ -147,7 +150,7 @@
         zonaEnvio: metodoEntrega === "envio" ? "santiago" : "",
         fechaPreferida: metodoEntrega === "retiro" ? String(data.get("fechaPreferida") || "") : ""
       },
-      items: orderItems(), metodoPago: String(data.get("metodoPago") || "transferencia"), observaciones: String(data.get("observaciones") || "").trim(), origen: "web"
+      items: orderItems(), metodoPago: "mercadopago", observaciones: String(data.get("observaciones") || "").trim(), origen: "web"
     };
   }
 
@@ -160,9 +163,12 @@
     renderSummary("Creando pedido...");
     try {
       const response = await window.EmmaginaAPI.createOrder(formPayload());
+      const checkoutUrl = String(response.checkoutUrl || "").trim();
+      if (!checkoutUrl) throw new Error("El pedido fue creado, pero Mercado Pago no devolvió un enlace de pago.");
       window.EmmaginaCart.clear();
-      summary.innerHTML = `<h2>Pedido recibido</h2><p class="cart-success">${escape(response.mensaje || "Tu pedido fue creado correctamente.")}</p><div class="checkout-confirmation"><span>Número de pedido</span><strong>${escape(response.numeroPedido || "—")}</strong></div><div class="summary-total"><span>Total</span><strong>${money(response.total || 0)}</strong></div>${response.venceAt ? `<p>El stock quedó reservado mientras envías el comprobante.</p>` : ""}<a class="btn btn-primary" href="seguimiento-pedido.html">Ver seguimiento</a><a class="btn btn-soft" href="catalogo.html">Volver a la tienda</a>`;
+      summary.innerHTML = `<h2>Redirigiendo a Mercado Pago</h2><p class="cart-success">Pedido ${escape(response.numeroPedido || "")} creado correctamente.</p><div class="summary-total"><span>Total</span><strong>${money(response.total || 0)}</strong></div><a class="btn btn-primary" href="${escape(checkoutUrl)}">Continuar a Mercado Pago</a>`;
       form.querySelector(".checkout-main")?.setAttribute("hidden", "hidden");
+      window.location.assign(checkoutUrl);
     } catch (error) {
       submitting = false;
       renderSummary(error.message || "No fue posible crear el pedido.");

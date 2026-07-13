@@ -55,7 +55,7 @@
       ${validation ? `<p class="cart-success">Carrito validado con precios actuales.</p>` : ""}
       <a class="btn btn-primary btn-checkout" href="finalizar-compra.html">Continuar compra</a>
       <button class="btn btn-soft" type="button" data-clear-cart>Vaciar carrito</button>
-      <small>${mpReady ? "Mercado Pago disponible para esta tienda." : "Pago preparado para transferencia. Mercado Pago se activará cuando esté configurado."}</small>`;
+      <small>${mpReady ? "Mercado Pago disponible para esta tienda." : "Mercado Pago todavía no está configurado para recibir pagos."}</small>`;
   }
 
   async function validateAndRefresh(items) {
