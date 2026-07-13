@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Seguridad | Rhema Diseños</title>
+  <link rel="icon" href="../assets/emmagina-logo.svg">
+  <link rel="stylesheet" href="css/admin.css?v=5.19.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="css/admin-experience-v327.css?v=5.19.0">
+</head>
+<body data-admin-page="seguridad" data-admin-title="Seguridad">
+  <section id="admin-page-content">
+    <div class="admin-page-intro">
+      <div>
+        <h2>Preparación para producción</h2>
+        <p>Revisa variables, conexiones y protecciones antes de abrir la tienda a clientes reales.</p>
+      </div>
+      <button class="admin-button secondary" id="security-refresh" type="button"><i class="fa-solid fa-rotate"></i> Actualizar</button>
+    </div>
+
+    <div class="admin-stats-grid" id="security-summary">
+      <article class="admin-stat-card"><span>Estado</span><strong>Cargando…</strong></article>
+    </div>
+
+    <section class="admin-card" style="margin-top:18px">
+      <div class="admin-card-body">
+        <h3>Comprobaciones del sistema</h3>
+        <div id="security-checks" class="admin-form-grid two"></div>
+      </div>
+    </section>
+
+    <section class="admin-card" style="margin-top:18px">
+      <div class="admin-card-body">
+        <h3>Antes de abrir ventas reales</h3>
+        <div class="admin-form-grid two">
+          <article class="admin-card"><div class="admin-card-body"><strong>Mercado Pago</strong><p>Confirma que las credenciales productivas y el webhook correspondan al mismo entorno.</p></div></article>
+          <article class="admin-card"><div class="admin-card-body"><strong>Variables privadas</strong><p>Mantén JWT_SECRET, MongoDB, Cloudinary y Mercado Pago únicamente en Environment de Render.</p></div></article>
+          <article class="admin-card"><div class="admin-card-body"><strong>Archivos</strong><p>Prueba límites, formatos permitidos y rechazo de extensiones no admitidas.</p></div></article>
+          <article class="admin-card"><div class="admin-card-body"><strong>Dominio y correo</strong><p>Permanecen pendientes hasta que contrates el dominio. No bloquean las pruebas actuales en Render.</p></div></article>
+        </div>
+      </div>
+    </section>
+  </section>
+  <script src="../js/config.js?v=5.19.0"></script>
+  <script src="js/admin-api.js?v=5.19.0"></script>
+  <script src="js/admin-common.js?v=5.19.0"></script>
+  <script src="js/admin-experience-v327.js?v=5.19.0"></script>
+  <script src="js/security-admin.js?v=5.19.0"></script>
+</body>
+</html>

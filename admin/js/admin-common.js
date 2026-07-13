@@ -54,6 +54,12 @@
             icon: "fa-chart-line"
         },
         {
+            id: "seguridad",
+            label: "Seguridad",
+            href: "seguridad.html",
+            icon: "fa-shield-halved"
+        },
+        {
             id: "studio",
             label: "Editor del Sitio",
             href: "editor-sitio.html",
