@@ -48,12 +48,21 @@
     tabs.forEach((tab) => tab.addEventListener("click", () => {
       const name = tab.dataset.authTab;
       tabs.forEach((item) => item.classList.toggle("is-active", item === tab));
-      panels.forEach((panel) => panel.hidden = panel.dataset.authPanel !== name);
+      panels.forEach((panel) => {
+        const shouldShow = panel.dataset.authPanel === name;
+        panel.hidden = !shouldShow;
+        panel.style.display = shouldShow ? "grid" : "none";
+      });
     }));
 
     const loginForm = document.querySelector("[data-login-form]");
     const registerForm = document.querySelector("[data-register-form]");
     const message = document.querySelector("[data-auth-message]");
+    panels.forEach((panel) => {
+      const shouldShow = panel.dataset.authPanel === "login";
+      panel.hidden = !shouldShow;
+      panel.style.display = shouldShow ? "grid" : "none";
+    });
 
     loginForm?.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -139,6 +148,41 @@
     const ordersBox = document.querySelector("[data-account-orders]");
     const profileForm = document.querySelector("[data-profile-form]");
     const greeting = document.querySelector("[data-account-name]");
+    const editButton = document.querySelector("[data-profile-edit]");
+    const cancelButton = document.querySelector("[data-profile-cancel]");
+    const profileActions = document.querySelector("[data-profile-actions]");
+    let originalProfileValues = {};
+
+    function setProfileEditing(enabled) {
+      if (!profileForm) return;
+      ["nombre", "telefono", "rut", "direccion", "comuna"].forEach((field) => {
+        const input = profileForm.elements[field];
+        if (input) input.disabled = !enabled;
+      });
+      if (profileActions) profileActions.hidden = !enabled;
+      if (editButton) {
+        editButton.hidden = enabled;
+        editButton.disabled = false;
+      }
+    }
+
+    editButton?.addEventListener("click", () => {
+      originalProfileValues = {};
+      ["nombre", "telefono", "rut", "direccion", "comuna"].forEach((field) => {
+        originalProfileValues[field] = profileForm?.elements[field]?.value || "";
+      });
+      setProfileEditing(true);
+      profileForm?.elements.nombre?.focus();
+    });
+
+    cancelButton?.addEventListener("click", () => {
+      Object.entries(originalProfileValues).forEach(([field, value]) => {
+        const input = profileForm?.elements[field];
+        if (input) input.value = value;
+      });
+      setProfileEditing(false);
+      if (message) message.hidden = true;
+    });
 
     document.querySelector("[data-logout]")?.addEventListener("click", () => {
       API.clearSession();
@@ -157,6 +201,7 @@
       ordersBox.innerHTML = orders.length ? orders.map(orderCard).join("") : `<div class="account-empty"><h3>Aún no tienes pedidos vinculados</h3><p>Los próximos pedidos creados mientras tengas tu sesión iniciada aparecerán aquí.</p><a class="btn btn-primary" href="catalogo.html">Ir a la tienda</a></div>`;
       document.querySelector("[data-order-count]").textContent = String(orders.length);
       document.querySelector("[data-active-order-count]").textContent = String(orders.filter((order) => !["entregado", "cancelado"].includes(order.estadoPedido)).length);
+      setProfileEditing(false);
     } catch (error) {
       if (error.status === 401) {
         API.clearSession();
@@ -179,6 +224,7 @@
         API.saveSession({ token: current.token, usuario: result.usuario }, Boolean(localStorage.getItem("rhema_customer_session")));
         showMessage(message, "Tus datos fueron actualizados.", "success");
         if (greeting) greeting.textContent = result.usuario?.nombre || "cliente";
+        setProfileEditing(false);
       } catch (error) {
         showMessage(message, error.message || "No fue posible actualizar tus datos.", "error");
       } finally {

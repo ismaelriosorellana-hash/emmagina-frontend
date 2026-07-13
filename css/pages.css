@@ -546,3 +546,15 @@
 .account-history span, .account-history p { color: var(--deep-blue); }
 .account-history p { margin: 0; }
 @media (max-width: 760px) { .account-detail-grid { grid-template-columns: 1fr; } .account-history > div { grid-template-columns: 1fr; gap: 4px; } .account-order-detail-head { flex-direction: column; } }
+
+
+/* V5.15.2 · Correcciones de acceso, checkout y edición de cuenta */
+.account-auth-card [hidden],
+.checkout-form [hidden],
+.account-profile-form [hidden] { display: none !important; }
+.account-panel-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; }
+.account-panel-heading h2 { margin: 0; }
+.account-profile-form input:disabled { background: var(--cloud); color: var(--deep-blue); cursor: not-allowed; opacity: 1; }
+.account-profile-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.account-profile-actions .btn { flex: 1 1 145px; justify-content: center; }
+@media (max-width: 520px) { .account-panel-heading { align-items: stretch; flex-direction: column; } .account-panel-heading .btn { width: 100%; } }

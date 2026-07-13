@@ -46,7 +46,7 @@
   }
 
   function shippingPreview(subtotal) {
-    if (deliveryMethod() === "retiro") return { cost: 0, label: "Retiro coordinado" };
+    if (deliveryMethod() === "retiro") return { cost: 0, label: "Gratis" };
     const cost = Number(subtotal) >= 25000 ? 0 : 4000;
     return { cost, label: cost > 0 ? money(cost) : "Gratis" };
   }
