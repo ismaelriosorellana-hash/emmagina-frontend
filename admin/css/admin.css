@@ -1855,3 +1855,6 @@ body[data-admin-page="productos"] .admin-product-tab-sale.active {
         grid-template-columns: 1fr;
     }
 }
+
+/* v5.20.0 · Preparación de lanzamiento */
+.launch-test-list { margin: 0; padding-left: 1.35rem; display: grid; gap: .7rem; color: var(--admin-text, #26364a); line-height: 1.55; }
