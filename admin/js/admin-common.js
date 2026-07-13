@@ -36,6 +36,12 @@
             icon: "fa-list-check"
         },
         {
+            id: "comunicaciones",
+            label: "Comunicaciones",
+            href: "comunicaciones.html",
+            icon: "fa-comments"
+        },
+        {
             id: "inventario",
             label: "Inventario",
             href: "inventario.html",

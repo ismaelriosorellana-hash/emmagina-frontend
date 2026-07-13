@@ -178,12 +178,58 @@
     markActiveNav();
   }
 
+  const DEFAULT_FOOTER_COLUMNS = Object.freeze([
+    {
+      title: "Tienda",
+      sortOrder: 10,
+      links: [
+        { label: "Catálogo", href: "catalogo.html", isVisible: true },
+        { label: "Crea tu Figura", href: "pedido-personalizado.html", isVisible: true },
+        { label: "Memories", href: "memories.html", isVisible: true },
+        { label: "Alma", href: "alma.html", isVisible: true }
+      ]
+    },
+    {
+      title: "Ayuda",
+      sortOrder: 20,
+      links: [
+        { label: "Centro de ayuda", href: "ayuda.html", isVisible: true },
+        { label: "Preguntas frecuentes", href: "preguntas-frecuentes.html", isVisible: true },
+        { label: "Seguimiento", href: "seguimiento-pedido.html", isVisible: true },
+        { label: "Cotizaciones", href: "cotizacion.html", isVisible: true }
+      ]
+    }
+  ]);
+
+  function footerColumnsWithRequiredLinks(footer = {}) {
+    const source = Array.isArray(footer.columns) && footer.columns.length
+      ? footer.columns.map((column) => ({ ...column, links: Array.isArray(column.links) ? [...column.links] : [] }))
+      : DEFAULT_FOOTER_COLUMNS.map((column) => ({ ...column, links: column.links.map((link) => ({ ...link })) }));
+
+    let helpColumn = source.find((column) => /ayuda|soporte/i.test(String(column?.title || "")));
+    if (!helpColumn) {
+      helpColumn = { title: "Ayuda", sortOrder: 20, isVisible: true, links: [] };
+      source.push(helpColumn);
+    }
+
+    const hasHelpCenter = helpColumn.links.some((link) => {
+      const href = String(link?.href || "").split("?")[0].split("#")[0].toLowerCase();
+      return href === "ayuda.html" || /centro de ayuda/i.test(String(link?.label || ""));
+    });
+
+    if (!hasHelpCenter) {
+      helpColumn.links.unshift({ label: "Centro de ayuda", href: "ayuda.html", isVisible: true });
+    }
+
+    return source
+      .filter((column) => column && column.isVisible !== false)
+      .sort((a, b) => (Number(a.sortOrder) || 0) - (Number(b.sortOrder) || 0));
+  }
+
   function renderFooter(footer = {}) {
     const target = document.querySelector(".site-footer");
     if (!target || footer.enabled === false) return;
-    const columns = (Array.isArray(footer.columns) ? footer.columns : [])
-      .filter((column) => column && column.isVisible !== false)
-      .sort((a,b) => (Number(a.sortOrder)||0) - (Number(b.sortOrder)||0));
+    const columns = footerColumnsWithRequiredLinks(footer);
     const colsHtml = columns.map((column) => `<nav class="footer-col" aria-label="${escapeHtml(column.title)}">
       <h3>${escapeHtml(column.title)}</h3>
       ${(Array.isArray(column.links) ? column.links : []).filter((link) => link.isVisible !== false).map((link) => `<a href="${escapeHtml(cleanHref(link.href, "#"))}">${escapeHtml(link.label)}</a>`).join("")}

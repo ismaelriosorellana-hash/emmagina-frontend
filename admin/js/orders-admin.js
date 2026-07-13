@@ -1345,6 +1345,13 @@ function openOrder(id) {
                 <label for="order-production-message">Mensaje visible para el cliente</label>
                 <textarea id="order-production-message" maxlength="1200">${AdminUI.escapeHtml(order.produccion?.mensajeCliente || "Estamos revisando los detalles de tu pedido.")}</textarea>
             </div>
+            <div class="admin-field full">
+                <label class="admin-checkbox">
+                    <input id="order-notify-customer" type="checkbox" checked>
+                    Enviar esta actualización al cliente por correo si Resend está configurado
+                </label>
+                <small>El mensaje también quedará preparado para copiar o abrir por WhatsApp.</small>
+            </div>
         </div>
         </details>
     `;
@@ -1615,6 +1622,7 @@ async function saveOrder() {
                     estadoPedido: document.getElementById("order-status-edit").value,
                     estadoPago: document.getElementById("order-payment-edit").value,
                     notasInternas: document.getElementById("order-note-edit").value,
+                    notificarCliente: document.getElementById("order-notify-customer")?.checked !== false,
                     produccion: {
                         etapa: document.getElementById("order-production-stage").value,
                         progreso: Number(document.getElementById("order-production-progress").value || 0),
