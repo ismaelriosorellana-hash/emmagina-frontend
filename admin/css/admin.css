@@ -1856,5 +1856,22 @@ body[data-admin-page="productos"] .admin-product-tab-sale.active {
     }
 }
 
-/* v5.20.0 · Preparación de lanzamiento */
+/* v5.21.0 · Preparación de lanzamiento */
 .launch-test-list { margin: 0; padding-left: 1.35rem; display: grid; gap: .7rem; color: var(--admin-text, #26364a); line-height: 1.55; }
+
+
+/* v5.21.0 · Actualización masiva de productos */
+.admin-bulk-products { margin-bottom: 18px; }
+.admin-bulk-header { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; }
+.admin-bulk-header h3 { margin:4px 0 6px; }
+.admin-bulk-header p { margin:0; color:var(--admin-muted); max-width:720px; }
+.admin-bulk-grid { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:18px; align-items:end; margin-top:18px; }
+.admin-bulk-result { margin-top:18px; }
+.admin-bulk-summary { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+.admin-bulk-summary span { padding:9px 12px; border-radius:12px; background:#f2f6f7; border:1px solid #dbe5e7; }
+.admin-bulk-summary .is-error { background:#fff0f0; border-color:#f0caca; color:#a52b2b; }
+.admin-bulk-summary .is-ok { background:#effaf3; border-color:#cce9d5; color:#247240; }
+.admin-bulk-errors { max-height:260px; overflow:auto; padding:14px 16px; border-radius:14px; background:#fff5f5; border:1px solid #efcccc; }
+.admin-bulk-errors h4 { margin:0 0 10px; }
+.admin-bulk-errors p { margin:6px 0; font-size:.9rem; }
+@media (max-width:800px) { .admin-bulk-header,.admin-bulk-grid { grid-template-columns:1fr; display:grid; } .admin-bulk-header .admin-button { width:100%; } }

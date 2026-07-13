@@ -60,12 +60,6 @@
             icon: "fa-shield-halved"
         },
         {
-            id: "lanzamiento",
-            label: "Lanzamiento",
-            href: "lanzamiento.html",
-            icon: "fa-rocket"
-        },
-        {
             id: "studio",
             label: "Editor del Sitio",
             href: "editor-sitio.html",

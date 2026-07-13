@@ -15,6 +15,8 @@ const PRODUCT_TAB_LABELS = Object.freeze({
 });
 
 document.addEventListener("admin:ready", () => {
+    configureBulkProductTools();
+
     document.getElementById("product-new")
         ?.addEventListener("click", () => openProductForm());
 
@@ -1020,4 +1022,112 @@ async function saveProduct(event) {
     } finally {
         saveButton.disabled = false;
     }
+}
+
+
+let lastProductExcelPreviewValid = false;
+
+function configureBulkProductTools() {
+    const download = document.getElementById("product-template-download");
+    if (download) {
+        const base = String(window.CONFIG?.API_BASE_URL || "").replace(/\/+$/, "");
+        download.href = `${base}/admin/productos/plantilla-excel?incluirActuales=true`;
+        download.addEventListener("click", async (event) => {
+            event.preventDefault();
+            try {
+                const response = await fetch(download.href, {
+                    headers: { Authorization: `Bearer ${AdminAPI.getToken()}` }
+                });
+                if (!response.ok) throw new Error("No fue posible descargar la plantilla.");
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = `plantilla-productos-rhema-${new Date().toISOString().slice(0, 10)}.xlsx`;
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                AdminUI.toast(error.message, "error");
+            }
+        });
+    }
+
+    document.getElementById("product-excel-file")?.addEventListener("change", () => {
+        lastProductExcelPreviewValid = false;
+        const apply = document.getElementById("product-excel-apply");
+        if (apply) apply.disabled = true;
+        const result = document.getElementById("product-excel-result");
+        if (result) result.innerHTML = "";
+    });
+    document.getElementById("product-excel-preview")?.addEventListener("click", () => submitProductExcel(false));
+    document.getElementById("product-excel-apply")?.addEventListener("click", () => submitProductExcel(true));
+}
+
+async function submitProductExcel(applyChanges) {
+    const fileInput = document.getElementById("product-excel-file");
+    const file = fileInput?.files?.[0];
+    if (!file) {
+        AdminUI.toast("Selecciona una plantilla Excel.", "error");
+        return;
+    }
+    if (applyChanges && !lastProductExcelPreviewValid) {
+        AdminUI.toast("Primero ejecuta una vista previa sin errores.", "error");
+        return;
+    }
+    if (applyChanges && !AdminUI.confirmAction("Se actualizará el catálogo según la plantilla. ¿Continuar?")) return;
+
+    const previewButton = document.getElementById("product-excel-preview");
+    const applyButton = document.getElementById("product-excel-apply");
+    const result = document.getElementById("product-excel-result");
+    const formData = new FormData();
+    formData.append("archivo", file);
+    formData.append("aplicar", applyChanges ? "true" : "false");
+    if (previewButton) previewButton.disabled = true;
+    if (applyButton) applyButton.disabled = true;
+    if (result) result.innerHTML = `<div class="admin-loading">${applyChanges ? "Aplicando cambios..." : "Validando plantilla..."}</div>`;
+
+    try {
+        const response = await AdminAPI.request("/admin/productos/importar-excel", { method: "POST", body: formData });
+        const summary = response.resumen || {};
+        const errors = response.errores || [];
+        lastProductExcelPreviewValid = !applyChanges && errors.length === 0;
+        if (applyButton) applyButton.disabled = !lastProductExcelPreviewValid;
+        renderProductExcelResult(response);
+        if (applyChanges) {
+            lastProductExcelPreviewValid = false;
+            await loadProducts();
+            AdminUI.toast(`${response.aplicados?.length || 0} cambios aplicados.`, "success");
+        } else {
+            AdminUI.toast(errors.length ? "La plantilla contiene errores." : `${summary.filas || 0} filas listas para aplicar.`, errors.length ? "error" : "success");
+        }
+    } catch (error) {
+        const details = error.details || {};
+        renderProductExcelResult(details);
+        lastProductExcelPreviewValid = false;
+        AdminUI.toast(error.message, "error");
+    } finally {
+        if (previewButton) previewButton.disabled = false;
+        if (applyButton && applyChanges) applyButton.disabled = true;
+    }
+}
+
+function renderProductExcelResult(data = {}) {
+    const container = document.getElementById("product-excel-result");
+    if (!container) return;
+    const summary = data.resumen || {};
+    const errors = Array.isArray(data.errores) ? data.errores : [];
+    const rows = Array.isArray(data.vistaPrevia) ? data.vistaPrevia : [];
+    container.innerHTML = `
+        <div class="admin-bulk-summary">
+            <span><strong>${summary.filas || 0}</strong> filas</span>
+            <span><strong>${summary.crear || 0}</strong> crear</span>
+            <span><strong>${summary.actualizar || 0}</strong> actualizar</span>
+            <span><strong>${summary.desactivar || 0}</strong> desactivar</span>
+            <span class="${errors.length ? "is-error" : "is-ok"}"><strong>${errors.length}</strong> errores</span>
+        </div>
+        ${errors.length ? `<div class="admin-bulk-errors"><h4>Errores que debes corregir</h4>${errors.slice(0, 30).map((item) => `<p><strong>${AdminUI.escapeHtml(item.hoja || "Productos")} fila ${item.fila || "—"}:</strong> ${AdminUI.escapeHtml(item.campo || "Dato")} — ${AdminUI.escapeHtml(item.mensaje || "Error")}</p>`).join("")}</div>` : ""}
+        ${rows.length ? `<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Fila</th><th>SKU</th><th>Producto</th><th>Acción</th><th>Resultado</th><th>Variantes</th></tr></thead><tbody>${rows.slice(0, 100).map((row) => `<tr><td>${row.fila}</td><td>${AdminUI.escapeHtml(row.sku)}</td><td>${AdminUI.escapeHtml(row.nombre)}</td><td>${AdminUI.escapeHtml(row.accion)}</td><td>${AdminUI.escapeHtml(row.resultado)}</td><td>${row.variantes || 0}</td></tr>`).join("")}</tbody></table></div>` : ""}
+    `;
 }

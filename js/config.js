@@ -28,7 +28,7 @@ const PLACEHOLDER_IMAGE = "data:image/svg+xml;charset=UTF-8," + encodeURICompone
 </svg>`);
 
 window.CONFIG = Object.freeze({
-  APP_VERSION: "5.20.0-lanzamiento-controlado",
+  APP_VERSION: "5.21.0-slim-commerce-y-catalogo-masivo",
   SITE_NAME: "Rhema Diseños",
   BRAND_NAME: "Rhema Diseños",
   SITE_URL: window.location.origin,

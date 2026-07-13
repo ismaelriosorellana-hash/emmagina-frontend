@@ -8,9 +8,9 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Productos | Rhema Diseños</title>
     <link rel="icon" href="../assets/emmagina-logo.svg">
-    <link rel="stylesheet" href="css/admin.css?v=5.20.0">
+    <link rel="stylesheet" href="css/admin.css?v=5.21.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="css/admin-experience-v327.css?v=5.20.0">
+    <link rel="stylesheet" href="css/admin-experience-v327.css?v=5.21.0">
 </head>
 <body data-admin-page="productos" data-admin-title="Productos">
     <section id="admin-page-content">
@@ -44,6 +44,36 @@
                 Actualizar
             </button>
         </div>
+
+        <section class="admin-card admin-bulk-products" aria-labelledby="bulk-products-title">
+            <div class="admin-card-header admin-bulk-header">
+                <div>
+                    <span class="admin-product-eyebrow">Actualización masiva</span>
+                    <h3 id="bulk-products-title">Importar catálogo desde Excel</h3>
+                    <p>Descarga la plantilla con el catálogo actual, edítala y revisa una vista previa antes de aplicar los cambios.</p>
+                </div>
+                <a class="admin-button secondary" id="product-template-download" href="#">
+                    <i class="fa-solid fa-file-excel"></i>
+                    Descargar plantilla
+                </a>
+            </div>
+            <div class="admin-bulk-grid">
+                <div class="admin-field full">
+                    <label for="product-excel-file">Plantilla Excel (.xlsx)</label>
+                    <input id="product-excel-file" type="file" accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
+                    <small>La columna SKU identifica cada producto. Usa “actualizar”, “crear”, “upsert”, “desactivar” o “ignorar” en Accion.</small>
+                </div>
+                <div class="admin-toolbar-group">
+                    <button class="admin-button secondary" id="product-excel-preview" type="button">
+                        <i class="fa-solid fa-eye"></i> Vista previa
+                    </button>
+                    <button class="admin-button" id="product-excel-apply" type="button" disabled>
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Aplicar cambios
+                    </button>
+                </div>
+            </div>
+            <div id="product-excel-result" class="admin-bulk-result" aria-live="polite"></div>
+        </section>
 
         <section class="admin-card">
             <div class="admin-table-wrap" id="products-table"></div>
@@ -488,10 +518,10 @@
         </div>
     </section>
 
-    <script src="../js/config.js?v=5.20.0"></script>
-    <script src="js/admin-api.js?v=5.20.0"></script>
-    <script src="js/admin-common.js?v=5.20.0"></script>
-    <script src="js/admin-experience-v327.js?v=5.20.0"></script>
-    <script src="js/products-admin.js?v=5.20.0"></script>
+    <script src="../js/config.js?v=5.21.0"></script>
+    <script src="js/admin-api.js?v=5.21.0"></script>
+    <script src="js/admin-common.js?v=5.21.0"></script>
+    <script src="js/admin-experience-v327.js?v=5.21.0"></script>
+    <script src="js/products-admin.js?v=5.21.0"></script>
 </body>
 </html>
