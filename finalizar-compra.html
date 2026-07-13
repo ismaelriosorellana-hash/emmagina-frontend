@@ -11,13 +11,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=5.15.0">
-  <link rel="stylesheet" href="css/layout.css?v=5.15.0">
-  <link rel="stylesheet" href="css/components.css?v=5.15.0">
-  <link rel="stylesheet" href="css/home.css?v=5.15.0">
-  <link rel="stylesheet" href="css/catalog.css?v=5.15.0">
-  <link rel="stylesheet" href="css/product.css?v=5.15.0">
-  <link rel="stylesheet" href="css/pages.css?v=5.15.0">
+  <link rel="stylesheet" href="css/base.css?v=5.15.1">
+  <link rel="stylesheet" href="css/layout.css?v=5.15.1">
+  <link rel="stylesheet" href="css/components.css?v=5.15.1">
+  <link rel="stylesheet" href="css/home.css?v=5.15.1">
+  <link rel="stylesheet" href="css/catalog.css?v=5.15.1">
+  <link rel="stylesheet" href="css/product.css?v=5.15.1">
+  <link rel="stylesheet" href="css/pages.css?v=5.15.1">
   <title>Finalizar compra | Rhema Diseños</title>
 </head>
 <body>
@@ -82,7 +82,8 @@
             <div class="form-grid">
               <div class="field"><label for="checkout-delivery">Método</label><select id="checkout-delivery" name="metodoEntrega"><option value="envio">Envío</option><option value="retiro">Retiro coordinado</option></select></div>
               <div class="field"><label for="checkout-comuna">Comuna</label><input id="checkout-comuna" name="comuna" maxlength="120"></div>
-              <div class="field full"><label for="checkout-address">Dirección</label><input id="checkout-address" name="direccion" maxlength="300"></div>
+              <div class="field full" data-address-field><label for="checkout-address">Dirección</label><input id="checkout-address" name="direccion" maxlength="300"></div>
+              <div class="field full" data-preferred-date-field hidden><label for="checkout-preferred-date">Fecha preferida para el retiro</label><input id="checkout-preferred-date" name="fechaPreferida" type="date"><small data-preferred-date-help>Debe ser posterior al tiempo de preparación del producto.</small></div>
               <div class="field full"><label for="checkout-notes">Observaciones</label><textarea id="checkout-notes" name="observaciones" rows="4" maxlength="1000" placeholder="Indica referencias, horarios o detalles importantes."></textarea></div>
             </div>
           </section>
@@ -112,12 +113,12 @@
     </div>
     <div class="footer-bottom"><span>© 2026 Rhema Diseños. Todos los derechos reservados.</span><span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span></div>
   </footer>
-  <script src="js/config.js?v=5.15.0"></script>
-  <script src="js/emmagina-data.js?v=5.15.0"></script>
-  <script src="js/emmagina-api.js?v=5.15.0"></script>
-  <script src="js/emmagina-cart.js?v=5.15.0"></script>
-  <script src="js/emmagina-ui.js?v=5.15.0"></script>
-  <script src="js/emmagina-common.js?v=5.15.0"></script>
-  <script src="js/emmagina-checkout.js?v=5.15.0"></script>
+  <script src="js/config.js?v=5.15.1"></script>
+  <script src="js/emmagina-data.js?v=5.15.1"></script>
+  <script src="js/emmagina-api.js?v=5.15.1"></script>
+  <script src="js/emmagina-cart.js?v=5.15.1"></script>
+  <script src="js/emmagina-ui.js?v=5.15.1"></script>
+  <script src="js/emmagina-common.js?v=5.15.1"></script>
+  <script src="js/emmagina-checkout.js?v=5.15.1"></script>
 </body>
 </html>
