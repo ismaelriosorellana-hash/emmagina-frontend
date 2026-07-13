@@ -11,13 +11,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=5.15.2">
-  <link rel="stylesheet" href="css/layout.css?v=5.15.2">
-  <link rel="stylesheet" href="css/components.css?v=5.15.2">
-  <link rel="stylesheet" href="css/home.css?v=5.15.2">
-  <link rel="stylesheet" href="css/catalog.css?v=5.15.2">
-  <link rel="stylesheet" href="css/product.css?v=5.15.2">
-  <link rel="stylesheet" href="css/pages.css?v=5.15.2">
+  <link rel="stylesheet" href="css/base.css?v=5.15.3">
+  <link rel="stylesheet" href="css/layout.css?v=5.15.3">
+  <link rel="stylesheet" href="css/components.css?v=5.15.3">
+  <link rel="stylesheet" href="css/home.css?v=5.15.3">
+  <link rel="stylesheet" href="css/catalog.css?v=5.15.3">
+  <link rel="stylesheet" href="css/product.css?v=5.15.3">
+  <link rel="stylesheet" href="css/pages.css?v=5.15.3">
   <title>Finalizar compra | Rhema Diseños</title>
 </head>
 <body>
@@ -81,8 +81,13 @@
             <div class="checkout-step-heading"><span>2</span><div><h2>Entrega</h2><p>El costo de envío final puede coordinarse según comuna, tamaño y tipo de producto.</p></div></div>
             <div class="form-grid">
               <div class="field"><label for="checkout-delivery">Método</label><select id="checkout-delivery" name="metodoEntrega"><option value="envio">Envío</option><option value="retiro">Retiro coordinado</option></select></div>
-              <div class="field"><label for="checkout-comuna">Comuna</label><input id="checkout-comuna" name="comuna" maxlength="120"></div>
+              <div class="field" data-comuna-field><label for="checkout-comuna">Comuna</label><input id="checkout-comuna" name="comuna" maxlength="120"></div>
               <div class="field full" data-address-field><label for="checkout-address">Dirección</label><input id="checkout-address" name="direccion" maxlength="300"></div>
+              <div class="field full checkout-pickup-point" data-pickup-point hidden>
+                <strong>Punto de retiro</strong>
+                <span>Salida norte de la estación de Metro Macul, Peñalolén.</span>
+                <small>Horario a coordinar previamente con Rhema Diseños.</small>
+              </div>
               <div class="field full" data-preferred-date-field hidden><label for="checkout-preferred-date">Fecha preferida para el retiro</label><input id="checkout-preferred-date" name="fechaPreferida" type="date"><small data-preferred-date-help>Debe ser posterior al tiempo de preparación del producto.</small></div>
               <div class="field full"><label for="checkout-notes">Observaciones</label><textarea id="checkout-notes" name="observaciones" rows="4" maxlength="1000" placeholder="Indica referencias, horarios o detalles importantes."></textarea></div>
             </div>
@@ -113,12 +118,12 @@
     </div>
     <div class="footer-bottom"><span>© 2026 Rhema Diseños. Todos los derechos reservados.</span><span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span></div>
   </footer>
-  <script src="js/config.js?v=5.15.2"></script>
-  <script src="js/emmagina-data.js?v=5.15.2"></script>
-  <script src="js/emmagina-api.js?v=5.15.2"></script>
-  <script src="js/emmagina-cart.js?v=5.15.2"></script>
-  <script src="js/emmagina-ui.js?v=5.15.2"></script>
-  <script src="js/emmagina-common.js?v=5.15.2"></script>
-  <script src="js/emmagina-checkout.js?v=5.15.2"></script>
+  <script src="js/config.js?v=5.15.3"></script>
+  <script src="js/emmagina-data.js?v=5.15.3"></script>
+  <script src="js/emmagina-api.js?v=5.15.3"></script>
+  <script src="js/emmagina-cart.js?v=5.15.3"></script>
+  <script src="js/emmagina-ui.js?v=5.15.3"></script>
+  <script src="js/emmagina-common.js?v=5.15.3"></script>
+  <script src="js/emmagina-checkout.js?v=5.15.3"></script>
 </body>
 </html>

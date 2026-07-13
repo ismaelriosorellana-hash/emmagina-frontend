@@ -558,3 +558,27 @@
 .account-profile-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .account-profile-actions .btn { flex: 1 1 145px; justify-content: center; }
 @media (max-width: 520px) { .account-panel-heading { align-items: stretch; flex-direction: column; } .account-panel-heading .btn { width: 100%; } }
+
+
+/* v5.15.3 · Punto fijo de retiro */
+.checkout-layout [hidden] { display: none !important; }
+.checkout-pickup-point {
+  display: grid;
+  gap: 5px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--cloud);
+  color: var(--navy);
+}
+.checkout-pickup-point strong { font-size: 1rem; }
+.checkout-pickup-point span { color: var(--deep-blue); font-weight: 800; }
+.checkout-pickup-point small { color: var(--muted); }
+.checkout-pickup-summary {
+  margin: 10px 0 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--cloud);
+  color: var(--deep-blue);
+  line-height: 1.45;
+}
