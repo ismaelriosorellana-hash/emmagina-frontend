@@ -2,6 +2,30 @@
 
 (function () {
   const API = {};
+  const SESSION_KEY = "rhema_customer_session";
+
+  function getStoredSession() {
+    try {
+      const raw = sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function saveSession(payload, remember = false) {
+    const session = payload?.token ? { token: payload.token, usuario: payload.usuario || null } : null;
+    sessionStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(SESSION_KEY);
+    if (!session) return null;
+    (remember ? localStorage : sessionStorage).setItem(SESSION_KEY, JSON.stringify(session));
+    return session;
+  }
+
+  function clearSession() {
+    sessionStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(SESSION_KEY);
+  }
 
   function cleanBase() {
     const base = String(window.CONFIG?.API_BASE_URL || "").replace(/\/+$/, "");
@@ -18,11 +42,13 @@
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), options.timeoutMs || 65000);
     try {
+      const session = getStoredSession();
       const response = await fetch(toUrl(endpoint), {
         method: options.method || "GET",
         headers: {
           Accept: "application/json",
           ...(options.body && !(options.body instanceof FormData) ? { "Content-Type": "application/json" } : {}),
+          ...(session?.token ? { Authorization: `Bearer ${session.token}` } : {}),
           ...(options.headers || {})
         },
         body: options.body instanceof FormData ? options.body : options.body ? JSON.stringify(options.body) : undefined,
@@ -167,6 +193,33 @@
     });
   }
 
+  async function registerCustomer(payload = {}, remember = false) {
+    const response = await request("/auth/registro", { method: "POST", body: payload });
+    saveSession(response, remember);
+    return response;
+  }
+
+  async function loginCustomer(payload = {}, remember = false) {
+    const response = await request("/auth/login", { method: "POST", body: { ...payload, area: "cliente" } });
+    saveSession(response, remember);
+    return response;
+  }
+
+  async function getCustomerProfile() {
+    return request("/cuenta/perfil");
+  }
+
+  async function updateCustomerProfile(payload = {}) {
+    return request("/cuenta/perfil", { method: "PATCH", body: payload });
+  }
+
+  async function getCustomerOrders() {
+    return request("/cuenta/pedidos");
+  }
+
+  async function getCustomerOrder(id) {
+    return request(`/cuenta/pedidos/${encodeURIComponent(id)}`);
+  }
 
   API.request = request;
   API.getProducts = getProducts;
@@ -184,5 +237,14 @@
   API.getCustomQuote = getCustomQuote;
   API.respondCustomQuote = respondCustomQuote;
   API.createOrderFromQuote = createOrderFromQuote;
+  API.getStoredSession = getStoredSession;
+  API.saveSession = saveSession;
+  API.clearSession = clearSession;
+  API.registerCustomer = registerCustomer;
+  API.loginCustomer = loginCustomer;
+  API.getCustomerProfile = getCustomerProfile;
+  API.updateCustomerProfile = updateCustomerProfile;
+  API.getCustomerOrders = getCustomerOrders;
+  API.getCustomerOrder = getCustomerOrder;
   window.EmmaginaAPI = Object.freeze(API);
 })();

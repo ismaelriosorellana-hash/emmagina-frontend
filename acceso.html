@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Próximamente podrás revisar tus pedidos, historial y datos de contacto desde esta sección.">
   <meta name="theme-color" content="#f8f6f1">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="favicon.ico">
@@ -11,97 +10,59 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=5.14.0">
-  <link rel="stylesheet" href="css/layout.css?v=5.14.0">
-  <link rel="stylesheet" href="css/components.css?v=5.14.0">
-  <link rel="stylesheet" href="css/home.css?v=5.14.0">
-  <link rel="stylesheet" href="css/catalog.css?v=5.14.0">
-  <link rel="stylesheet" href="css/product.css?v=5.14.0">
-  <link rel="stylesheet" href="css/pages.css?v=5.14.0">
-  <title>Acceso | Rhema Diseños</title>
-</head>
-<body>
-  <a href="#main" class="skip-link">Saltar al contenido</a>
+  <link rel="stylesheet" href="css/base.css?v=5.15.0">
+  <link rel="stylesheet" href="css/layout.css?v=5.15.0">
+  <link rel="stylesheet" href="css/components.css?v=5.15.0">
+  <link rel="stylesheet" href="css/home.css?v=5.15.0">
+  <link rel="stylesheet" href="css/catalog.css?v=5.15.0">
+  <link rel="stylesheet" href="css/product.css?v=5.15.0">
+  <link rel="stylesheet" href="css/pages.css?v=5.15.0">
+  <meta name="description" content="Inicia sesión o crea tu cuenta de cliente en Rhema Diseños."><title>Acceso de cliente | Rhema Diseños</title></head>
+<body class="account-page" data-account-page="access">  <a href="#main" class="skip-link">Saltar al contenido</a>
   <header class="site-header" data-site-header>
     <div class="header-shell">
-      <div class="header-top" aria-label="Barra superior Rhema Diseños">
-        <button class="icon-button search-trigger" type="button" data-open-search aria-label="Buscar productos">
-          <span aria-hidden="true">🔎</span><span>Buscar</span>
-        </button>
-        <a class="brand" href="index.html" aria-label="Ir al inicio de Rhema Diseños">
-          <strong>Rhema Diseños</strong><small>Diseños 3D</small>
-        </a>
-        <div class="header-actions" aria-label="Acciones de usuario">
+      <div class="header-top">
+        <button class="icon-button search-trigger" type="button" data-open-search aria-label="Buscar productos"><span aria-hidden="true">🔎</span><span>Buscar</span></button>
+        <a class="brand" href="index.html"><strong>Rhema Diseños</strong><small>Diseños 3D</small></a>
+        <div class="header-actions">
           <button class="icon-button mobile-menu-button" type="button" data-mobile-menu aria-expanded="false" aria-controls="main-nav">Menú</button>
           <a class="header-link login-link" href="acceso.html">Iniciar sesión</a>
-          <a class="header-link cart-pill" href="carrito.html" aria-label="Ir al carrito">Carrito <span class="cart-count" data-cart-count>0</span></a>
+          <a class="header-link cart-pill" href="carrito.html">Carrito <span class="cart-count" data-cart-count>0</span></a>
         </div>
       </div>
       <nav class="main-nav" id="main-nav" aria-label="Navegación principal">
-        <a href="index.html">Inicio</a>
-        <a href="catalogo.html">Tienda</a>
-        <a href="pedido-personalizado.html">Crea tu Figura</a>
-        <a href="quienes-somos.html">Sobre Nosotros</a>
-        <a href="preguntas-frecuentes.html">Preguntas Frecuentes</a>
-        <a href="contacto.html">Contáctanos</a>
+        <a href="index.html">Inicio</a><a href="catalogo.html">Tienda</a><a href="pedido-personalizado.html">Crea tu Figura</a><a href="quienes-somos.html">Sobre Nosotros</a><a href="preguntas-frecuentes.html">Preguntas Frecuentes</a><a href="contacto.html">Contáctanos</a>
       </nav>
     </div>
   </header>
-  <section class="search-panel" data-search-panel aria-label="Buscador" aria-hidden="true">
-    <div class="search-box" role="search">
-      <form action="catalogo.html" method="get">
-        <label class="sr-only" for="global-search">Buscar productos</label>
-        <input id="global-search" type="search" name="q" placeholder="Buscar figuras, decoración, herramientas...">
-        <button class="btn btn-primary" type="submit">Buscar</button>
+  <section class="search-panel" data-search-panel aria-hidden="true"><div class="search-box"><form action="catalogo.html" method="get"><input type="search" name="q" placeholder="Buscar productos..."><button class="btn btn-primary" type="submit">Buscar</button></form><button class="btn btn-soft search-close" type="button" data-close-search>Cerrar</button></div></section>
+<main id="main">
+  <section class="account-auth-shell">
+    <div class="account-auth-intro"><p class="kicker">Tu espacio Rhema</p><h1>Todo tu proceso en un solo lugar.</h1><p>Inicia sesión para revisar pedidos vinculados, mantener tus datos de entrega y continuar comprando sin repetir información.</p><p><strong>Importante:</strong> los pedidos anteriores creados sin una cuenta continúan disponibles mediante su número de seguimiento.</p></div>
+    <div class="account-auth-card">
+      <div class="account-tabs"><button class="is-active" type="button" data-auth-tab="login">Iniciar sesión</button><button type="button" data-auth-tab="register">Crear cuenta</button></div>
+      <p class="account-message" data-auth-message hidden></p>
+      <form class="account-form" data-auth-panel="login" data-login-form>
+        <label>Correo electrónico<input type="email" name="email" autocomplete="email" required></label>
+        <label>Contraseña<input type="password" name="password" autocomplete="current-password" required></label>
+        <label class="account-check"><input type="checkbox" name="remember"> Mantener la sesión en este equipo</label>
+        <button class="btn btn-primary" type="submit">Ingresar a mi cuenta</button>
       </form>
-      <button class="btn btn-soft search-close" type="button" data-close-search>Cerrar</button>
+      <form class="account-form" data-auth-panel="register" data-register-form hidden>
+        <label>Nombre completo<input type="text" name="nombre" maxlength="120" required></label>
+        <label>Correo electrónico<input type="email" name="email" autocomplete="email" required></label>
+        <label>WhatsApp<input type="tel" name="telefono" placeholder="+56 9..." required></label>
+        <label>Comuna<input type="text" name="comuna" maxlength="120"></label>
+        <label>Contraseña<input type="password" name="password" minlength="8" maxlength="128" autocomplete="new-password" required></label>
+        <label>Repetir contraseña<input type="password" name="passwordConfirm" minlength="8" maxlength="128" autocomplete="new-password" required></label>
+        <label class="account-check"><input type="checkbox" name="remember"> Mantener la sesión en este equipo</label>
+        <button class="btn btn-primary" type="submit">Crear mi cuenta</button>
+      </form>
     </div>
   </section>
-  <main id="main">
-    <header class="content-hero">
-      <p class="kicker">Rhema Diseños</p>
-      <h1>Acceso de cliente</h1>
-      <p>Próximamente podrás revisar tus pedidos, historial y datos de contacto desde esta sección.</p>
-      <p><a class="btn btn-primary" href="catalogo.html">Volver a la tienda</a></p>
-    </header>
-  </main>
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <section class="footer-col" aria-label="Marca">
-        <h2 class="footer-brand">Rhema Diseños</h2>
-        <p>Productos impresos en 3D, figuras personalizadas y decoraciones pensadas para regalar, crear y recordar.</p>
-      </section>
-      <nav class="footer-col" aria-label="Tienda">
-        <h3>Tienda</h3>
-        <a href="catalogo.html">Catálogo</a>
-        <a href="pedido-personalizado.html">Crea tu Figura</a>
-        <a href="carrito.html">Carrito</a>
-        <a href="comparacion.html">Comparación</a>
-      </nav>
-      <nav class="footer-col" aria-label="Ayuda">
-        <h3>Ayuda</h3>
-        <a href="preguntas-frecuentes.html">Preguntas frecuentes</a>
-        <a href="despachos-retiros.html">Despachos y retiros</a>
-        <a href="cambios-pedidos.html">Cambios y pedidos</a>
-        <a href="seguimiento-pedido.html">Seguimiento</a>
-      </nav>
-      <section class="footer-col" aria-label="Soporte al cliente">
-        <h3>Soporte</h3>
-        <p>WhatsApp: +56 9 0000 0000</p>
-        <p>Correo: contacto@rhemadisenos.cl</p>
-        <a class="btn btn-soft btn-small" href="https://wa.me/56900000000" target="_blank" rel="noopener">Contactar soporte</a>
-      </section>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 Rhema Diseños. Todos los derechos reservados.</span>
-      <span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span>
-    </div>
+</main>  <footer class="site-footer">
+    <div class="footer-inner"><section class="footer-col"><h2 class="footer-brand">Rhema Diseños</h2><p>Productos impresos en 3D y soluciones personalizadas.</p></section><nav class="footer-col"><h3>Tienda</h3><a href="catalogo.html">Catálogo</a><a href="pedido-personalizado.html">Crea tu Figura</a><a href="cuenta.html">Mi cuenta</a></nav><nav class="footer-col"><h3>Ayuda</h3><a href="preguntas-frecuentes.html">Preguntas frecuentes</a><a href="seguimiento-pedido.html">Seguimiento</a><a href="cotizacion.html">Cotizaciones</a></nav><section class="footer-col"><h3>Soporte</h3><p>contacto@rhemadisenos.cl</p></section></div>
+    <div class="footer-bottom"><span>© 2026 Rhema Diseños.</span><span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span></div>
   </footer>
-  <script src="js/config.js?v=5.14.0"></script>
-  <script src="js/emmagina-data.js?v=5.14.0"></script>
-  <script src="js/emmagina-api.js?v=5.14.0"></script>
-  <script src="js/emmagina-cart.js?v=5.14.0"></script>
-  <script src="js/emmagina-ui.js?v=5.14.0"></script>
-  <script src="js/emmagina-common.js?v=5.14.0"></script>
-</body>
-</html>
+  <script src="js/config.js?v=5.15.0"></script><script src="js/emmagina-data.js?v=5.15.0"></script><script src="js/emmagina-api.js?v=5.15.0"></script><script src="js/emmagina-cart.js?v=5.15.0"></script><script src="js/emmagina-ui.js?v=5.15.0"></script><script src="js/emmagina-common.js?v=5.15.0"></script><script src="js/rhema-account.js?v=5.15.0"></script>
+</body></html>

@@ -486,3 +486,63 @@
 .tracking-history li small { color: var(--muted); }
 @media (max-width: 860px) { .tracking-search-card { grid-template-columns: 1fr; } .tracking-summary-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .tracking-order-head { flex-direction: column; } }
 @media (max-width: 520px) { .tracking-summary-grid { grid-template-columns: 1fr; } }
+
+/* Rhema v5.15 · Cuenta de cliente */
+.account-page { background: var(--cloud); }
+.account-auth-shell { width: min(980px, calc(100vw - 32px)); margin: 38px auto 80px; display: grid; grid-template-columns: .8fr 1.2fr; gap: 22px; align-items: stretch; }
+.account-auth-intro, .account-auth-card, .account-panel, .account-summary-card { border: 1px solid var(--line); border-radius: 30px; background: #fff; box-shadow: var(--shadow); }
+.account-auth-intro { padding: clamp(28px, 5vw, 52px); display: grid; align-content: center; background: #EAF4F8; }
+.account-auth-intro h1 { margin: 0 0 14px; color: var(--navy); font: 900 clamp(2.4rem, 5vw, 4.8rem)/.95 Nunito, Inter, sans-serif; }
+.account-auth-intro p { color: var(--deep-blue); line-height: 1.7; }
+.account-auth-card { padding: clamp(22px, 4vw, 38px); }
+.account-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 22px; padding: 6px; border-radius: 18px; background: var(--cloud); }
+.account-tabs button { border: 0; border-radius: 14px; min-height: 46px; background: transparent; color: var(--deep-blue); font-weight: 900; }
+.account-tabs button.is-active { background: #fff; color: var(--navy); box-shadow: 0 6px 18px rgba(2,48,71,.08); }
+.account-form { display: grid; gap: 14px; }
+.account-form label { display: grid; gap: 7px; color: var(--navy); font-weight: 800; }
+.account-form input { min-height: 50px; padding: 0 14px; border: 1px solid var(--line); border-radius: 15px; background: #fff; }
+.account-check { display: flex !important; grid-template-columns: auto 1fr; align-items: center; gap: 9px !important; font-weight: 700 !important; color: var(--deep-blue) !important; }
+.account-check input { min-height: auto; width: 18px; height: 18px; }
+.account-message { margin: 0 0 18px; padding: 13px 15px; border-radius: 16px; font-weight: 800; }
+.account-message.is-error { background: #fff0ee; color: #9f241b; border: 1px solid #f0c1bb; }
+.account-message.is-success { background: #eaf8ef; color: #176c3a; border: 1px solid #b9e0c7; }
+.account-message.is-info { background: #eef6ff; color: #125373; border: 1px solid #c8ddf0; }
+.account-dashboard { width: var(--container); margin: 34px auto 80px; display: grid; gap: 20px; }
+.account-dashboard-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; }
+.account-dashboard-head h1 { margin: 0; color: var(--navy); font: 900 clamp(2.2rem, 5vw, 4.4rem)/.95 Nunito, Inter, sans-serif; }
+.account-summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.account-summary-card { padding: 22px; }
+.account-summary-card span { color: var(--deep-blue); font-weight: 800; }
+.account-summary-card strong { display: block; margin-top: 7px; color: var(--navy); font: 900 2rem Nunito, Inter, sans-serif; }
+.account-main-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr); gap: 20px; align-items: start; }
+.account-panel { padding: clamp(20px, 3vw, 30px); }
+.account-panel h2 { margin: 0 0 18px; color: var(--navy); }
+.account-orders { display: grid; gap: 12px; }
+.account-order-card { display: flex; justify-content: space-between; gap: 18px; padding: 18px; border: 1px solid var(--line); border-radius: 20px; background: var(--cloud); }
+.account-order-card h3 { margin: 0 0 6px; color: var(--navy); }
+.account-order-card p { margin: 0; color: var(--deep-blue); }
+.account-order-side { display: grid; gap: 8px; justify-items: end; text-align: right; }
+.account-order-side > strong { color: var(--navy); font-size: 1.2rem; }
+.account-status { padding: 5px 9px; border-radius: 999px; background: #fff; color: var(--deep-blue); font-weight: 850; font-size: .78rem; }
+.account-profile-form { display: grid; gap: 12px; }
+.account-profile-form label { display: grid; gap: 6px; color: var(--navy); font-weight: 800; }
+.account-profile-form input { min-height: 46px; padding: 0 13px; border: 1px solid var(--line); border-radius: 14px; }
+.account-empty { padding: 30px; text-align: center; border-radius: 22px; background: var(--cloud); }
+.account-empty h3 { margin: 0 0 8px; color: var(--navy); }
+.account-empty p { color: var(--deep-blue); }
+@media (max-width: 860px) { .account-auth-shell, .account-main-grid { grid-template-columns: 1fr; } .account-summary-grid { grid-template-columns: 1fr; } .account-dashboard-head { align-items: flex-start; flex-direction: column; } }
+@media (max-width: 620px) { .account-order-card { flex-direction: column; } .account-order-side { justify-items: start; text-align: left; } }
+.account-order-detail-head { display: flex; justify-content: space-between; gap: 18px; align-items: start; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.account-order-detail-head h2 { margin: 0 0 6px; color: var(--navy); }
+.account-order-detail-head p { margin: 0; color: var(--deep-blue); }
+.account-order-detail-head > strong { color: var(--navy); font: 900 2rem Nunito, Inter, sans-serif; }
+.account-detail-grid { display: grid; grid-template-columns: 1.3fr .7fr; gap: 20px; margin-top: 22px; }
+.account-detail-grid h3, .account-history h3 { color: var(--navy); }
+.account-detail-list { display: grid; gap: 10px; }
+.account-detail-list article { display: flex; justify-content: space-between; gap: 14px; padding: 14px; border-radius: 16px; background: var(--cloud); }
+.account-detail-list span { display: block; margin-top: 4px; color: var(--deep-blue); font-size: .86rem; }
+.account-history { margin-top: 24px; }
+.account-history > div { display: grid; grid-template-columns: 170px 180px 1fr; gap: 12px; padding: 13px 0; border-top: 1px solid var(--line); }
+.account-history span, .account-history p { color: var(--deep-blue); }
+.account-history p { margin: 0; }
+@media (max-width: 760px) { .account-detail-grid { grid-template-columns: 1fr; } .account-history > div { grid-template-columns: 1fr; gap: 4px; } .account-order-detail-head { flex-direction: column; } }

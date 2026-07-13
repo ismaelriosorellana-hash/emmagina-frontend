@@ -221,6 +221,14 @@
     loadAndApplySiteSettings().finally(renderDynamicNav);
   }
 
+  function updateCustomerHeader() {
+    const session = window.EmmaginaAPI?.getStoredSession?.();
+    document.querySelectorAll(".login-link").forEach((link) => {
+      link.href = session?.token ? "cuenta.html" : "acceso.html";
+      link.textContent = session?.token ? "Mi cuenta" : "Iniciar sesión";
+    });
+  }
+
   function initSearch() {
     const panel = document.querySelector("[data-search-panel]");
     const open = document.querySelector("[data-open-search]");
@@ -243,6 +251,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     initNav();
     initSearch();
+    updateCustomerHeader();
     window.EmmaginaCart?.updateBadges();
   });
 })();

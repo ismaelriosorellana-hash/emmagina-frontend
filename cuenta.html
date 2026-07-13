@@ -17,8 +17,8 @@
   <link rel="stylesheet" href="css/catalog.css?v=5.15.0">
   <link rel="stylesheet" href="css/product.css?v=5.15.0">
   <link rel="stylesheet" href="css/pages.css?v=5.15.0">
-  <meta name="description" content="Detalle de un pedido vinculado a tu cuenta Rhema Diseños."><title>Detalle del pedido | Rhema Diseños</title></head>
-<body class="account-page" data-account-page="order">  <a href="#main" class="skip-link">Saltar al contenido</a>
+  <meta name="description" content="Cuenta de cliente, pedidos y datos personales en Rhema Diseños."><title>Mi cuenta | Rhema Diseños</title></head>
+<body class="account-page" data-account-page="account">  <a href="#main" class="skip-link">Saltar al contenido</a>
   <header class="site-header" data-site-header>
     <div class="header-shell">
       <div class="header-top">
@@ -36,7 +36,17 @@
     </div>
   </header>
   <section class="search-panel" data-search-panel aria-hidden="true"><div class="search-box"><form action="catalogo.html" method="get"><input type="search" name="q" placeholder="Buscar productos..."><button class="btn btn-primary" type="submit">Buscar</button></form><button class="btn btn-soft search-close" type="button" data-close-search>Cerrar</button></div></section>
-<main id="main"><section class="account-dashboard"><header class="account-dashboard-head"><div><p class="kicker">Mi cuenta</p><h1>Detalle del pedido</h1></div><a class="btn btn-soft" href="cuenta.html">Volver a mi cuenta</a></header><p class="account-message" data-account-message hidden></p><section class="account-panel" data-account-order-detail><div class="state-box">Cargando pedido...</div></section></section></main>  <footer class="site-footer">
+<main id="main">
+  <section class="account-dashboard">
+    <header class="account-dashboard-head"><div><p class="kicker">Mi cuenta</p><h1>Hola, <span data-account-name>cliente</span></h1></div><button class="btn btn-soft" type="button" data-logout>Cerrar sesión</button></header>
+    <p class="account-message" data-account-message hidden></p>
+    <div class="account-summary-grid"><article class="account-summary-card"><span>Pedidos totales</span><strong data-order-count>0</strong></article><article class="account-summary-card"><span>Pedidos activos</span><strong data-active-order-count>0</strong></article><article class="account-summary-card"><span>Acceso rápido</span><a class="btn btn-soft btn-small" href="cotizacion.html">Revisar cotización</a></article></div>
+    <div class="account-main-grid">
+      <section class="account-panel"><h2>Mis pedidos</h2><div class="account-orders" data-account-orders><div class="state-box">Cargando pedidos...</div></div></section>
+      <aside class="account-panel"><h2>Mis datos</h2><form class="account-profile-form" data-profile-form><label>Nombre<input name="nombre" required></label><label>Correo<input name="email" type="email" readonly></label><label>WhatsApp<input name="telefono"></label><label>RUT opcional<input name="rut"></label><label>Dirección<input name="direccion"></label><label>Comuna<input name="comuna"></label><button class="btn btn-primary" type="submit">Guardar cambios</button></form></aside>
+    </div>
+  </section>
+</main>  <footer class="site-footer">
     <div class="footer-inner"><section class="footer-col"><h2 class="footer-brand">Rhema Diseños</h2><p>Productos impresos en 3D y soluciones personalizadas.</p></section><nav class="footer-col"><h3>Tienda</h3><a href="catalogo.html">Catálogo</a><a href="pedido-personalizado.html">Crea tu Figura</a><a href="cuenta.html">Mi cuenta</a></nav><nav class="footer-col"><h3>Ayuda</h3><a href="preguntas-frecuentes.html">Preguntas frecuentes</a><a href="seguimiento-pedido.html">Seguimiento</a><a href="cotizacion.html">Cotizaciones</a></nav><section class="footer-col"><h3>Soporte</h3><p>contacto@rhemadisenos.cl</p></section></div>
     <div class="footer-bottom"><span>© 2026 Rhema Diseños.</span><span><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a></span></div>
   </footer>
