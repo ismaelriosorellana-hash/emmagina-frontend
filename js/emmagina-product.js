@@ -219,7 +219,7 @@
           <div class="pdp-title-block">
             <div class="pdp-title-meta"><span>${escape(product.categoriaPrincipal || "Rhema Diseños")}</span>${product.marca ? `<span>${escape(product.marca)}</span>` : ""}</div>
             <h1>${escape(product.nombre)}</h1>
-            <a class="pdp-review-link" href="#pdp-reviews" aria-label="Ver reseñas"><span aria-hidden="true">☆</span> Aún no hay reseñas</a>
+            <a class="pdp-review-link" href="#pdp-reviews" aria-label="Ver reseñas" data-pdp-review-link><span aria-hidden="true">☆</span> Aún no hay reseñas</a>
           </div>
           <div class="pdp-middle-accordions" aria-label="Información principal del producto">
             <details class="pdp-card pdp-accordion"><summary>Descripción del producto</summary><div class="pdp-accordion-body"><p>${escape(product.descripcion || product.descripcionCorta || "Producto creado por Rhema Diseños.")}</p></div></details>
@@ -256,11 +256,12 @@
           </div>
         </aside>
       </section>
-      <section id="pdp-reviews" class="pdp-reviews-empty"><div><span>☆</span><h2>Reseñas del producto</h2><p>Aún no hay reseñas publicadas para este producto.</p></div></section>
+      <section id="pdp-reviews" class="pdp-reviews-empty" data-pdp-reviews><div><span>☆</span><h2>Reseñas del producto</h2><p>Aún no hay reseñas publicadas para este producto.</p></div></section>
       <section class="pdp-related" data-related-products></section>
       <div class="pdp-mobile-buybar" aria-label="Compra rápida"><div><strong data-mobile-pdp-price>${product.tieneRangoPrecio && !currentVariant ? `Desde ${money(product.precioDesde)}` : money(price)}</strong><span data-mobile-pdp-status>${escape(stockText(product, currentVariant))}</span></div><button class="btn btn-buy" type="button" data-pdp-add-cart>Agregar al carrito</button></div>`;
 
     attachEvents(product);
+    loadReviews(product);
     loadRelated(product);
   }
 
@@ -326,6 +327,43 @@
         window.EmmaginaCart.add(product, quantity, selectedOptionPayload(product, currentVariant));
       }
     });
+  }
+
+  function reviewStars(value) {
+    const rating = Math.max(0, Math.min(5, Number(value) || 0));
+    return "★".repeat(Math.round(rating)) + "☆".repeat(5 - Math.round(rating));
+  }
+
+  async function loadReviews(product) {
+    const container = root.querySelector("[data-pdp-reviews]");
+    const link = root.querySelector("[data-pdp-review-link]");
+    if (!container || !product.id) return;
+    try {
+      const payload = await window.EmmaginaAPI.request(`/resenas/producto/${encodeURIComponent(product.id)}`);
+      const reviews = Array.isArray(payload?.resenas) ? payload.resenas : [];
+      const summary = payload?.resumen || { total: 0, promedio: 0 };
+      if (link) {
+        link.innerHTML = summary.total
+          ? `<span class="pdp-review-stars" aria-hidden="true">${reviewStars(summary.promedio)}</span> ${escape(summary.promedio)} · ${summary.total} ${summary.total === 1 ? "reseña" : "reseñas"}`
+          : '<span aria-hidden="true">☆</span> Aún no hay reseñas';
+      }
+      if (!reviews.length) return;
+      container.className = "pdp-reviews-section";
+      container.innerHTML = `
+        <div class="pdp-reviews-heading">
+          <div><p class="kicker">Opiniones reales</p><h2>Reseñas del producto</h2></div>
+          <div class="pdp-review-average"><strong>${escape(summary.promedio)}</strong><span>${reviewStars(summary.promedio)}</span><small>${summary.total} ${summary.total === 1 ? "reseña" : "reseñas"}</small></div>
+        </div>
+        <div class="pdp-review-grid">${reviews.map((review) => `
+          <article class="pdp-review-card">
+            <div class="pdp-review-card-head"><span class="pdp-review-stars">${reviewStars(review.estrellas)}</span>${review.compraVerificada ? '<span class="pdp-review-verified">Compra verificada</span>' : ""}</div>
+            ${review.titulo ? `<h3>${escape(review.titulo)}</h3>` : ""}
+            <p>${escape(review.comentario)}</p>
+            <footer><strong>${escape(review.clienteNombre)}</strong><span>${new Date(review.publicadoEn || review.createdAt).toLocaleDateString("es-CL")}</span></footer>
+          </article>`).join("")}</div>`;
+    } catch (error) {
+      console.warn("No fue posible cargar las reseñas", error);
+    }
   }
 
   async function loadRelated(product) {

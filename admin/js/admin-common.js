@@ -24,6 +24,12 @@
             icon: "fa-bag-shopping"
         },
         {
+            id: "resenas",
+            label: "Reseñas",
+            href: "resenas.html",
+            icon: "fa-star"
+        },
+        {
             id: "solicitudes",
             label: "Solicitudes",
             href: "solicitudes.html",
