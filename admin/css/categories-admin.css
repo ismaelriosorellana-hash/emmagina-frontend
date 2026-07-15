@@ -2,3 +2,6 @@
 #category-modal[aria-hidden="true"]{display:none!important}#category-modal[aria-hidden="false"]{display:flex!important}.admin-modal-dialog{background:#fff!important;opacity:1!important;box-shadow:0 24px 70px rgba(2,48,71,.28)!important;border:1px solid #d7e8ef}.admin-modal-dialog form{background:#fff}.category-parent-label{display:block;margin-top:4px;color:#587687}.admin-categories-table tr:has(.category-parent-label){background:#fbfdfe}
 
 .hero-admin-card{margin-bottom:20px}.hero-admin-preview{min-height:180px;border:1px dashed #b9d8e6;border-radius:16px;background:#f7fbfd;display:grid;place-items:center;overflow:hidden;color:#587687}.hero-admin-preview img{width:100%;height:220px;object-fit:cover}.category-toggle{display:flex;align-items:center;gap:10px;font-weight:800;color:#023047}.admin-upload-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* v5.28.0 integrado en Editor del Sitio */
+.site-editor-settings-panel[data-settings-panel="categories"],.site-editor-settings-panel[data-settings-panel="hero"]{padding-top:18px}.site-editor-settings-panel .hero-admin-preview{height:150px;min-height:150px}.site-editor-settings-panel .hero-admin-preview img{height:150px}.site-editor-settings-panel #categories-table{margin-top:16px}

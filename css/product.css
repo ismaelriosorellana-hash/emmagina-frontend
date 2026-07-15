@@ -116,3 +116,6 @@
   width: 100%;
   margin-inline: 0;
 }
+
+/* v5.28.0 carrusel relacionado como Home */
+.pdp-related{width:var(--container);max-width:calc(100% - 32px);margin:0 auto 56px;overflow:hidden}.pdp-related .section-heading,.pdp-related .marquee-viewport{width:100%;max-width:100%;margin-inline:auto}.pdp-related .marquee-track{display:flex;width:max-content;animation:marquee-scroll var(--marquee-duration,42s) linear infinite}.pdp-related:hover .marquee-track,.pdp-related:focus-within .marquee-track{animation-play-state:paused}.pdp-related .marquee-group{display:flex;gap:16px;padding-right:16px}.pdp-related .product-card{width:220px;min-width:220px}@media(max-width:720px){.pdp-related{max-width:calc(100% - 24px)}.pdp-related .product-card{width:190px;min-width:190px}}

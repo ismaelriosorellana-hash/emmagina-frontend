@@ -8,11 +8,12 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Editor del Sitio | Rhema Diseños CMS v4.5</title>
     <link rel="icon" href="../assets/emmagina-logo.svg">
-    <link rel="stylesheet" href="css/admin.css?v=5.27.0">
+    <link rel="stylesheet" href="css/admin.css?v=5.28.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="css/admin-experience-v327.css?v=5.27.0">
-    <link rel="stylesheet" href="css/pagebuilder-admin.css?v=5.27.0">
-    <link rel="stylesheet" href="css/site-editor-admin.css?v=5.27.0">
+    <link rel="stylesheet" href="css/admin-experience-v327.css?v=5.28.0">
+    <link rel="stylesheet" href="css/pagebuilder-admin.css?v=5.28.0">
+    <link rel="stylesheet" href="css/site-editor-admin.css?v=5.28.0">
+    <link rel="stylesheet" href="css/categories-admin.css?v=5.28.0">
 </head>
 <body data-admin-page="studio" data-admin-title="Editor del Sitio">
     <section id="admin-page-content">
@@ -151,6 +152,8 @@
                         <button class="active" type="button" data-settings-tab="navigation">Menú</button>
                         <button type="button" data-settings-tab="footer">Footer</button>
                         <button type="button" data-settings-tab="style">Estilos</button>
+                        <button type="button" data-settings-tab="categories">Categorías</button>
+                        <button type="button" data-settings-tab="hero">Banner del Hero</button>
                     </div>
                     <div class="site-editor-settings-panel active" data-settings-panel="navigation">
                         <div class="admin-form-grid two">
@@ -209,7 +212,17 @@
                             <div class="admin-field"><label for="settings-style-shadow">Sombras</label><select id="settings-style-shadow"><option value="none">Sin sombras</option><option value="soft">Suaves</option><option value="medium">Medias</option></select></div>
                         </div>
                     </div>
+                    <div class="site-editor-settings-panel" data-settings-panel="categories" id="categorias">
+                        <div class="admin-page-intro compact"><div><p class="admin-section-kicker">Catálogo y navegación</p><h3>Categorías y subcategorías</h3><p>Crea, renombra, ordena y decide dónde aparece cada categoría.</p></div><div class="admin-actions-row"><button class="admin-button secondary small" id="category-base" type="button"><i class="fa-solid fa-wand-magic-sparkles"></i> Instalar base</button><button class="admin-button small" id="category-new" type="button"><i class="fa-solid fa-plus"></i> Nueva categoría</button></div></div>
+                        <div class="category-location-help"><strong>Ubicaciones</strong><span><b>Menú:</b> navegación y filtros.</span><span><b>Inicio:</b> lista lateral del Hero.</span><span><b>Destacada:</b> bloques prioritarios.</span></div><div id="categories-table"></div>
+                    </div>
+                    <div class="site-editor-settings-panel" data-settings-panel="hero" id="banner-hero">
+                        <div class="admin-page-intro compact"><div><p class="admin-section-kicker">Portada</p><h3>Banner del Hero</h3><p>Configura la imagen y el único botón visible. El alto del Hero es fijo y no depende de la imagen.</p></div></div>
+                        <form id="hero-banner-form" class="admin-form-grid two"><label class="admin-field admin-field-wide"><span>Imagen del banner</span><input id="hero-banner-url" type="url" placeholder="URL de Cloudinary"><input id="hero-banner-file" type="file" accept="image/*"><button class="admin-button secondary small" id="hero-banner-upload" type="button">Subir imagen</button><small>Recomendado: 1600 × 400 px (relación 4:1), WebP o JPG, máximo 500 KB.</small></label><label class="admin-field"><span>Texto del botón</span><input id="hero-banner-button" maxlength="40" value="Ver productos"></label><label class="admin-field"><span>Enlace del botón</span><input id="hero-banner-target" value="catalogo.html"></label><label class="admin-field"><span>Posición de imagen</span><select id="hero-banner-position"><option value="center">Centro</option><option value="top">Arriba</option><option value="bottom">Abajo</option><option value="left">Izquierda</option><option value="right">Derecha</option></select></label><label class="category-toggle"><input id="hero-banner-active" type="checkbox" checked><span>Banner activo</span></label><div class="admin-field admin-field-wide"><span>Vista previa</span><div id="hero-banner-preview" class="hero-admin-preview">Sin imagen configurada</div></div><div class="admin-field admin-field-wide"><button class="admin-button" type="submit">Guardar banner del Hero</button></div></form>
+                    </div>
                 </section>
+
+                <div class="admin-modal" id="category-modal" aria-hidden="true"><div class="admin-modal-backdrop" data-close-modal="category-modal"></div><section class="admin-modal-dialog"><header><div><p class="admin-section-kicker">Configuración</p><h2 id="category-modal-title">Nueva categoría</h2></div><button class="admin-icon-button" type="button" data-close-modal="category-modal" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button></header><form id="category-form"><input type="hidden" id="category-id"><div class="admin-form-grid two"><label class="admin-field"><span>Nombre visible</span><input id="category-name" maxlength="80" required></label><label class="admin-field"><span>Slug</span><input id="category-slug" maxlength="100"></label><label class="admin-field admin-field-wide"><span>Descripción</span><textarea id="category-description" rows="3" maxlength="280"></textarea></label><label class="admin-field"><span>Icono Font Awesome</span><input id="category-icon" value="fa-solid fa-tag"></label><label class="admin-field"><span>URL de imagen opcional</span><input id="category-image"></label><label class="admin-field"><span>Color</span><input id="category-color" type="color" value="#219EBC"></label><label class="admin-field"><span>Categoría padre</span><select id="category-parent"><option value="">Categoría principal</option></select></label><label class="admin-field"><span>Orden</span><input id="category-order" type="number" min="0" max="9999" value="0"></label></div><div class="category-visibility-grid"><label><input id="category-active" type="checkbox" checked><span>Activa</span><small>Disponible para productos y sitio.</small></label><label><input id="category-menu" type="checkbox" checked><span>Mostrar en menú</span><small>Navegación y filtros.</small></label><label><input id="category-home" type="checkbox" checked><span>Mostrar en inicio</span><small>Lista del Hero.</small></label><label><input id="category-featured" type="checkbox"><span>Destacada</span><small>Bloques prioritarios.</small></label></div><footer class="admin-modal-actions"><button class="admin-button secondary" type="button" data-close-modal="category-modal">Cancelar</button><button class="admin-button" type="submit">Guardar categoría</button></footer></form></section></div>
 
                 <section class="pagebuilder-layout site-editor-builder-layout" aria-label="Constructor de bloques">
                     <aside class="admin-card pagebuilder-layers" aria-label="Capas de la página">
@@ -345,10 +358,11 @@
         </section>
     </section>
 
-    <script src="../js/config.js?v=5.27.0"></script>
-    <script src="js/admin-api.js?v=5.27.0"></script>
-    <script src="js/admin-common.js?v=5.27.0"></script>
-    <script src="js/admin-experience-v327.js?v=5.27.0"></script>
-    <script src="js/site-editor-admin.js?v=5.27.0"></script>
+    <script src="../js/config.js?v=5.28.0"></script>
+    <script src="js/admin-api.js?v=5.28.0"></script>
+    <script src="js/admin-common.js?v=5.28.0"></script>
+    <script src="js/admin-experience-v327.js?v=5.28.0"></script>
+    <script src="js/site-editor-admin.js?v=5.28.0"></script>
+    <script src="js/categories-admin.js?v=5.28.0"></script>
 </body>
 </html>

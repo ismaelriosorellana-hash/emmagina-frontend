@@ -370,12 +370,13 @@
     const container = root.querySelector("[data-related-products]");
     if (!container || !product.id) return;
     try {
-      const payload = await window.EmmaginaAPI.request(`/productos/${encodeURIComponent(product.id)}/relacionados?limit=4`);
+      const payload = await window.EmmaginaAPI.request(`/productos/${encodeURIComponent(product.id)}/relacionados?limit=10`);
       const products = (payload?.productos || []).map(window.EmmaginaData.normalizeProduct);
       if (!products.length) return;
+      const cards = products.map(window.EmmaginaUI.productCard).join("");
       container.innerHTML = `
-        <div class="section-heading"><div><p class="kicker">También te puede gustar</p><h2>Productos relacionados</h2></div></div>
-        <div class="product-grid">${products.map(window.EmmaginaUI.productCard).join("")}</div>`;
+        <div class="section-heading"><div><p class="kicker">Según su categoría y características</p><h2>Productos relacionados</h2></div></div>
+        <div class="marquee-viewport"><div class="marquee-track" style="--marquee-duration:${Math.max(34, products.length * 6)}s"><div class="marquee-group">${cards}</div><div class="marquee-group" aria-hidden="true">${cards}</div></div></div>`;
       window.EmmaginaUI.attachCartButtons(products);
     } catch (error) {
       console.warn("No fue posible cargar relacionados", error);

@@ -18,12 +18,6 @@
             icon: "fa-box-open"
         },
         {
-            id: "categorias",
-            label: "Categorías",
-            href: "categorias.html",
-            icon: "fa-tags"
-        },
-        {
             id: "pedidos",
             label: "Pedidos",
             href: "pedidos.html",
