@@ -619,29 +619,30 @@
     }).join("");
   }
 
-  function renderLegacyReviews(products) {
+  async function renderLegacyReviews() {
     const section = by("[data-reviews-section]");
     const track = by("[data-reviews-track]");
     if (!section || !track) return;
-    const reviews = collectReviews(products, 4);
-    if (!reviews.length) {
-      section.hidden = true;
-      return;
-    }
-    section.hidden = false;
-    const cards = reviews.map((review) => {
-      const stars = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
-      return `<article class="review-card">
-        <div class="review-stars" aria-label="${review.rating} de 5 estrellas">${stars}</div>
-        <blockquote>“${escape(review.text)}”</blockquote>
-        <footer>
-          <strong>${escape(review.author)}</strong>
-          <a href="${escape(review.productUrl)}">${escape(review.productName)}</a>
-        </footer>
-      </article>`;
-    }).join("");
-    track.innerHTML = `<div class="marquee-group">${cards}</div><div class="marquee-group" aria-hidden="true">${cards}</div>`;
-    track.style.setProperty("--marquee-duration", `${Math.max(32, reviews.length * 7)}s`);
+    try {
+      const payload = await window.EmmaginaAPI.request("/resenas/mejores");
+      const reviews = Array.isArray(payload?.resenas) ? payload.resenas : [];
+      if (!reviews.length) { section.hidden = true; return; }
+      section.hidden = false;
+      const cards = reviews.map((review) => {
+        const rating = Math.max(1, Math.min(5, Number(review.estrellas || 0)));
+        const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
+        const product = review.producto || {};
+        const productUrl = product.slug ? `producto.html?slug=${encodeURIComponent(product.slug)}` : "catalogo.html";
+        const date = new Date(review.publicadoEn || review.createdAt).toLocaleDateString("es-CL", { day: "2-digit", month: "short", year: "numeric" });
+        return `<article class="review-card">
+          <div class="review-stars" aria-label="${rating} de 5 estrellas">${stars}</div>
+          <blockquote>“${escape(review.comentario || "")}”</blockquote>
+          <footer><div><strong>${escape(review.clienteNombre || "Cliente")}</strong><time>${escape(date)}</time></div><a href="${escape(productUrl)}">${escape(product.nombre || "Ver producto")}</a></footer>
+        </article>`;
+      }).join("");
+      track.innerHTML = `<div class="marquee-group">${cards}</div><div class="marquee-group" aria-hidden="true">${cards}</div>`;
+      track.style.setProperty("--marquee-duration", `${Math.max(32, reviews.length * 7)}s`);
+    } catch (error) { console.warn("No fue posible cargar reseñas verificadas:", error.message); section.hidden = true; }
   }
 
   function renderLegacyHome(visible) {
@@ -652,7 +653,7 @@
     renderProductMarquee("desde14990", "Desde $14.990", sectionProducts("desde14990", visible));
     renderProductMarquee("lanzamiento", "Lanzamiento", sectionProducts("lanzamiento", visible));
     renderProductMarquee("destacados", "Destacados", sectionProducts("destacados", visible));
-    renderLegacyReviews(visible);
+    renderLegacyReviews();
   }
 
   try {

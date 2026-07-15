@@ -234,6 +234,25 @@
   }
 
 
+  async function loadOrderReviews(orderId) {
+    const box = document.querySelector("[data-order-reviews]");
+    if (!box) return;
+    try {
+      const payload = await API.request(`/resenas/pedido/${encodeURIComponent(orderId)}/disponibles`);
+      const items = Array.isArray(payload.items) ? payload.items : [];
+      const cards = items.map((item) => {
+        if (!item.puedeResenar) return `<article class="account-review-card"><strong>${escape(item.nombre)}</strong><p>Reseña enviada · ${escape(statusLabel(item.resena?.estado || "pendiente"))}</p></article>`;
+        return `<form class="account-review-card" data-review-form data-linea-id="${escape(item.lineaId)}"><strong>${escape(item.nombre)}</strong><label>Valoración<select name="estrellas" required><option value="5">5 estrellas</option><option value="4">4 estrellas</option><option value="3">3 estrellas</option><option value="2">2 estrellas</option><option value="1">1 estrella</option></select></label><label>Título opcional<input name="titulo" maxlength="120"></label><label>Comentario<textarea name="comentario" minlength="10" maxlength="1500" required></textarea></label><button class="btn btn-primary btn-small" type="submit">Enviar reseña</button><p class="account-review-message" hidden></p></form>`;
+      }).join("");
+      box.innerHTML = `<h3>Evalúa tus productos</h3><p>Solo puedes evaluar productos de pedidos recibidos, una vez por cada producto comprado.</p><div class="account-review-list">${cards || '<p>No hay productos disponibles para evaluar.</p>'}</div>`;
+      box.querySelectorAll("[data-review-form]").forEach((form) => form.addEventListener("submit", async (event) => {
+        event.preventDefault(); const button=form.querySelector("button"); const note=form.querySelector(".account-review-message"); setBusy(button,true,"Enviando...");
+        try { const data=new FormData(form); const result=await API.request(`/resenas/pedido/${encodeURIComponent(orderId)}/items/${encodeURIComponent(form.dataset.lineaId)}`,{method:"POST",body:{estrellas:Number(data.get("estrellas")),titulo:data.get("titulo"),comentario:data.get("comentario")}}); showMessage(note,result.mensaje||"Reseña enviada.","success"); form.querySelectorAll("input,textarea,select,button").forEach(el=>el.disabled=true); }
+        catch(error){showMessage(note,error.message||"No fue posible enviar la reseña.","error");setBusy(button,false);}
+      }));
+    } catch (error) { box.innerHTML = `<h3>Evalúa tus productos</h3><p>${escape(error.message || "No fue posible cargar las reseñas disponibles.")}</p>`; }
+  }
+
   async function initOrderDetail() {
     const session = API.getStoredSession?.();
     if (!session?.token) {
@@ -262,7 +281,9 @@
           <section><h3>Productos</h3><div class="account-detail-list">${items.map((item) => `<article><div><strong>${escape(item.nombre)}</strong><span>Cantidad: ${Number(item.cantidad || 1)}</span></div><strong>${money(Number(item.precioUnitario || item.precio || 0) * Number(item.cantidad || 1))}</strong></article>`).join("") || "<p>No hay productos para mostrar.</p>"}</div></section>
           <section><h3>Entrega</h3><p><strong>${escape(order.entrega?.metodo === "retiro" ? "Retiro coordinado" : "Envío")}</strong></p><p>${escape(order.entrega?.comuna || order.cliente?.comuna || "Por coordinar")}</p></section>
         </div>
-        <section class="account-history"><h3>Historial</h3>${history.map((entry) => `<div><span>${new Date(entry.fecha).toLocaleString("es-CL")}</span><strong>${escape(statusLabel(entry.estado))}</strong><p>${escape(entry.detalle || "")}</p></div>`).join("") || "<p>Aún no hay movimientos públicos.</p>"}</section>`;
+        <section class="account-history"><h3>Historial</h3>${history.map((entry) => `<div><span>${new Date(entry.fecha).toLocaleString("es-CL")}</span><strong>${escape(statusLabel(entry.estado))}</strong><p>${escape(entry.detalle || "")}</p></div>`).join("") || "<p>Aún no hay movimientos públicos.</p>"}</section>
+        ${order.estadoPedido === "entregado" ? '<section class="account-review-section" data-order-reviews><h3>Evalúa tus productos</h3><p>Tu opinión estará vinculada a esta compra y se publicará después de una revisión.</p><div class="state-box">Cargando productos disponibles...</div></section>' : ''}`;
+      if (order.estadoPedido === "entregado") await loadOrderReviews(id);
     } catch (error) {
       if (error.status === 401) {
         API.clearSession();
