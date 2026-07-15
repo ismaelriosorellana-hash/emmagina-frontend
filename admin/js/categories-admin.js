@@ -2,7 +2,8 @@
 
 (function () {
     const state = {
-        categories: []
+        categories: [],
+        heroBanner: null
     };
 
     const $ = (selector) => document.querySelector(selector);
@@ -28,7 +29,8 @@
             activa: $("#category-active").checked,
             mostrarMenu: $("#category-menu").checked,
             mostrarInicio: $("#category-home").checked,
-            destacada: $("#category-featured").checked
+            destacada: $("#category-featured").checked,
+            categoriaPadre: $("#category-parent").value || null
         };
     }
 
@@ -52,6 +54,11 @@
         setValue("category-image", category?.imagen || "");
         setValue("category-color", category?.color || "#8E456A");
         setValue("category-order", category?.orden ?? 0);
+        const parent = $("#category-parent");
+        if (parent) {
+            parent.innerHTML = `<option value="">Categoría principal</option>` + state.categories.filter(item => item.id !== category?.id && !item.categoriaPadre).map(item => `<option value="${AdminUI.escapeHtml(item.id)}">${AdminUI.escapeHtml(item.nombre)}</option>`).join("");
+            parent.value = category?.categoriaPadre || "";
+        }
         setValue("category-active", category ? category.activa !== false : true);
         setValue("category-menu", category ? category.mostrarMenu !== false : true);
         setValue("category-home", category ? category.mostrarInicio !== false : true);
@@ -99,12 +106,12 @@
                                         <i class="${AdminUI.escapeHtml(category.icono || "fa-solid fa-tag")}" aria-hidden="true"></i>
                                     </span>
                                     <div>
-                                        <strong>${AdminUI.escapeHtml(category.nombre)}</strong>
+                                        <strong>${category.categoriaPadre ? "↳ " : ""}${AdminUI.escapeHtml(category.nombre)}</strong>
                                         <small>${AdminUI.escapeHtml(category.descripcion || "Sin descripción")}</small>
                                     </div>
                                 </div>
                             </td>
-                            <td>${AdminUI.escapeHtml(category.slug || "—")}</td>
+                            <td><span>${AdminUI.escapeHtml(category.slug || "—")}</span>${category.categoriaPadreNombre ? `<small class="category-parent-label">Subcategoría de ${AdminUI.escapeHtml(category.categoriaPadreNombre)}</small>` : ""}</td>
                             <td>
                                 <div class="admin-pill-row">
                                     ${visibilityPill("Activa", category.activa !== false)}
@@ -206,8 +213,70 @@
         }
     }
 
+
+    function updateHeroPreview() {
+        const preview = $("#hero-banner-preview");
+        const url = $("#hero-banner-url")?.value.trim();
+        if (!preview) return;
+        preview.innerHTML = url ? `<img src="${AdminUI.escapeHtml(url)}" alt="Vista previa del Hero">` : "Sin imagen configurada";
+    }
+
+    async function loadHeroBanner() {
+        try {
+            const banners = await AdminAPI.request("/admin/banners");
+            state.heroBanner = (Array.isArray(banners) ? banners : []).find(item => item.ubicacion === "hero-inicio") || null;
+            setValue("hero-banner-url", state.heroBanner?.imagenEscritorio || "");
+            setValue("hero-banner-button", state.heroBanner?.textoBoton || "Ver productos");
+            setValue("hero-banner-target", state.heroBanner?.destino || "catalogo.html");
+            setValue("hero-banner-position", state.heroBanner?.posicion || "center");
+            setValue("hero-banner-active", state.heroBanner ? state.heroBanner.activo !== false : true);
+            updateHeroPreview();
+        } catch (error) {
+            console.warn("No fue posible cargar el banner del Hero:", error);
+        }
+    }
+
+    async function uploadHeroImage() {
+        const file = $("#hero-banner-file")?.files?.[0];
+        if (!file) { AdminUI.toast("Selecciona una imagen.", "warning"); return; }
+        const form = new FormData(); form.append("imagenes", file); form.append("nombre", "hero-rhema");
+        try {
+            const data = await AdminAPI.request("/uploads/productos", { method: "POST", body: form });
+            const url = data.urls?.[0] || data.assets?.[0]?.url || data.assets?.[0]?.secure_url || "";
+            if (!url) throw new Error("No se recibió una URL válida.");
+            $("#hero-banner-url").value = url; updateHeroPreview();
+            AdminUI.toast("Imagen cargada. Guarda el banner.", "success");
+        } catch (error) { AdminUI.toast(error.message, "danger"); }
+    }
+
+    async function saveHeroBanner(event) {
+        event.preventDefault();
+        const payload = {
+            nombre: "Hero principal",
+            ubicacion: "hero-inicio",
+            titulo: "",
+            eyebrow: "",
+            textoBoton: $("#hero-banner-button").value.trim() || "Ver productos",
+            destino: $("#hero-banner-target").value.trim() || "catalogo.html",
+            imagenEscritorio: $("#hero-banner-url").value.trim(),
+            imagenMovil: $("#hero-banner-url").value.trim(),
+            posicion: $("#hero-banner-position").value || "center",
+            activo: $("#hero-banner-active").checked,
+            orden: 0
+        };
+        if (!payload.imagenEscritorio) { AdminUI.toast("Carga una imagen para el Hero.", "warning"); return; }
+        try {
+            const id = state.heroBanner?._id || state.heroBanner?.id;
+            const saved = await AdminAPI.request(id ? `/admin/banners/${id}` : "/admin/banners", { method: id ? "PUT" : "POST", body: payload });
+            state.heroBanner = saved; AdminUI.toast("Banner del Hero guardado.", "success");
+        } catch (error) { AdminUI.toast(error.message, "danger"); }
+    }
+
     function bindEvents() {
         $("#category-base")?.addEventListener("click", installBaseCategories);
+        $("#hero-banner-form")?.addEventListener("submit", saveHeroBanner);
+        $("#hero-banner-upload")?.addEventListener("click", uploadHeroImage);
+        $("#hero-banner-url")?.addEventListener("input", updateHeroPreview);
 
         $("#category-new")?.addEventListener("click", () => {
             resetForm();
@@ -245,7 +314,9 @@
     }
 
     document.addEventListener("admin:ready", () => {
+        AdminUI.closeModal("category-modal");
         bindEvents();
         loadCategories();
+        loadHeroBanner();
     });
 })();

@@ -249,7 +249,8 @@
       const href = typeof item === "string"
         ? (label === "Todos" ? "catalogo.html" : `catalogo.html?categoria=${encodeURIComponent(label)}`)
         : cleanUrl(item?.href || item?.url || item?.link, `catalogo.html?categoria=${encodeURIComponent(label)}`);
-      return `<a href="${escape(href)}"><span>${escape(label)}</span></a>`;
+      const childClass = category.categoriaPadre ? " is-subcategory" : "";
+      return `<a class="${childClass.trim()}" href="${escape(href)}"><span>${category.categoriaPadre ? "↳ " : ""}${escape(label)}</span></a>`;
     }).join("");
   }
 
@@ -559,8 +560,8 @@
     image.alt = banner.titulo || banner.nombre || "Banner principal Rhema Diseños";
     image.style.objectPosition = banner.posicion || "center";
     if (link) link.href = bannerTarget(banner, "catalogo.html");
-    if (kicker) kicker.textContent = banner.eyebrow || "Rhema Diseños";
-    if (title) title.textContent = banner.titulo || "Ideas que toman forma";
+    if (kicker) kicker.hidden = true;
+    if (title) title.hidden = true;
     if (button) button.textContent = banner.textoBoton || "Ver tienda";
   }
 
@@ -619,13 +620,13 @@
     if (!nav) return;
     const visible = (Array.isArray(categories) ? categories : [])
       .filter((category) => category && category.activa !== false && category.mostrarInicio !== false)
-      .sort((a, b) => Number(a.orden || 0) - Number(b.orden || 0))
-      .slice(0, 12);
+      .sort((a, b) => Number(a.orden || 0) - Number(b.orden || 0));
     const source = visible.length ? visible : DEFAULT_CATEGORIES.map((nombre, index) => ({ nombre, orden: index * 10 }));
     nav.innerHTML = source.map((category) => {
       const label = String(category.nombre || category.label || category);
       const href = label === "Todos" ? "catalogo.html" : `catalogo.html?categoria=${encodeURIComponent(label)}`;
-      return `<a href="${escape(href)}"><span>${escape(label)}</span></a>`;
+      const childClass = category.categoriaPadre ? " is-subcategory" : "";
+      return `<a class="${childClass.trim()}" href="${escape(href)}"><span>${category.categoriaPadre ? "↳ " : ""}${escape(label)}</span></a>`;
     }).join("");
   }
 

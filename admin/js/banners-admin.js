@@ -19,12 +19,8 @@ document.addEventListener(
             saveBanner
         );
 
-        document.getElementById(
-            "banner-desktop"
-        ).addEventListener(
-            "input",
-            updateBannerPreview
-        );
+        document.getElementById("banner-desktop").addEventListener("input", updateBannerPreview);
+        document.getElementById("banner-upload-desktop")?.addEventListener("click", uploadDesktopBanner);
 
         document.getElementById(
             "banners-table"
@@ -114,6 +110,20 @@ function syncBannerDestination() {
     } else if (type === "seccion") {
         target.value = document.getElementById("banner-target-section")?.value || "#lo-mas-vendido";
     }
+}
+
+
+async function uploadDesktopBanner() {
+    const file = document.getElementById("banner-desktop-file")?.files?.[0];
+    if (!file) { AdminUI.toast("Selecciona una imagen.", "warning"); return; }
+    const form = new FormData(); form.append("imagenes", file); form.append("nombre", "hero-banner");
+    try {
+        const data = await AdminAPI.request("/uploads/productos", { method: "POST", body: form });
+        const url = data.urls?.[0] || data.assets?.[0]?.url || data.assets?.[0]?.secure_url || "";
+        if (!url) throw new Error("Cloudinary no devolvió una URL válida.");
+        document.getElementById("banner-desktop").value = url; updateBannerPreview();
+        AdminUI.toast("Imagen cargada. Guarda el banner para publicarla.", "success");
+    } catch (error) { AdminUI.toast(error.message, "danger"); }
 }
 
 async function loadBanners() {
