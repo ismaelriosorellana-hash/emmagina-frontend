@@ -110,6 +110,7 @@
                                     ${visibilityPill("Activa", category.activa !== false)}
                                     ${visibilityPill("Menú", category.mostrarMenu !== false)}
                                     ${visibilityPill("Inicio", category.mostrarInicio !== false)}
+                                    ${visibilityPill("Destacada", Boolean(category.destacada))}
                                 </div>
                             </td>
                             <td>${Number(category.orden || 0)}</td>
@@ -190,7 +191,24 @@
         }
     }
 
+
+    async function installBaseCategories() {
+        const confirmed = await AdminUI.confirmAction(
+            "Se crearán o actualizarán las 20 categorías base y las categorías antiguas quedarán desactivadas. Los productos no se eliminarán. ¿Continuar?"
+        );
+        if (!confirmed) return;
+        try {
+            const response = await AdminAPI.request("/admin/categorias/base", { method: "POST", body: {} });
+            AdminUI.toast(response?.mensaje || "Categorías base instaladas.", "success");
+            await loadCategories();
+        } catch (error) {
+            AdminUI.toast(error.message, "danger");
+        }
+    }
+
     function bindEvents() {
+        $("#category-base")?.addEventListener("click", installBaseCategories);
+
         $("#category-new")?.addEventListener("click", () => {
             resetForm();
             AdminUI.openModal("category-modal");

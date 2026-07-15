@@ -2,16 +2,10 @@
 
 (async function () {
   const DEFAULT_CATEGORIES = [
-    "Accesorios",
-    "Coleccionables",
-    "Decoración",
-    "Herramientas",
-    "Linea Memories",
-    "Librería",
-    "Linea Alma",
-    "Ofertas",
-    "Vasos Temáticos",
-    "Todos"
+    "Librería y Escritorio", "Juguetería", "Coleccionables", "Decoración", "Hogar",
+    "Memories", "Vasos", "Para regalar", "Educativos", "Infantiles", "Babies",
+    "Cristianos", "Niños", "Niñas", "Mascotas", "Herramientas", "Utilidades",
+    "Accesorios para automóvil", "Accesorios para celular", "Todos"
   ];
 
   const all = [];
@@ -619,6 +613,22 @@
     }).join("");
   }
 
+
+  function renderHomeCategories(categories = []) {
+    const nav = document.querySelector(".rhema-category-list");
+    if (!nav) return;
+    const visible = (Array.isArray(categories) ? categories : [])
+      .filter((category) => category && category.activa !== false && category.mostrarInicio !== false)
+      .sort((a, b) => Number(a.orden || 0) - Number(b.orden || 0))
+      .slice(0, 12);
+    const source = visible.length ? visible : DEFAULT_CATEGORIES.map((nombre, index) => ({ nombre, orden: index * 10 }));
+    nav.innerHTML = source.map((category) => {
+      const label = String(category.nombre || category.label || category);
+      const href = label === "Todos" ? "catalogo.html" : `catalogo.html?categoria=${encodeURIComponent(label)}`;
+      return `<a href="${escape(href)}"><span>${escape(label)}</span></a>`;
+    }).join("");
+  }
+
   async function renderLegacyReviews() {
     const section = by("[data-reviews-section]");
     const track = by("[data-reviews-track]");
@@ -658,13 +668,15 @@
 
   try {
     document.querySelectorAll("[data-marquee-track]").forEach((track) => window.EmmaginaUI.setLoading(track, "Cargando productos..."));
-    const [products, banners] = await Promise.all([
+    const [products, banners, categories] = await Promise.all([
       window.EmmaginaAPI.getProducts({ limit: 240 }),
-      window.EmmaginaAPI.getBanners().catch(() => [])
+      window.EmmaginaAPI.getBanners().catch(() => []),
+      window.EmmaginaAPI.getCategories().catch(() => [])
     ]);
 
     all.push(...products);
     publicBanners = Array.isArray(banners) ? banners : [];
+    renderHomeCategories(Array.isArray(categories?.categorias) ? categories.categorias : categories);
     const visible = all.filter(window.EmmaginaData.isVisible);
 
     renderLegacyHome(visible);

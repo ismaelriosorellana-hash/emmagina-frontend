@@ -514,7 +514,7 @@ a[href*="pago"].primary-link:hover {
 
 /* v5.7.1 — lanzamiento local Santiago */
 .rhema-launch-section{background:#fff;border:2px solid #bfdce8;border-radius:28px;padding:clamp(22px,4vw,44px);margin-block:28px}.rhema-launch-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.rhema-launch-grid article{display:flex;flex-direction:column;gap:8px;background:#eaf4f8;border:1px solid #bfdce8;border-radius:20px;padding:20px}.rhema-launch-grid strong{color:#023047;font-family:Nunito,Inter,sans-serif;font-size:1.05rem}.rhema-launch-grid span{color:#125373;line-height:1.55}@media(max-width:900px){.rhema-launch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.rhema-launch-grid{grid-template-columns:1fr}.rhema-launch-section{border-radius:20px;padding:20px}}
-/* v5.25.0 Home compacta */
+/* v5.26.0 Home compacta */
 .rhema-hero-section{padding-block:clamp(12px,2vw,24px)!important}
 .rhema-hero-shell,.rhema-hero{min-height:0!important}
 .rhema-hero{padding:clamp(18px,3vw,34px)!important}
@@ -526,6 +526,12 @@ a[href*="pago"].primary-link:hover {
 .review-card time{font-size:.78rem;color:var(--muted)}
 .review-card footer{display:flex;justify-content:space-between;gap:12px;align-items:end}
 @media(max-width:760px){.rhema-hero-visual{min-height:140px!important}.rhema-hero{padding:18px!important}.review-card{min-width:270px}}
-/* v5.25.0 Home compacta */
+/* v5.26.0 Home compacta */
 .rhema-hero-section{padding-block:clamp(10px,1.5vw,20px)!important}.rhema-hero-shell,.rhema-hero{min-height:0!important}.rhema-hero{padding:clamp(16px,2.5vw,28px)!important}.rhema-hero-copy h1{font-size:clamp(1.9rem,3.5vw,3.2rem)!important;line-height:1.02!important}.rhema-hero-visual{min-height:190px!important}.hero-category-list,.rhema-hero-categories{min-height:0!important;height:auto!important}.reviews-marquee{padding-top:clamp(28px,4vw,48px)}.review-card{min-width:300px;max-width:360px;display:grid;gap:10px}.review-card time{font-size:.78rem;color:var(--muted)}.review-card footer{display:flex;justify-content:space-between;gap:12px;align-items:end}@media(max-width:760px){.rhema-hero-visual{min-height:130px!important}.rhema-hero{padding:16px!important}.review-card{min-width:270px}}
 @media(min-width:861px){.rhema-hero-layout{grid-template-columns:250px minmax(0,1fr);align-items:stretch}.rhema-category-panel,.rhema-hero-card{height:100%;min-height:245px!important}.rhema-hero-card{grid-template-columns:minmax(0,1fr) 270px;padding:24px 30px!important}.rhema-hero-copy{gap:11px}.rhema-hero-copy p:not(.kicker){font-size:15px!important;line-height:1.45}.rhema-category-list a{min-height:31px;padding:6px 10px}.rhema-category-list{gap:5px}}
+
+/* v5.26.0: carruseles limitados al ancho general de la Home */
+.reviews-marquee,.section-muted>.product-marquee{width:var(--container);max-width:calc(100% - 32px);margin-inline:auto}
+.reviews-marquee .section-heading,.reviews-marquee .marquee-viewport,.section-muted>.product-marquee .carousel-head,.section-muted>.product-marquee .marquee-viewport{width:100%;max-width:100%;margin-inline:auto}
+.section-muted:has(>.product-marquee){padding-inline:0}
+@media(max-width:720px){.reviews-marquee,.section-muted>.product-marquee{max-width:calc(100% - 24px)}}
